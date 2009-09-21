@@ -10,6 +10,7 @@ setup(name='transforms3d',
       author_email='Christoph Gohlke, matthew.brett@gmail.com',
       url='http://imaging.mrc-cbu.cam.ac.uk/svn/transforms3d',
       packages=['transforms3d'],
+      package_data={'transforms3d': ['derivations/*.py']},
       scripts=glob('scripts/*.py')
       )
 
