@@ -1,0 +1,88 @@
+''' Test module for affines '''
+
+import numpy as np
+
+from numpy.testing import assert_array_equal, assert_raises, dec, \
+    assert_array_almost_equal
+    
+from nose.tools import assert_true, assert_false
+
+from transforms3d.affines import shears2matrix, compose, decompose, \
+    decompose44
+from transforms3d.taitbryan import euler2mat
+
+
+def test_shears():
+    for n, N in ((1, 2),
+                 (3, 3),
+                 (6, 4),
+                 (10, 5),
+                 (15, 6),
+                 (21, 7),
+                 (78, 13)):
+        shears = np.arange(n)
+        M = shears2matrix(shears)
+        e = np.eye(N)
+        inds = np.triu(np.ones((N,N)), 1).astype(bool)
+        e[inds] = shears
+        yield assert_array_equal, M, e
+    for n in (2, 4, 5, 7, 8, 9):
+        shears = np.zeros(n)        
+        yield assert_raises, ValueError, shears2matrix, shears
+
+
+def permute(seq):
+    # Return list of all permutations of 3 element sequence
+    indlist = (
+        [0,2,1],
+        [1,2,0],
+        [1,0,2],
+        [2,0,1],
+        [2,1,0])
+    permuted = [seq]
+    for inds in indlist:
+        permuted.append([seq[inds[0]], seq[inds[1]], seq[inds[2]]])
+    return permuted
+
+
+def test_compose():
+    # Test that rotation vector raises error
+    T = np.ones(3)
+    R = np.ones(3)
+    Z = np.ones(3)
+    yield assert_raises, ValueError, compose, T, R, Z
+
+
+@dec.slow
+def test_de_compose():
+    # Make a series of translations etc, compose and decompose
+    for trans in permute([10,20,30]):
+        for rots in permute([0.2,0.3,0.4]):
+            for zooms in permute([1.1,1.9,2.3]):
+                for shears in permute([0.01, 0.04, 0.09]):
+                    Rmat = euler2mat(*rots)
+                    M = compose(trans, Rmat, zooms, shears)
+                    for func in decompose, decompose44:
+                        T, R, Z, S = func(M)
+                        yield (assert_true,
+                               np.allclose(trans, T) and
+                               np.allclose(Rmat, R) and
+                               np.allclose(zooms, Z) and
+                               np.allclose(shears, S))
+
+
+def test_decompose_shears():
+    # Check that zeros shears are also returned
+    T, R, Z, S = decompose(np.eye(4))
+    yield assert_array_equal, S, np.zeros(3)
+
+
+def test_rand_de_compose():
+    # random matrices
+    for i in range(50):
+        M = np.random.normal(size=(4,4))
+        M[-1] = [0, 0, 0, 1]
+        for func in decompose, decompose44:
+            T, R, Z, S = func(M)
+            M2 = compose(T, R, Z, S)
+            yield assert_array_almost_equal, M, M2
