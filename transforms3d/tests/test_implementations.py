@@ -5,7 +5,8 @@ import transforms3d.taitbryan as ttb
 
 from transforms3d.gohlketransforms import quaternion_matrix, \
     quaternion_from_matrix, euler_matrix, \
-    quaternion_from_euler
+    quaternion_from_euler, rotation_matrix, \
+    rotation_from_matrix
 
 from nose.tools import assert_true, assert_equal
 from numpy.testing import assert_array_almost_equal, dec
@@ -69,3 +70,19 @@ def test_euler_imps():
         q1 = quaternion_from_euler(z, y, x, 'szyx')
         q2 = ttb.euler2quat(z, y, x)
         yield assert_true, tq.nearly_equivalent(our_quat(q1), q2)
+
+
+def test_angle_axis_imps():
+    for x, y, z in eg_rots:
+        M = ttb.euler2mat(z, y, x)
+        q = tq.mat2quat(M)
+        theta, vec = tq.quat2angle_axis(q)
+        M1 = tq.angle_axis2mat(theta, vec)
+        M2 = rotation_matrix(theta, vec)[:3,:3]
+        yield assert_array_almost_equal, M1, M2
+        M3 = np.eye(4)
+        M3[:3,:3] = M
+        t2, v2, point = rotation_from_matrix(M3)
+        M4 = tq.angle_axis2mat(t2, v2)
+        yield assert_array_almost_equal, M, M4
+        
