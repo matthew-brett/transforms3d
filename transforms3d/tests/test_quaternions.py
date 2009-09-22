@@ -1,5 +1,7 @@
 ''' Test quaternion calculations '''
 
+import math
+
 import numpy as np
 from numpy import pi
 
@@ -173,6 +175,34 @@ def test_angle_axis2quat():
     yield assert_array_almost_equal, q, [0, 1, 0, 0]
 
 
+def sympy_aa2mat(theta, vec):
+    # sympy expression derived from quaternion formulae
+    v0, v1, v2 = vec # assumed normalized
+    sin = math.sin
+    cos = math.cos
+    return np.array([
+            [      1 - 2*v1**2*sin(0.5*theta)**2 - 2*v2**2*sin(0.5*theta)**2, -2*v2*cos(0.5*theta)*sin(0.5*theta) + 2*v0*v1*sin(0.5*theta)**2,  2*v1*cos(0.5*theta)*sin(0.5*theta) + 2*v0*v2*sin(0.5*theta)**2],
+            [ 2*v2*cos(0.5*theta)*sin(0.5*theta) + 2*v0*v1*sin(0.5*theta)**2,       1 - 2*v0**2*sin(0.5*theta)**2 - 2*v2**2*sin(0.5*theta)**2, -2*v0*cos(0.5*theta)*sin(0.5*theta) + 2*v1*v2*sin(0.5*theta)**2],
+            [-2*v1*cos(0.5*theta)*sin(0.5*theta) + 2*v0*v2*sin(0.5*theta)**2,  2*v0*cos(0.5*theta)*sin(0.5*theta) + 2*v1*v2*sin(0.5*theta)**2,       1 - 2*v0**2*sin(0.5*theta)**2 - 2*v1**2*sin(0.5*theta)**2]])
+
+
+def sympy_aa2mat2(theta, vec):
+    # sympy expression derived from direct formula
+    v0, v1, v2 = vec # assumed normalized
+    sin = math.sin
+    cos = math.cos
+    return np.array([
+            [v0**2*(1 - cos(theta)) + cos(theta),
+             -v2*sin(theta) + v0*v1*(1 - cos(theta)),
+             v1*sin(theta) + v0*v2*(1 - cos(theta))],
+            [v2*sin(theta) + v0*v1*(1 - cos(theta)),
+             v1**2*(1 - cos(theta)) + cos(theta),
+             -v0*sin(theta) + v1*v2*(1 - cos(theta))],
+            [-v1*sin(theta) + v0*v2*(1 - cos(theta)),
+              v0*sin(theta) + v1*v2*(1 - cos(theta)),
+              v2**2*(1 - cos(theta)) + cos(theta)]])
+
+
 def test_angle_axis():
     for M, q in eg_pairs:
         theta, vec = tq.quat2angle_axis(q)
@@ -180,3 +210,11 @@ def test_angle_axis():
         yield tq.nearly_equivalent, q, q2
         aa_mat = tq.angle_axis2mat(theta, vec)
         yield assert_array_almost_equal, aa_mat, M
+        aa_mat2 = sympy_aa2mat(theta, vec)
+        yield assert_array_almost_equal, aa_mat, aa_mat2
+        aa_mat22 = sympy_aa2mat2(theta, vec)
+        yield assert_array_almost_equal, aa_mat, aa_mat22
+
+
+
+            

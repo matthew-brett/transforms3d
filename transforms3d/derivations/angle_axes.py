@@ -10,15 +10,6 @@ sys.path.append(_my_path)
 from quaternions import quat_around_axis, quat2mat, qmult
 sys.path.remove(_my_path)
 
-R = Matrix(3, 3, lambda i, j : Symbol('R%d%d' % (i, j)))
-aR = eye(4)
-aR[:3,:3] = R
-T = eye(4)
-T[:3,3] = symbols('T0', 'T1', 'T2')
-
-# applying a rotation matrix after a translation
-print T.inv() * aR * T
-
 
 def angle_axis2quat(theta, vector):
     ''' Quaternion for rotation of angle `theta` around `vector`
@@ -73,8 +64,19 @@ def angle_axis2mat(theta, vector):
             [ zxC-ys,   yzC+xs,   z*zC+c ]])
 
 
+# Formulae for axis_angle to matrix
 theta, v0, v1, v2 = symbols('theta', 'v0', 'v1', 'v2')
 vec = (v0, v1, v2)
 
 q2m1 = quat2mat(quat_around_axis(theta, vec))
 q2m2 = angle_axis2mat(theta, vec)
+
+# Applying a translation before a rotation
+R = Matrix(3, 3, lambda i, j : Symbol('R%d%d' % (i, j)))
+aR = eye(4)
+aR[:3,:3] = R
+T = eye(4)
+T[:3,3] = symbols('T0', 'T1', 'T2')
+
+iT_R_T =  T.inv() * aR * T
+
