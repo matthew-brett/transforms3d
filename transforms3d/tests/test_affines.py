@@ -32,17 +32,62 @@ def test_shears():
 
 
 def permute(seq):
-    # Return list of all permutations of 3 element sequence
+    # Return list of unique permutations of 3 element sequence
+    seq = list(seq)
     indlist = (
-        [0,2,1],
-        [1,2,0],
-        [1,0,2],
-        [2,0,1],
-        [2,1,0])
+        (0,2,1),
+        (1,2,0),
+        (1,0,2),
+        (2,0,1),
+        (2,1,0))
     permuted = [seq]
     for inds in indlist:
-        permuted.append([seq[inds[0]], seq[inds[1]], seq[inds[2]]])
+        res = [seq[inds[0]], seq[inds[1]], seq[inds[2]]]
+        if res not in permuted:
+            permuted.append(res)
     return permuted
+
+
+def permute_signs(seq):
+    # Permute signs on all non-zero elements in 3 element sequence
+    signs = np.array(((1, 1, 1),
+                      (1, 1, -1),
+                      (1, -1, 1),
+                      (1, -1, -1),
+                      (-1, 1, 1),
+                      (-1, 1, -1),
+                      (-1, -1, 1),
+                      (-1, -1, -1)
+                      ))
+    permuted = []
+    aseq = np.array(seq)
+    snz = aseq != 0
+    if not np.any(snz):
+        return [seq]
+    for s in signs:
+        sseq = aseq.copy()
+        sseq[snz] = sseq[snz] * s[snz]
+        sseq = list(sseq)
+        if sseq not in permuted:
+            permuted.append(sseq)
+    return permuted
+
+
+def permute_with_signs(seq):
+    seqs = permute(seq)
+    res = []
+    for s in seqs:
+        res += permute_signs(s)
+    return res
+
+    
+_r13 = np.sqrt(1/3.0)
+_r12 = np.sqrt(0.5)
+sphere_points = (
+        permute_with_signs([1, 0, 0]) + 
+        permute_with_signs([_r12, _r12, 0]) + 
+        permute_signs([_r13, _r13, _r13])
+    )
 
 
 def test_compose():
