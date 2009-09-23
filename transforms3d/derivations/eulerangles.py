@@ -11,14 +11,12 @@ and ``vdash`` is the matrix of rotated vectors::
 
 
 '''
-import os, sys
-_my_path, _ = os.path.split(__file__)
-sys.path.append(_my_path)
-from quaternions import quat_around_axis, quat2mat, qmult
-sys.path.remove(_my_path)
 
 from sympy import Symbol, cos, sin
 from sympy.matrices import Matrix
+
+from transforms3d.derivations.quaternions import quat_around_axis, \
+    quat2mat, qmult
 
 
 def x_rotation(theta):
@@ -58,4 +56,5 @@ q_zrot = quat_around_axis(Symbol('z'), [0, 0, 1])
 q_yrot = quat_around_axis(Symbol('y'), [0, 1, 0])
 q_xrot = quat_around_axis(Symbol('x'), [1, 0, 0])
 
+# quaternion from composition of x on y on z rotations
 q_zyx = qmult(q_xrot, qmult(q_yrot, q_zrot))

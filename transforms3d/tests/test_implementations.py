@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 
 import transforms3d.quaternions as tq
@@ -85,4 +87,5 @@ def test_angle_axis_imps():
         t2, v2, point = rotation_from_matrix(M3)
         M4 = tq.angle_axis2mat(t2, v2)
         yield assert_array_almost_equal, M, M4
-        
+
+

@@ -1,14 +1,30 @@
 ''' Derivations for rotations of angle around axis '''
 import numpy as np
 
-from sympy import Symbol, symbols, sin, cos, acos, sqrt
+from sympy import Symbol, symbols, sin, cos, acos, sqrt, solve
 from sympy.matrices import Matrix, eye
 
-import os, sys
-_my_path, _ = os.path.split(__file__)
-sys.path.append(_my_path)
-from quaternions import quat_around_axis, quat2mat, qmult
-sys.path.remove(_my_path)
+from transforms3d.derivations.utils import matrices_equal
+
+from transforms3d.derivations.quaternions import quat_around_axis, \
+    quat2mat, qmult
+
+
+def orig_aa2mat(angle, direction):
+    # original transformations.py implementation of angle_axis2mat
+    direction = np.array(direction)
+    sina = sin(angle)
+    cosa = cos(angle)
+    # rotation matrix around unit vector
+    R = Matrix(((cosa, 0.0,  0.0),
+                (0.0,  cosa, 0.0),
+                (0.0,  0.0,  cosa)))
+    R += np.outer(direction, direction) * (1.0 - cosa)
+    direction *= sina
+    R += Matrix((( 0.0,         -direction[2],  direction[1]),
+                 ( direction[2], 0.0,          -direction[0]),
+                 (-direction[1], direction[0],  0.0)))
+    return R
 
 
 def angle_axis2quat(theta, vector):
@@ -58,7 +74,7 @@ def angle_axis2mat(theta, vector):
     xs = x*s;   ys = y*s;   zs = z*s
     xC = x*C;   yC = y*C;   zC = z*C
     xyC = x*yC; yzC = y*zC; zxC = z*xC
-    return np.array([
+    return Matrix([
             [ x*xC+c,   xyC-zs,   zxC+ys ],
             [ xyC+zs,   y*yC+c,   yzC-xs ],
             [ zxC-ys,   yzC+xs,   z*zC+c ]])
@@ -68,15 +84,22 @@ def angle_axis2mat(theta, vector):
 theta, v0, v1, v2 = symbols('theta', 'v0', 'v1', 'v2')
 vec = (v0, v1, v2)
 
-q2m1 = quat2mat(quat_around_axis(theta, vec))
-q2m2 = angle_axis2mat(theta, vec)
+# These give the same formula
+M1 = angle_axis2mat(theta, vec)
+M2 = orig_aa2mat(theta, vec)
+assert matrices_equal(M1, M2)
+# This does not, but leads to the same numerical result (see tests)
+M3 = quat2mat(quat_around_axis(theta, vec))
+assert not matrices_equal(M1, M3)
 
-# Applying a translation before a rotation
+# Applying a rotation about a point
 R = Matrix(3, 3, lambda i, j : Symbol('R%d%d' % (i, j)))
 aR = eye(4)
 aR[:3,:3] = R
 T = eye(4)
-T[:3,3] = symbols('T0', 'T1', 'T2')
+point = Matrix(3, 1, symbols('P0', 'P1', 'P2'))
+T[:3,3] = point
 
-iT_R_T =  T.inv() * aR * T
+# Move to new origin (inverse point), rotate, move back to original origin
+T_R_iT =  T * aR * T.inv()
 

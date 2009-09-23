@@ -195,6 +195,20 @@ def rotation_matrix(angle, direction, point=None):
     ...                                                direc, point)))
     True
 
+    Notes
+    -----
+    Applying a rotation around a point is the same as applying a
+    translation of ``-point`` to move ``point`` to the origin, rotating,
+    then applying a translation of ``point``.  If ``R`` is the rotation
+    matrix, than the affine for the rotation about point P is::
+
+       [R00, R01, R02, P0 - P0*R00 - P1*R01 - P2*R02]
+       [R10, R11, R12, P1 - P0*R10 - P1*R11 - P2*R12]
+       [R20, R21, R22, P2 - P0*R20 - P1*R21 - P2*R22]
+       [  0,   0,   0,                             1]
+
+    (see derivations)
+
     """
     sina = math.sin(angle)
     cosa = math.cos(angle)
@@ -215,6 +229,7 @@ def rotation_matrix(angle, direction, point=None):
         # rotation not around origin
         point = np.array(point[:3], dtype=np.float64, copy=False)
         M[:3, 3] = point - np.dot(R, point)
+        print M[:3,3]
     return M
 
 
