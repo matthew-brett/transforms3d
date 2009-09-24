@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# templates3d documentation build configuration file, created by
+# transforms3d documentation build configuration file, created by
 # sphinx-quickstart on Wed Sep 23 16:54:41 2009.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -38,7 +38,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'templates3d'
+project = u'transforms3d'
 copyright = u'2009, Christoph Gohlke, Matthew Brett'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -159,7 +159,7 @@ html_static_path = ['_static']
 #html_file_suffix = ''
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'templates3ddoc'
+htmlhelp_basename = 'transforms3ddoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -173,7 +173,7 @@ htmlhelp_basename = 'templates3ddoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'templates3d.tex', u'templates3d Documentation',
+  ('index', 'transforms3d.tex', u'transforms3d Documentation',
    u'Christoph Gohlke, Matthew Brett', 'manual'),
 ]
 

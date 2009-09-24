@@ -68,23 +68,21 @@ When $\cos(\beta) = 0$, $\sin(\beta) = \pm1$ and $R$ simplifies to:
 
      R = \left(\begin{smallmatrix}0 & - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \pm{1} \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) & \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \pm{1} \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right)\\0 & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \pm{1} \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) & - \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) + \pm{1} \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right)\\- \pm{1} & 0 & 0\end{smallmatrix}\right)
 
-Noting the reductions in
-http://www.gregslabaugh.name/publications/euler.pdf we remind ourselves that:
-
-.. math::
-
-   \sin(\theta)\cos(\phi) - \cos(\theta)\sin(\phi) = \sin(\theta-\phi)
-
-   \cos(\theta)\cos(\phi) + \sin(\theta)\sin(\phi) = \cos(\theta-\phi)
-
-
 When $\sin(\beta) = 1$:
 
 .. math::
 
    R = \left(\begin{smallmatrix}0 & \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right)\\0 & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) & \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) - \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right)\\-1 & 0 & 0\end{smallmatrix}\right)
 
-and:
+From the `angle sum and difference identities <http://en.wikipedia.org/wiki/List_of_trigonometric_identities#Angle_sum_and_difference_identities>`_ we remind ourselves that, for any two angles $\alpha$ and $\beta$:
+
+.. math::
+
+   \sin(\alpha \pm \beta) = \sin \alpha \cos \beta \pm \cos \alpha \sin \beta \,
+
+   \cos(\alpha \pm \beta) = \cos \alpha \cos \beta \mp \sin \alpha \sin \beta
+
+We can rewrite $R$ as:
 
 .. math::
 
@@ -94,7 +92,7 @@ where:
 
 .. math::
 
-    V_1 = \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) = \sin(\alpha - \gamma)
+    V_1 = \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) = \sin(\alpha - \gamma) \,
 
     V_2 =  \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) = \cos(\alpha - \gamma)
 
