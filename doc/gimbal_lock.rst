@@ -61,13 +61,13 @@ by rotation $\gamma$ around $z$, the rotation matrix $R$ is:
 
    R = \left(\begin{smallmatrix}\operatorname{cos}\left(\beta\right) \operatorname{cos}\left(\gamma\right) & - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\beta\right) & \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\beta\right)\\\operatorname{cos}\left(\beta\right) \operatorname{sin}\left(\gamma\right) & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\beta\right) \operatorname{sin}\left(\gamma\right) &- \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) + \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\beta\right) \operatorname{sin}\left(\gamma\right)\\- \operatorname{sin}\left(\beta\right) & \operatorname{cos}\left(\beta\right) \operatorname{sin}\left(\alpha\right) & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\beta\right)\end{smallmatrix}\right)
 
-When $\cos(\beta) = 0$, $\sin(\beta) = \pm1$. When $\sin(\beta) = 1$ this simplifies to:
+When $\cos(\beta) = 0$, $\sin(\beta) = \pm1$ and $R$ simplifies to:
 
 .. math::
 
-     R = \left(\begin{smallmatrix}0 & \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) - \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right)\\0 & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) & \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right)\\-1 & 0 & 0\end{smallmatrix}\right)
+     R = \left(\begin{smallmatrix}0 & - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \pm{1} \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) & \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \pm{1} \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right)\\0 & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \pm{1} \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) & - \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) + \pm{1} \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right)\\- \pm{1} & 0 & 0\end{smallmatrix}\right)
 
-or:
+For the $\sin(\beta) = 1$ case:
 
 .. math::
 

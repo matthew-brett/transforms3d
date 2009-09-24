@@ -60,20 +60,21 @@ q_xrot = quat_around_axis(Symbol('x'), [1, 0, 0])
 q_zyx = qmult(q_xrot, qmult(q_yrot, q_zrot))
 
 # Formula for gimbal lock example
-alpha, beta, gamma = symbols('\\gamma', '\\beta', '\\alpha')
+alpha, beta, gamma = symbols('\\alpha', '\\beta', '\\gamma')
 M_xyz = (z_rotation(gamma) *
          y_rotation(beta) *
          x_rotation(alpha))
 
-# Substitute for cos(beta) = 0
+# Substitute for cos(beta) = 0, sin(beta) = +-1
+pm1 = Symbol('\\pm{1}')
 subs = {cos(beta): 0,
-        sin(beta): 1}
+        sin(beta): pm1}
 M_xyz_gimbal_full = M_xyz.subs(subs)
 
 # And combination symbols
 V1, V2 = symbols('V1', 'V2')
-v1t = cos(gamma)*sin(alpha) - cos(alpha)*sin(gamma)
-v2t = cos(alpha)*cos(gamma) + sin(alpha)*sin(gamma)
+v1t = cos(gamma)*sin(alpha) - pm1*cos(alpha)*sin(gamma)
+v2t = cos(alpha)*cos(gamma) + pm1*sin(alpha)*sin(gamma)
 subs2 = {v1t: V1,
          v2t: V2,
          v1t*-1: -V1
