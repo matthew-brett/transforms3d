@@ -11,15 +11,9 @@ from nose.tools import assert_true, assert_false, assert_equal
 
 from numpy.testing import assert_array_equal, assert_array_almost_equal
 
-FLOAT_EPS = np.finfo(np.float).eps
+from transforms3d.testing import euler_tuples
 
-# Example rotations '''
-eg_rots = []
-params = np.arange(-pi*2,pi*2.5,pi/2)
-for x in params:
-    for y in params:
-        for z in params:
-            eg_rots.append((x, y, z))
+FLOAT_EPS = np.finfo(np.float).eps
 
 
 def x_only(x):
@@ -98,7 +92,7 @@ def test_basic_euler():
 def test_euler_mat():
     M = ttb.euler2mat()
     yield assert_array_equal, M, np.eye(3)
-    for x, y, z in eg_rots:
+    for x, y, z in euler_tuples:
         M1 = ttb.euler2mat(z, y, x)
         M2 = sympy_euler(z, y, x)
         yield assert_array_almost_equal, M1, M2
@@ -149,7 +143,7 @@ def test_euler_instability():
 
 
 def test_quats():
-    for x, y, z in eg_rots:
+    for x, y, z in euler_tuples:
         M1 = ttb.euler2mat(z, y, x)
         quatM = tq.mat2quat(M1)
         quat = ttb.euler2quat(z, y, x)

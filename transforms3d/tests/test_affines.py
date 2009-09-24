@@ -7,6 +7,8 @@ from numpy.testing import assert_array_equal, assert_raises, dec, \
     
 from nose.tools import assert_true, assert_false
 
+from transforms3d.testing.utils import permutations
+
 from transforms3d.affines import shears2matrix, compose, decompose, \
     decompose44
 from transforms3d.taitbryan import euler2mat
@@ -31,65 +33,6 @@ def test_shears():
         yield assert_raises, ValueError, shears2matrix, shears
 
 
-def permute(seq):
-    # Return list of unique permutations of 3 element sequence
-    seq = list(seq)
-    indlist = (
-        (0,2,1),
-        (1,2,0),
-        (1,0,2),
-        (2,0,1),
-        (2,1,0))
-    permuted = [seq]
-    for inds in indlist:
-        res = [seq[inds[0]], seq[inds[1]], seq[inds[2]]]
-        if res not in permuted:
-            permuted.append(res)
-    return permuted
-
-
-def permute_signs(seq):
-    # Permute signs on all non-zero elements in 3 element sequence
-    signs = np.array(((1, 1, 1),
-                      (1, 1, -1),
-                      (1, -1, 1),
-                      (1, -1, -1),
-                      (-1, 1, 1),
-                      (-1, 1, -1),
-                      (-1, -1, 1),
-                      (-1, -1, -1)
-                      ))
-    permuted = []
-    aseq = np.array(seq)
-    snz = aseq != 0
-    if not np.any(snz):
-        return [seq]
-    for s in signs:
-        sseq = aseq.copy()
-        sseq[snz] = sseq[snz] * s[snz]
-        sseq = list(sseq)
-        if sseq not in permuted:
-            permuted.append(sseq)
-    return permuted
-
-
-def permute_with_signs(seq):
-    seqs = permute(seq)
-    res = []
-    for s in seqs:
-        res += permute_signs(s)
-    return res
-
-    
-_r13 = np.sqrt(1/3.0)
-_r12 = np.sqrt(0.5)
-sphere_points = (
-        permute_with_signs([1, 0, 0]) + 
-        permute_with_signs([_r12, _r12, 0]) + 
-        permute_signs([_r13, _r13, _r13])
-    )
-
-
 def test_compose():
     # Test that rotation vector raises error
     T = np.ones(3)
@@ -101,10 +44,10 @@ def test_compose():
 @dec.slow
 def test_de_compose():
     # Make a series of translations etc, compose and decompose
-    for trans in permute([10,20,30]):
-        for rots in permute([0.2,0.3,0.4]):
-            for zooms in permute([1.1,1.9,2.3]):
-                for shears in permute([0.01, 0.04, 0.09]):
+    for trans in permutations([10,20,30]):
+        for rots in permutations([0.2,0.3,0.4]):
+            for zooms in permutations([1.1,1.9,2.3]):
+                for shears in permutations([0.01, 0.04, 0.09]):
                     Rmat = euler2mat(*rots)
                     M = compose(trans, Rmat, zooms, shears)
                     for func in decompose, decompose44:

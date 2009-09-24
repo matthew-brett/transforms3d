@@ -3,7 +3,6 @@
 import math
 
 import numpy as np
-from numpy import pi
 
 # Recent (1.2) versions of numpy have this decorator
 try:
@@ -19,24 +18,15 @@ from nose.tools import assert_raises, assert_true, assert_false, \
 from numpy.testing import assert_array_almost_equal, assert_array_equal
 
 import transforms3d.quaternions as tq
-import transforms3d.taitbryan as ttb
 
-# Example rotations '''
-eg_rots = []
-params = (-pi,pi,pi/2)
-zs = np.arange(*params)
-ys = np.arange(*params)
-xs = np.arange(*params)
-for z in zs:
-    for y in ys:
-        for x in xs:
-            eg_rots.append(ttb.euler2mat(z,y,x))
+from transforms3d.testing import euler_mats
+
 # Example quaternions (from rotations)
-eg_quats = []
-for M in eg_rots:
-    eg_quats.append(tq.mat2quat(M))
+euler_quats = []
+for M in euler_mats:
+    euler_quats.append(tq.mat2quat(M))
 # M, quaternion pairs
-eg_pairs = zip(eg_rots, eg_quats)
+eg_pairs = zip(euler_mats, euler_quats)
 
 # Set of arbitrary unit quaternions
 unit_quats = set()
@@ -126,20 +116,6 @@ def test_mult():
         for M2, q2 in eg_pairs[1::4]:
             q21 = tq.mult(q2, q1)
             yield assert_array_almost_equal, np.dot(M2,M1), tq.quat2mat(q21)
-
-
-def test_inverse():
-    for M, q in eg_pairs:
-        iq = tq.inverse(q)
-        iqM = tq.quat2mat(iq)
-        iM = np.linalg.inv(M)
-        yield assert_true, np.allclose(iM, iqM)
-
-
-def test_eye():
-    qi = tq.eye()
-    yield assert_true, np.all([1,0,0,0]==qi)
-    yield assert_true, np.allclose(tq.quat2mat(qi), np.eye(3))
 
 
 @slow

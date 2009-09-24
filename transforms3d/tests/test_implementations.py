@@ -5,6 +5,8 @@ import numpy as np
 import transforms3d.quaternions as tq
 import transforms3d.taitbryan as ttb
 
+from transforms3d.testing import euler_tuples
+
 from transforms3d.gohlketransforms import quaternion_matrix, \
     quaternion_from_matrix, euler_matrix, \
     quaternion_from_euler, rotation_matrix, \
@@ -27,16 +29,6 @@ for w in range(*params):
                     unit_quats.add(q)
 
 
-# Example rotations '''
-eg_rots = []
-params = (-np.pi,np.pi,np.pi/2)
-zs = np.arange(*params)
-ys = np.arange(*params)
-xs = np.arange(*params)
-for z in zs:
-    for y in ys:
-        for x in xs:
-            eg_rots.append((x, y, z))
 
 
 def our_quat(tquat):
@@ -52,7 +44,7 @@ def trans_quat(oquat):
 
 
 def test_quaternion_imps():
-    for x, y, z in eg_rots:
+    for x, y, z in euler_tuples:
         M = ttb.euler2mat(z, y, x)
         quat = tq.mat2quat(M)
         # Against transformations code
@@ -65,7 +57,7 @@ def test_quaternion_imps():
 
 
 def test_euler_imps():
-    for x, y, z in eg_rots:
+    for x, y, z in euler_tuples:
         M1 = euler_matrix(z, y, x,'szyx')[:3,:3]
         M2 = ttb.euler2mat(z, y, x)
         yield assert_array_almost_equal, M1, M2
@@ -75,7 +67,7 @@ def test_euler_imps():
 
 
 def test_angle_axis_imps():
-    for x, y, z in eg_rots:
+    for x, y, z in euler_tuples:
         M = ttb.euler2mat(z, y, x)
         q = tq.mat2quat(M)
         theta, vec = tq.quat2angle_axis(q)
