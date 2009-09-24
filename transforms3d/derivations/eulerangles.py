@@ -71,10 +71,11 @@ subs = {cos(beta): 0,
         sin(beta): pm1}
 M_xyz_gimbal_full = M_xyz.subs(subs)
 
-# And combination symbols
+# Substitute for cos(beta) = 0, sin(beta) = 1
 subs = {cos(beta): 0,
         sin(beta): 1}
 M_xyz_gimbal_sb1 = M_xyz.subs(subs)
+# And combination symbols
 V1, V2 = symbols('V1', 'V2')
 v1t = cos(gamma)*sin(alpha) - cos(alpha)*sin(gamma)
 v2t = cos(alpha)*cos(gamma) + sin(alpha)*sin(gamma)

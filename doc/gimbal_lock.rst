@@ -34,12 +34,13 @@ away from the viewer):
 .. image:: images/spitfire_hoped.png
 
 But, wait, let's go back over that again.  Look at the result of the
-rotation around the $y$ axis.  Notice that the $x$ axis, as was,
-is now aligned with the $z$ axis, as it is now.  Rotating around the $z$
-axis will have exactly the same effect as adding an extra rotation
-around the $x$ axis at the beginning.  That means that, when there is a
-$y$ axis rotation onto the $z$ axis (a rotation of $\pm\pi/2$ around the
-$y$ axis) - we are *locked* from doing standard $z$ axis type rotations.
+rotation around the $y$ axis.  Notice that the $x$ axis, as was, is now
+aligned with the $z$ axis, as it is now.  Rotating around the $z$ axis
+will have exactly the same effect as adding an extra rotation around the
+$x$ axis at the beginning.  That means that, when there is a $y$ axis
+rotation that rotates the $x$ axis onto the $z$ axis (a rotation of
+$\pm\pi/2$ around the $y$ axis) - we are *locked* from doing standard
+$z$ axis type rotations.
 
 Mathematics of gimbal lock
 ==========================
@@ -59,13 +60,13 @@ by rotation $\gamma$ around $z$, the rotation matrix $R$ is:
 
 .. math::
 
-   R = \left(\begin{smallmatrix}0 & - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \pm{1} \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) & \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \pm{1} \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right)\\0 & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \pm{1} \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) & - \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) + \pm{1} \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right)\\- \pm{1} & 0 & 0\end{smallmatrix}\right)
+   R = \left(\begin{smallmatrix}\operatorname{cos}\left(\beta\right) \operatorname{cos}\left(\gamma\right) & - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\beta\right) & \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\beta\right)\\\operatorname{cos}\left(\beta\right) \operatorname{sin}\left(\gamma\right) & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\beta\right) \operatorname{sin}\left(\gamma\right) &- \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) + \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\beta\right) \operatorname{sin}\left(\gamma\right)\\- \operatorname{sin}\left(\beta\right) & \operatorname{cos}\left(\beta\right) \operatorname{sin}\left(\alpha\right) & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\beta\right)\end{smallmatrix}\right)
 
 When $\cos(\beta) = 0$, $\sin(\beta) = \pm1$ and $R$ simplifies to:
 
 .. math::
 
-     R = \left(\begin{smallmatrix}0 & - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \pm{1} \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) & \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \pm{1} \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right)\\0 & V_{2} & - V_{1}\\-\pm{1} & 0 & 0\end{smallmatrix}\right)
+     R = \left(\begin{smallmatrix}0 & - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \pm{1} \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) & \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \pm{1} \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right)\\0 & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \pm{1} \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) & - \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) + \pm{1} \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right)\\- \pm{1} & 0 & 0\end{smallmatrix}\right)
 
 Noting the reductions in
 http://www.gregslabaugh.name/publications/euler.pdf we remind ourselves that:
