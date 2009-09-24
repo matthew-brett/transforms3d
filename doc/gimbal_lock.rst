@@ -74,7 +74,12 @@ When $\sin(\beta) = 1$:
 
    R = \left(\begin{smallmatrix}0 & \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right)\\0 & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) & \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) - \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right)\\-1 & 0 & 0\end{smallmatrix}\right)
 
-From the `angle sum and difference identities <http://en.wikipedia.org/wiki/List_of_trigonometric_identities#Angle_sum_and_difference_identities>`_ we remind ourselves that, for any two angles $\alpha$ and $\beta$:
+From the `angle sum and difference identities
+<http://en.wikipedia.org/wiki/List_of_trigonometric_identities#Angle_sum_and_difference_identities>`_
+(see also `geometric proof
+<http://www.themathpage.com/atrig/sum-proof.htm>`_, `Mathworld treatment
+<http://mathworld.wolfram.com/TrigonometricAdditionFormulas.html>`_) we
+remind ourselves that, for any two angles $\alpha$ and $\beta$:
 
 .. math::
 
