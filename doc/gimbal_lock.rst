@@ -41,12 +41,46 @@ around the $x$ axis at the beginning.  That means that, when there is a
 $y$ axis rotation onto the $z$ axis (a rotation of $\pm\pi/2$ around the
 $y$ axis) - we are *locked* from doing standard $z$ axis type rotations.
 
-In mathematical terms, we see gimbal lock for this type of Euler axis
-convention, when $\cos(\beta)$ = 0$, where $\beta$ is the angle of
-rotation around the $y$ axis.  By "this type of convention" we mean
-using rotation around all 3 of the $x$, $y$ and $z$ axes, rather than
-using the same axis twice - e.g. the physics convention of $z$ followed
-by $x$ followed by $z$ axis rotation.
+Mathematics of gimbal lock
+==========================
+
+we see gimbal lock for this type of Euler axis convention, when
+$\cos(\beta) = 0$, where $\beta$ is the angle of rotation around the $y$
+axis.  By "this type of convention" we mean using rotation around all 3
+of the $x$, $y$ and $z$ axes, rather than using the same axis twice -
+e.g. the physics convention of $z$ followed by $x$ followed by $z$ axis
+rotation (the physics convention has different properties to its gimbal
+lock)
+
+Recall that, for a rotation of $\alpha$ radians around $x$, followed by
+a rotation $\beta$ around $y$, followed by rotation $\gamma$ around $z$,
+the rotation matrix $R$ is:
+
+.. math::
+
+   R = \left(\begin{smallmatrix}\operatorname{cos}\left(\beta\right) \operatorname{cos}\left(\gamma\right) & - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\beta\right) & \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\beta\right)\\\operatorname{cos}\left(\beta\right) \operatorname{sin}\left(\gamma\right) & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\beta\right) \operatorname{sin}\left(\gamma\right) &- \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) + \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\beta\right) \operatorname{sin}\left(\gamma\right)\\- \operatorname{sin}\left(\beta\right) & \operatorname{cos}\left(\beta\right) \operatorname{sin}\left(\alpha\right) & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\beta\right)\end{smallmatrix}\right)
+
+When $\cos(\beta) = 0$, and $\sin(\beta) = 1$, this simplifies to:
+
+.. math::
+
+     R = \left(\begin{smallmatrix}0 & \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) - \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right)\\0 & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) & \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right)\\-1 & 0 & 0\end{smallmatrix}\right)
+
+or:
+
+.. math::
+
+   R = \left(\begin{smallmatrix}0 & V_{1} & V_{2}\\0 & V_{2} & - V_{1}\\-1 & 0 & 0\end{smallmatrix}\right)
+
+where:
+
+.. math::
+
+   V_1 = \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) - \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right)
+
+   V_2 = \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right)
+
+
 
 See http://www.gregslabaugh.name/publications/euler.pdf for a more
 detailed explanation.

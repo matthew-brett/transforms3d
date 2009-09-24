@@ -12,7 +12,7 @@ and ``vdash`` is the matrix of rotated vectors::
 
 '''
 
-from sympy import Symbol, cos, sin
+from sympy import Symbol, cos, sin, symbols, latex
 from sympy.matrices import Matrix
 
 from transforms3d.derivations.quaternions import quat_around_axis, \
@@ -58,3 +58,25 @@ q_xrot = quat_around_axis(Symbol('x'), [1, 0, 0])
 
 # quaternion from composition of x on y on z rotations
 q_zyx = qmult(q_xrot, qmult(q_yrot, q_zrot))
+
+# Formula for gimbal lock example
+alpha, beta, gamma = symbols('\\gamma', '\\beta', '\\alpha')
+M_xyz = (z_rotation(gamma) *
+         y_rotation(beta) *
+         x_rotation(alpha))
+
+# Substitute for cos(beta) = 0
+subs = {cos(beta): 0,
+        sin(beta): 1}
+M_xyz_gimbal_full = M_xyz.subs(subs)
+
+# And combination symbols
+V1, V2 = symbols('V1', 'V2')
+v1t = cos(gamma)*sin(alpha) - cos(alpha)*sin(gamma)
+v2t = cos(alpha)*cos(gamma) + sin(alpha)*sin(gamma)
+subs2 = {v1t: V1,
+         v2t: V2,
+         v1t*-1: -V1
+         }
+M_xyz_gimbal_reduced = M_xyz_gimbal_full.subs(subs2)
+
