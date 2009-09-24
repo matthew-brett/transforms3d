@@ -33,7 +33,7 @@ away from the viewer):
 
 .. image:: images/spitfire_hoped.png
 
-But, wait.  Let's go back over that again.  Look at the result of the
+But, wait, let's go back over that again.  Look at the result of the
 rotation around the $y$ axis.  Notice that the $x$ axis, as was,
 is now aligned with the $z$ axis, as it is now.  Rotating around the $z$
 axis will have exactly the same effect as adding an extra rotation
@@ -44,23 +44,24 @@ $y$ axis) - we are *locked* from doing standard $z$ axis type rotations.
 Mathematics of gimbal lock
 ==========================
 
-we see gimbal lock for this type of Euler axis convention, when
+We see gimbal lock for this type of Euler axis convention, when
 $\cos(\beta) = 0$, where $\beta$ is the angle of rotation around the $y$
 axis.  By "this type of convention" we mean using rotation around all 3
 of the $x$, $y$ and $z$ axes, rather than using the same axis twice -
 e.g. the physics convention of $z$ followed by $x$ followed by $z$ axis
 rotation (the physics convention has different properties to its gimbal
-lock)
+lock).
 
-Recall that, for a rotation of $\alpha$ radians around $x$, followed by
-a rotation $\beta$ around $y$, followed by rotation $\gamma$ around $z$,
-the rotation matrix $R$ is:
+We can show how gimbal lock works by creating a rotation matrix for the
+three component rotations. Recall that, for a rotation of $\alpha$
+radians around $x$, followed by a rotation $\beta$ around $y$, followed
+by rotation $\gamma$ around $z$, the rotation matrix $R$ is:
 
 .. math::
 
    R = \left(\begin{smallmatrix}\operatorname{cos}\left(\beta\right) \operatorname{cos}\left(\gamma\right) & - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\beta\right) & \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\beta\right)\\\operatorname{cos}\left(\beta\right) \operatorname{sin}\left(\gamma\right) & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\beta\right) \operatorname{sin}\left(\gamma\right) &- \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) + \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\beta\right) \operatorname{sin}\left(\gamma\right)\\- \operatorname{sin}\left(\beta\right) & \operatorname{cos}\left(\beta\right) \operatorname{sin}\left(\alpha\right) & \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\beta\right)\end{smallmatrix}\right)
 
-When $\cos(\beta) = 0$, and $\sin(\beta) = 1$, this simplifies to:
+When $\cos(\beta) = 0$, $\sin(\beta) = \pm1$. When $\sin(\beta) = 1$ this simplifies to:
 
 .. math::
 
