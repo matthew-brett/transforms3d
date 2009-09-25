@@ -4,8 +4,15 @@
  Gimbal lock
 =============
 
-Euler angles have a major deficiency, and that is, that some rotations
-are not possible, because of a phenomenon called *gimbal lock*.
+See also: http://en.wikipedia.org/wiki/Gimbal_lock
+
+Euler angles have a major deficiency, and that is, that it is possible,
+in some rotation sequences, to reach a situation where two of the three
+Euler angles cause rotation around the same axis of the object.  In the
+case below, rotation around the $x$ axis becomes indistinguishable in
+its effect from rotation around the $z$ axis, so the $z$ and $x$ axis
+angles collapse into one transformation, and the rotation reduces from
+three degrees of freedom to two.
 
 Imagine that we are using the Euler angle convention of starting with a
 rotation around the $x$ axis, followed by the $y$ axis, followed by the
@@ -28,7 +35,7 @@ around $y$ axis):
 
 .. image:: images/spitfire_y.png
 
-followed by a yaw-like turn of the nose towards the viewer (and the tail
+Now we'd like to do a turn of the nose towards the viewer (and the tail
 away from the viewer):
 
 .. image:: images/spitfire_hoped.png
@@ -39,8 +46,8 @@ aligned with the $z$ axis, as it is now.  Rotating around the $z$ axis
 will have exactly the same effect as adding an extra rotation around the
 $x$ axis at the beginning.  That means that, when there is a $y$ axis
 rotation that rotates the $x$ axis onto the $z$ axis (a rotation of
-$\pm\pi/2$ around the $y$ axis) - we are *locked* from doing standard
-$z$ axis type rotations.
+$\pm\pi/2$ around the $y$ axis) - the $x$ and $y$ axes are "locked"
+together.
 
 Mathematics of gimbal lock
 ==========================
@@ -109,3 +116,10 @@ rotation about the $z$ axis.
 It's easy to do the same set of reductions, with the same conclusion,
 for the case where $\sin(\beta) = -1$ - see
 http://www.gregslabaugh.name/publications/euler.pdf.
+
+Code
+====
+
+In practice, gimbal lock looks like this:
+
+>>> from transforms3d.
