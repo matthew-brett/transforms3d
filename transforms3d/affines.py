@@ -516,6 +516,10 @@ def to_angle_axis_point(aff):
     >>> R1 = from_angle_axis_point(angle, direc, point)
     >>> np.allclose(R0, R1)
     True
+
+    Notes
+    -----
+    http://en.wikipedia.org/wiki/Rotation_matrix#Axis_of_a_rotation
     """
     R = np.asarray(aff, dtype=np.float)
     R33 = R[:3, :3]
