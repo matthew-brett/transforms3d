@@ -125,9 +125,9 @@ Examples
 >>> alpha, beta, gamma = 0.123, -1.234, 2.345
 >>> origin, xaxis, yaxis, zaxis = (0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1)
 >>> I = compose_matrix()
->>> Rx = rotation_matrix(alpha, xaxis)
->>> Ry = rotation_matrix(beta, yaxis)
->>> Rz = rotation_matrix(gamma, zaxis)
+>>> Rx = from_angle_axis_point(alpha, xaxis)
+>>> Ry = from_angle_axis_point(beta, yaxis)
+>>> Rz = from_angle_axis_point(gamma, zaxis)
 >>> R = concatenate_matrices(Rx, Ry, Rz)
 >>> euler = euler_from_matrix(R, 'rxyz')
 >>> np.allclose([alpha, beta, gamma], euler)
@@ -173,104 +173,7 @@ import math
 
 import numpy as np
 
-
-def rotation_matrix(angle, direction, point=None):
-    """Return matrix to rotate about axis defined by point and direction.
-
-    >>> angle = (np.random.random() - 0.5) * (2*math.pi)
-    >>> direc = np.random.random(3) - 0.5
-    >>> point = np.random.random(3) - 0.5
-    >>> R0 = rotation_matrix(angle, direc, point)
-    >>> R1 = rotation_matrix(angle-2*math.pi, direc, point)
-    >>> is_same_transform(R0, R1)
-    True
-    >>> R0 = rotation_matrix(angle, direc, point)
-    >>> R1 = rotation_matrix(-angle, -direc, point)
-    >>> is_same_transform(R0, R1)
-    True
-    >>> I = np.identity(4, np.float64)
-    >>> np.allclose(I, rotation_matrix(math.pi*2, direc))
-    True
-    >>> np.allclose(2., np.trace(rotation_matrix(math.pi/2,
-    ...                                                direc, point)))
-    True
-
-    Notes
-    -----
-    Applying a rotation around a point is the same as applying a
-    translation of ``-point`` to move ``point`` to the origin, rotating,
-    then applying a translation of ``point``.  If ``R`` is the rotation
-    matrix, than the affine for the rotation about point P is::
-
-       [R00, R01, R02, P0 - P0*R00 - P1*R01 - P2*R02]
-       [R10, R11, R12, P1 - P0*R10 - P1*R11 - P2*R12]
-       [R20, R21, R22, P2 - P0*R20 - P1*R21 - P2*R22]
-       [  0,   0,   0,                             1]
-
-    (see derivations)
-
-    """
-    sina = math.sin(angle)
-    cosa = math.cos(angle)
-    direction = unit_vector(direction[:3])
-    # rotation matrix around unit vector
-    R = np.array(((cosa, 0.0,  0.0),
-                     (0.0,  cosa, 0.0),
-                     (0.0,  0.0,  cosa)), dtype=np.float64)
-    R += np.outer(direction, direction) * (1.0 - cosa)
-    direction *= sina
-    R += np.array((( 0.0,         -direction[2],  direction[1]),
-                      ( direction[2], 0.0,          -direction[0]),
-                      (-direction[1], direction[0],  0.0)),
-                     dtype=np.float64)
-    M = np.identity(4)
-    M[:3, :3] = R
-    if point is not None:
-        # rotation not around origin
-        point = np.array(point[:3], dtype=np.float64, copy=False)
-        M[:3, 3] = point - np.dot(R, point)
-        print M[:3,3]
-    return M
-
-
-def rotation_from_matrix(matrix):
-    """Return rotation angle and axis from rotation matrix.
-
-    >>> angle = (np.random.random() - 0.5) * (2*math.pi)
-    >>> direc = np.random.random(3) - 0.5
-    >>> point = np.random.random(3) - 0.5
-    >>> R0 = rotation_matrix(angle, direc, point)
-    >>> angle, direc, point = rotation_from_matrix(R0)
-    >>> R1 = rotation_matrix(angle, direc, point)
-    >>> is_same_transform(R0, R1)
-    True
-
-    """
-    R = np.array(matrix, dtype=np.float64, copy=False)
-    R33 = R[:3, :3]
-    # direction: unit eigenvector of R33 corresponding to eigenvalue of 1
-    l, W = np.linalg.eig(R33.T)
-    i = np.where(abs(np.real(l) - 1.0) < 1e-8)[0]
-    if not len(i):
-        raise ValueError("no unit eigenvector corresponding to eigenvalue 1")
-    direction = np.real(W[:, i[-1]]).squeeze()
-    # point: unit eigenvector of R33 corresponding to eigenvalue of 1
-    l, Q = np.linalg.eig(R)
-    i = np.where(abs(np.real(l) - 1.0) < 1e-8)[0]
-    if not len(i):
-        raise ValueError("no unit eigenvector corresponding to eigenvalue 1")
-    point = np.real(Q[:, i[-1]]).squeeze()
-    point /= point[3]
-    # rotation angle depending on direction
-    cosa = (np.trace(R33) - 1.0) / 2.0
-    if abs(direction[2]) > 1e-8:
-        sina = (R[1, 0] + (cosa-1.0)*direction[0]*direction[1]) / direction[2]
-    elif abs(direction[1]) > 1e-8:
-        sina = (R[0, 2] + (cosa-1.0)*direction[0]*direction[2]) / direction[1]
-    else:
-        sina = (R[2, 1] + (cosa-1.0)*direction[1]*direction[2]) / direction[0]
-    angle = math.atan2(sina, cosa)
-    return angle, direction, point
+from transforms3d.affines import from_angle_axis_point
 
 
 def scale_matrix(factor, origin=None, direction=None):
@@ -1092,7 +995,7 @@ def quaternion_matrix(quaternion):
     """Return homogeneous rotation matrix from quaternion.
 
     >>> R = quaternion_matrix([0.06146124, 0, 0, 0.99810947])
-    >>> np.allclose(R, rotation_matrix(0.123, (1, 0, 0)))
+    >>> np.allclose(R, from_angle_axis_point(0.123, (1, 0, 0)))
     True
 
     """
@@ -1113,7 +1016,7 @@ def quaternion_matrix(quaternion):
 def quaternion_from_matrix(matrix):
     """Return quaternion from rotation matrix.
 
-    >>> R = rotation_matrix(0.123, (1, 2, 3))
+    >>> R = from_angle_axis_point(0.123, (1, 2, 3))
     >>> q = quaternion_from_matrix(R)
     >>> np.allclose(q, [0.0164262, 0.0328524, 0.0492786, 0.9981095])
     True

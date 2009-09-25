@@ -390,7 +390,7 @@ def angle_axis2quat(theta, vector, is_normalized=False):
                            vector * st2))
 
 
-def angle_axis2mat(theta, vector, is_normalized=False):
+def angle_axis2mat(theta, vector):
     ''' Rotation matrix of angle `theta` around `vector`
 
     Parameters
@@ -399,9 +399,6 @@ def angle_axis2mat(theta, vector, is_normalized=False):
        angle of rotation
     vector : 3 element sequence
        vector specifying axis for rotation.
-    is_normalized : bool, optional
-       True if vector is already normalized (has norm of 1).  Default
-       False
 
     Returns
     -------
@@ -412,12 +409,11 @@ def angle_axis2mat(theta, vector, is_normalized=False):
     -----
     From: http://en.wikipedia.org/wiki/Rotation_matrix#Axis_and_angle
     '''
-    x, y, z = vector
-    if not is_normalized:
-        n = math.sqrt(x*x + y*y + z*z)
-        x = x/n
-        y = y/n
-        z = z/n
+    x, y, z = vector[:3]
+    n = math.sqrt(x*x + y*y + z*z)
+    x = x/n
+    y = y/n
+    z = z/n
     c = math.cos(theta); s = math.sin(theta); C = 1-c
     xs = x*s;   ys = y*s;   zs = z*s
     xC = x*C;   yC = y*C;   zC = z*C

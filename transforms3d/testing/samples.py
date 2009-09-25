@@ -15,14 +15,11 @@ sphere_points = (
 
 # Example rotations '''
 euler_tuples = []
-params = (-np.pi,np.pi,np.pi/2)
-zs = np.arange(*params)
-ys = np.arange(*params)
-xs = np.arange(*params)
-for z in zs:
-    for y in ys:
-        for x in xs:
-            euler_tuples.append((x, y, z))
-
+params = np.arange(-np.pi,np.pi,np.pi/2)
+euler_tuples = tuple((x, y, z)
+                     for x in params
+                     for y in params
+                     for z in params)
+    
 euler_mats = tuple(euler2mat(*t) for t in euler_tuples)
 

@@ -359,7 +359,7 @@ def euler2angle_axis(z=0, y=0, x=0):
     return nq.quat2angle_axis(euler2quat(z, y, x))
 
     
-def angle_axis2euler(theta, vector, is_normalized=False):
+def angle_axis2euler(theta, vector):
     ''' Convert angle, axis pair to Euler angles
 
     Parameters
@@ -368,9 +368,6 @@ def angle_axis2euler(theta, vector, is_normalized=False):
        angle of rotation
     vector : 3 element sequence
        vector specifying axis for rotation.
-    is_normalized : bool, optional
-       True if vector is already normalized (has norm of 1).  Default
-       False
 
     Returns
     -------
@@ -394,5 +391,5 @@ def angle_axis2euler(theta, vector, is_normalized=False):
     '''
     # delayed import to avoid cyclic dependencies
     import transforms3d.quaternions as nq
-    M = nq.angle_axis2mat(theta, vector, is_normalized)
+    M = nq.angle_axis2mat(theta, vector)
     return mat2euler(M)
