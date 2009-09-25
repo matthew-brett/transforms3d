@@ -11,7 +11,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   naming_conventions
    gimbal_lock
+   glossary
 
 Indices and tables
 ==================
