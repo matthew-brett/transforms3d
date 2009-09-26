@@ -41,14 +41,14 @@ functions to decompose transformation matrices.
   `Christoph Gohlke <http://www.lfd.uci.edu/~gohlke/>`__,
   Laboratory for Fluorescence Dynamics, University of California, Irvine
 
-:Version: 20090712
+:Version: 20090923
 
 Requirements
 ------------
 
 * `Python 2.6 <http://www.python.org>`__
 * `Numpy 1.3 <http://np.scipy.org>`__
-* `transformations.c 20090712 <http://www.lfd.uci.edu/~gohlke/>`__
+* `transformations.c 20090923 <http://www.lfd.uci.edu/~gohlke/>`__
   (optional implementation of some functions in C)
 
 Notes
@@ -70,7 +70,7 @@ Return types are numpy arrays unless specified otherwise.
 
 Angles are in radians unless specified otherwise.
 
-Quaternions ix+jy+kz+w are represented as [x, y, z, w].
+Quaternions w+ix+jy+kz are represented as [w, x, y, z].
 
 Use the transpose of transformation matrices for OpenGL glMultMatrixd().
 
@@ -110,14 +110,17 @@ References
 (8)  A discussion of the solution for the best rotation to relate two sets
      of vectors. W Kabsch. Acta Cryst. 1978. A34, 827-828.
 (9)  Closed-form solution of absolute orientation using unit quaternions.
-     BKP Horn. J Opt Soc Am A. 1987. 4(4), 629-642.
+     BKP Horn. J Opt Soc Am A. 1987. 4(4):629-642.
 (10) Quaternions. Ken Shoemake.
      http://www.sfu.ca/~jwa3/cmpt461/files/quatut.pdf
 (11) From quaternion to matrix and back. JMP van Waveren. 2005.
      http://www.intel.com/cd/ids/developer/asmo-na/eng/293748.htm
 (12) Uniform random rotations. Ken Shoemake.
      In "Graphics Gems III", pp 124-132. Morgan Kaufmann, 1992.
-
+(13) Quaternion in molecular modeling. CFF Karney.
+     J Mol Graph Mod, 25(5):595-604
+(14) New method for extracting the quaternion from a rotation matrix.
+     Itzhack Y Bar-Itzhack, J Guid Contr Dynam. 2000. 23(6): 1085-1087.
 
 Examples
 --------
@@ -272,6 +275,9 @@ def projection_matrix(point, normal, direction=None,
     >>> persp = np.random.random(3) - 0.5
     >>> P0 = projection_matrix(point, normal)
     >>> P1 = projection_matrix(point, normal, direction=direct)
+    >>> R = from_angle_axis_point(math.pi/2.0, [0, 0, 1], [1, 0, 0])
+    >>> np.allclose(np.dot(R, [0, 0, 0, 1]), [ 1., -1.,  0.,  1.])
+    True
     >>> P2 = projection_matrix(point, normal, perspective=persp)
     >>> P3 = projection_matrix(point, normal, perspective=persp, pseudo=True)
     >>> is_same_transform(P2, np.dot(P0, P3))
@@ -759,15 +765,14 @@ def superimposition_matrix(v0, v1, scaling=False, usesvd=True):
         xx, yy, zz = np.sum(v0 * v1, axis=1)
         xy, yz, zx = np.sum(v0 * np.roll(v1, -1, axis=0), axis=1)
         xz, yx, zy = np.sum(v0 * np.roll(v1, -2, axis=0), axis=1)
-        N = ((xx+yy+zz, yz-zy,    zx-xz,    xy-yx),
-             (yz-zy,    xx-yy-zz, xy+yx,    zx+xz),
-             (zx-xz,    xy+yx,   -xx+yy-zz, yz+zy),
-             (xy-yx,    zx+xz,    yz+zy,   -xx-yy+zz))
+        N = ((xx+yy+zz, 0.0, 0.0, 0.0),
+             (yz-zy, xx-yy-zz, 0.0, 0.0),
+             (zx-xz, xy+yx, -xx+yy-zz, 0.0),
+             (xy-yx, zx+xz, yz+zy, -xx-yy+zz))
         # quaternion: eigenvector corresponding to most positive eigenvalue
-        l, V = np.linalg.eig(N)
+        l, V = np.linalg.eigh(N)
         q = V[:, np.argmax(l)]
         q /= vector_norm(q) # unit quaternion
-        q = np.roll(q, -1) # move w component to end
         # homogeneous transformation matrix
         M = quaternion_matrix(q)
 
@@ -909,7 +914,7 @@ def euler_from_matrix(matrix, axes='sxyz'):
 def euler_from_quaternion(quaternion, axes='sxyz'):
     """Return Euler angles from quaternion for specified axis sequence.
 
-    >>> angles = euler_from_quaternion([0.06146124, 0, 0, 0.99810947])
+    >>> angles = euler_from_quaternion([0.99810947, 0.06146124, 0, 0])
     >>> np.allclose(angles, [0.123, 0, 0])
     True
 
@@ -924,7 +929,7 @@ def quaternion_from_euler(ai, aj, ak, axes='sxyz'):
     axes : One of 24 axis sequences as string or encoded tuple
 
     >>> q = quaternion_from_euler(1, 2, 3, 'ryxz')
-    >>> np.allclose(q, [0.310622, -0.718287, 0.444435, 0.435953])
+    >>> np.allclose(q, [0.435953, 0.310622, -0.718287, 0.444435])
     True
 
     """
@@ -934,9 +939,9 @@ def quaternion_from_euler(ai, aj, ak, axes='sxyz'):
         _ = _TUPLE2AXES[axes]
         firstaxis, parity, repetition, frame = axes
 
-    i = firstaxis
-    j = _NEXT_AXIS[i+parity]
-    k = _NEXT_AXIS[i-parity+1]
+    i = firstaxis + 1
+    j = _NEXT_AXIS[i+parity-1] + 1
+    k = _NEXT_AXIS[i-parity] + 1
 
     if frame:
         ai, ak = ak, ai
@@ -959,15 +964,15 @@ def quaternion_from_euler(ai, aj, ak, axes='sxyz'):
 
     quaternion = np.empty((4, ), dtype=np.float64)
     if repetition:
+        quaternion[0] = cj*(cc - ss)
         quaternion[i] = cj*(cs + sc)
         quaternion[j] = sj*(cc + ss)
         quaternion[k] = sj*(cs - sc)
-        quaternion[3] = cj*(cc - ss)
     else:
+        quaternion[0] = cj*cc + sj*ss
         quaternion[i] = cj*sc - sj*cs
         quaternion[j] = cj*ss + sj*cc
         quaternion[k] = cj*cs - sj*sc
-        quaternion[3] = cj*cc + sj*ss
     if parity:
         quaternion[j] *= -1
 
@@ -978,24 +983,32 @@ def quaternion_about_axis(angle, axis):
     """Return quaternion for rotation about axis.
 
     >>> q = quaternion_about_axis(0.123, (1, 0, 0))
-    >>> np.allclose(q, [0.06146124, 0, 0, 0.99810947])
+    >>> np.allclose(q, [0.99810947, 0.06146124, 0, 0])
     True
 
     """
     quaternion = np.zeros((4, ), dtype=np.float64)
-    quaternion[:3] = axis[:3]
+    quaternion[1] = axis[0]
+    quaternion[2] = axis[1]
+    quaternion[3] = axis[2]
     qlen = vector_norm(quaternion)
     if qlen > _EPS:
         quaternion *= math.sin(angle/2.0) / qlen
-    quaternion[3] = math.cos(angle/2.0)
+    quaternion[0] = math.cos(angle/2.0)
     return quaternion
 
 
 def quaternion_matrix(quaternion):
     """Return homogeneous rotation matrix from quaternion.
 
-    >>> R = quaternion_matrix([0.06146124, 0, 0, 0.99810947])
-    >>> np.allclose(R, from_angle_axis_point(0.123, (1, 0, 0)))
+    >>> M = quaternion_matrix([0.99810947, 0.06146124, 0, 0])
+    >>> np.allclose(M, from_angle_axis_point(0.123, (1, 0, 0)))
+    True
+    >>> M = quaternion_matrix([1, 0, 0, 0])
+    >>> np.allclose(M, compose_matrix())
+    True
+    >>> M = quaternion_matrix([0, 1, 0, 0])
+    >>> np.allclose(M, np.diag([1, -1, -1, 1]))
     True
 
     """
@@ -1006,60 +1019,106 @@ def quaternion_matrix(quaternion):
     q *= math.sqrt(2.0 / nq)
     q = np.outer(q, q)
     return np.array((
-        (1.0-q[1, 1]-q[2, 2],     q[0, 1]-q[2, 3],     q[0, 2]+q[1, 3], 0.0),
-        (    q[0, 1]+q[2, 3], 1.0-q[0, 0]-q[2, 2],     q[1, 2]-q[0, 3], 0.0),
-        (    q[0, 2]-q[1, 3],     q[1, 2]+q[0, 3], 1.0-q[0, 0]-q[1, 1], 0.0),
+        (1.0-q[2, 2]-q[3, 3],     q[1, 2]-q[3, 0],     q[1, 3]+q[2, 0], 0.0),
+        (    q[1, 2]+q[3, 0], 1.0-q[1, 1]-q[3, 3],     q[2, 3]-q[1, 0], 0.0),
+        (    q[1, 3]-q[2, 0],     q[2, 3]+q[1, 0], 1.0-q[1, 1]-q[2, 2], 0.0),
         (                0.0,                 0.0,                 0.0, 1.0)
         ), dtype=np.float64)
 
 
-def quaternion_from_matrix(matrix):
+def quaternion_from_matrix(matrix, isprecise=False):
     """Return quaternion from rotation matrix.
 
+    If isprecise=True, the input matrix is assumed to be a precise rotation
+    matrix and a faster algorithm is used.
+
+    >>> q = quaternion_from_matrix(compose_matrix(), True)
+    >>> np.allclose(q, [1., 0., 0., 0.])
+    True
+    >>> q = quaternion_from_matrix(np.diag([1., -1., -1., 1.]))
+    >>> np.allclose(q, [0, 1, 0, 0]) or np.allclose(q, [0, -1, 0, 0])
+    True
     >>> R = from_angle_axis_point(0.123, (1, 2, 3))
+    >>> q = quaternion_from_matrix(R, True)
+    >>> np.allclose(q, [0.9981095, 0.0164262, 0.0328524, 0.0492786])
+    True
+    >>> R = [[-0.545, 0.797, 0.260, 0], [0.733, 0.603, -0.313, 0],
+    ...      [-0.407, 0.021, -0.913, 0], [0, 0, 0, 1]]
     >>> q = quaternion_from_matrix(R)
-    >>> np.allclose(q, [0.0164262, 0.0328524, 0.0492786, 0.9981095])
+    >>> np.allclose(q, [0.19069, 0.43736, 0.87485, -0.083611])
+    True
+    >>> R = [[0.395, 0.362, 0.843, 0], [-0.626, 0.796, -0.056, 0],
+    ...      [-0.677, -0.498, 0.529, 0], [0, 0, 0, 1]]
+    >>> q = quaternion_from_matrix(R)
+    >>> np.allclose(q, [0.82336615, -0.13610694, 0.46344705, -0.29792603])
+    True
+    >>> R = random_rotation_matrix()
+    >>> q = quaternion_from_matrix(R)
+    >>> is_same_transform(R, quaternion_matrix(q))
     True
 
     """
-    q = np.empty((4, ), dtype=np.float64)
     M = np.array(matrix, dtype=np.float64, copy=False)[:4, :4]
-    t = np.trace(M)
-    if t > M[3, 3]:
-        q[3] = t
-        q[2] = M[1, 0] - M[0, 1]
-        q[1] = M[0, 2] - M[2, 0]
-        q[0] = M[2, 1] - M[1, 2]
+    if isprecise:
+        q = np.empty((4, ), dtype=np.float64)
+        t = np.trace(M)
+        if t > M[3, 3]:
+            q[0] = t
+            q[3] = M[1, 0] - M[0, 1]
+            q[2] = M[0, 2] - M[2, 0]
+            q[1] = M[2, 1] - M[1, 2]
+        else:
+            i, j, k = 1, 2, 3
+            if M[1, 1] > M[0, 0]:
+                i, j, k = 2, 3, 1
+            if M[2, 2] > M[i, i]:
+                i, j, k = 3, 1, 2
+            t = M[i, i] - (M[j, j] + M[k, k]) + M[3, 3]
+            q[i] = t
+            q[j] = M[i, j] + M[j, i]
+            q[k] = M[k, i] + M[i, k]
+            q[3] = M[k, j] - M[j, k]
+        q *= 0.5 / math.sqrt(t * M[3, 3])
     else:
-        i, j, k = 0, 1, 2
-        if M[1, 1] > M[0, 0]:
-            i, j, k = 1, 2, 0
-        if M[2, 2] > M[i, i]:
-            i, j, k = 2, 0, 1
-        t = M[i, i] - (M[j, j] + M[k, k]) + M[3, 3]
-        q[i] = t
-        q[j] = M[i, j] + M[j, i]
-        q[k] = M[k, i] + M[i, k]
-        q[3] = M[k, j] - M[j, k]
-    q *= 0.5 / math.sqrt(t * M[3, 3])
+        m00 = M[0, 0]
+        m01 = M[0, 1]
+        m02 = M[0, 2]
+        m10 = M[1, 0]
+        m11 = M[1, 1]
+        m12 = M[1, 2]
+        m20 = M[2, 0]
+        m21 = M[2, 1]
+        m22 = M[2, 2]
+        # symmetric matrix K
+        K = np.array(((m00-m11-m22, 0.0, 0.0, 0.0),
+                         (m01+m10, m11-m00-m22, 0.0, 0.0),
+                         (m02+m20, m12+m21, m22-m00-m11, 0.0),
+                         (m21-m12, m02-m20, m10-m01, m00+m11+m22)))
+        K /= 3.0
+        # quaternion is eigenvector of K that corresponds to largest eigenvalue
+        l, V = np.linalg.eigh(K)
+        q = V[[3, 0, 1, 2], np.argmax(l)]
+
+    if q[0] < 0.0:
+        q *= -1.0
     return q
 
 
 def quaternion_multiply(quaternion1, quaternion0):
     """Return multiplication of two quaternions.
 
-    >>> q = quaternion_multiply([1, -2, 3, 4], [-5, 6, 7, 8])
-    >>> np.allclose(q, [-44, -14, 48, 28])
+    >>> q = quaternion_multiply([4, 1, -2, 3], [8, -5, 6, 7])
+    >>> np.allclose(q, [28, -44, -14, 48])
     True
 
     """
-    x0, y0, z0, w0 = quaternion0
-    x1, y1, z1, w1 = quaternion1
+    w0, x0, y0, z0 = quaternion0
+    w1, x1, y1, z1 = quaternion1
     return np.array((
+        -x1*x0 - y1*y0 - z1*z0 + w1*w0,
          x1*w0 + y1*z0 - z1*y0 + w1*x0,
         -x1*z0 + y1*w0 + z1*x0 + w1*y0,
-         x1*y0 - y1*x0 + z1*w0 + w1*z0,
-        -x1*x0 - y1*y0 - z1*z0 + w1*w0), dtype=np.float64)
+         x1*y0 - y1*x0 + z1*w0 + w1*z0), dtype=np.float64)
 
 
 def quaternion_conjugate(quaternion):
@@ -1067,12 +1126,12 @@ def quaternion_conjugate(quaternion):
 
     >>> q0 = random_quaternion()
     >>> q1 = quaternion_conjugate(q0)
-    >>> q1[3] == q0[3] and all(q1[:3] == -q0[:3])
+    >>> q1[0] == q0[0] and all(q1[1:] == -q0[1:])
     True
 
     """
-    return np.array((-quaternion[0], -quaternion[1],
-                        -quaternion[2], quaternion[3]), dtype=np.float64)
+    return np.array((quaternion[0], -quaternion[1],
+                       -quaternion[2], -quaternion[3]), dtype=np.float64)
 
 
 def quaternion_inverse(quaternion):
@@ -1080,11 +1139,31 @@ def quaternion_inverse(quaternion):
 
     >>> q0 = random_quaternion()
     >>> q1 = quaternion_inverse(q0)
-    >>> np.allclose(quaternion_multiply(q0, q1), [0, 0, 0, 1])
+    >>> np.allclose(quaternion_multiply(q0, q1), [1, 0, 0, 0])
     True
 
     """
     return quaternion_conjugate(quaternion) / np.dot(quaternion, quaternion)
+
+
+def quaternion_real(quaternion):
+    """Return real part of quaternion.
+
+    >>> quaternion_real([3.0, 0.0, 1.0, 2.0])
+    3.0
+
+    """
+    return quaternion[0]
+
+
+def quaternion_imag(quaternion):
+    """Return imaginary part of quaternion.
+
+    >>> quaternion_imag([3.0, 0.0, 1.0, 2.0])
+    [0.0, 1.0, 2.0]
+
+    """
+    return quaternion[1:4]
 
 
 def quaternion_slerp(quat0, quat1, fraction, spin=0, shortestpath=True):
@@ -1139,8 +1218,8 @@ def random_quaternion(rand=None):
     >>> np.allclose(1.0, vector_norm(q))
     True
     >>> q = random_quaternion(np.random.random(3))
-    >>> q.shape
-    (4,)
+    >>> len(q.shape), q.shape[0]==4
+    (1, True)
 
     """
     if rand is None:
@@ -1152,10 +1231,10 @@ def random_quaternion(rand=None):
     pi2 = math.pi * 2.0
     t1 = pi2 * rand[1]
     t2 = pi2 * rand[2]
-    return np.array((np.sin(t1)*r1,
+    return np.array((np.cos(t2)*r2,
+                        np.sin(t1)*r1,
                         np.cos(t1)*r1,
-                        np.sin(t2)*r2,
-                        np.cos(t2)*r2), dtype=np.float64)
+                        np.sin(t2)*r2), dtype=np.float64)
 
 
 def random_rotation_matrix(rand=None):
@@ -1184,7 +1263,7 @@ class Arcball(object):
     >>> R = ball.matrix()
     >>> np.allclose(np.sum(R), 3.90583455)
     True
-    >>> ball = Arcball(initial=[0, 0, 0, 1])
+    >>> ball = Arcball(initial=[1, 0, 0, 0])
     >>> ball.place([320, 320], 320)
     >>> ball.setaxes([1,1,0], [-1, 1, 0])
     >>> ball.setconstrain(True)
@@ -1211,7 +1290,7 @@ class Arcball(object):
         self._constrain = False
 
         if initial is None:
-            self._qdown = np.array([0, 0, 0, 1], dtype=np.float64)
+            self._qdown = np.array([1, 0, 0, 0], dtype=np.float64)
         else:
             initial = np.array(initial, dtype=np.float64)
             if initial.shape == (4, 4):
@@ -1276,7 +1355,7 @@ class Arcball(object):
         if np.dot(t, t) < _EPS:
             self._qnow = self._qdown
         else:
-            q = [t[0], t[1], t[2], np.dot(self._vdown, vnow)]
+            q = [np.dot(self._vdown, vnow), t[0], t[1], t[2]]
             self._qnow = quaternion_multiply(q, self._qdown)
 
     def next(self, acceleration=0.0):
@@ -1535,3 +1614,4 @@ if __name__ == "__main__":
     import random
     np.set_printoptions(suppress=True, precision=5)
     doctest.testmod()
+    

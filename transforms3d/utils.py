@@ -5,7 +5,9 @@ import math
 import numpy as np
 
 def normalized_vector(data):
-    ''' Return vector divided by L2 norm
+    ''' Return vector divided by Euclidian (L2) norm
+
+    See :term:`unit vector` and :term:`Euclidian norm`
 
     Parameters
     ----------
