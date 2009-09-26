@@ -444,8 +444,8 @@ def to_reflection(aff):
     return point, normal
 
 
-def from_angle_axis_point(angle, direction, point=None):
-    """Return matrix to rotate about axis defined by point and direction.
+def axap2aff(axis, angle, point=None):
+    """Return affine to rotate about axis defined by point and axis.
 
     >>> angle = (np.random.random() - 0.5) * (2*math.pi)
     >>> direc = np.random.random(3) - 0.5
@@ -490,8 +490,8 @@ def from_angle_axis_point(angle, direction, point=None):
     return M
 
 
-def to_angle_axis_point(aff):
-    """Return rotation angle, axis and point from affine
+def aff2axap(aff):
+    """Return axis, angle and point from affine
 
     Parameters
     ----------
@@ -512,7 +512,7 @@ def to_angle_axis_point(aff):
     >>> direc = np.random.random(3) - 0.5
     >>> point = np.random.random(3) - 0.5
     >>> R0 = from_angle_axis_point(angle, direc, point)
-    >>> angle, direc, point = to_angle_axis_point(R0)
+    >>> direc, angle, point = to_angle_axis_point(R0)
     >>> R1 = from_angle_axis_point(angle, direc, point)
     >>> np.allclose(R0, R1)
     True
@@ -545,4 +545,4 @@ def to_angle_axis_point(aff):
     else:
         sina = (R[2, 1] + (cosa-1.0)*direction[1]*direction[2]) / direction[0]
     angle = math.atan2(sina, cosa)
-    return angle, direction, point
+    return direction, angle, point
