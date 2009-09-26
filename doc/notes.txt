@@ -1,0 +1,6 @@
+Good discussion on page 181 of axis-angle representations. 
+
+Essential Mathematics for Games and Interactive Applications: A Programmer's ...
+ By James M. Van Verth, Lars M. Bishop
+
+http://books.google.com.cu/books?id=zkEY9RIm4WkC&pg=PA179&lpg=PA179&dq=essential+mathematics+gimbal+lock&source=bl&ots=tWw8KGTbEQ&sig=2IUUOp50BtOnz4_M2UNlnHSQSqI&hl=en&ei=1fS8SoClPJCPtgfJ9o2LAw&sa=X&oi=book_result&ct=result&resnum=1#v=onepage&q=&f=false
