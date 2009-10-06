@@ -57,6 +57,13 @@
       suffer from :term:`gimbal lock` and are often used for rapid
       interpolation of rotations.
 
+   Reflection
+
+      A transformation that can be thought of as transforming an object
+      to its mirror image.  The mirror in the transformation is a plane.
+      A plan can be defined with a point and a vector normal to the
+      plane.  See `wikipedia reflection`_.
+
    Rotation matrix
       See `wikipedia rotation matrix`_.  A rotation matrix is a matrix
       implementing a rotation.  Rotation matrices are square and
@@ -79,6 +86,10 @@
 
       where $\|\boldsymbol{u}\|$ is the :term:`Euclidean norm` of
       $\boldsymbol{u}$
+
+   Shear matrix
+      Square matrix that results in shearing transforms - see
+      ``wikipedia shear matrix`_.
 
    Unit vector
       A vector $\boldsymbol{\hat{u}}$ with a :term:`Euclidean norm`

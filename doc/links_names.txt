@@ -16,4 +16,5 @@
 .. _`wikipedia Euler angles`: http://en.wikipedia.org/wiki/Euler_angles
 .. _`Mathworld Euler angles`: http://mathworld.wolfram.com/EulerAngles.html
 .. _`wikipedia quaternion`: http://en.wikipedia.org/wiki/Quaternion
-
+.. _`wikipedia shear matrix`: http://en.wikipedia.org/wiki/Shear_matrix
+.. _`wikipedia reflection`: http://en.wikipedia.org/wiki/Reflection_(mathematics)

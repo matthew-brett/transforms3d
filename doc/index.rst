@@ -10,8 +10,11 @@ Contents:
 
 .. toctree::
    :maxdepth: 2
-
+   
+   intro
+   conventions
    naming_conventions
+   refactor_plan
    gimbal_lock
    glossary
 
