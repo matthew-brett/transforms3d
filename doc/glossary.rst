@@ -58,7 +58,6 @@
       interpolation of rotations.
 
    Reflection
-
       A transformation that can be thought of as transforming an object
       to its mirror image.  The mirror in the transformation is a plane.
       A plan can be defined with a point and a vector normal to the
@@ -89,7 +88,7 @@
 
    Shear matrix
       Square matrix that results in shearing transforms - see
-      ``wikipedia shear matrix`_.
+      `wikipedia shear matrix`_.
 
    Unit vector
       A vector $\boldsymbol{\hat{u}}$ with a :term:`Euclidean norm`
