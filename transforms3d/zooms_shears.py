@@ -14,7 +14,7 @@ def zdir2zmat(factor, direction=None):
     ----------
     factor : scalar
        factor to zoom by (see direction)
-    direction : None or array-like shape (3,)
+    direction : None or array-like shape (3,), optional
        If None, simply apply uniform scaling by `factor`.  Otherwise,
        apply scaling along direction given by vector `direction`.  We
        convert direction to a :term:`unit vector` before application.
@@ -104,9 +104,10 @@ def zmat2zdir(zmat):
     -------
     factor : scalar
        zoom (scale) factor as for ``zdir2zmat``
-    direction : array shape (3,)
-       direction of zoom as for ``zdir2zmat``
-
+    direction : None or array, shape (3,)
+       direction of zoom as for ``zdir2zmat``.  None if scaling is
+       uniform.
+    
     Examples
     --------
     Roundtrip may not generate same factor, direction, but the
@@ -141,6 +142,23 @@ def zmat2zdir(zmat):
 def aff2zdir(aff):
     """Return scaling factor, direction and origin from scaling matrix.
 
+    Parameters
+    ----------
+    aff : array-like shape (4,4)
+       4x4 :term:`affine transformation` matrix.
+
+    Returns
+    -------
+    factor : scalar
+       zoom (scale) factor as for ``zdir2zmat``
+    direction : None or array, shape (3,)
+       direction of zoom as for ``zdir2zmat``.  None if scaling is
+       uniform.
+    origin : array, shape (3,)
+       origin of zooms
+
+    Examples
+    --------
     >>> factor = np.random.random() * 10 - 5
     >>> direct = np.random.random(3) - 0.5
     >>> origin = np.random.random(3) - 0.5
