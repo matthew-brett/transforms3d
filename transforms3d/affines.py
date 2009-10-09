@@ -4,9 +4,7 @@ import math
 
 import numpy as np
 
-from .utils import normalized_vector
-
-from .quaternions import angle_axis2mat
+from .quaternions import axangle2rmat
 
 # Caching dictionary for common shear Ns, indices
 _shearers = {}
@@ -444,25 +442,26 @@ def to_reflection(aff):
     return point, normal
 
 
-def axap2aff(axis, angle, point=None):
+def axangle2aff(axis, angle, point=None):
     """Return affine to rotate about axis defined by point and axis.
 
     >>> angle = (np.random.random() - 0.5) * (2*math.pi)
     >>> direc = np.random.random(3) - 0.5
     >>> point = np.random.random(3) - 0.5
-    >>> R0 = from_angle_axis_point(angle, direc, point)
-    >>> R1 = from_angle_axis_point(angle-2*math.pi, direc, point)
+    >>> R0 = axangle2aff(direc, angle, point)
+    >>> R1 = axangle2aff(direc, angle-2*math.pi, point)
     >>> np.allclose(R0, R1)
     True
-    >>> R0 = from_angle_axis_point(angle, direc, point)
-    >>> R1 = from_angle_axis_point(-angle, -direc, point)
+    >>> R0 = axangle2aff(direc, angle, point)
+    >>> R1 = axangle2aff(-direc, -angle, point)
     >>> np.allclose(R0, R1)
     True
     >>> I = np.identity(4, np.float64)
-    >>> np.allclose(I, from_angle_axis_point(math.pi*2, direc))
+    >>> np.allclose(I, axangle2aff(direc, math.pi*2))
     True
-    >>> np.allclose(2., np.trace(from_angle_axis_point(math.pi/2,
-    ...                                                direc, point)))
+    >>> np.allclose(2., np.trace(axangle2aff(direc,
+    ...                                      math.pi/2,
+    ...                                      point)))
     True
 
     Notes
@@ -481,7 +480,7 @@ def axap2aff(axis, angle, point=None):
 
     """
     M = np.eye(4)
-    R = angle_axis2mat(angle, direction)
+    R = axangle2rmat(axis, angle)
     M[:3,:3] = R
     if point is not None:
         # rotation not around origin
@@ -490,7 +489,7 @@ def axap2aff(axis, angle, point=None):
     return M
 
 
-def aff2axap(aff):
+def aff2axangle(aff):
     """Return axis, angle and point from affine
 
     Parameters
@@ -499,21 +498,21 @@ def aff2axap(aff):
 
     Returns
     -------
-    angle : scalar
-       angle of rotation
     axis : array shape (3,)
        vector giving axis of rotation
+    angle : scalar
+       angle of rotation
     point : array shape (3,)
        point around which rotation is performed
 
     Examples
     --------
-    >>> angle = (np.random.random() - 0.5) * (2*math.pi)
     >>> direc = np.random.random(3) - 0.5
+    >>> angle = (np.random.random() - 0.5) * (2*math.pi)
     >>> point = np.random.random(3) - 0.5
-    >>> R0 = from_angle_axis_point(angle, direc, point)
-    >>> direc, angle, point = to_angle_axis_point(R0)
-    >>> R1 = from_angle_axis_point(angle, direc, point)
+    >>> R0 = axangle2aff(direc, angle, point)
+    >>> direc, angle, point = aff2axangle(R0)
+    >>> R1 = axangle2aff(direc, angle, point)
     >>> np.allclose(R0, R1)
     True
 

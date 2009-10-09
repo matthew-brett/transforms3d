@@ -66,13 +66,15 @@ To integrate
 C / python integration
 ======================
 
-See scipy.spatial - parallel C and Python routines, but here in a very
+See scipy.spatial - parallel C and Python routines, but there in a very
 simple case.
 
 How about:
 
 #. Import all the Python names via the __init__.py
-#. Import all the C names (after renaming with agreed scheme as above or differently) into a ``c.py`` __init__ -like module. Thus something like::
+#. Import all the C names (after renaming with agreed scheme as above or
+   differently) into a ``c.py`` __init__ -like module. Thus something
+   like::
 
    >>> import transforms3d as t3d
    >>> M = t3d.euler3rmat(0.1, 0.3, 0.2)

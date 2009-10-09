@@ -6,12 +6,13 @@ import numpy as np
 
 import transforms3d.quaternions as tq
 import transforms3d.taitbryan as ttb
+import transforms3d.zooms_shears as tzs
 
 from transforms3d.testing import euler_tuples
 
 from transforms3d.gohlketransforms import quaternion_matrix, \
     quaternion_from_matrix, euler_matrix, \
-    quaternion_from_euler
+    quaternion_from_euler, scale_matrix, scale_from_matrix
 
 
 from nose.tools import assert_true, assert_equal
@@ -41,3 +42,28 @@ def test_euler_imps():
         yield assert_true, tq.nearly_equivalent(q1, q2)
 
 
+def test_zooms_shears():
+    for i in range(5):
+        factor = np.random.random() * 10 - 5
+        direct = np.random.random(3) - 0.5
+        origin = np.random.random(3) - 0.5
+        # factor, etc to matrices
+        S0 = tzs.zdir2aff(factor, None, None)
+        S1 = scale_matrix(factor, None, None)
+        yield assert_array_almost_equal, S0, S1, 8
+        S0 = tzs.zdir2aff(factor, direct, None)
+        S1 = scale_matrix(factor, None, direct)
+        yield assert_array_almost_equal, S0, S1, 8
+        S0 = tzs.zdir2aff(factor, direct, origin)
+        S1 = scale_matrix(factor, origin, direct)
+        yield assert_array_almost_equal, S0, S1, 8
+        # matrices to factor, etc
+        S0 = tzs.zdir2aff(factor, direct, origin)
+        f1, d1, o1 = tzs.aff2zdir(S0)        
+        f2, o2, d2 = scale_from_matrix(S0)
+        yield assert_array_almost_equal, f1, f2
+        if d1 is None:
+            yield assert_true, d2 is None
+        else:
+            yield assert_array_almost_equal, d1, d2
+        yield assert_array_almost_equal, o1, o2[:3]

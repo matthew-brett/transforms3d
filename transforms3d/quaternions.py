@@ -353,15 +353,15 @@ def nearly_equivalent(q1, q2, rtol=1e-5, atol=1e-8):
     return np.allclose(q1 * -1, q2, rtol, atol)
 
 
-def angle_axis2quat(theta, vector, is_normalized=False):
+def axangle2quat(vector, theta, is_normalized=False):
     ''' Quaternion for rotation of angle `theta` around `vector`
 
     Parameters
     ----------
-    theta : scalar
-       angle of rotation
     vector : 3 element sequence
        vector specifying axis for rotation.
+    theta : scalar
+       angle of rotation
     is_normalized : bool, optional
        True if vector is already normalized (has norm of 1).  Default
        False
@@ -373,7 +373,7 @@ def angle_axis2quat(theta, vector, is_normalized=False):
 
     Examples
     --------
-    >>> q = angle_axis2quat(np.pi, [1, 0, 0])
+    >>> q = axangle2quat([1, 0, 0], np.pi)
     >>> np.allclose(q, [0, 1, 0,  0])
     True
     
@@ -390,15 +390,15 @@ def angle_axis2quat(theta, vector, is_normalized=False):
                            vector * st2))
 
 
-def angle_axis2mat(theta, vector):
+def axangle2rmat(vector, theta):
     ''' Rotation matrix of angle `theta` around `vector`
 
     Parameters
     ----------
-    theta : scalar
-       angle of rotation
     vector : 3 element sequence
        vector specifying axis for rotation.
+    theta : scalar
+       angle of rotation
 
     Returns
     -------
@@ -424,7 +424,7 @@ def angle_axis2mat(theta, vector):
             [ zxC-ys,   yzC+xs,   z*zC+c ]])
 
 
-def quat2angle_axis(quat, identity_thresh=None):
+def quat2axangle(quat, identity_thresh=None):
     ''' Convert quaternion to rotation of angle around axis
 
     Parameters
@@ -446,17 +446,17 @@ def quat2angle_axis(quat, identity_thresh=None):
 
     Examples
     --------
-    >>> theta, vec = quat2angle_axis([0, 1, 0, 0])
-    >>> np.allclose(theta, np.pi)
-    True
+    >>> vec, theta = quat2axangle([0, 1, 0, 0])
     >>> vec
     array([ 1.,  0.,  0.])
+    >>> np.allclose(theta, np.pi)
+    True
 
     If this is an identity rotation, we return a zero angle and an
     arbitrary vector
     
-    >>> quat2angle_axis([1, 0, 0, 0])
-    (0.0, array([ 1.,  0.,  0.]))
+    >>> quat2axangle([1, 0, 0, 0])
+    (array([ 1.,  0.,  0.]), 0.0)
 
     Notes
     -----
@@ -474,5 +474,5 @@ def quat2angle_axis(quat, identity_thresh=None):
     n = math.sqrt(x*x + y*y + z*z)
     if n < identity_thresh: 
         # if vec is nearly 0,0,0, this is an identity rotation
-        return 0.0, np.array([1.0, 0, 0])
-    return  2 * math.acos(w), vec / n
+        return np.array([1.0, 0, 0]), 0.0
+    return  vec / n, 2 * math.acos(w)

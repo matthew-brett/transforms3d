@@ -15,3 +15,5 @@ In the code, we try to abbreviate common concepts in a standard way.
 * *quat* - :term:`quaternion`
 * *refpn* - point and normal vector defining plane for reflection
 * *zoom* - shape (3,) scaling, sometimes 
+* *zdir* - factor, direction pair to specify 3D zoom matrix
+* *zdiro* - factor, direction, origin triple to specify 4D zoom affine

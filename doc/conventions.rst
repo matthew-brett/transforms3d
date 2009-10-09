@@ -9,8 +9,8 @@ Transformation matrices are matrices for application on the left,
 applied to coodinates on the right, stored as column vectors.
 
 Let's say you are transforming a set of points. The points are vectors
-$V^1, V^2 \ldots V^N$, and the vectors are composed of $x$, $y$ and $z$
-coordinates, so that $V^1 = \left(x^1, y^1, z^1\right)$, then your points
+$v^1, v^2 \ldots v^N$, and the vectors are composed of $x$, $y$ and $z$
+coordinates, so that $v^1 = \left(x^1, y^1, z^1\right)$, then your points
 matrix $P$ would look like:
 
 .. math::
@@ -24,8 +24,9 @@ matrix $P$ would look like:
      \right)
    
 If we are applying a 3x3 transformation matrix $M$, to transform points
-$P$, then the transformed points $V^{\prime}$ are given by:
+$P$, then the transformed points $v^{\prime}$ are given by:
 
 .. math::
 
-   V^\prime = M \cdot P
+   v^\prime = M \cdot P
+

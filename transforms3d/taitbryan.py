@@ -325,8 +325,8 @@ def quat2euler(q):
     return mat2euler(nq.quat2mat(q))
 
 
-def euler2angle_axis(z=0, y=0, x=0):
-    ''' Return angle, axis corresponding to these Euler angles
+def euler2axangle(z=0, y=0, x=0):
+    ''' Return axis, angle corresponding to these Euler angles
 
     Uses the z, then y, then x convention above
 
@@ -341,33 +341,33 @@ def euler2angle_axis(z=0, y=0, x=0):
 
     Returns
     -------
-    theta : scalar
-       angle of rotation
     vector : array shape (3,)
        axis around which rotation occurs
+    theta : scalar
+       angle of rotation
 
     Examples
     --------
-    >>> theta, vec = euler2angle_axis(0, 1.5, 0)
-    >>> theta
-    1.5
+    >>> vec, theta = euler2axangle(0, 1.5, 0)
     >>> np.allclose(vec, [0, 1, 0])
     True
+    >>> theta
+    1.5
     '''
     # delayed import to avoid cyclic dependencies
     import transforms3d.quaternions as nq
-    return nq.quat2angle_axis(euler2quat(z, y, x))
+    return nq.quat2axangle(euler2quat(z, y, x))
 
     
-def angle_axis2euler(theta, vector):
-    ''' Convert angle, axis pair to Euler angles
+def axangle2euler(vector, theta):
+    ''' Convert axis, angle pair to Euler angles
 
     Parameters
     ----------
-    theta : scalar
-       angle of rotation
     vector : 3 element sequence
        vector specifying axis for rotation.
+    theta : scalar
+       angle of rotation
 
     Returns
     -------
@@ -378,7 +378,7 @@ def angle_axis2euler(theta, vector):
 
     Examples
     --------
-    >>> z, y, x = angle_axis2euler(0, [1, 0, 0])
+    >>> z, y, x = axangle2euler([1, 0, 0], 0)
     >>> np.allclose((z, y, x), 0)
     True
     
@@ -391,5 +391,5 @@ def angle_axis2euler(theta, vector):
     '''
     # delayed import to avoid cyclic dependencies
     import transforms3d.quaternions as nq
-    M = nq.angle_axis2mat(theta, vector)
+    M = nq.axangle2rmat(vector, theta)
     return mat2euler(M)

@@ -128,9 +128,9 @@ Examples
 >>> alpha, beta, gamma = 0.123, -1.234, 2.345
 >>> origin, xaxis, yaxis, zaxis = (0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1)
 >>> I = compose_matrix()
->>> Rx = from_angle_axis_point(alpha, xaxis)
->>> Ry = from_angle_axis_point(beta, yaxis)
->>> Rz = from_angle_axis_point(gamma, zaxis)
+>>> Rx = axangle2aff(xaxis, alpha)
+>>> Ry = axangle2aff(yaxis, beta)
+>>> Rz = axangle2aff(zaxis, gamma)
 >>> R = concatenate_matrices(Rx, Ry, Rz)
 >>> euler = euler_from_matrix(R, 'rxyz')
 >>> np.allclose([alpha, beta, gamma], euler)
@@ -176,7 +176,7 @@ import math
 
 import numpy as np
 
-from transforms3d.affines import from_angle_axis_point
+from transforms3d.affines import axangle2aff
 
 
 def scale_matrix(factor, origin=None, direction=None):
@@ -275,7 +275,7 @@ def projection_matrix(point, normal, direction=None,
     >>> persp = np.random.random(3) - 0.5
     >>> P0 = projection_matrix(point, normal)
     >>> P1 = projection_matrix(point, normal, direction=direct)
-    >>> R = from_angle_axis_point(math.pi/2.0, [0, 0, 1], [1, 0, 0])
+    >>> R = axangle2aff([0, 0, 1], math.pi/2.0, [1, 0, 0])
     >>> np.allclose(np.dot(R, [0, 0, 0, 1]), [ 1., -1.,  0.,  1.])
     True
     >>> P2 = projection_matrix(point, normal, perspective=persp)
@@ -1002,7 +1002,7 @@ def quaternion_matrix(quaternion):
     """Return homogeneous rotation matrix from quaternion.
 
     >>> M = quaternion_matrix([0.99810947, 0.06146124, 0, 0])
-    >>> np.allclose(M, from_angle_axis_point(0.123, (1, 0, 0)))
+    >>> np.allclose(M, axangle2aff((1, 0, 0), 0.123))
     True
     >>> M = quaternion_matrix([1, 0, 0, 0])
     >>> np.allclose(M, compose_matrix())
@@ -1038,7 +1038,7 @@ def quaternion_from_matrix(matrix, isprecise=False):
     >>> q = quaternion_from_matrix(np.diag([1., -1., -1., 1.]))
     >>> np.allclose(q, [0, 1, 0, 0]) or np.allclose(q, [0, -1, 0, 0])
     True
-    >>> R = from_angle_axis_point(0.123, (1, 2, 3))
+    >>> R = axangle2aff((1, 2, 3), 0.123)
     >>> q = quaternion_from_matrix(R, True)
     >>> np.allclose(q, [0.9981095, 0.0164262, 0.0328524, 0.0492786])
     True
