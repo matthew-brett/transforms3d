@@ -65,5 +65,5 @@ def test_zooms_shears():
         if d1 is None:
             yield assert_true, d2 is None
         else:
-            yield assert_array_almost_equal, d1, d2
-        yield assert_array_almost_equal, o1, o2[:3]
+            yield assert_array_almost_equal, d1, d2, 8
+        yield assert_array_almost_equal, o1, o2[:3], 8
