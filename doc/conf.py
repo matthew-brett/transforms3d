@@ -24,8 +24,8 @@ sys.path.append(os.path.abspath('sphinxext'))
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.doctest',
-              'math_dollar',
               'autosummary', # the numpy version, for now
+              'math_dollar', # has to go before numpydoc
               'numpydoc',
               'sphinx.ext.pngmath']
 

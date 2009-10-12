@@ -1,6 +1,6 @@
 import re
 
-def process_dollars(app, docname, source):
+def dollars_to_math(source):
     r"""
     Replace dollar signs with backticks.
 
@@ -37,7 +37,6 @@ def process_dollars(app, docname, source):
         _data[t] = s
         return t
     s = re.sub(r"({[^{}$]*\$[^{}$]*\$[^{}]*})", repl, s)
-    
     # matches $...$
     dollars = re.compile(r"(?<!\$)(?<!\\)\$([^\$]+?)\$")
     # regular expression for \$
@@ -49,6 +48,16 @@ def process_dollars(app, docname, source):
         s = s.replace(r, _data[r])
     # now save results in "source"
     source[:] = [s]
+    
 
+def process_dollars(app, docname, source):
+    dollars_to_math(source)
+
+
+def mathdollar_docstrings(app, what, name, obj, options, lines):
+    dollars_to_math(lines)
+
+    
 def setup(app):
     app.connect("source-read", process_dollars)
+    app.connect('autodoc-process-docstring', mathdollar_docstrings)
