@@ -6,6 +6,8 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
 
+NEED_AUTOSUMMARY = $(shell $(PYTHON) -c 'import sphinx; print sphinx.__version__ < "0.7" and "1" or ""')
+
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
@@ -27,9 +29,17 @@ help:
 	@echo "  doctest   to run all doctests embedded in the documentation (if enabled)"
 
 clean:
-	-rm -rf _build/*
+	-rm -rf _build/* reference/generated
 
-html:
+generate: _build/generate-stamp
+_build/generate-stamp: $(wildcard reference/*.rst)
+	mkdir -p _build
+ifeq ($(NEED_AUTOSUMMARY),1)
+	sphinx-autogen -o reference/generated reference/*.rst  
+endif
+	touch _build/generate-stamp
+
+html: generate
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) _build/html
 	@echo
 	@echo "Build finished. The HTML pages are in _build/html."
@@ -64,7 +74,7 @@ qthelp:
 	@echo "To view the help file:"
 	@echo "# assistant -collectionFile _build/qthelp/transforms3d.qhc"
 
-latex:
+latex: generate
 	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) _build/latex
 	@echo
 	@echo "Build finished; the LaTeX files are in _build/latex."

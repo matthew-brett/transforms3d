@@ -16,6 +16,7 @@ Contents:
    naming_conventions
    refactor_plan
    gimbal_lock
+   reference/index
    glossary
 
 Indices and tables

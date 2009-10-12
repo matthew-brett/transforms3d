@@ -13,7 +13,8 @@ In the code, we try to abbreviate common concepts in a standard way.
 * *axangle* - :term:`axis angle`
 * *rvec* - :term:`rotation vector`
 * *quat* - :term:`quaternion`
-* *refpn* - point and normal vector defining plane for reflection
+* *rfmat* - :term:`reflection` matrix
+* *rfvec* - vector defining plane for :term:`reflection`
 * *zoom* - shape (3,) scaling, sometimes 
 * *zdir* - factor, direction pair to specify 3D zoom matrix
 * *zdiro* - factor, direction, origin triple to specify 4D zoom affine

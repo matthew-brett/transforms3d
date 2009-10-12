@@ -179,6 +179,61 @@ import numpy as np
 from transforms3d.affines import axangle2aff
 
 
+def reflection_matrix(point, normal):
+    """Return matrix to mirror at plane defined by point and normal vector.
+
+    >>> v0 = np.random.random(4) - 0.5
+    >>> v0[3] = 1.0
+    >>> v1 = np.random.random(3) - 0.5
+    >>> R = reflection_matrix(v0, v1)
+    >>> np.allclose(2., np.trace(R))
+    True
+    >>> np.allclose(v0, np.dot(R, v0))
+    True
+    >>> v2 = v0.copy()
+    >>> v2[:3] += v1
+    >>> v3 = v0.copy()
+    >>> v2[:3] -= v1
+    >>> np.allclose(v2, np.dot(R, v3))
+    True
+
+    """
+    normal = unit_vector(normal[:3])
+    M = np.identity(4)
+    M[:3, :3] -= 2.0 * np.outer(normal, normal)
+    M[:3, 3] = (2.0 * np.dot(point[:3], normal)) * normal
+    return M
+
+
+def reflection_from_matrix(matrix):
+    """Return mirror plane point and normal vector from reflection matrix.
+
+    >>> v0 = np.random.random(3) - 0.5
+    >>> v1 = np.random.random(3) - 0.5
+    >>> M0 = reflection_matrix(v0, v1)
+    >>> point, normal = reflection_from_matrix(M0)
+    >>> M1 = reflection_matrix(point, normal)
+    >>> is_same_transform(M0, M1)
+    True
+
+    """
+    M = np.array(matrix, dtype=np.float64, copy=False)
+    # normal: unit eigenvector corresponding to eigenvalue -1
+    l, V = np.linalg.eig(M[:3, :3])
+    i = np.where(abs(np.real(l) + 1.0) < 1e-8)[0]
+    if not len(i):
+        raise ValueError("no unit eigenvector corresponding to eigenvalue -1")
+    normal = np.real(V[:, i[0]]).squeeze()
+    # point: any unit eigenvector corresponding to eigenvalue 1
+    l, V = np.linalg.eig(M)
+    i = np.where(abs(np.real(l) - 1.0) < 1e-8)[0]
+    if not len(i):
+        raise ValueError("no unit eigenvector corresponding to eigenvalue 1")
+    point = np.real(V[:, i[-1]]).squeeze()
+    point /= point[3]
+    return point, normal
+
+
 def scale_matrix(factor, origin=None, direction=None):
     """Return matrix to scale by factor around origin in direction.
 
