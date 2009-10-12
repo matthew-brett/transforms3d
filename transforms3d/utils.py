@@ -1,4 +1,4 @@
-''' Utilities for tranforms3d '''
+''' Utilities for transforms3d '''
 
 import math
 

@@ -1,5 +1,4 @@
-'''
-Functions to operate on, or return, quaternions.
+'''Functions to operate on, or return, quaternions.
 
 The module also includes functions for the closely related angle, axis
 pair as a specification for rotation.
@@ -20,8 +19,8 @@ they are applied on the left of the vector.  For example:
 import math
 import numpy as np
 
-MAX_FLOAT = np.maximum_sctype(np.float)
-FLOAT_EPS = np.finfo(np.float).eps
+_MAX_FLOAT = np.maximum_sctype(np.float)
+_FLOAT_EPS = np.finfo(np.float).eps
 
 
 def fillpositive(xyz, w2_thresh=None):
@@ -81,9 +80,9 @@ def fillpositive(xyz, w2_thresh=None):
         try: # trap errors for non-array, integer array
             w2_thresh = -np.finfo(xyz.dtype).eps
         except (AttributeError, ValueError):
-            w2_thresh = -FLOAT_EPS
+            w2_thresh = -_FLOAT_EPS
     # Use maximum precision
-    xyz = np.asarray(xyz, dtype=MAX_FLOAT)
+    xyz = np.asarray(xyz, dtype=_MAX_FLOAT)
     # Calculate w
     w2 = 1.0 - np.dot(xyz, xyz)
     if w2 < 0:
@@ -170,14 +169,6 @@ def mat2quat(M):
     sign of the reconstructed quaternion is arbitrary, and we return
     quaternions with positive w (q[0]).
     
-    References
-    ----------
-     * http://en.wikipedia.org/wiki/Rotation_matrix#Quaternion
-     * Bar-Itzhack, Itzhack Y. (2000), "New method for extracting the
-       quaternion from a rotation matrix", AIAA Journal of Guidance,
-       Control and Dynamics 23(6):1085-1087 (Engineering Note), ISSN
-       0731-5090
-
     Examples
     --------
     >>> import numpy as np
@@ -187,6 +178,15 @@ def mat2quat(M):
     >>> q = mat2quat(np.diag([1, -1, -1]))
     >>> np.allclose(q, [0, 1, 0, 0]) # 180 degree rotn around axis 0
     True
+
+    Notes
+    -----
+    http://en.wikipedia.org/wiki/Rotation_matrix#Quaternion
+
+    Bar-Itzhack, Itzhack Y. (2000), "New method for extracting the
+    quaternion from a rotation matrix", AIAA Journal of Guidance,
+    Control and Dynamics 23(6):1085-1087 (Engineering Note), ISSN
+    0731-5090
 
     '''
     # Qyx refers to the contribution of the y input vector component to
@@ -470,7 +470,7 @@ def quat2axangle(quat, identity_thresh=None):
         try:
             identity_thresh = np.finfo(vec.dtype).eps * 3
         except ValueError: # integer type
-            identity_thresh = FLOAT_EPS * 3
+            identity_thresh = _FLOAT_EPS * 3
     n = math.sqrt(x*x + y*y + z*z)
     if n < identity_thresh: 
         # if vec is nearly 0,0,0, this is an identity rotation

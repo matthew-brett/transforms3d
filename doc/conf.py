@@ -25,7 +25,7 @@ sys.path.append(os.path.abspath('sphinxext'))
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.doctest',
               'math_dollar',
-              'sphinx.ext.autosummary',
+              'autosummary', # the numpy version, for now
               'numpydoc',
               'sphinx.ext.pngmath']
 
