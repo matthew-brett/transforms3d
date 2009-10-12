@@ -81,7 +81,7 @@ def rfvec2aff(normal, point=None):
     M[:3,:3] = rfvec2rfmat(normal)
     if not point is None:
         normal = normalized_vector(normal)
-        M[:3, :3] = (2.0 * np.dot(point, normal)) * normal
+        M[:3, 3] = (2.0 * np.dot(point, normal)) * normal
     return M
 
 
@@ -99,6 +99,11 @@ def aff2rfvec(aff):
     normal : array shape (3,)
        vector normal to point (and therefore mirror plane)
 
+    Raises
+    ------
+    ValueError
+       If there is no eigvector for with eigenvalue -1
+       
     Examples
     --------
     >>> v0 = np.random.random(3) - 0.5
