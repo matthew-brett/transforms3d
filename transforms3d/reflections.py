@@ -27,13 +27,13 @@ def rfvec2rfmat(normal):
 
     .. math::
 
-        \mathrm{Ref}_a(v) = v - 2\frac{v\cdot a}{a\cdot a}a
+       \\mathrm{Ref}_a(v) = v - 2\\frac{v\\cdot a}{a\\cdot a}a
 
-    The corresponding orthogonal transformation matrix $R$ is:
+    The corresponding orthogonal transformation matrix `R` is:
 
     .. math::
 
-       R_{ij} = I_{ij} - 2\frac{a_i a_j}{\|a\|^2}
+       R_{ij} = I_{ij} - 2\\frac{a_i a_j}{\|a\|^2}
 
     where $I$ is the identity matrix.
     """

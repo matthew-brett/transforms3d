@@ -174,9 +174,9 @@ def mat2quat(M):
     ----------
      * http://en.wikipedia.org/wiki/Rotation_matrix#Quaternion
      * Bar-Itzhack, Itzhack Y. (2000), "New method for extracting the
-    quaternion from a rotation matrix", AIAA Journal of Guidance,
-    Control and Dynamics 23(6):1085-1087 (Engineering Note), ISSN
-    0731-5090
+       quaternion from a rotation matrix", AIAA Journal of Guidance,
+       Control and Dynamics 23(6):1085-1087 (Engineering Note), ISSN
+       0731-5090
 
     Examples
     --------

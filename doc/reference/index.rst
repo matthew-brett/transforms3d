@@ -1,7 +1,7 @@
 .. _reference:
 
 ######################
-transforms3d Reference
+transforms3d reference
 ######################
 
 :Release: |version|
@@ -14,5 +14,9 @@ in transforms3d.
 
 .. autosummary::
    :toctree: generated/
-
+   
+   affines
+   quaternions
    reflections
+   zooms_shears
+   utils

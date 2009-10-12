@@ -6,9 +6,9 @@ import numpy as np
 
 
 def normalized_vector(vec):
-    ''' Return vector divided by Euclidian (L2) norm
+    ''' Return vector divided by Euclidean (L2) norm
 
-    See :term:`unit vector` and :term:`Euclidian norm`
+    See :term:`unit vector` and :term:`Euclidean norm`
 
     Parameters
     ----------
@@ -37,9 +37,9 @@ def normalized_vector(vec):
 
 
 def vector_norm(vec):
-    ''' Return vector Euclidian (L2) norm
+    ''' Return vector Euclidaan (L2) norm
 
-    See :term:`unit vector` and :term:`Euclidian norm`
+    See :term:`unit vector` and :term:`Euclidean norm`
 
     Parameters
     ----------
