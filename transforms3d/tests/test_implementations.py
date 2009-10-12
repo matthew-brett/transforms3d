@@ -2,6 +2,9 @@
 
 These tests should shrink as the Gohlke transforms get incorporated
 '''
+
+import math
+
 import numpy as np
 
 import transforms3d.quaternions as tq
@@ -83,3 +86,22 @@ def test_reflections():
         yield assert_array_almost_equal, n0, n1
         yield assert_array_almost_equal, p0, p1[:3]
 
+
+def test_shears():
+    angle = (np.random.random() - 0.5) * 4*math.pi
+    direct = np.random.random(3) - 0.5
+    normal = np.cross(direct, np.random.random(3))
+    S0 = tzs.shear_adn2aff(angle, direct, normal)
+    S1 = tg.shear_matrix(angle, direct, [0,0,0], normal)
+    yield assert_array_almost_equal, S0, S1, 8
+    point = np.random.random(3) - 0.5
+    S0 = tzs.shear_adn2aff(angle, direct, normal, point)
+    S1 = tg.shear_matrix(angle, direct, point, normal)
+    yield assert_array_almost_equal, S0, S1, 8
+    a0, d0, n0, p0 = tzs.aff2shear_adn(S0)
+    a1, d1, p1, n1 = tg.shear_from_matrix(S0)
+    yield assert_array_almost_equal, a0, a1, 8
+    yield assert_array_almost_equal, d0, d1, 8
+    yield assert_array_almost_equal, n0, n1, 8
+    yield assert_array_almost_equal, p0, p1[:3], 8
+    

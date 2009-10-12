@@ -1,8 +1,10 @@
 ''' zoom (scale) and shears '''
 
+import math
+
 import numpy as np
 
-from .utils import normalized_vector
+from .utils import normalized_vector, vector_norm
 
 
 def zdir2zmat(factor, direction=None):
@@ -187,4 +189,195 @@ def aff2zdir(aff):
     origin = np.real(V[:, near_1[-1]]).squeeze()
     origin = origin[:3] / origin[3]
     return factor, direction, origin
+
+
+def shear_adn2smat(angle, direction, normal):
+    """Return matrix to shear by angle along direction vector on shear plane.
+
+    The shear plane is defined by normal vector, and passes through the
+    origin. The direction vector must be orthogonal to the plane's
+    normal vector.
+
+    A point P is transformed by the shear matrix into P" such that
+    the vector P-P" is parallel to the direction vector and its extent is
+    given by the angle of P-P'-P", where P' is the orthogonal projection
+    of P onto the shear plane.
+
+    Parameters
+    ----------
+    angle : scalar
+       angle to shear, in radians
+    direction : array-like, shape (3,)
+       direction along which to shear
+    normal : array-like, shape (3,)
+       vector defining shear plane, where shear plane passes through
+       origin
+
+    Returns
+    -------
+    smat : array shape (3,3)
+       shear matrix
+
+    Examples
+    --------
+    >>> angle = (np.random.random() - 0.5) * 4*math.pi
+    >>> direct = np.random.random(3) - 0.5
+    >>> normal = np.cross(direct, np.random.random(3))
+    >>> S = shear_adn2aff(angle, direct, normal)
+    >>> np.allclose(1.0, np.linalg.det(S))
+    True
+
+    """
+    normal = normalized_vector(normal)
+    direction = normalized_vector(direction)
+    if abs(np.dot(normal, direction)) > 1e-6:
+        raise ValueError("direction and normal vectors are not orthogonal")
+    angle = math.tan(angle)
+    M = np.eye(3)
+    M += angle * np.outer(direction, normal)
+    return M
+
+
+def shear_adn2aff(angle, direction, normal, point=None):
+    """Return affine to shear by angle along direction vector on shear plane.
+
+    The shear plane is defined by a point and normal vector. The direction
+    vector must be orthogonal to the plane's normal vector.
+
+    A point P is transformed by the shear matrix into P" such that
+    the vector P-P" is parallel to the direction vector and its extent is
+    given by the angle of P-P'-P", where P' is the orthogonal projection
+    of P onto the shear plane.
+
+    Parameters
+    ----------
+    angle : scalar
+       angle to shear, in radians
+    direction : array-like, shape (3,)
+       direction along which to shear
+    normal : array-like, shape (3,)
+       vector normal to shear-plane
+    point : None or array-like, shape (3,), optional
+       point, that, with `normal` defines shear plane.  Defaults to
+       None, equivalent to shear-plane through origin.
+
+    Returns
+    -------
+    aff : array shape (4,4)
+       affine shearing matrix
+
+    Examples
+    --------
+    >>> angle = (np.random.random() - 0.5) * 4*math.pi
+    >>> direct = np.random.random(3) - 0.5
+    >>> normal = np.cross(direct, np.random.random(3))
+    >>> S = shear_adn2smat(angle, direct, normal)
+    >>> np.allclose(1.0, np.linalg.det(S))
+    True
+    """
+    M = np.eye(4)
+    M[:3,:3] = shear_adn2smat(angle, direction, normal)
+    if not point is None:
+        normal = normalized_vector(normal)
+        direction = normalized_vector(direction)
+        angle = math.tan(angle)
+        M[:3, 3] = -angle * np.dot(point, normal) * direction
+    return M
+
+
+def smat2shear_adn(smat):
+    """Return shear angle, direction and plane normal from shear matrix.
+
+    Parameters
+    ----------
+    smat : array-like, shape (3,3)
+       shear matrix
+
+    Returns
+    -------
+    angle : scalar
+       angle to shear, in radians
+    direction : array, shape (3,)
+       direction along which to shear
+    normal : array, shape (3,)
+       vector defining shear plane, where shear plane passes through
+       origin
+
+    Examples
+    --------
+    >>> angle = (np.random.random() - 0.5) * 4*math.pi
+    >>> direct = np.random.random(3) - 0.5
+    >>> normal = np.cross(direct, np.random.random(3))
+    >>> S0 = shear_adn2smat(angle, direct, normal)
+    >>> angle, direct, normal = smat2shear_adn(S0)
+    >>> S1 = shear_adn2smat(angle, direct, normal)
+    >>> np.allclose(S0, S1)
+    True
+
+    """
+    smat = np.asarray(smat)
+    # normal: cross independent eigenvectors corresponding to the eigenvalue 1
+    l, V = np.linalg.eig(smat)
+    near_1, = np.nonzero(abs(np.real(l.squeeze()) - 1.0) < 1e-4)
+    if near_1.size < 2:
+        raise ValueError("no two linear independent eigenvectors found %s" % l)
+    V = np.real(V[:, near_1]).squeeze().T
+    lenorm = -1.0
+    for i0, i1 in ((0, 1), (0, 2), (1, 2)):
+        n = np.cross(V[i0], V[i1])
+        l = vector_norm(n)
+        if l > lenorm:
+            lenorm = l
+            normal = n
+    normal /= lenorm
+    # direction and angle
+    direction = np.dot(smat - np.eye(3), normal)
+    angle = vector_norm(direction)
+    direction /= angle
+    angle = math.atan(angle)
+    return angle, direction, normal
+
+
+def aff2shear_adn(aff):
+    """Return shear angle, direction and plane normal from shear matrix.
+
+    Parameters
+    ----------
+    smat : array-like, shape (3,3)
+       shear matrix
+
+    Returns
+    -------
+    angle : scalar
+       angle to shear, in radians
+    direction : array, shape (3,)
+       direction along which to shear
+    normal : array, shape (3,)
+       vector normal to shear plane
+    point : array, shape (3,)
+       point, that, with `normal` defines shear plane.
+
+    Examples
+    --------
+    >>> angle = (np.random.random() - 0.5) * 4*math.pi
+    >>> direct = np.random.random(3) - 0.5
+    >>> normal = np.cross(direct, np.random.random(3))
+    >>> point = np.random.random(3) - 0.5
+    >>> S0 = shear_adn2aff(angle, direct, normal, point)
+    >>> angle, direct, normal, point = aff2shear_adn(S0)
+    >>> S1 = shear_adn2aff(angle, direct, normal, point)
+    >>> np.allclose(S0, S1)
+    True
+    """
+    aff = np.asarray(aff)
+    angle, direction, normal = smat2shear_adn(aff[:3,:3])
+    # point: eigenvector corresponding to eigenvalue 1
+    l, V = np.linalg.eig(aff)
+    near_1, = np.nonzero(abs(np.real(l.squeeze()) - 1.0) < 1e-8)
+    if near_1.size == 0:
+        raise ValueError("no eigenvector corresponding to eigenvalue 1")
+    point = np.real(V[:, near_1[-1]]).squeeze()
+    point = point[:3] / point[3]
+    return angle, direction, normal, point
+
 
