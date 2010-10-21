@@ -17,9 +17,9 @@ from nose.tools import assert_raises, assert_true, assert_false, \
 
 from numpy.testing import assert_array_almost_equal, assert_array_equal
 
-import transforms3d.quaternions as tq
+from .. import quaternions as tq
 
-from transforms3d.testing import euler_mats
+from .samples import euler_mats
 
 # Example quaternions (from rotations)
 euler_quats = []

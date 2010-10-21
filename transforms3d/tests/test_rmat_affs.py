@@ -4,12 +4,12 @@
 
 import numpy as np
 
-import transforms3d.quaternions as tq
-import transforms3d.taitbryan as ttb
+from .. import quaternions as tq
+from .. import taitbryan as ttb
 
-from transforms3d.testing import euler_tuples
+from .samples import euler_tuples
 
-from transforms3d.affines import axangle2aff, aff2axangle
+from ..affines import axangle2aff, aff2axangle
 
 from nose.tools import assert_true, assert_equal
 from numpy.testing import assert_array_almost_equal

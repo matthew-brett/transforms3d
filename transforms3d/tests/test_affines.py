@@ -7,11 +7,11 @@ from numpy.testing import assert_array_equal, assert_raises, dec, \
     
 from nose.tools import assert_true, assert_false
 
-from transforms3d.testing.utils import permutations
+from ..utils import permutations
 
-from transforms3d.affines import shears2matrix, compose, decompose, \
+from ..affines import shears2matrix, compose, decompose, \
     decompose44
-from transforms3d.taitbryan import euler2mat
+from ..taitbryan import euler2mat
 
 
 def test_shears():

@@ -1,6 +1,6 @@
 import numpy as np
 
-from .utils import inique, permuted_signs, permuted_with_signs
+from ..utils import inique, permuted_signs, permuted_with_signs
 
 from ..taitbryan import euler2mat
 

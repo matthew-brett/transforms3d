@@ -7,15 +7,14 @@ import math
 
 import numpy as np
 
-import transforms3d.quaternions as tq
-import transforms3d.taitbryan as ttb
-import transforms3d.zooms_shears as tzs
-import transforms3d.reflections as trf
+from .. import quaternions as tq
+from .. import taitbryan as ttb
+from .. import zooms_shears as tzs
+from .. import reflections as trf
 
-from transforms3d.testing import euler_tuples
+from .samples import euler_tuples
 
-import transforms3d.gohlketransforms as tg
-
+from .. import gohlketransforms as tg
 
 from nose.tools import assert_true, assert_equal
 from numpy.testing import assert_array_almost_equal

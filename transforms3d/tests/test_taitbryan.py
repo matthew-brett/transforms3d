@@ -4,14 +4,14 @@ import math
 import numpy as np
 from numpy import pi
 
-import transforms3d.quaternions as tq
-import transforms3d.taitbryan as ttb
+from .. import quaternions as tq
+from .. import taitbryan as ttb
 
 from nose.tools import assert_true, assert_false, assert_equal
 
 from numpy.testing import assert_array_equal, assert_array_almost_equal
 
-from transforms3d.testing import euler_tuples
+from .samples import euler_tuples
 
 FLOAT_EPS = np.finfo(np.float).eps
 
