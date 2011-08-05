@@ -383,7 +383,8 @@ def axangle2quat(vector, theta, is_normalized=False):
     '''
     vector = np.array(vector)
     if not is_normalized:
-        vector /= math.sqrt(np.dot(vector, vector))
+        # not in place to avoid numpy 2.0s stricter casting rules
+        vector = vector / math.sqrt(np.dot(vector, vector))
     t2 = theta / 2.0
     st2 = math.sin(t2)
     return np.concatenate(([math.cos(t2)],
