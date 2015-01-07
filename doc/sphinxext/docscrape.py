@@ -113,7 +113,7 @@ class NumpyDocString(object):
         return self._parsed_data[key]
 
     def __setitem__(self,key,val):
-        if not self._parsed_data.has_key(key):
+        if not key in self._parsed_data:
             warn("Unknown section %s" % key)
         else:
             self._parsed_data[key] = val
@@ -386,8 +386,6 @@ class NumpyDocString(object):
         out += self._str_see_also(func_role)
         for s in ('Notes','References','Examples'):
             out += self._str_section(s)
-        for param_list in ('Attributes', 'Methods'):
-            out += self._str_param_list(param_list)
         out += self._str_index()
         return '\n'.join(out)
 
@@ -453,7 +451,7 @@ class FunctionDoc(NumpyDocString):
                  'meth': 'method'}
 
         if self._role:
-            if not roles.has_key(self._role):
+            if not self._role in roles:
                 print "Warning: invalid role %s" % self._role
             out += '.. %s:: %s\n    \n\n' % (roles.get(self._role,''),
                                              func_name)
@@ -479,19 +477,21 @@ class ClassDoc(NumpyDocString):
 
         NumpyDocString.__init__(self, doc)
 
-        if not self['Methods']:
-            self['Methods'] = [(name, '', '') for name in sorted(self.methods)]
-
-        if not self['Attributes']:
-            self['Attributes'] = [(name, '', '')
-                                  for name in sorted(self.properties)]
-
     @property
     def methods(self):
         return [name for name,func in inspect.getmembers(self._cls)
                 if not name.startswith('_') and callable(func)]
 
-    @property
-    def properties(self):
-        return [name for name,func in inspect.getmembers(self._cls)
-                if not name.startswith('_') and func is None]
+    def __str__(self):
+        out = ''
+        out += super(ClassDoc, self).__str__()
+        out += "\n\n"
+
+        #for m in self.methods:
+        #    print "Parsing `%s`" % m
+        #    out += str(self._func_doc(getattr(self._cls,m), 'meth')) + '\n\n'
+        #    out += '.. index::\n   single: %s; %s\n\n' % (self._name, m)
+
+        return out
+
+
