@@ -6,15 +6,14 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
 
-# The Python executable to be used
-PYTHON ?= python
-
-NEED_AUTOSUMMARY = $(shell $(PYTHON) -c 'import sphinx; print(sphinx.__version__ < "0.7" and "1" or "")')
-
 # Internal variables.
+BUILDROOT       = _build
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d _build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+
+# API generation
+API_DIR = reference
 
 .PHONY: help clean html dirhtml pickle json htmlhelp qthelp latex changes linkcheck doctest
 
@@ -32,18 +31,21 @@ help:
 	@echo "  linkcheck to check all external links for integrity"
 	@echo "  doctest   to run all doctests embedded in the documentation (if enabled)"
 
-clean:
-	-rm -rf _build/* reference/generated
+clean: api-clean
+	-rm -rf $(BUILDROOT)/*
+	-rm *-stamp
 
-generate: _build/generate-stamp
-_build/generate-stamp: $(wildcard reference/*.rst)
-	mkdir -p _build
-ifeq ($(NEED_AUTOSUMMARY),1)
-	sphinx-autogen -o reference/generated reference/*.rst  
-endif
-	touch _build/generate-stamp
+api-clean:
+	rm -rf $(API_DIR)/*.rst
 
-html: generate
+api: api-stamp
+api-stamp:
+	@mkdir -p $(API_DIR)
+	$(PYTHON) tools/build_modref_templates.py transforms3d $(API_DIR) False
+	@echo "Build API docs...done."
+	@touch $@
+
+html: api-stamp
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) _build/html
 	@echo
 	@echo "Build finished. The HTML pages are in _build/html."
