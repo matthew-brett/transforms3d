@@ -48,7 +48,7 @@ script:
       COVER_ARGS="--with-coverage --cover-package transforms3d";
       fi
     - if [ "${DOCTESTS}" == "1" ]; then
-      DOCTEST_ARGS="--with-doctests"
+      DOCTEST_ARGS="--with-doctests";
       fi
     - nosetests $COVER_ARGS $DOCTEST_ARGS transforms3d
 
