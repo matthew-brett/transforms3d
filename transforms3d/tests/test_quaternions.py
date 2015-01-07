@@ -26,7 +26,7 @@ euler_quats = []
 for M in euler_mats:
     euler_quats.append(tq.mat2quat(M))
 # M, quaternion pairs
-eg_pairs = zip(euler_mats, euler_quats)
+eg_pairs = list(zip(euler_mats, euler_quats))
 
 # Set of arbitrary unit quaternions
 unit_quats = set()
