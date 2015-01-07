@@ -4,16 +4,9 @@ import math
 
 import numpy as np
 
-# Recent (1.2) versions of numpy have this decorator
-try:
-    from numpy.testing.decorators import slow
-except ImportError:
-    def slow(t):
-        t.slow = True
-        return t
+from numpy.testing.decorators import slow
 
-from nose.tools import assert_raises, assert_true, assert_false, \
-    assert_equal
+from nose.tools import (assert_raises, assert_true)
 
 from numpy.testing import assert_array_almost_equal, assert_array_equal
 
