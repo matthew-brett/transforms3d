@@ -1,0 +1,7 @@
+[run]
+branch = True
+source = transforms3d
+include = */transforms3d/*
+omit =
+    */_gohlketransforms.py
+    */benchmarks/*
