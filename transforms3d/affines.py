@@ -13,7 +13,7 @@ for n in range(1,11):
     i = n+1
     _shearers[x] = (i, np.triu(np.ones((i,i)), 1).astype(bool))
 
-                    
+
 def shears2matrix(shears):
     ''' Construct shear matrix from shear vector
 
@@ -289,7 +289,7 @@ def decompose(M):
     T = M[:-1,-1]
     RZS = M[:-1,:-1]
     ZS = np.linalg.cholesky(np.dot(RZS.T,RZS)).T
-    Z = np.diag(ZS)
+    Z = np.diag(ZS).copy()
     shears = ZS / Z[:,np.newaxis]
     n = len(Z)
     S = shears[np.triu(np.ones((n,n)), 1).astype(bool)]
