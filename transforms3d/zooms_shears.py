@@ -173,11 +173,6 @@ def aff2zdir(aff):
     >>> np.allclose(S0, zdir2aff(f2, d2, o2))
     True
     >>> S0 = zdir2aff(factor, direct, origin)
-    >>> import transforms3d.gohlketransforms as tg
-    >>> S0 = tg.scale_matrix(factor, origin, direct)
-    >>> f2, o2, d2 = tg.scale_from_matrix(S0)
-    >>> np.allclose(S0, tg.scale_matrix(f2, o2, d2))
-    True
     """
     M = np.asarray(aff, dtype=np.float)
     factor, direction = zmat2zdir(M[:3,:3])

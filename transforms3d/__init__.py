@@ -8,7 +8,6 @@ Additional code monkey work by Matthew Brett
 
 '''
 
-from .  import gohlketransforms
 from . import taitbryan
 from . import affines
 from . import quaternions

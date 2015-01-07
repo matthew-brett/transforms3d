@@ -14,7 +14,7 @@ from .. import reflections as trf
 
 from .samples import euler_tuples
 
-from .. import gohlketransforms as tg
+from .. import _gohlketransforms as tg
 
 from nose.tools import assert_true, assert_equal
 from numpy.testing import assert_array_almost_equal
@@ -60,7 +60,7 @@ def test_zooms_shears():
         yield assert_array_almost_equal, S0, S1, 8
         # matrices to factor, etc
         S0 = tzs.zdir2aff(factor, direct, origin)
-        f1, d1, o1 = tzs.aff2zdir(S0)        
+        f1, d1, o1 = tzs.aff2zdir(S0)
         f2, o2, d2 = tg.scale_from_matrix(S0)
         yield assert_array_almost_equal, f1, f2
         if d1 is None:
