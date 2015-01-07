@@ -1,0 +1,2 @@
+include versioneer.py
+include transforms3d/_version.py
