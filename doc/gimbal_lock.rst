@@ -117,9 +117,11 @@ It's easy to do the same set of reductions, with the same conclusion,
 for the case where $\sin(\beta) = -1$ - see
 http://www.gregslabaugh.name/publications/euler.pdf.
 
-Code
-====
+.. FIXME:
 
-In practice, gimbal lock looks like this:
+    Code
+    ====
 
->>> from transforms3d.
+    In practice, gimbal lock looks like this:
+
+    >>> from transforms3d.

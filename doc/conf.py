@@ -27,7 +27,7 @@ extensions = ['sphinx.ext.autodoc',
               'autosummary', # the numpy version, for now
               'math_dollar', # has to go before numpydoc
               'numpydoc',
-              'sphinx.ext.pngmath']
+              'sphinx.ext.mathjax']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

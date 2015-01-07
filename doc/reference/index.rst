@@ -9,12 +9,14 @@ transforms3d reference
 
 .. module:: transforms3d
 
+.. currentmodule:: transforms3d
+
 This reference manual details functions, modules, and objects included
 in transforms3d.
 
 .. autosummary::
    :toctree: generated/
-   
+
    affines
    quaternions
    reflections
