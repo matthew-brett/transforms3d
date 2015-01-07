@@ -21,10 +21,11 @@ matrix:
         - DEPENDS="numpy==1.5.1"
 
 before_install:
+    - source tools/travis_tools.sh
     - virtualenv venv
     - source venv/bin/activate
-    - pip install nose # always
-    - pip install --no-index -f http://travis-wheels.scikit-image.org $DEPENDS
+    - retry pip install nose # always
+    - wheelhouse_pip_install $DEPENDS
     - if [ "${COVERAGE}" == "1" ]; then
       pip install coverage;
       pip install coveralls;
