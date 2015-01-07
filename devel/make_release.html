@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Guide to making a transforms3d release &mdash; transforms3d 0.1a documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="transforms3d 0.1a documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">transforms3d 0.1a documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="guide-to-making-a-transforms3d-release">
+<span id="release-guide"></span><h1>Guide to making a transforms3d release<a class="headerlink" href="#guide-to-making-a-transforms3d-release" title="Permalink to this headline">¶</a></h1>
+<p>A guide for developers who are doing a transforms3d release</p>
+<div class="section" id="release-checklist">
+<span id="id1"></span><h2>Release checklist<a class="headerlink" href="#release-checklist" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Review the open list of <a class="reference external" href="http://github.com/matthew-brett/transforms3d/issues">transforms3d issues</a>.  Check whether there are
+outstanding issues that can be closed, and whether there are any issues that
+should delay the release.  Label them !</p>
+</li>
+<li><p class="first">Review and update the release notes.  Review and update the <tt class="file docutils literal"><span class="pre">Changelog</span></tt>
+file.  Get a partial list of contributors with something like:</p>
+<div class="highlight-python"><div class="highlight"><pre>git shortlog -ns 0.6.0..
+</pre></div>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">0.6.0</span></tt> was the last release tag name.</p>
+<p>Then manually go over <tt class="docutils literal"><span class="pre">git</span> <span class="pre">shortlog</span> <span class="pre">0.6.0..</span></tt> to make sure the release notes
+are as complete as possible and that every contributor was recognized.</p>
+</li>
+<li><p class="first">Use the opportunity to update the <tt class="docutils literal"><span class="pre">.mailmap</span></tt> file if there are any
+duplicate authors listed from <tt class="docutils literal"><span class="pre">git</span> <span class="pre">shortlog</span> <span class="pre">-ns</span></tt>.</p>
+</li>
+<li><p class="first">Add any new authors to the <tt class="docutils literal"><span class="pre">AUTHORS</span></tt> file.  Add any new entries to the
+<tt class="docutils literal"><span class="pre">THANKS</span></tt> file.</p>
+</li>
+<li><p class="first">Check the copyright years in <tt class="docutils literal"><span class="pre">doc/conf.py</span></tt> and <tt class="docutils literal"><span class="pre">LICENSE</span></tt></p>
+</li>
+<li><p class="first">If you have <a class="reference external" href="https://travis-ci.org">travis-ci</a> building set up you might want to push the code in its
+current state to a branch that will build, e.g:</p>
+<div class="highlight-python"><div class="highlight"><pre>git branch -D pre-release-test # in case branch already exists
+git co -b pre-release-test
+</pre></div>
+</div>
+</li>
+<li><p class="first">Clean:</p>
+<div class="highlight-python"><div class="highlight"><pre>git clean -fxd
+</pre></div>
+</div>
+</li>
+<li><p class="first">Make sure all tests pass on your local machine (from the transforms3d root
+directory):</p>
+<div class="highlight-python"><div class="highlight"><pre>nosetests --with-doctest transforms3d
+</pre></div>
+</div>
+<p>Do this on a Python 2 and Python 3 setup.</p>
+</li>
+<li><p class="first">Run the same tests after installing into a virtualenv, to test that
+installing works correctly:</p>
+<div class="highlight-python"><div class="highlight"><pre>mkvirtualenv transforms3d-test
+pip install nose wheel
+git clean -fxd
+python setup.py install
+mkdir for_test
+cd for_test
+nosetests --with-doctest transforms3d
+</pre></div>
+</div>
+</li>
+<li><p class="first">Check the documentation doctests:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd doc
+make doctest
+cd ..
+</pre></div>
+</div>
+</li>
+<li><p class="first">The release should now be ready.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="doing-the-release">
+<h2>Doing the release<a class="headerlink" href="#doing-the-release" title="Permalink to this headline">¶</a></h2>
+<p>You might want to make tag the release commit on your local machine, push to
+<a class="reference external" href="http://pypi.python.org/pypi">pypi</a>, review, fix, rebase, until all is good.  Then and only then do you push
+to upstream on github.</p>
+<ul>
+<li><p class="first">Make an annotated tag for the release with tag of form <tt class="docutils literal"><span class="pre">0.6.0</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>git tag -am &#39;Fifth public release&#39; 0.6.0
+</pre></div>
+</div>
+<p>Because we&#8217;re using <a class="reference external" href="https://github.com/warner/python-versioneer">versioneer</a> it is the tag which sets the package
+version.</p>
+</li>
+<li><p class="first">Once everything looks good, upload the source release to PyPi.  See
+<a class="reference external" href="http://packages.python.org/an_example_pypi_project/setuptools.html">setuptools intro</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre>python setup.py register
+python setup.py sdist --formats=gztar,zip upload
+</pre></div>
+</div>
+</li>
+<li><p class="first">Upload wheels by building in virtualenvs, something like:</p>
+<div class="highlight-python"><div class="highlight"><pre>workon py27
+rm -rf build
+python setup.py bdist_wheel upload
+workon py33
+rm -rf build
+python setup.py bdist_wheel upload
+workon py34
+rm -rf build
+python setup.py bdist_wheel upload
+</pre></div>
+</div>
+</li>
+<li><p class="first">Remember you&#8217;ll need your <tt class="docutils literal"><span class="pre">~/.pypirc</span></tt> file set up right for this to work.
+See <a class="reference external" href="http://packages.python.org/an_example_pypi_project/setuptools.html">setuptools intro</a>.  The file should look something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>[distutils]
+index-servers =
+    pypi
+
+[pypi]
+username:your.pypi.username
+password:your-password
+
+[server-login]
+username:your.pypi.username
+password:your-password
+</pre></div>
+</div>
+</li>
+<li><p class="first">Check how everything looks on pypi - the description, the packages.  If
+necessary delete the release and try again if it doesn&#8217;t look right.</p>
+</li>
+<li><p class="first">Push the tag with <tt class="docutils literal"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">0.6.0</span></tt></p>
+</li>
+<li><p class="first">Announce to the mailing lists.  With fear and trembling.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Guide to making a transforms3d release</a><ul>
+<li><a class="reference internal" href="#release-checklist">Release checklist</a></li>
+<li><a class="reference internal" href="#doing-the-release">Doing the release</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/devel/make_release.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">transforms3d 0.1a documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2015, Christoph Gohlke, Matthew Brett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

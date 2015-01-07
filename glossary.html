@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Glossary &mdash; transforms3d 0.1a documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="transforms3d 0.1a documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">transforms3d 0.1a documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="glossary">
+<h1>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h1>
+<dl class="glossary docutils">
+<dt id="term-affine-matrix">Affine matrix</dt>
+<dd>A matrix implementing an <a class="reference internal" href="#term-affine-transformation"><em class="xref std std-term">affine transformation</em></a> in
+<a class="reference internal" href="#term-homogenous-coordinates"><em class="xref std std-term">homogenous coordinates</em></a>.  For a 3 dimensional transform, the
+matrix is shape 4 by 4.</dd>
+<dt id="term-affine-transformation">Affine transformation</dt>
+<dd>See <a class="reference external" href="http://en.wikipedia.org/wiki/Affine_transformation">wikipedia affine</a> definition.  An affine transformation is a
+<a class="reference internal" href="#term-linear-transformation"><em class="xref std std-term">linear transformation</em></a> followed by a translation.</dd>
+<dt id="term-axis-angle">Axis angle</dt>
+<dd>A representation of rotation.  See: <a class="reference external" href="http://en.wikipedia.org/wiki/Axis_angle">wikipedia axis angle</a> .
+From Euler&#8217;s rotation theorem we know that any rotation or
+sequence of rotations can be represented by a single rotation
+about an axis.  The axis <span class="math">\(\boldsymbol{\hat{u}}\)</span> is a <a class="reference internal" href="#term-unit-vector"><em class="xref std std-term">unit
+vector</em></a>.  The angle is <span class="math">\(\theta\)</span>.  The <a class="reference internal" href="#term-rotation-vector"><em class="xref std std-term">rotation vector</em></a> is a
+more compact representation of <span class="math">\(\theta\)</span> and
+<span class="math">\(\boldsymbol{\hat{u}}\)</span>.</dd>
+<dt id="term-euclidean-norm">Euclidean norm</dt>
+<dd><p class="first">Also called Euclidean length, or L2 norm.  The Euclidean norm
+<span class="math">\(\|\mathbf{x}\|\)</span> of a vector <span class="math">\(\mathbf{x}\)</span> is given by:</p>
+<div class="math">
+\[\|\mathbf{x}\| := \sqrt{x_1^2 + \cdots + x_n^2}\]</div>
+<p class="last">Pure Pythagoras.</p>
+</dd>
+<dt id="term-euler-angles">Euler angles</dt>
+<dd>See: <a class="reference external" href="http://en.wikipedia.org/wiki/Euler_angles">wikipedia Euler angles</a> and <a class="reference external" href="http://mathworld.wolfram.com/EulerAngles.html">Mathworld Euler angles</a>.</dd>
+<dt id="term-gimbal-lock">Gimbal lock</dt>
+<dd>See <a class="reference internal" href="gimbal_lock.html#gimbal-lock"><em>Gimbal lock</em></a></dd>
+<dt id="term-homogenous-coordinates">Homogenous coordinates</dt>
+<dd>See <a class="reference external" href="http://en.wikipedia.org/wiki/Homogeneous_coordinates">wikipedia homogenous coordinates</a></dd>
+<dt id="term-linear-transformation">Linear transformation</dt>
+<dd>A linear transformation is one that preserves lines - that is, if
+any three points are on a line before transformation, they are
+also on a line after transformation.  See <a class="reference external" href="http://en.wikipedia.org/wiki/Linear_transformation">wikipedia linear
+transform</a>.  Rotation, scaling and shear are linear
+transformations.</dd>
+<dt id="term-quaternion">Quaternion</dt>
+<dd>See: <a class="reference external" href="http://en.wikipedia.org/wiki/Quaternion">wikipedia quaternion</a>.  An extension of the complex numbers
+that can represent a rotation.  Quaternions have 4 values, <span class="math">\(w, x,
+y, z\)</span>.  <span class="math">\(w\)</span> is the <em>real</em> part of the quaternion and the vector
+<span class="math">\(x, y, z\)</span> is the <em>vector</em> part of the quaternion.  Quaternions are
+less intuitive to visualize than <a class="reference internal" href="#term-euler-angles"><em class="xref std std-term">Euler angles</em></a> but do not
+suffer from <a class="reference internal" href="#term-gimbal-lock"><em class="xref std std-term">gimbal lock</em></a> and are often used for rapid
+interpolation of rotations.</dd>
+<dt id="term-reflection">Reflection</dt>
+<dd>A transformation that can be thought of as transforming an object
+to its mirror image.  The mirror in the transformation is a plane.
+A plan can be defined with a point and a vector normal to the
+plane.  See <a class="reference external" href="http://en.wikipedia.org/wiki/Reflection_(mathematics)">wikipedia reflection</a>.</dd>
+<dt id="term-rotation-matrix">Rotation matrix</dt>
+<dd>See <a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix">wikipedia rotation matrix</a>.  A rotation matrix is a matrix
+implementing a rotation.  Rotation matrices are square and
+orthogonal.  That means, that the rotation matrix <span class="math">\(R\)</span> has columns
+and rows that are <a class="reference internal" href="#term-unit-vector"><em class="xref std std-term">unit vector</em></a>, and where <span class="math">\(R^T R = I\)</span> (<span class="math">\(R^T\)</span> is
+the transpose and <span class="math">\(I\)</span> is the identity matrix).  Therefore <span class="math">\(R^T =
+R^{-1}\)</span> (<span class="math">\(R^{-1}\)</span> is the inverse).  Rotation matrices also have a
+determinant of <span class="math">\(1\)</span>.</dd>
+<dt id="term-rotation-vector">Rotation vector</dt>
+<dd><p class="first">A representation of an <a class="reference internal" href="#term-axis-angle"><em class="xref std std-term">axis angle</em></a> rotation. The angle
+<span class="math">\(\theta\)</span> and unit vector axis <span class="math">\(\boldsymbol{\hat{u}}\)</span> are stored in a
+<em>rotation vector</em> <span class="math">\(\boldsymbol{u}\)</span>, such that:</p>
+<div class="math">
+\[\theta =  \|\boldsymbol{u}\| \,\]\[\boldsymbol{\hat{u}} = \frac{\boldsymbol{u}}{\|\boldsymbol{u}\|}\]</div>
+<p class="last">where <span class="math">\(\|\boldsymbol{u}\|\)</span> is the <a class="reference internal" href="#term-euclidean-norm"><em class="xref std std-term">Euclidean norm</em></a> of
+<span class="math">\(\boldsymbol{u}\)</span></p>
+</dd>
+<dt id="term-shear-matrix">Shear matrix</dt>
+<dd>Square matrix that results in shearing transforms - see
+<a class="reference external" href="http://en.wikipedia.org/wiki/Shear_matrix">wikipedia shear matrix</a>.</dd>
+<dt id="term-unit-vector">Unit vector</dt>
+<dd>A vector <span class="math">\(\boldsymbol{\hat{u}}\)</span> with a <a class="reference internal" href="#term-euclidean-norm"><em class="xref std std-term">Euclidean norm</em></a>
+of 1.  Normalized vector is a synonym.  The &#8220;hat&#8221; over the
+<span class="math">\(\boldsymbol{\hat{u}}\)</span> is a convention to express the fact that it
+is a unit vector.</dd>
+</dl>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/glossary.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">transforms3d 0.1a documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2015, Christoph Gohlke, Matthew Brett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

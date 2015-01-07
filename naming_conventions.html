@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Naming conventions &mdash; transforms3d 0.1a documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="transforms3d 0.1a documentation" href="index.html" />
+    <link rel="next" title="Gimbal lock" href="gimbal_lock.html" />
+    <link rel="prev" title="Conventions for transforms" href="conventions.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gimbal_lock.html" title="Gimbal lock"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="conventions.html" title="Conventions for transforms"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">transforms3d 0.1a documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="naming-conventions">
+<span id="id1"></span><h1>Naming conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this headline">¶</a></h1>
+<p>In the code, we try to abbreviate common concepts in a standard way.</p>
+<ul class="simple">
+<li><em>aff</em>  - 4x4 <a class="reference internal" href="glossary.html#term-affine-matrix"><em class="xref std std-term">affine matrix</em></a></li>
+<li><em>rmat</em> - 3x3 <a class="reference internal" href="glossary.html#term-rotation-matrix"><em class="xref std std-term">rotation matrix</em></a></li>
+<li><em>smat</em> - 3x3 <a class="reference internal" href="glossary.html#term-shear-matrix"><em class="xref std std-term">shear matrix</em></a></li>
+<li><em>euler</em> - <a class="reference internal" href="glossary.html#term-euler-angles"><em class="xref std std-term">euler angles</em></a></li>
+<li><em>axangle</em> - <a class="reference internal" href="glossary.html#term-axis-angle"><em class="xref std std-term">axis angle</em></a></li>
+<li><em>rvec</em> - <a class="reference internal" href="glossary.html#term-rotation-vector"><em class="xref std std-term">rotation vector</em></a></li>
+<li><em>quat</em> - <a class="reference internal" href="glossary.html#term-quaternion"><em class="xref std std-term">quaternion</em></a></li>
+<li><em>rfmat</em> - <a class="reference internal" href="glossary.html#term-reflection"><em class="xref std std-term">reflection</em></a> matrix</li>
+<li><em>rfvec</em> - vector defining plane for <a class="reference internal" href="glossary.html#term-reflection"><em class="xref std std-term">reflection</em></a></li>
+<li><em>zoom</em> - shape (3,) scaling, sometimes</li>
+<li><em>zdir</em> - factor, direction pair to specify 3D zoom matrix</li>
+<li><em>zdiro</em> - factor, direction, origin triple to specify 4D zoom affine</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="conventions.html"
+                        title="previous chapter">Conventions for transforms</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="gimbal_lock.html"
+                        title="next chapter">Gimbal lock</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/naming_conventions.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gimbal_lock.html" title="Gimbal lock"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="conventions.html" title="Conventions for transforms"
+             >previous</a> |</li>
+        <li><a href="index.html">transforms3d 0.1a documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2015, Christoph Gohlke, Matthew Brett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

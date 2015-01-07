@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Gimbal lock &mdash; transforms3d 0.1a documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1a',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="transforms3d 0.1a documentation" href="index.html" />
+    <link rel="next" title="transforms3d reference" href="reference/index.html" />
+    <link rel="prev" title="Naming conventions" href="naming_conventions.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="reference/index.html" title="transforms3d reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="naming_conventions.html" title="Naming conventions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">transforms3d 0.1a documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="gimbal-lock">
+<span id="id1"></span><h1>Gimbal lock<a class="headerlink" href="#gimbal-lock" title="Permalink to this headline">¶</a></h1>
+<p>See also: <a class="reference external" href="http://en.wikipedia.org/wiki/Gimbal_lock">http://en.wikipedia.org/wiki/Gimbal_lock</a></p>
+<p>Euler angles have a major deficiency, and that is, that it is possible,
+in some rotation sequences, to reach a situation where two of the three
+Euler angles cause rotation around the same axis of the object.  In the
+case below, rotation around the <span class="math">\(x\)</span> axis becomes indistinguishable in
+its effect from rotation around the <span class="math">\(z\)</span> axis, so the <span class="math">\(z\)</span> and <span class="math">\(x\)</span> axis
+angles collapse into one transformation, and the rotation reduces from
+three degrees of freedom to two.</p>
+<p>Imagine that we are using the Euler angle convention of starting with a
+rotation around the <span class="math">\(x\)</span> axis, followed by the <span class="math">\(y\)</span> axis, followed by the
+<span class="math">\(z\)</span> axis.</p>
+<p>Here we see a Spitfire aircraft, flying across the screen.  The <span class="math">\(x\)</span> axis
+is left to right (tail to nose), the <span class="math">\(y\)</span> axis is from the left wing tip
+to the right wing tip (going away from the screen), and the <span class="math">\(z\)</span> axis is
+from bottom to top:</p>
+<img alt="_images/spitfire_0.png" src="_images/spitfire_0.png" />
+<p>Imagine we wanted to do a slight roll with the left wing tilting down
+(rotation about <span class="math">\(x\)</span>) like this:</p>
+<img alt="_images/spitfire_x.png" src="_images/spitfire_x.png" />
+<p>followed by a violent pitch so we are pointing straight up (rotation
+around <span class="math">\(y\)</span> axis):</p>
+<img alt="_images/spitfire_y.png" src="_images/spitfire_y.png" />
+<p>Now we&#8217;d like to do a turn of the nose towards the viewer (and the tail
+away from the viewer):</p>
+<img alt="_images/spitfire_hoped.png" src="_images/spitfire_hoped.png" />
+<p>But, wait, let&#8217;s go back over that again.  Look at the result of the
+rotation around the <span class="math">\(y\)</span> axis.  Notice that the <span class="math">\(x\)</span> axis, as was, is now
+aligned with the <span class="math">\(z\)</span> axis, as it is now.  Rotating around the <span class="math">\(z\)</span> axis
+will have exactly the same effect as adding an extra rotation around the
+<span class="math">\(x\)</span> axis at the beginning.  That means that, when there is a <span class="math">\(y\)</span> axis
+rotation that rotates the <span class="math">\(x\)</span> axis onto the <span class="math">\(z\)</span> axis (a rotation of
+<span class="math">\(\pm\pi/2\)</span> around the <span class="math">\(y\)</span> axis) - the <span class="math">\(x\)</span> and <span class="math">\(y\)</span> axes are &#8220;locked&#8221;
+together.</p>
+<div class="section" id="mathematics-of-gimbal-lock">
+<h2>Mathematics of gimbal lock<a class="headerlink" href="#mathematics-of-gimbal-lock" title="Permalink to this headline">¶</a></h2>
+<p>We see gimbal lock for this type of Euler axis convention, when
+<span class="math">\(\cos(\beta) = 0\)</span>, where <span class="math">\(\beta\)</span> is the angle of rotation around the <span class="math">\(y\)</span>
+axis.  By &#8220;this type of convention&#8221; we mean using rotation around all 3
+of the <span class="math">\(x\)</span>, <span class="math">\(y\)</span> and <span class="math">\(z\)</span> axes, rather than using the same axis twice -
+e.g. the physics convention of <span class="math">\(z\)</span> followed by <span class="math">\(x\)</span> followed by <span class="math">\(z\)</span> axis
+rotation (the physics convention has different properties to its gimbal
+lock).</p>
+<p>We can show how gimbal lock works by creating a rotation matrix for the
+three component rotations. Recall that, for a rotation of <span class="math">\(\alpha\)</span>
+radians around <span class="math">\(x\)</span>, followed by a rotation <span class="math">\(\beta\)</span> around <span class="math">\(y\)</span>, followed
+by rotation <span class="math">\(\gamma\)</span> around <span class="math">\(z\)</span>, the rotation matrix <span class="math">\(R\)</span> is:</p>
+<div class="math">
+\[\begin{split}R = \left(\begin{smallmatrix}\operatorname{cos}\left(\beta\right) \operatorname{cos}\left(\gamma\right) &amp; - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\beta\right) &amp; \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\beta\right)\\\operatorname{cos}\left(\beta\right) \operatorname{sin}\left(\gamma\right) &amp; \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\beta\right) \operatorname{sin}\left(\gamma\right) &amp;- \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) + \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\beta\right) \operatorname{sin}\left(\gamma\right)\\- \operatorname{sin}\left(\beta\right) &amp; \operatorname{cos}\left(\beta\right) \operatorname{sin}\left(\alpha\right) &amp; \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\beta\right)\end{smallmatrix}\right)\end{split}\]</div>
+<p>When <span class="math">\(\cos(\beta) = 0\)</span>, <span class="math">\(\sin(\beta) = \pm1\)</span> and <span class="math">\(R\)</span> simplifies to:</p>
+<div class="math">
+\[\begin{split}R = \left(\begin{smallmatrix}0 &amp; - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \pm{1} \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) &amp; \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \pm{1} \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right)\\0 &amp; \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \pm{1} \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) &amp; - \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) + \pm{1} \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right)\\- \pm{1} &amp; 0 &amp; 0\end{smallmatrix}\right)\end{split}\]</div>
+<p>When <span class="math">\(\sin(\beta) = 1\)</span>:</p>
+<div class="math">
+\[\begin{split}R = \left(\begin{smallmatrix}0 &amp; \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) &amp; \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right)\\0 &amp; \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) &amp; \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) - \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right)\\-1 &amp; 0 &amp; 0\end{smallmatrix}\right)\end{split}\]</div>
+<p>From the <a class="reference external" href="http://en.wikipedia.org/wiki/List_of_trigonometric_identities#Angle_sum_and_difference_identities">angle sum and difference identities</a>
+(see also <a class="reference external" href="http://www.themathpage.com/atrig/sum-proof.htm">geometric proof</a>, <a class="reference external" href="http://mathworld.wolfram.com/TrigonometricAdditionFormulas.html">Mathworld treatment</a>) we
+remind ourselves that, for any two angles <span class="math">\(\alpha\)</span> and <span class="math">\(\beta\)</span>:</p>
+<div class="math">
+\[\sin(\alpha \pm \beta) = \sin \alpha \cos \beta \pm \cos \alpha \sin \beta \,\]\[\cos(\alpha \pm \beta) = \cos \alpha \cos \beta \mp \sin \alpha \sin \beta\]</div>
+<p>We can rewrite <span class="math">\(R\)</span> as:</p>
+<div class="math">
+\[\begin{split}R = \left(\begin{smallmatrix}0 &amp; V_{1} &amp; V_{2}\\0 &amp; V_{2} &amp; - V_{1}\\-1 &amp; 0 &amp; 0\end{smallmatrix}\right)\end{split}\]</div>
+<p>where:</p>
+<div class="math">
+\[V_1 = \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) = \sin(\alpha - \gamma) \,\]\[V_2 =  \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) = \cos(\alpha - \gamma)\]</div>
+<p>We immediately see that <span class="math">\(\alpha\)</span> and <span class="math">\(\gamma\)</span> are going to lead the same
+transformation - the mathematical expression of the observation on the
+spitfire above, that rotation around the <span class="math">\(x\)</span> axis is equivalent to
+rotation about the <span class="math">\(z\)</span> axis.</p>
+<p>It&#8217;s easy to do the same set of reductions, with the same conclusion,
+for the case where <span class="math">\(\sin(\beta) = -1\)</span> - see
+<a class="reference external" href="http://www.gregslabaugh.name/publications/euler.pdf">http://www.gregslabaugh.name/publications/euler.pdf</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Gimbal lock</a><ul>
+<li><a class="reference internal" href="#mathematics-of-gimbal-lock">Mathematics of gimbal lock</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="naming_conventions.html"
+                        title="previous chapter">Naming conventions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="reference/index.html"
+                        title="next chapter">transforms3d reference</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/gimbal_lock.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="reference/index.html" title="transforms3d reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="naming_conventions.html" title="Naming conventions"
+             >previous</a> |</li>
+        <li><a href="index.html">transforms3d 0.1a documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2015, Christoph Gohlke, Matthew Brett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
