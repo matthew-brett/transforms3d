@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 ''' Installation script for transforms3d package '''
-from glob import glob
+import sys
+
+# For some commands, use setuptools.
+if len(set(('develop', 'bdist_egg', 'bdist_rpm', 'bdist', 'bdist_dumb',
+            'install_egg_info', 'egg_info', 'easy_install', 'bdist_wheel',
+            'bdist_mpkg')).intersection(sys.argv)) > 0:
+    import setuptools
+
 from distutils.core import setup
 
 setup(name='transforms3d',
