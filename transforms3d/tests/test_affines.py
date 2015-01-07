@@ -1,13 +1,13 @@
 ''' Test module for affines '''
 
 import numpy as np
+from itertools import permutations
 
 from numpy.testing import assert_array_equal, assert_raises, dec, \
     assert_array_almost_equal
     
 from nose.tools import assert_true, assert_false
 
-from ..utils import permutations
 
 from ..affines import shears2matrix, compose, decompose, \
     decompose44

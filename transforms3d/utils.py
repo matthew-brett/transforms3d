@@ -1,6 +1,7 @@
 ''' Utilities for transforms3d '''
 
 import math
+from itertools import permutations
 
 import numpy as np
 
@@ -59,58 +60,6 @@ def vector_norm(vec):
     '''
     vec = np.asarray(vec)
     return math.sqrt((vec**2).sum())
-
-
-def permutations(iterable, r=None):
-    ''' Generate all permutations of `iterable`, of length `r`
-
-    From Python docs, expressing 2.6 ``itertools.permutations``
-    algorithm.
-
-    If the elements are unique, then the resulting permutations will
-    also be unique.
-
-    Parameters
-    ----------
-    iterable : iterable
-       returning elements that will be permuted
-    r : None or int
-       length of sequence to return, if None (default) use length of
-       `iterable`
-
-    Returns
-    -------
-    gen : generator
-       generator that yields permutations
-    
-    Examples
-    --------
-    >>> tuple(permutations(range(3)))
-    ((0, 1, 2), (0, 2, 1), (1, 0, 2), (1, 2, 0), (2, 0, 1), (2, 1, 0))
-    >>> tuple(permutations(range(3), 2))
-    ((0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1))
-    '''
-    pool = tuple(iterable)
-    n = len(pool)
-    r = n if r is None else r
-    if r > n:
-        return
-    indices = range(n)
-    cycles = range(n, n-r, -1)
-    yield tuple(pool[i] for i in indices[:r])
-    while n:
-        for i in reversed(range(r)):
-            cycles[i] -= 1
-            if cycles[i] == 0:
-                indices[i:] = indices[i+1:] + indices[i:i+1]
-                cycles[i] = n - i
-            else:
-                j = cycles[i]
-                indices[i], indices[-j] = indices[-j], indices[i]
-                yield tuple(pool[i] for i in indices[:r])
-                break
-        else:
-            return
 
 
 def inique(iterable):
