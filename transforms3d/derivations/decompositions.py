@@ -4,7 +4,7 @@ import numpy as np
 from sympy import Symbol, symbols
 from sympy.matrices import Matrix
 
-sx, sy, sz, sxy, sxz, syz = symbols('sx', 'sy', 'sz', 'sxy', 'sxz', 'syz')
+sx, sy, sz, sxy, sxz, syz = symbols('sx, sy, sz, sxy, sxz, syz')
 
 R = Matrix(3, 3, lambda i, j : Symbol('R%d%d' % (i, j)))
 Z = Matrix(np.diag([sx, sy, sz]))

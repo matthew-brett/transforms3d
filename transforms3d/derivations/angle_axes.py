@@ -81,7 +81,7 @@ def angle_axis2mat(theta, vector):
 
 
 # Formulae for axis_angle to matrix
-theta, v0, v1, v2 = symbols('theta', 'v0', 'v1', 'v2')
+theta, v0, v1, v2 = symbols('theta, v0, v1, v2')
 vec = (v0, v1, v2)
 
 # These give the same formula
@@ -97,7 +97,7 @@ R = Matrix(3, 3, lambda i, j : Symbol('R%d%d' % (i, j)))
 aR = eye(4)
 aR[:3,:3] = R
 T = eye(4)
-point = Matrix(3, 1, symbols('P0', 'P1', 'P2'))
+point = Matrix(3, 1, symbols('P0, P1, P2'))
 T[:3,3] = point
 
 # Move to new origin (inverse point), rotate, move back to original origin
