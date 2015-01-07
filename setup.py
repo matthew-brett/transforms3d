@@ -9,7 +9,7 @@ setup(name='transforms3d',
       author='Christoph Gohlke, Matthew Brett',
       author_email='Christoph Gohlke, matthew.brett@gmail.com',
       url='http://github.com/matthew-brett/transforms3d',
-      packages=['transforms3d', 'transforms3d.derivations'],
-      scripts=glob('scripts/*.py')
+      packages=['transforms3d',
+                'transforms3d.derivations',
+                'transforms3d.tests'],
       )
-

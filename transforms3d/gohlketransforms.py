@@ -1659,7 +1659,7 @@ def _import_module(module_name, warn=True, prefix='_py_', ignore='_'):
         return True
 
 
-_import_module('_transformations')
+_import_module('_transformations', warn=False)
 
 # Documentation in HTML format can be generated with Epydoc
 __docformat__ = "restructuredtext en"
