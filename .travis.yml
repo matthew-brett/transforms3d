@@ -19,6 +19,11 @@ matrix:
     - python: 2.7
       env:
         - DEPENDS="numpy==1.5.1"
+    # With sympy we can run doctests
+    - python: 2.7
+      env:
+        - DEPENDS="numpy sympy"
+        - DOCTESTS=1
 
 before_install:
     - source tools/travis_tools.sh
@@ -42,7 +47,10 @@ script:
       cp ../.coveragerc .;
       COVER_ARGS="--with-coverage --cover-package transforms3d";
       fi
-    - nosetests $COVER_ARGS transforms3d
+    - if [ "${DOCTESTS}" == "1" ]; then
+      DOCTEST_ARGS="--with-doctests"
+      fi
+    - nosetests $COVER_ARGS $DOCTEST_ARGS transforms3d
 
 after_success:
     - if [ "${COVERAGE}" == "1" ]; then coveralls; fi
