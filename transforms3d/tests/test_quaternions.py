@@ -11,6 +11,7 @@ from nose.tools import (assert_raises, assert_true)
 from numpy.testing import assert_array_almost_equal, assert_array_equal
 
 from .. import quaternions as tq
+from .. import axangles as taa
 
 from .samples import euler_mats
 
@@ -54,11 +55,11 @@ def test_fillpos():
     yield assert_true, wxyz[0] == 0.0
 
 
-def test_conjugate():
+def test_qconjugate():
     # Takes sequence
-    cq = tq.conjugate((1, 0, 0, 0))
+    cq = tq.qconjugate((1, 0, 0, 0))
     # Returns float type
-    yield assert_true, cq.dtype.kind == 'f'
+    assert_true(cq.dtype.kind == 'f')
 
 
 def test_quat2mat():
@@ -73,41 +74,41 @@ def test_quat2mat():
     yield assert_array_almost_equal, M, np.diag([1, -1, -1])
     M = tq.quat2mat([0, 0, 0, 0])
     yield assert_array_almost_equal, M, np.eye(3)
-    
 
-def test_inverse():
+
+def test_qinverse():
     # Takes sequence
-    iq = tq.inverse((1, 0, 0, 0))
+    iq = tq.qinverse((1, 0, 0, 0))
     # Returns float type
     yield assert_true, iq.dtype.kind == 'f'
     for M, q in eg_pairs:
-        iq = tq.inverse(q)
+        iq = tq.qinverse(q)
         iqM = tq.quat2mat(iq)
         iM = np.linalg.inv(M)
         yield assert_true, np.allclose(iM, iqM)
 
 
-def test_eye():
-    qi = tq.eye()
+def test_qeye():
+    qi = tq.qeye()
     yield assert_true, qi.dtype.kind == 'f'
     yield assert_true, np.all([1,0,0,0]==qi)
     yield assert_true, np.allclose(tq.quat2mat(qi), np.eye(3))
 
 
-def test_norm():
-    qi = tq.eye()
-    yield assert_true, tq.norm(qi) == 1
-    yield assert_true, tq.isunit(qi)
+def test_qnorm():
+    qi = tq.qeye()
+    yield assert_true, tq.qnorm(qi) == 1
+    yield assert_true, tq.qisunit(qi)
     qi[1] = 0.2
-    yield assert_true, not tq.isunit(qi)
+    yield assert_true, not tq.qisunit(qi)
 
 
 @slow
-def test_mult():
+def test_qmult():
     # Test that quaternion * same as matrix * 
     for M1, q1 in eg_pairs[0::4]:
         for M2, q2 in eg_pairs[1::4]:
-            q21 = tq.mult(q2, q1)
+            q21 = tq.qmult(q2, q1)
             yield assert_array_almost_equal, np.dot(M2,M1), tq.quat2mat(q21)
 
 
@@ -177,13 +178,9 @@ def test_axis_angle():
         vec, theta = tq.quat2axangle(q)
         q2 = tq.axangle2quat(vec, theta)
         yield tq.nearly_equivalent, q, q2
-        aa_mat = tq.axangle2rmat(vec, theta)
+        aa_mat = taa.axangle2mat(vec, theta)
         yield assert_array_almost_equal, aa_mat, M
         aa_mat2 = sympy_aa2mat(vec, theta)
         yield assert_array_almost_equal, aa_mat, aa_mat2
         aa_mat22 = sympy_aa2mat2(vec, theta)
         yield assert_array_almost_equal, aa_mat, aa_mat22
-
-
-
-            

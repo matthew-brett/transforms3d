@@ -176,8 +176,6 @@ import math
 
 import numpy as np
 
-from transforms3d.affines import axangle2aff
-
 
 def reflection_matrix(point, normal):
     """Return matrix to mirror at plane defined by point and normal vector.
