@@ -272,11 +272,11 @@ def shear_adn2aff(angle, direction, normal, point=None):
     True
     """
     M = np.eye(4)
-    M[:3,:3] = shear_adn2smat(angle, direction, normal)
-    if not point is None:
-        normal = normalized_vector(normal)
-        direction = normalized_vector(direction)
-        angle = math.tan(angle)
+    normal = normalized_vector(normal)
+    direction = normalized_vector(direction)
+    angle = math.tan(angle)
+    M[:3, :3] = np.eye(3) + angle * np.outer(direction, normal)
+    if point is not None:
         M[:3, 3] = -angle * np.dot(point, normal) * direction
     return M
 
