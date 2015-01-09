@@ -100,9 +100,6 @@ def test_shears():
     S1 = tg.shear_matrix(angle, direct, point, normal)
     yield assert_array_almost_equal, S0, S1, 8
     with warnings.catch_warnings():
-        warnings.simplefilter('error')
-        assert_raises(UserWarning, tss.aff2sadn,S0)
-        warnings.simplefilter('ignore')
         a1, d1, n0, p0 = tss.aff2sadn(S0)
     a0, d0, n0, p0 = tss.aff2sadn(S0)
     a1, d1, p1, n1 = tg.shear_from_matrix(S0)
