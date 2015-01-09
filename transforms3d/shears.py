@@ -189,13 +189,12 @@ def mat2sadn(mat):
 
     Examples
     --------
-    >>> angle = (np.random.random() - 0.5) * 4*math.pi
-    >>> direct = np.random.random(3) - 0.5
-    >>> normal = np.cross(direct, np.random.random(3))
-    >>> S0 = sadn2mat(angle, direct, normal)
-    >>> angle, direct, normal = mat2sadn(S0)
-    >>> S1 = sadn2mat(angle, direct, normal)
-    >>> np.allclose(S0, S1)
+    >>> M = sadn2mat(0.5, [1, 0, 0], [0, 1, 0])
+    >>> angle, direction, normal = mat2sadn(M)
+    >>> angle, direction, normal
+    (0.5, array([-1.,  0.,  0.]), array([ 0., -1.,  0.]))
+    >>> M_again = sadn2mat(angle, direction, normal)
+    >>> np.allclose(M, M_again)
     True
     """
     mat = np.asarray(mat)
