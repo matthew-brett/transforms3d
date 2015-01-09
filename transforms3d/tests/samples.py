@@ -20,6 +20,5 @@ euler_tuples = tuple((x, y, z)
                      for x in params
                      for y in params
                      for z in params)
-    
-euler_mats = tuple(euler2mat(*t) for t in euler_tuples)
 
+euler_mats = tuple(euler2mat(*t) for t in euler_tuples)

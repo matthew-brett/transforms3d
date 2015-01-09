@@ -1,13 +1,18 @@
-''' Reflections '''
+""" Functions to work with reflections
 
-import math
+Terms used in function names:
+
+* *mat* : array shape (3, 3) (3D non-homogenous coordinates)
+* *aff* : affine array shape (4, 4) (3D homogenous coordinates)
+* *rfnorm* : reflection in plane defined by normal vector and optional point.
+"""
 
 import numpy as np
 
 from .utils import normalized_vector
 
 
-def rfvec2rfmat(normal):
+def rfnorm2mat(normal):
     """ Matrix to reflect in plane through origin, orthogonal to `normal`
 
     Parameters
@@ -17,7 +22,7 @@ def rfvec2rfmat(normal):
 
     Returns
     -------
-    rfmat : array shape (3,3)
+    mat : array shape (3,3)
 
     Notes
     -----
@@ -44,7 +49,7 @@ def rfvec2rfmat(normal):
     return M - 2.0 * np.outer(normal, normal) / norm2
 
 
-def rfvec2aff(normal, point=None):
+def rfnorm2aff(normal, point=None):
     """Affine to mirror at plane defined by point and normal vector.
 
     Parameters
@@ -62,7 +67,7 @@ def rfvec2aff(normal, point=None):
     --------
     >>> normal = np.random.random(3) - 0.5
     >>> point = np.random.random(3) - 0.5
-    >>> R = rfvec2aff(normal, point)
+    >>> R = rfnorm2aff(normal, point)
     >>> np.allclose(2., np.trace(R))
     True
     >>> np.allclose(point, np.dot(R[:3,:3], point) + R[:3,3])
@@ -70,22 +75,22 @@ def rfvec2aff(normal, point=None):
 
     Notes
     -----
-    See :func:`rfvec2rfmat`
+    See :func:`rfnorm2mat`
     """
     M = np.eye(4)
-    M[:3,:3] = rfvec2rfmat(normal)
+    M[:3,:3] = rfnorm2mat(normal)
     if not point is None:
         normal = normalized_vector(normal)
         M[:3, 3] = (2.0 * np.dot(point, normal)) * normal
     return M
 
 
-def rfmat2rfvec(rfmat):
-    """Mirror plane normal vector from `rfmat` matrix.
+def mat2rfnorm(mat):
+    """Mirror plane normal vector from `mat` matrix.
 
     Parameters
     ----------
-    rfmat : array-like, shape (3,3)
+    mat : array-like, shape (3,3)
 
     Returns
     -------
@@ -96,27 +101,27 @@ def rfmat2rfvec(rfmat):
     ------
     ValueError
        If there is no eigenvector with eigenvalue -1
-       
+
     Examples
     --------
     >>> normal = np.random.random(3) - 0.5
-    >>> M0 = rfvec2rfmat(normal)
-    >>> normal = rfmat2rfvec(M0)
-    >>> M1 = rfvec2rfmat(normal)
+    >>> M0 = rfnorm2mat(normal)
+    >>> normal = mat2rfnorm(M0)
+    >>> M1 = rfnorm2mat(normal)
     >>> np.allclose(M0, M1)
     True
     """
-    M = np.asarray(rfmat)
+    mat = np.asarray(mat)
     # normal: unit eigenvector corresponding to eigenvalue -1
-    l, V = np.linalg.eig(rfmat)
+    l, V = np.linalg.eig(mat)
     m1_factors, = np.nonzero(abs(np.real(l.squeeze()) + 1.0) < 1e-8)
     if m1_factors.size == 0:
         raise ValueError("no unit eigenvector corresponding to eigenvalue -1")
     return np.real(V[:, m1_factors[0]]).squeeze()
 
 
-def aff2rfvec(aff):
-    """Mirror plane normal vector and point from affine.
+def aff2rfnorm(aff):
+    """Mirror plane normal vector and point from affine `aff`
 
     Parameters
     ----------
@@ -125,28 +130,29 @@ def aff2rfvec(aff):
     Returns
     -------
     normal : array shape (3,)
-       vector normal to point (and therefore mirror plane)
+       vector normal to point (and therefore mirror plane).
     point : array shape (3,)
-       x, y, x coordinates of point
+       x, y, x coordinates of point that, together with normal, define the
+       reflection plane.
 
     Raises
     ------
     ValueError
        If there is no eigenvector for aff[:3,:3] with eigenvalue -1 or if
        there is no eigenvector for `aff` with eigenvalue 1.
-       
+
     Examples
     --------
     >>> v0 = np.random.random(3) - 0.5
     >>> v1 = np.random.random(3) - 0.5
-    >>> M0 = rfvec2aff(v0, v1)
-    >>> normal, point = aff2rfvec(M0)
-    >>> M1 = rfvec2aff(normal, point)
+    >>> M0 = rfnorm2aff(v0, v1)
+    >>> normal, point = aff2rfnorm(M0)
+    >>> M1 = rfnorm2aff(normal, point)
     >>> np.allclose(M0, M1)
     True
     """
     aff = np.asarray(aff)
-    normal = rfmat2rfvec(aff[:3,:3])
+    normal = mat2rfnorm(aff[:3,:3])
     # point: any unit eigenvector corresponding to eigenvalue 1
     l, V = np.linalg.eig(aff)
     near_1, = np.nonzero(abs(np.real(l.squeeze()) - 1.0) < 1e-8)
@@ -155,5 +161,3 @@ def aff2rfvec(aff):
     point = np.real(V[:, near_1[-1]]).squeeze()
     point = point[:3] / point[3]
     return normal, point
-
-

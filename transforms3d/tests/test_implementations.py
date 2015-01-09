@@ -76,13 +76,13 @@ def test_reflections():
     for i in range(5):
         v0 = np.random.random(3) - 0.5
         v1 = np.random.random(3) - 0.5
-        M0 = trf.rfvec2aff(v0)
+        M0 = trf.rfnorm2aff(v0)
         M1 = tg.reflection_matrix([0,0,0], v0)
         yield assert_array_almost_equal, M0, M1, 8
-        M0 = trf.rfvec2aff(v0, v1)
+        M0 = trf.rfnorm2aff(v0, v1)
         M1 = tg.reflection_matrix(v1, v0)
         yield assert_array_almost_equal, M0, M1, 8
-        n0, p0 = trf.aff2rfvec(M0)
+        n0, p0 = trf.aff2rfnorm(M0)
         p1, n1 = tg.reflection_from_matrix(M0)
         yield assert_array_almost_equal, n0, n1
         yield assert_array_almost_equal, p0, p1[:3]
