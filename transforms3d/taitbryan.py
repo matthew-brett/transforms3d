@@ -25,7 +25,7 @@ specify the axes around which each of the rotations corresponding to
 
 There are therefore three axes for the rotations :math:`alpha`,
 :math:`beta` and :math:`gamma`; let's call them :math:`i` :math:`j`,
-:math:`k`. 
+:math:`k`.
 
 Let us express the rotation :math:`alpha` around axis `i` as a 3 by 3
 rotation matrix `A`.  Similarly :math:`beta` around `j` becomes 3 x 3
@@ -73,6 +73,15 @@ We are using the following conventions:
 The convention of rotation around ``z``, followed by rotation around
 ``y``, followed by rotation around ``x``, is known (confusingly) as
 "xyz", pitch-roll-yaw, Cardan angles, or Tait-Bryan angles.
+
+Terms used in function names:
+
+* *mat* : array shape (3, 3) (3D non-homogenous coordinates)
+* *aff* : affine array shape (4, 4) (3D homogenous coordinates)
+* *euler* : (sequence of) rotation angles about the z, y, x axes (in that
+  order)
+* *axangle* : rotations encoded by axis vector and angle scalar
+* *quat* : quaternion shape (4,)
 '''
 
 import math
@@ -80,6 +89,7 @@ import numpy as np
 
 from functools import reduce
 
+from .axangles import axangle2mat
 
 _FLOAT_EPS_4 = np.finfo(float).eps * 4.0
 
@@ -327,7 +337,7 @@ def quat2euler(q):
     return mat2euler(nq.quat2mat(q))
 
 
-def euler2angle_axis(z=0, y=0, x=0):
+def euler2axangle(z=0, y=0, x=0):
     ''' Return angle, axis corresponding to these Euler angles
 
     Uses the z, then y, then x convention above
@@ -391,7 +401,4 @@ def axangle2euler(vector, theta):
     functions, but the reduction in computation is small, and the code
     repetition is large.
     '''
-    # delayed import to avoid cyclic dependencies
-    from . import quaternions as nq
-    M = nq.axangle2rmat(vector, theta)
-    return mat2euler(M)
+    return mat2euler(axangle2mat(vector, theta))

@@ -6,6 +6,7 @@ from numpy import pi
 
 from .. import quaternions as tq
 from .. import taitbryan as ttb
+from .. import axangles as taa
 
 from nose.tools import assert_true, assert_false, assert_equal
 
@@ -24,7 +25,7 @@ def x_only(x):
          [0, cosx, -sinx],
          [0, sinx, cosx]])
 
-                 
+
 def y_only(y):
     cosy = np.cos(y)
     siny = np.sin(y)
@@ -88,7 +89,7 @@ def test_basic_euler():
     yield assert_true, np.allclose(ttb.euler2mat(x=-xr),
                        np.linalg.inv(ttb.euler2mat(x=xr)))
 
-        
+
 def test_euler_mat():
     M = ttb.euler2mat()
     yield assert_array_equal, M, np.eye(3)
@@ -155,4 +156,15 @@ def test_quats():
         # same rotation matrix
         M2 = ttb.euler2mat(zp, yp, xp)
         yield assert_array_almost_equal, M1, M2
-        
+
+
+def test_axangle_euler():
+    # Conversion between axis, angle and euler
+    for x, y, z in euler_tuples:
+        M1 = ttb.euler2mat(z, y, x)
+        ax, angle = ttb.euler2axangle(z, y, x)
+        M2 = taa.axangle2mat(ax, angle)
+        assert_array_almost_equal(M1, M2)
+        zp, yp, xp = ttb.axangle2euler(ax, angle)
+        M3 = ttb.euler2mat(zp, yp, xp)
+        assert_array_almost_equal(M1, M3)
