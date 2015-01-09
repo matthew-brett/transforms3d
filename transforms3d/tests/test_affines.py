@@ -3,33 +3,13 @@
 import numpy as np
 from itertools import permutations
 
-from numpy.testing import assert_array_equal, assert_raises, dec, \
-    assert_array_almost_equal
+from numpy.testing import (assert_array_equal, assert_raises, dec,
+                           assert_array_almost_equal)
 
 from nose.tools import assert_true, assert_false
 
-from ..affines import shears2matrix, compose, decompose, \
-    decompose44
+from ..affines import (compose, decompose, decompose44)
 from ..taitbryan import euler2mat
-
-
-def test_shears():
-    for n, N in ((1, 2),
-                 (3, 3),
-                 (6, 4),
-                 (10, 5),
-                 (15, 6),
-                 (21, 7),
-                 (78, 13)):
-        shears = np.arange(n)
-        M = shears2matrix(shears)
-        e = np.eye(N)
-        inds = np.triu(np.ones((N,N)), 1).astype(bool)
-        e[inds] = shears
-        yield assert_array_equal, M, e
-    for n in (2, 4, 5, 7, 8, 9):
-        shears = np.zeros(n)        
-        yield assert_raises, ValueError, shears2matrix, shears
 
 
 def test_compose():

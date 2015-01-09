@@ -5,62 +5,7 @@ import math
 import numpy as np
 
 from .quaternions import axangle2rmat
-
-# Caching dictionary for common shear Ns, indices
-_shearers = {}
-for n in range(1,11):
-    x = (n**2 + n)/2.0
-    i = n+1
-    _shearers[x] = (i, np.triu(np.ones((i,i)), 1).astype(bool))
-
-
-def shears2matrix(shears):
-    ''' Construct shear matrix from shear vector
-
-    Parameters
-    ----------
-    shears : array, shape (N,)
-       shear vector
-
-    Returns
-    -------
-    SM : array, shape (N, N)
-       shear matrix
-
-    Examples
-    --------
-    >>> S = [0.1,0.2,0.3]
-    >>> shears2matrix(S)
-    array([[ 1. ,  0.1,  0.2],
-           [ 0. ,  1. ,  0.3],
-           [ 0. ,  0. ,  1. ]])
-    >>> shears2matrix([1])
-    array([[ 1.,  1.],
-           [ 0.,  1.]])
-    >>> shears2matrix([1, 2])
-    Traceback (most recent call last):
-       ...
-    ValueError: 2 is a strange number of shear elements
-
-    Notes
-    -----
-    Shear lengths are triangular numbers.
-
-    See http://en.wikipedia.org/wiki/Triangular_number
-    '''
-    n = len(shears)
-    # cached case
-    if n in _shearers:
-        N, inds = _shearers[n]
-    else: # General case
-        N = ((-1+math.sqrt(8*n+1))/2.0)+1 # n+1 th root
-        if N != math.floor(N):
-            raise ValueError('%d is a strange number of shear elements' %
-                             n)
-        inds = np.triu(np.ones((N,N)), 1).astype(bool)
-    M = np.eye(N)
-    M[inds] = shears
-    return M
+from .shears import sutri2mat
 
 
 def decompose44(A44):
@@ -70,7 +15,7 @@ def decompose44(A44):
 
     This is the same as :func:`decompose` but specialized for 4x4 affines.
 
-    Decomposes `A44` into ``T, R, Z, S``, such that:
+    Decomposes `A44` into ``T, R, Z, S``, such that::
 
        Smat = np.array([[1, S[0], S[1]],
                         [0,    1, S[2]],
@@ -354,7 +299,7 @@ def compose(T, R, Z, S=None):
         raise ValueError('Expecting shape (%d,%d) for rotations' % (n,n))
     A = np.eye(n+1)
     if not S is None:
-        Smat = shears2matrix(S)
+        Smat = sutri2mat(S)
         ZS = np.dot(np.diag(Z), Smat)
     else:
         ZS = np.diag(Z)

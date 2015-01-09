@@ -5,7 +5,7 @@ import warnings
 
 import numpy as np
 
-from nose.tools import assert_true, assert_false, assert_equal
+from nose.tools import assert_true, assert_false, assert_equal, assert_raises
 
 from numpy.testing import assert_array_equal, assert_array_almost_equal
 
@@ -38,6 +38,34 @@ def test_zdir_zmat_aff():
         S0 = tzs.zfdir2aff(factor, direct, origin)
         f2, d2, o2 = tzs.aff2zfdir(S0)
         yield assert_array_almost_equal, S0, tzs.zfdir2aff(f2, d2, o2)
+
+
+def test_sutri():
+    # Shears encoded as vector from triangle above diagonal of shear mat
+    S = [0.1, 0.2, 0.3]
+    assert_array_equal(tss.sutri2mat(S),
+                       [[ 1. ,  0.1,  0.2],
+                        [ 0. ,  1. ,  0.3],
+                        [ 0. ,  0. ,  1. ]])
+    assert_array_equal(tss.sutri2mat([1]),
+                       [[ 1.,  1.],
+                        [ 0.,  1.]])
+    for n, N in ((1, 2),
+                 (3, 3),
+                 (6, 4),
+                 (10, 5),
+                 (15, 6),
+                 (21, 7),
+                 (78, 13)):
+        shears = np.arange(n)
+        M = tss.sutri2mat(shears)
+        e = np.eye(N)
+        inds = np.triu(np.ones((N,N)), 1).astype(bool)
+        e[inds] = shears
+        assert_array_equal(M, e)
+    for n in (2, 4, 5, 7, 8, 9):
+        shears = np.zeros(n)
+        assert_raises(ValueError, tss.sutri2mat, shears)
 
 
 def test_aff2sadn():

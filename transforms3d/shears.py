@@ -4,6 +4,8 @@ Terms used in function names:
 
 * *mat* : array shape (3, 3) (3D non-homogenous coordinates)
 * *aff* : affine array shape (4, 4) (3D homogenous coordinates)
+* *sutri* : shears encoded by vector giving triangular portion above diagonal
+  of NxN array (for ND transformation)
 * *sadn* : shears encoded by angle scalar, direction vector, normal vector
   (with optional point vector)
 '''
@@ -15,6 +17,63 @@ import warnings
 import numpy as np
 
 from .utils import normalized_vector, vector_norm
+
+
+# Caching dictionary for common shear Ns, indices
+_shearers = {}
+for n in range(1,11):
+    x = (n**2 + n)/2.0
+    i = n+1
+    _shearers[x] = (i, np.triu(np.ones((i,i)), 1).astype(bool))
+
+
+def sutri2mat(sutri):
+    ''' Construct shear matrix from upper triangular vector
+
+    Parameters
+    ----------
+    sutri : array, shape (N,)
+       vector giving triangle above diagonal of shear matrix.
+
+    Returns
+    -------
+    SM : array, shape (N, N)
+       shear matrix
+
+    Examples
+    --------
+    >>> S = [0.1, 0.2, 0.3]
+    >>> sutri2mat(S)
+    array([[ 1. ,  0.1,  0.2],
+           [ 0. ,  1. ,  0.3],
+           [ 0. ,  0. ,  1. ]])
+    >>> sutri2mat([1])
+    array([[ 1.,  1.],
+           [ 0.,  1.]])
+    >>> sutri2mat([1, 2])
+    Traceback (most recent call last):
+       ...
+    ValueError: 2 is a strange number of shear elements
+
+    Notes
+    -----
+    Shear lengths are triangular numbers.
+
+    See http://en.wikipedia.org/wiki/Triangular_number
+    '''
+    n = len(sutri)
+    # cached case
+    if n in _shearers:
+        N, inds = _shearers[n]
+    else: # General case
+        N = ((-1+math.sqrt(8*n+1))/2.0)+1 # n+1 th root
+        if N != math.floor(N):
+            raise ValueError('%d is a strange number of shear elements' %
+                             n)
+        inds = np.triu(np.ones((N,N)), 1).astype(bool)
+    M = np.eye(N)
+    M[inds] = sutri
+    return M
 
 
 def sadn2mat(angle, direction, normal):
