@@ -14,7 +14,7 @@ import transforms3d.zooms_shears as tzs
 
 def test_zdir_zmat_aff():
     # test zdir to zmat and back
-    for i in range(5):
+    for i in range(10):
         factor = np.random.random() * 10 - 5
         direct = np.random.random(3) - 0.5
         origin = np.random.random(3) - 0.5
