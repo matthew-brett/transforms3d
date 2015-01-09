@@ -4,7 +4,7 @@ import math
 
 import numpy as np
 
-from nose.tools import (assert_raises, assert_true)
+from nose.tools import (assert_raises, assert_true, assert_equal)
 
 from numpy.testing import assert_array_almost_equal, assert_array_equal
 
@@ -38,19 +38,19 @@ def test_fillpos():
     # Takes np array
     xyz = np.zeros((3,))
     w,x,y,z = tq.fillpositive(xyz)
-    yield assert_true, w == 1
+    assert_equal(w, 1)
     # Or lists
     xyz = [0] * 3
     w,x,y,z = tq.fillpositive(xyz)
-    yield assert_true, w == 1
+    assert_equal(w, 1)
     # Errors with wrong number of values
-    yield assert_raises, ValueError, tq.fillpositive, [0, 0]
-    yield assert_raises, ValueError, tq.fillpositive, [0]*4
+    assert_raises(ValueError, tq.fillpositive, [0, 0])
+    assert_raises(ValueError, tq.fillpositive, [0]*4)
     # Errors with negative w2
-    yield assert_raises, ValueError, tq.fillpositive, [1.0]*3
+    assert_raises(ValueError, tq.fillpositive, [1.0]*3)
     # Test corner case where w is near zero
     wxyz = tq.fillpositive([1,0,0])
-    yield assert_true, wxyz[0] == 0.0
+    assert_equal(wxyz[0], 0.0)
 
 
 def test_qconjugate():
