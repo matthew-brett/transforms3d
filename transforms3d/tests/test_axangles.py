@@ -2,7 +2,7 @@ import math
 
 import numpy as np
 
-from ..axangles import axangle2aff, aff2axangle, axangle2mat
+from ..axangles import axangle2aff, aff2axangle, axangle2mat, mat2axangle
 
 from .. import quaternions as tq
 from .. import taitbryan as ttb
@@ -10,6 +10,8 @@ from .. import taitbryan as ttb
 from .samples import euler_tuples
 
 from numpy.testing import assert_array_almost_equal
+
+from nose.tools import assert_raises
 
 
 def test_aa_points():
@@ -48,8 +50,19 @@ def test_angle_axis_imps():
         M1 = axangle2mat(vec, theta)
         M2 = axangle2aff(vec, theta)[:3,:3]
         assert_array_almost_equal(M1, M2)
-        M3 = np.eye(4)
-        M3[:3,:3] = M
-        v2, t2, point = aff2axangle(M3)
+        v1, t1 = mat2axangle(M1)
+        M3 = axangle2mat(v1, t1)
+        assert_array_almost_equal(M, M3)
+        A = np.eye(4)
+        A[:3,:3] = M
+        v2, t2, point = aff2axangle(A)
         M4 = axangle2mat(v2, t2)
         assert_array_almost_equal(M, M4)
+
+
+def test_errors():
+    M = np.ones((3, 3))
+    assert_raises(ValueError, mat2axangle, M)
+    A = np.eye(4)
+    A[:3, :3] = M
+    assert_raises(ValueError, aff2axangle, A)

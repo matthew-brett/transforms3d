@@ -112,6 +112,53 @@ def axangle2aff(axis, angle, point=None):
     return M
 
 
+def mat2axangle(mat):
+    """Return axis, angle and point from (3, 3) matrix `mat`
+
+    Parameters
+    ----------
+    mat : array-like shape (3, 3)
+
+    Returns
+    -------
+    axis : array shape (3,)
+       vector giving axis of rotation
+    angle : scalar
+       angle of rotation in radians.
+
+    Examples
+    --------
+    >>> direc = np.random.random(3) - 0.5
+    >>> angle = (np.random.random() - 0.5) * (2*math.pi)
+    >>> R0 = axangle2mat(direc, angle)
+    >>> direc, angle = mat2axangle(R0)
+    >>> R1 = axangle2mat(direc, angle)
+    >>> np.allclose(R0, R1)
+    True
+
+    Notes
+    -----
+    http://en.wikipedia.org/wiki/Rotation_matrix#Axis_of_a_rotation
+    """
+    M = np.asarray(mat, dtype=np.float)
+    # direction: unit eigenvector of R33 corresponding to eigenvalue of 1
+    L, W = np.linalg.eig(M.T)
+    i = np.where(abs(np.real(L) - 1.0) < 1e-8)[0]
+    if not len(i):
+        raise ValueError("no unit eigenvector corresponding to eigenvalue 1")
+    direction = np.real(W[:, i[-1]]).squeeze()
+    # rotation angle depending on direction
+    cosa = (np.trace(M) - 1.0) / 2.0
+    if abs(direction[2]) > 1e-8:
+        sina = (M[1, 0] + (cosa-1.0)*direction[0]*direction[1]) / direction[2]
+    elif abs(direction[1]) > 1e-8:
+        sina = (M[0, 2] + (cosa-1.0)*direction[0]*direction[2]) / direction[1]
+    else:
+        sina = (M[2, 1] + (cosa-1.0)*direction[1]*direction[2]) / direction[0]
+    angle = math.atan2(sina, cosa)
+    return direction, angle
+
+
 def aff2axangle(aff):
     """Return axis, angle and point from affine
 
@@ -144,27 +191,12 @@ def aff2axangle(aff):
     http://en.wikipedia.org/wiki/Rotation_matrix#Axis_of_a_rotation
     """
     R = np.asarray(aff, dtype=np.float)
-    R33 = R[:3, :3]
-    # direction: unit eigenvector of R33 corresponding to eigenvalue of 1
-    l, W = np.linalg.eig(R33.T)
-    i = np.where(abs(np.real(l) - 1.0) < 1e-8)[0]
-    if not len(i):
-        raise ValueError("no unit eigenvector corresponding to eigenvalue 1")
-    direction = np.real(W[:, i[-1]]).squeeze()
+    direction, angle = mat2axangle(R[:3, :3])
     # point: unit eigenvector of R33 corresponding to eigenvalue of 1
-    l, Q = np.linalg.eig(R)
-    i = np.where(abs(np.real(l) - 1.0) < 1e-8)[0]
+    L, Q = np.linalg.eig(R)
+    i = np.where(abs(np.real(L) - 1.0) < 1e-8)[0]
     if not len(i):
         raise ValueError("no unit eigenvector corresponding to eigenvalue 1")
     point = np.real(Q[:, i[-1]]).squeeze()
     point /= point[3]
-    # rotation angle depending on direction
-    cosa = (np.trace(R33) - 1.0) / 2.0
-    if abs(direction[2]) > 1e-8:
-        sina = (R[1, 0] + (cosa-1.0)*direction[0]*direction[1]) / direction[2]
-    elif abs(direction[1]) > 1e-8:
-        sina = (R[0, 2] + (cosa-1.0)*direction[0]*direction[2]) / direction[1]
-    else:
-        sina = (R[2, 1] + (cosa-1.0)*direction[1]*direction[2]) / direction[0]
-    angle = math.atan2(sina, cosa)
     return direction, angle, point
