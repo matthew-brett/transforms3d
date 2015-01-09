@@ -119,7 +119,7 @@ def decompose44(A44):
 
     Similarly ``R[:,0].T * RZS[:,2]`` simplifies to ``sx*sxz``, and
     ``R[:,1].T * RZS[:,2]`` to ``sy*syz`` giving us the remaining
-    unknowns. 
+    unknowns.
     '''
     A44 = np.asarray(A44)
     T = A44[:-1,-1]
@@ -132,7 +132,7 @@ def decompose44(A44):
     # orthogonalize M1 with respect to M0
     sx_sxy = np.dot(M0, M1)
     M1 -= sx_sxy * M0
-    # extract y scale and normalize    
+    # extract y scale and normalize
     sy = math.sqrt(np.sum(M1**2))
     M1 /= sy
     sxy = sx_sxy / sx
