@@ -12,18 +12,15 @@ python:
 
 matrix:
   include:
-    - python: 2.7
-      env:
-        - COVERAGE=1
-    # Absolute minimum dependencies
-    - python: 2.7
-      env:
-        - DEPENDS="numpy==1.5.1"
     # With sympy we can run doctests
     - python: 2.7
       env:
         - DEPENDS="numpy sympy"
-        - DOCTESTS=1
+        - COVERAGE=1 DOCTESTS=1
+    # Absolute minimum dependencies
+    - python: 2.7
+      env:
+        - DEPENDS="numpy==1.5.1"
 
 before_install:
     - source tools/travis_tools.sh
