@@ -242,14 +242,12 @@ def aff2sadn(aff):
 
     Examples
     --------
-    >>> angle = (np.random.random() - 0.5) * 4 * math.pi
-    >>> direct = np.random.random(3) - 0.5
-    >>> normal = np.cross(direct, np.random.random(3))
-    >>> point = np.random.random(3) - 0.5
-    >>> S0 = sadn2aff(angle, direct, normal, point)
-    >>> angle, direct, normal, point = aff2sadn(S0)
-    >>> S1 = sadn2aff(angle, direct, normal, point)
-    >>> np.allclose(S0, S1)
+    >>> A = sadn2aff(0.5, [1, 0, 0], [0, 1, 0])
+    >>> angle, direction, normal, point = aff2sadn(A)
+    >>> angle, direction, normal, point
+    (0.5, array([-1.,  0.,  0.]), array([ 0., -1.,  0.]), array([ 0.,  0.,  0.]))
+    >>> A_again = sadn2aff(angle, direction, normal, point)
+    >>> np.allclose(A, A_again)
     True
     """
     warnings.warn('This function can be numerically unstable; use with care')
