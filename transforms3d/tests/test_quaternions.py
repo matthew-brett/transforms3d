@@ -49,7 +49,15 @@ def test_fillpos():
     # Errors with negative w2
     assert_raises(ValueError, tq.fillpositive, [1.0]*3)
     # Test corner case where w is near zero
-    wxyz = tq.fillpositive([1,0,0])
+    wxyz = tq.fillpositive([1, 0, 0])
+    assert_equal(wxyz[0], 0.0)
+    eps = np.finfo(float).eps
+    wxyz = tq.fillpositive([1 + eps, 0, 0])
+    assert_equal(wxyz[0], 0.0)
+    # Bump up the floating point error - raises error
+    assert_raises(ValueError, tq.fillpositive, [1 + eps * 3, 0, 0])
+    # Increase threshold, happy again
+    wxyz = tq.fillpositive([1 + eps * 3, 0, 0], w2_thresh=eps * -10)
     assert_equal(wxyz[0], 0.0)
 
 
