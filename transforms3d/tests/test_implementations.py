@@ -10,7 +10,8 @@ import numpy as np
 
 from .. import quaternions as tq
 from .. import taitbryan as ttb
-from .. import zooms_shears as tzs
+from .. import zooms as tzs
+from .. import shears as tss
 from .. import reflections as trf
 
 from .samples import euler_tuples
@@ -50,18 +51,18 @@ def test_zooms_shears():
         direct = np.random.random(3) - 0.5
         origin = np.random.random(3) - 0.5
         # factor, etc to matrices
-        S0 = tzs.zdir2aff(factor, None, None)
+        S0 = tzs.zfdir2aff(factor, None, None)
         S1 = tg.scale_matrix(factor, None, None)
         yield assert_array_almost_equal, S0, S1, 8
-        S0 = tzs.zdir2aff(factor, direct, None)
+        S0 = tzs.zfdir2aff(factor, direct, None)
         S1 = tg.scale_matrix(factor, None, direct)
         yield assert_array_almost_equal, S0, S1, 8
-        S0 = tzs.zdir2aff(factor, direct, origin)
+        S0 = tzs.zfdir2aff(factor, direct, origin)
         S1 = tg.scale_matrix(factor, origin, direct)
         yield assert_array_almost_equal, S0, S1, 8
         # matrices to factor, etc
-        S0 = tzs.zdir2aff(factor, direct, origin)
-        f1, d1, o1 = tzs.aff2zdir(S0)
+        S0 = tzs.zfdir2aff(factor, direct, origin)
+        f1, d1, o1 = tzs.aff2zfdir(S0)
         f2, o2, d2 = tg.scale_from_matrix(S0)
         yield assert_array_almost_equal, f1, f2
         if d1 is None:
@@ -91,19 +92,19 @@ def test_shears():
     angle = (np.random.random() - 0.5) * 4*math.pi
     direct = np.random.random(3) - 0.5
     normal = np.cross(direct, np.random.random(3))
-    S0 = tzs.shear_adn2aff(angle, direct, normal)
+    S0 = tss.sadn2aff(angle, direct, normal)
     S1 = tg.shear_matrix(angle, direct, [0,0,0], normal)
     yield assert_array_almost_equal, S0, S1, 8
     point = np.random.random(3) - 0.5
-    S0 = tzs.shear_adn2aff(angle, direct, normal, point)
+    S0 = tss.sadn2aff(angle, direct, normal, point)
     S1 = tg.shear_matrix(angle, direct, point, normal)
     yield assert_array_almost_equal, S0, S1, 8
     with warnings.catch_warnings():
         warnings.simplefilter('error')
-        assert_raises(UserWarning, tzs.aff2shear_adn,S0)
+        assert_raises(UserWarning, tss.aff2sadn,S0)
         warnings.simplefilter('ignore')
-        a1, d1, n0, p0 = tzs.aff2shear_adn(S0)
-    a0, d0, n0, p0 = tzs.aff2shear_adn(S0)
+        a1, d1, n0, p0 = tss.aff2sadn(S0)
+    a0, d0, n0, p0 = tss.aff2sadn(S0)
     a1, d1, p1, n1 = tg.shear_from_matrix(S0)
     yield assert_array_almost_equal, a0, a1, 8
     yield assert_array_almost_equal, d0, d1, 8
