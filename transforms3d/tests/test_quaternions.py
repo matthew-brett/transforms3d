@@ -4,8 +4,6 @@ import math
 
 import numpy as np
 
-from numpy.testing.decorators import slow
-
 from nose.tools import (assert_raises, assert_true)
 
 from numpy.testing import assert_array_almost_equal, assert_array_equal
@@ -103,7 +101,6 @@ def test_qnorm():
     yield assert_true, not tq.qisunit(qi)
 
 
-@slow
 def test_qmult():
     # Test that quaternion * same as matrix * 
     for M1, q1 in eg_pairs[0::4]:
@@ -112,9 +109,7 @@ def test_qmult():
             yield assert_array_almost_equal, np.dot(M2,M1), tq.quat2mat(q21)
 
 
-@slow
 def test_qrotate():
-    vecs = np.eye(3)
     for vec in np.eye(3):
         for M, q in eg_pairs:
             vdash = tq.rotate_vector(vec, q)
@@ -122,7 +117,6 @@ def test_qrotate():
             yield assert_array_almost_equal, vdash, vM
 
 
-@slow
 def test_quaternion_reconstruction():
     # Test reconstruction of arbitrary unit quaternions
     for q in unit_quats:
