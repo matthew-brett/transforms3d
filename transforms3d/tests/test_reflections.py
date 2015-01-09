@@ -11,6 +11,7 @@ from nose import SkipTest
 
 from numpy.testing import assert_array_equal, assert_array_almost_equal
 
+from .samples import euler_mats
 
 def assert_almost_equal_sign(v1, v2):
     # Assert vectors are almost equal or v1 * -1 ~= v2
@@ -40,6 +41,12 @@ def test_rfnorm_unit():
 def test_no_reflection():
     assert_raises(ValueError, mat2rfnorm, np.eye(3))
     assert_raises(ValueError, aff2rfnorm, np.eye(4))
+    # Rotations are not reflections
+    for mat in euler_mats:
+        assert_raises(ValueError, mat2rfnorm, mat)
+        aff = np.eye(4)
+        aff[:3, :3] = mat
+        assert_raises(ValueError, aff2rfnorm, aff)
 
 
 def test_list_input():

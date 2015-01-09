@@ -101,6 +101,8 @@ def mat2rfnorm(mat):
     ------
     ValueError
        If there is no eigenvector with eigenvalue -1
+    ValueError
+       If determinant of `mat` is not close to -1
 
     Examples
     --------
@@ -113,10 +115,12 @@ def mat2rfnorm(mat):
     """
     mat = np.asarray(mat)
     # normal: unit eigenvector corresponding to eigenvalue -1
-    l, V = np.linalg.eig(mat)
-    m1_factors, = np.nonzero(abs(np.real(l.squeeze()) + 1.0) < 1e-8)
+    L, V = np.linalg.eig(mat)
+    m1_factors, = np.nonzero(abs(np.real(L.squeeze()) + 1.0) < 1e-8)
     if m1_factors.size == 0:
         raise ValueError("no unit eigenvector corresponding to eigenvalue -1")
+    if not np.abs(np.prod(L) + 1) < 1e-8:
+        raise ValueError('Determinant should be -1')
     return np.real(V[:, m1_factors[0]]).squeeze()
 
 
@@ -138,8 +142,11 @@ def aff2rfnorm(aff):
     Raises
     ------
     ValueError
-       If there is no eigenvector for aff[:3,:3] with eigenvalue -1 or if
-       there is no eigenvector for `aff` with eigenvalue 1.
+       If there is no eigenvector for ``aff[:3,:3]`` with eigenvalue -1
+    ValueError
+        If determinant of ``aff[:3, :3]`` is not close to -1
+    ValueError
+       If there is no eigenvector for `aff` with eigenvalue 1.
 
     Examples
     --------
