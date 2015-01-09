@@ -311,7 +311,6 @@ def rotate_vector(v, q):
     Notes
     -----
     See: http://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Describing_rotations_with_quaternions
-    
     '''
     varr = np.zeros((4,))
     varr[1:] = v
@@ -321,8 +320,8 @@ def rotate_vector(v, q):
 def nearly_equivalent(q1, q2, rtol=1e-5, atol=1e-8):
     ''' Returns True if `q1` and `q2` give near equivalent transforms
 
-    q1 may be nearly numerically equal to q2, or nearly equal to q2 * -1
-    (becuase a quaternion multiplied by -1 gives the same transform).
+    `q1` may be nearly numerically equal to `q2`, or nearly equal to `q2` * -1
+    (because a quaternion multiplied by -1 gives the same transform).
 
     Parameters
     ----------
@@ -330,7 +329,7 @@ def nearly_equivalent(q1, q2, rtol=1e-5, atol=1e-8):
        w, x, y, z of first quaternion
     q2 : 4 element sequence
        w, x, y, z of second quaternion
-    
+
     Returns
     -------
     equiv : bool
@@ -361,10 +360,10 @@ def axangle2quat(vector, theta, is_normalized=False):
     vector : 3 element sequence
        vector specifying axis for rotation.
     theta : scalar
-       angle of rotation
+       angle of rotation in radians.
     is_normalized : bool, optional
        True if vector is already normalized (has norm of 1).  Default
-       False
+       False.
 
     Returns
     -------
@@ -376,7 +375,7 @@ def axangle2quat(vector, theta, is_normalized=False):
     >>> q = axangle2quat([1, 0, 0], np.pi)
     >>> np.allclose(q, [0, 1, 0,  0])
     True
-    
+
     Notes
     -----
     Formula from http://mathworld.wolfram.com/EulerParameters.html
@@ -399,12 +398,12 @@ def axangle2rmat(vector, theta):
     vector : 3 element sequence
        vector specifying axis for rotation.
     theta : scalar
-       angle of rotation
+       angle of rotation in radians.
 
     Returns
     -------
     mat : array shape (3,3)
-       rotation matrix specified rotation
+       rotation matrix for specified rotation
 
     Notes
     -----

@@ -50,7 +50,7 @@ def shears2matrix(shears):
     '''
     n = len(shears)
     # cached case
-    if n in _shearers: 
+    if n in _shearers:
         N, inds = _shearers[n]
     else: # General case
         N = ((-1+math.sqrt(8*n+1))/2.0)+1 # n+1 th root
@@ -63,30 +63,32 @@ def shears2matrix(shears):
     return M
 
 
-def decompose44(M44):
+def decompose44(A44):
     ''' Decompose 4x4 homogenous affine matrix into parts.
 
     The parts are translations, rotations, zooms, shears.
 
-    Decomposes M into ``T, R, Z, S``, such that, if M is shape (4,4)::
+    This is the same as :func:`decompose` but specialized for 4x4 affines.
+
+    Decomposes `A44` into ``T, R, Z, S``, such that:
 
        Smat = np.array([[1, S[0], S[1]],
                         [0,    1, S[2]],
                         [0,    0,    1]])
        RZS = np.dot(R, np.dot(np.diag(Z), Smat))
-       A = np.eye(4)
-       A[:3,:3] = RZS
-       A[:-1,-1] = T
+       A44 = np.eye(4)
+       A44[:3,:3] = RZS
+       A44[:-1,-1] = T
 
     The order of transformations is therefore shears, followed by
     zooms, followed by rotations, followed by translations.
 
     This routine only works for shape (4,4) matrices
-    
+
     Parameters
     ----------
-    M : array shape (4,4)
-    
+    A44 : array shape (4,4)
+
     Returns
     -------
     T : array, shape (3,)
@@ -94,14 +96,14 @@ def decompose44(M44):
     R : array shape (3,3)
         rotation matrix
     Z : array, shape (3,)
-       Zoom vector.  May have one negative zoom to prevent neeed for
-       negative determinant R matrix above
+       Zoom vector.  May have one negative zoom to prevent need for negative
+       determinant R matrix above
     S : array, shape (3,)
        Shear vector, such that shears fill upper triangle above
        diagonal to form shear matrix. 
-       
+
     Examples
-    -------- 
+    --------
     >>> T = [20, 30, 40] # translations
     >>> R = [[0, -1, 0], [1, 0, 0], [0, 0, 1]] # rotation matrix
     >>> Z = [2.0, 3.0, 4.0] # zooms
@@ -149,7 +151,7 @@ def decompose44(M44):
 
     Running all this through sympy (see 'derivations' folder) gives
     ``RZS`` as ::
-    
+
        [R00*sx, R01*sy + R00*sx*sxy, R02*sz + R00*sx*sxz + R01*sy*syz]
        [R10*sx, R11*sy + R10*sx*sxy, R12*sz + R10*sx*sxz + R11*sy*syz]
        [R20*sx, R21*sy + R20*sx*sxy, R22*sz + R20*sx*sxz + R21*sy*syz]
@@ -175,9 +177,9 @@ def decompose44(M44):
     ``R[:,1].T * RZS[:,2]`` to ``sy*syz`` giving us the remaining
     unknowns. 
     '''
-    M44 = np.asarray(M44)
-    T = M44[:-1,-1]
-    RZS = M44[:-1,:-1]
+    A44 = np.asarray(A44)
+    T = A44[:-1,-1]
+    RZS = A44[:-1,:-1]
     # compute scales and shears
     M0, M1, M2 = np.array(RZS).T
     # extract x scale and normalize
@@ -207,14 +209,14 @@ def decompose44(M44):
     return T, Rmat, np.array([sx, sy, sz]), np.array([sxy, sxz, syz])
 
 
-def decompose(M):
-    ''' Decompose homogenous affine transformation matrix into parts.
+def decompose(A):
+    ''' Decompose homogenous affine transformation matrix `A` into parts.
 
     The parts are translations, rotations, zooms, shears.
 
-    M can be any square matrix, but is typically shape (4,4)
+    `A` can be any square matrix, but is typically shape (4,4).
 
-    Decomposes M into ``T, R, Z, S``, such that, if M is shape (4,4)::
+    Decomposes A into ``T, R, Z, S``, such that, if A is shape (4,4)::
 
        Smat = np.array([[1, S[0], S[1]],
                         [0,    1, S[2]],
@@ -232,24 +234,24 @@ def decompose(M):
 
     Parameters
     ----------
-    M : array shape (N,N)
-    
+    A : array shape (N,N)
+
     Returns
     -------
     T : array, shape (N-1,)
        Translation vector
-    R : array shape (N-1,N-1)
+    R : array shape (N-1, N-1)
         rotation matrix
     Z : array, shape (N-1,)
-       Zoom vector.  May have one negative zoom to prevent neeed for
-       negative determinant R matrix above
+       Zoom vector.  May have one negative zoom to prevent need for negative
+       determinant R matrix above
     S : array, shape (P,)
        Shear vector, such that shears fill upper triangle above
        diagonal to form shear matrix.  P is the (N-2)th Triangular
        number, which happens to be 3 for a 4x4 affine.
-       
+
     Examples
-    -------- 
+    --------
     >>> T = [20, 30, 40] # translations
     >>> R = [[0, -1, 0], [1, 0, 0], [0, 0, 1]] # rotation matrix
     >>> Z = [2.0, 3.0, 4.0] # zooms
@@ -274,20 +276,19 @@ def decompose(M):
 
     Notes
     -----
-    We have used a nice trick from SPM to get the shears.  Let us call
-    the starting N-1 by N-1 matrix ``RZS``, because it is the
-    composition of the rotations on the zooms on the shears.  The
-    rotation matrix ``R`` must have the property ``np.dot(R.T, R) ==
-    np.eye(N-1)``.  Thus ``np.dot(RZS.T, RZS)`` will, by the transpose
-    rules, be equal to ``np.dot((ZS).T, (ZS))``.  Because we are doing
-    shears with the upper right part of the matrix, that means that
-    the cholesky decomposition of ``np.dot(RZS.T, RZS)`` will give us
-    our ``ZS`` matrix, from which we take the zooms from the diagonal,
-    and the shear values from the off-diagonal elements.
+    We have used a nice trick from SPM to get the shears.  Let us call the
+    starting N-1 by N-1 matrix ``RZS``, because it is the composition of the
+    rotations on the zooms on the shears.  The rotation matrix ``R`` must have
+    the property ``np.dot(R.T, R) == np.eye(N-1)``.  Thus ``np.dot(RZS.T,
+    RZS)`` will, by the transpose rules, be equal to ``np.dot((ZS).T, (ZS))``.
+    Because we are doing shears with the upper right part of the matrix, that
+    means that the Cholesky decomposition of ``np.dot(RZS.T, RZS)`` will give
+    us our ``ZS`` matrix, from which we take the zooms from the diagonal, and
+    the shear values from the off-diagonal elements.
     '''
-    M = np.asarray(M)
-    T = M[:-1,-1]
-    RZS = M[:-1,:-1]
+    A = np.asarray(A)
+    T = A[:-1,-1]
+    RZS = A[:-1,:-1]
     ZS = np.linalg.cholesky(np.dot(RZS.T,RZS)).T
     Z = np.diag(ZS).copy()
     shears = ZS / Z[:,np.newaxis]
@@ -302,7 +303,7 @@ def decompose(M):
 
 
 def compose(T, R, Z, S=None):
-    ''' compose rotation, zooms, translations, shears to affine
+    ''' Compose translations, rotations, zooms, [shears]  to affine
 
     Parameters
     ----------
@@ -363,8 +364,23 @@ def compose(T, R, Z, S=None):
 
 
 def axangle2aff(axis, angle, point=None):
-    """Return affine to rotate about axis defined by point and axis.
+    """Return affine encoding rotation by `angle` about `axis`.
 
+    Parameters
+    ----------
+    axis : array shape (3,)
+       vector giving axis of rotation
+    angle : scalar
+       angle of rotation, in radians.
+
+    Returns
+    -------
+    A : array shape (4, 4)
+        Affine array to be multiplied on left of coordinate column vector to
+        apply given rotation.
+
+    Examples
+    --------
     >>> angle = (np.random.random() - 0.5) * (2*math.pi)
     >>> direc = np.random.random(3) - 0.5
     >>> point = np.random.random(3) - 0.5
@@ -397,7 +413,6 @@ def axangle2aff(axis, angle, point=None):
        [  0,   0,   0,                             1]
 
     (see derivations)
-
     """
     M = np.eye(4)
     R = axangle2rmat(axis, angle)
@@ -421,7 +436,7 @@ def aff2axangle(aff):
     axis : array shape (3,)
        vector giving axis of rotation
     angle : scalar
-       angle of rotation
+       angle of rotation in radians.
     point : array shape (3,)
        point around which rotation is performed
 

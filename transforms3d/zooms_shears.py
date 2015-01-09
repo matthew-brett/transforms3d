@@ -10,17 +10,17 @@ from .utils import normalized_vector, vector_norm
 def zdir2zmat(factor, direction=None):
     """Return matrix to scale by factor around origin in direction.
 
-    Use factor -1 for point symmetry.
+    Use factor == -1 for point symmetry.
 
     Parameters
     ----------
     factor : scalar
-       factor to zoom by (see direction)
+       factor to zoom by (see `direction`)
     direction : None or array-like shape (3,), optional
        If None, simply apply uniform scaling by `factor`.  Otherwise,
        apply scaling along direction given by vector `direction`.  We
        convert direction to a :term:`unit vector` before application.
-    
+
     Returns
     -------
     zmat : array shape (3,3)
@@ -62,7 +62,7 @@ def zdir2aff(factor, direction=None, origin=None):
        convert direction to a :term:`unit vector` before application.
     origin : None or array-like shape (3,)
        point at which to apply implied zooms
-       
+
     Returns
     -------
     aff : array shape (4,4)
@@ -109,12 +109,12 @@ def zmat2zdir(zmat):
     direction : None or array, shape (3,)
        direction of zoom as for ``zdir2zmat``.  None if scaling is
        uniform.
-    
+
     Examples
     --------
     Roundtrip may not generate same factor, direction, but the
     generated transformation matrices will be the same
-    
+
     >>> factor = np.random.random() * 10 - 5
     >>> S0 = zdir2zmat(factor, None)
     >>> f2, d2 = zmat2zdir(S0)
@@ -187,11 +187,11 @@ def aff2zdir(aff):
 
 
 def shear_adn2smat(angle, direction, normal):
-    """Return matrix to shear by angle along direction vector on shear plane.
+    """Matrix for shear by `angle` along `direction` vector on shear plane.
 
-    The shear plane is defined by normal vector, and passes through the
-    origin. The direction vector must be orthogonal to the plane's
-    normal vector.
+    The shear plane is defined by normal vector `normal`, and passes through
+    the origin. The direction vector must be orthogonal to the plane's normal
+    vector.
 
     A point P is transformed by the shear matrix into P" such that
     the vector P-P" is parallel to the direction vector and its extent is
@@ -234,7 +234,7 @@ def shear_adn2smat(angle, direction, normal):
 
 
 def shear_adn2aff(angle, direction, normal, point=None):
-    """Return affine to shear by angle along direction vector on shear plane.
+    """Affine for shear by `angle` along vector `direction` on shear plane.
 
     The shear plane is defined by a point and normal vector. The direction
     vector must be orthogonal to the plane's normal vector.
@@ -308,7 +308,6 @@ def smat2shear_adn(smat):
     >>> S1 = shear_adn2smat(angle, direct, normal)
     >>> np.allclose(S0, S1)
     True
-
     """
     smat = np.asarray(smat)
     # normal: cross independent eigenvectors corresponding to the eigenvalue 1
@@ -354,7 +353,7 @@ def aff2shear_adn(aff):
 
     Examples
     --------
-    >>> angle = (np.random.random() - 0.5) * 4*math.pi
+    >>> angle = (np.random.random() - 0.5) * 4 * math.pi
     >>> direct = np.random.random(3) - 0.5
     >>> normal = np.cross(direct, np.random.random(3))
     >>> point = np.random.random(3) - 0.5
@@ -374,5 +373,3 @@ def aff2shear_adn(aff):
     point = np.real(V[:, near_1[-1]]).squeeze()
     point = point[:3] / point[3]
     return angle, direction, normal, point
-
-

@@ -3,9 +3,6 @@
 Based on, largely using transformations.py by Christoph Gohlke
 
 Additional code monkey work by Matthew Brett
-
-
-
 '''
 
 from . import taitbryan
