@@ -4,6 +4,7 @@ These tests should shrink as the Gohlke transforms get incorporated
 '''
 
 import math
+import warnings
 
 import numpy as np
 
@@ -16,7 +17,7 @@ from .samples import euler_tuples
 
 from .. import _gohlketransforms as tg
 
-from nose.tools import assert_true, assert_equal
+from nose.tools import assert_true, assert_equal, assert_raises
 from numpy.testing import assert_array_almost_equal
 
 
@@ -97,6 +98,11 @@ def test_shears():
     S0 = tzs.shear_adn2aff(angle, direct, normal, point)
     S1 = tg.shear_matrix(angle, direct, point, normal)
     yield assert_array_almost_equal, S0, S1, 8
+    with warnings.catch_warnings():
+        warnings.simplefilter('error')
+        assert_raises(UserWarning, tzs.aff2shear_adn,S0)
+        warnings.simplefilter('ignore')
+        a1, d1, n0, p0 = tzs.aff2shear_adn(S0)
     a0, d0, n0, p0 = tzs.aff2shear_adn(S0)
     a1, d1, p1, n1 = tg.shear_from_matrix(S0)
     yield assert_array_almost_equal, a0, a1, 8

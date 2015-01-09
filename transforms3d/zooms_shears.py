@@ -2,6 +2,8 @@
 
 import math
 
+import warnings
+
 import numpy as np
 
 from .utils import normalized_vector, vector_norm
@@ -221,12 +223,11 @@ def shear_adn2smat(angle, direction, normal):
     >>> S = shear_adn2aff(angle, direct, normal)
     >>> np.allclose(1.0, np.linalg.det(S))
     True
-
     """
+    if abs(np.dot(normal, direction)) > 1e-5:
+        raise ValueError("direction, normal vectors not orthogonal")
     normal = normalized_vector(normal)
     direction = normalized_vector(direction)
-    if abs(np.dot(normal, direction)) > 1e-6:
-        raise ValueError("direction and normal vectors are not orthogonal")
     angle = math.tan(angle)
     M = np.eye(3)
     M += angle * np.outer(direction, normal)
@@ -363,6 +364,7 @@ def aff2shear_adn(aff):
     >>> np.allclose(S0, S1)
     True
     """
+    warnings.warn('This function can be numerically unstable; use with care')
     aff = np.asarray(aff)
     angle, direction, normal = smat2shear_adn(aff[:3,:3])
     # point: eigenvector corresponding to eigenvalue 1

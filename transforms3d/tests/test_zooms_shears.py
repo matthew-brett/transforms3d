@@ -1,6 +1,7 @@
 """ Testing zooms and shears 
 
 """
+import warnings
 
 import numpy as np
 
@@ -37,4 +38,24 @@ def test_zdir_zmat_aff():
         f2, d2, o2 = tzs.aff2zdir(S0)
         yield assert_array_almost_equal, S0, tzs.zdir2aff(f2, d2, o2)
 
-    
+
+def test_aff2shear_adn():
+    # test aff2shear_adn function
+    # This function can be very unstable.
+    # Test with known random numbers to make sure we don't hit an unstable
+    # spot.
+    rng = np.random.RandomState(42)
+    for i in range(10):
+        angle = rng.random_sample() * np.pi
+        direct = rng.random_sample(3) - 0.5
+        vect = rng.random_sample(3)  # random vector
+        normal = np.cross(direct, vect) # orthogonalize against direct
+        point = rng.random_sample(3) - 0.5
+        # Make shear affine from angle, direction, normal and point
+        S0 = tzs.shear_adn2aff(angle, direct, normal, point)
+        # Reconstruct angle, direction, normal, point from affine
+        with warnings.catch_warnings():
+            a2, d2, n2, p2 = tzs.aff2shear_adn(S0)
+        # Confirm the shear affines are equivalent
+        S1 = tzs.shear_adn2aff(a2, d2, n2, p2)
+        assert_array_almost_equal(S0, S1)
