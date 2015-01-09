@@ -4,7 +4,7 @@ Terms used in function names:
 
 * *mat* : array shape (3, 3) (3D non-homogenous coordinates)
 * *aff* : affine array shape (4, 4) (3D homogenous coordinates)
-* *sutri* : shears encoded by vector giving triangular portion above diagonal
+* *striu* : shears encoded by vector giving triangular portion above diagonal
   of NxN array (for ND transformation)
 * *sadn* : shears encoded by angle scalar, direction vector, normal vector
   (with optional point vector)
@@ -27,12 +27,12 @@ for n in range(1,11):
     _shearers[x] = (i, np.triu(np.ones((i,i)), 1).astype(bool))
 
 
-def sutri2mat(sutri):
+def striu2mat(striu):
     ''' Construct shear matrix from upper triangular vector
 
     Parameters
     ----------
-    sutri : array, shape (N,)
+    striu : array, shape (N,)
        vector giving triangle above diagonal of shear matrix.
 
     Returns
@@ -43,14 +43,14 @@ def sutri2mat(sutri):
     Examples
     --------
     >>> S = [0.1, 0.2, 0.3]
-    >>> sutri2mat(S)
+    >>> striu2mat(S)
     array([[ 1. ,  0.1,  0.2],
            [ 0. ,  1. ,  0.3],
            [ 0. ,  0. ,  1. ]])
-    >>> sutri2mat([1])
+    >>> striu2mat([1])
     array([[ 1.,  1.],
            [ 0.,  1.]])
-    >>> sutri2mat([1, 2])
+    >>> striu2mat([1, 2])
     Traceback (most recent call last):
        ...
     ValueError: 2 is a strange number of shear elements
@@ -61,7 +61,7 @@ def sutri2mat(sutri):
 
     See http://en.wikipedia.org/wiki/Triangular_number
     '''
-    n = len(sutri)
+    n = len(striu)
     # cached case
     if n in _shearers:
         N, inds = _shearers[n]
@@ -72,7 +72,7 @@ def sutri2mat(sutri):
                              n)
         inds = np.triu(np.ones((N,N)), 1).astype(bool)
     M = np.eye(N)
-    M[inds] = sutri
+    M[inds] = striu
     return M
 
 

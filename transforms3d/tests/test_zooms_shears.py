@@ -40,14 +40,14 @@ def test_zdir_zmat_aff():
         yield assert_array_almost_equal, S0, tzs.zfdir2aff(f2, d2, o2)
 
 
-def test_sutri():
+def test_striu():
     # Shears encoded as vector from triangle above diagonal of shear mat
     S = [0.1, 0.2, 0.3]
-    assert_array_equal(tss.sutri2mat(S),
+    assert_array_equal(tss.striu2mat(S),
                        [[ 1. ,  0.1,  0.2],
                         [ 0. ,  1. ,  0.3],
                         [ 0. ,  0. ,  1. ]])
-    assert_array_equal(tss.sutri2mat([1]),
+    assert_array_equal(tss.striu2mat([1]),
                        [[ 1.,  1.],
                         [ 0.,  1.]])
     for n, N in ((1, 2),
@@ -58,14 +58,14 @@ def test_sutri():
                  (21, 7),
                  (78, 13)):
         shears = np.arange(n)
-        M = tss.sutri2mat(shears)
+        M = tss.striu2mat(shears)
         e = np.eye(N)
         inds = np.triu(np.ones((N,N)), 1).astype(bool)
         e[inds] = shears
         assert_array_equal(M, e)
     for n in (2, 4, 5, 7, 8, 9):
         shears = np.zeros(n)
-        assert_raises(ValueError, tss.sutri2mat, shears)
+        assert_raises(ValueError, tss.striu2mat, shears)
 
 
 def test_aff2sadn():

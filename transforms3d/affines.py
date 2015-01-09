@@ -4,7 +4,7 @@ import math
 
 import numpy as np
 
-from .shears import sutri2mat
+from .shears import striu2mat
 
 
 def decompose44(A44):
@@ -44,7 +44,7 @@ def decompose44(A44):
        determinant R matrix above
     S : array, shape (3,)
        Shear vector, such that shears fill upper triangle above
-       diagonal to form shear matrix. 
+       diagonal to form shear matrix (type ``striu'`).
 
     Examples
     --------
@@ -298,7 +298,7 @@ def compose(T, R, Z, S=None):
         raise ValueError('Expecting shape (%d,%d) for rotations' % (n,n))
     A = np.eye(n+1)
     if not S is None:
-        Smat = sutri2mat(S)
+        Smat = striu2mat(S)
         ZS = np.dot(np.diag(Z), Smat)
     else:
         ZS = np.diag(Z)
