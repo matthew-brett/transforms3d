@@ -43,7 +43,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'transforms3d'
-copyright = u'2009-2015, Christoph Gohlke, Matthew Brett'
+copyright = u'2009-2015, Matthew Brett'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -185,7 +185,7 @@ htmlhelp_basename = 'transforms3ddoc'
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
   ('index', 'transforms3d.tex', u'transforms3d Documentation',
-   u'Christoph Gohlke, Matthew Brett', 'manual'),
+   u'Matthew Brett', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
