@@ -1,0 +1,12 @@
+1a2,6
+> # From: http://www.lfd.uci.edu/~gohlke/code/transformations.py.html
+> # Tiny edits in transformations.py.patch
+> # This file patched from original/transformations.py.patch
+> # (see original/Makefile - apply-patch target)
+> 
+1902c1907
+< _import_module('_transformations')
+---
+> # _import_module('_transformations')
+1909d1913
+< 
