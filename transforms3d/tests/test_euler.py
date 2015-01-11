@@ -39,11 +39,12 @@ def test_with_euler2mat():
 def test_euleraxes2mat():
     # Test mat creation from random angles and round trip
     ai, aj, ak = (4 * math.pi) * (np.random.random(3) - 0.5)
-    for axes in euler._AXES2TUPLE.keys():
-       R = euleraxes2mat(ai, aj, ak, axes)
-       bi, bj, bk = mataxes2euler(R, axes)
-       R2 = euleraxes2mat(bi, bj, bk, axes)
-       assert_almost_equal(R, R2)
+    for ax_specs in euler._AXES2TUPLE.items():
+        for ax_spec in ax_specs:
+            R = euleraxes2mat(ai, aj, ak, ax_spec)
+            bi, bj, bk = mataxes2euler(R, ax_spec)
+            R2 = euleraxes2mat(bi, bj, bk, ax_spec)
+            assert_almost_equal(R, R2)
 
 
 def test_mataxes2euler():
