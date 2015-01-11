@@ -75,17 +75,17 @@ def euleraxes2mat(ai, aj, ak, axes='sxyz'):
     ai, aj, ak : Euler's roll, pitch and yaw angles
     axes : One of 24 axis sequences as string or encoded tuple
 
-    >>> R = euler_matrix(1, 2, 3, 'syxz')
+    >>> R = euleraxes2mat(1, 2, 3, 'syxz')
     >>> np.allclose(np.sum(R[0]), -1.34786452)
     True
-    >>> R = euler_matrix(1, 2, 3, (0, 1, 0, 1))
+    >>> R = euleraxes2mat(1, 2, 3, (0, 1, 0, 1))
     >>> np.allclose(np.sum(R[0]), -0.383436184)
     True
     >>> ai, aj, ak = (4*math.pi) * (np.random.random(3) - 0.5)
     >>> for axes in _AXES2TUPLE.keys():
-    ...    R = euler_matrix(ai, aj, ak, axes)
+    ...    R = euleraxes2mat(ai, aj, ak, axes)
     >>> for axes in _TUPLE2AXES.keys():
-    ...    R = euler_matrix(ai, aj, ak, axes)
+    ...    R = euleraxes2mat(ai, aj, ak, axes)
 
     """
     try:
@@ -139,15 +139,15 @@ def mataxes2euler(mat, axes='sxyz'):
 
     Note that many Euler angle triplets can describe one matrix.
 
-    >>> R0 = euler_matrix(1, 2, 3, 'syxz')
-    >>> al, be, ga = euler_from_matrix(R0, 'syxz')
-    >>> R1 = euler_matrix(al, be, ga, 'syxz')
+    >>> R0 = euleraxes2mat(1, 2, 3, 'syxz')
+    >>> al, be, ga = mataxes2euler(R0, 'syxz')
+    >>> R1 = euleraxes2mat(al, be, ga, 'syxz')
     >>> np.allclose(R0, R1)
     True
     >>> angles = (4*math.pi) * (np.random.random(3) - 0.5)
     >>> for axes in _AXES2TUPLE.keys():
-    ...    R0 = euler_matrix(axes=axes, *angles)
-    ...    R1 = euler_matrix(axes=axes, *euler_from_matrix(R0, axes))
+    ...    R0 = euleraxes2mat(axes=axes, *angles)
+    ...    R1 = euleraxes2mat(axes=axes, *mataxes2euler(R0, axes))
     ...    if not np.allclose(R0, R1): print(axes, "failed")
 
     """
