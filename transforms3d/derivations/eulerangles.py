@@ -75,6 +75,7 @@ M_xyz_gimbal_full = M_xyz.subs(subs)
 subs = {cos(beta): 0,
         sin(beta): 1}
 M_xyz_gimbal_sb1 = M_xyz.subs(subs)
+
 # And combination symbols
 V1, V2 = symbols('V1, V2')
 v1t = cos(gamma)*sin(alpha) - cos(alpha)*sin(gamma)
@@ -84,4 +85,19 @@ subs2 = {v1t: V1,
          v1t*-1: -V1
          }
 M_xyz_gimbal_sb1_reduced = M_xyz_gimbal_sb1.subs(subs2)
+
+# Substitute for cos(beta) = 0, sin(beta) = -1
+subs = {cos(beta): 0,
+        sin(beta): -1}
+M_xyz_gimbal_sbm1 = M_xyz.subs(subs)
+
+# And combination symbols
+W1, W2 = symbols('W1, W2')
+w1t = cos(gamma)*sin(alpha) + cos(alpha)*sin(gamma)
+w2t = cos(alpha)*cos(gamma) - sin(alpha)*sin(gamma)
+subs2 = {w1t: W1,
+         w2t: W2,
+         w1t*-1: -W1
+         }
+M_xyz_gimbal_sbm1_reduced = M_xyz_gimbal_sbm1.subs(subs2)
 
