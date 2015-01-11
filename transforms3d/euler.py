@@ -72,21 +72,31 @@ _EPS4 = np.finfo(float).eps * 4.0
 def euleraxes2mat(ai, aj, ak, axes='sxyz'):
     """Return rotation matrix from Euler angles and axis sequence.
 
-    ai, aj, ak : Euler's roll, pitch and yaw angles
-    axes : One of 24 axis sequences as string or encoded tuple
+    Parameters
+    ----------
+    ai : float
+        First rotation angle (according to `axes`).
+    aj : float
+        Second rotation angle (according to `axes`).
+    ak : float
+        Third rotation angle (according to `axes`).
+    axes : str, optional
+        Axis specification; one of 24 axis sequences as string or encoded
+        tuple - e.g. ``sxyz`` (the default).
 
+    Returns
+    -------
+    mat : array-like shape (3, 3) or (4, 4)
+        Rotation matrix or affine.
+
+    Examples
+    --------
     >>> R = euleraxes2mat(1, 2, 3, 'syxz')
     >>> np.allclose(np.sum(R[0]), -1.34786452)
     True
     >>> R = euleraxes2mat(1, 2, 3, (0, 1, 0, 1))
     >>> np.allclose(np.sum(R[0]), -0.383436184)
     True
-    >>> ai, aj, ak = (4*math.pi) * (np.random.random(3) - 0.5)
-    >>> for axes in _AXES2TUPLE.keys():
-    ...    R = euleraxes2mat(ai, aj, ak, axes)
-    >>> for axes in _TUPLE2AXES.keys():
-    ...    R = euleraxes2mat(ai, aj, ak, axes)
-
     """
     try:
         firstaxis, parity, repetition, frame = _AXES2TUPLE[axes]
@@ -135,21 +145,32 @@ def euleraxes2mat(ai, aj, ak, axes='sxyz'):
 def mataxes2euler(mat, axes='sxyz'):
     """Return Euler angles from rotation matrix for specified axis sequence.
 
-    axes : One of 24 axis sequences as string or encoded tuple
-
     Note that many Euler angle triplets can describe one matrix.
 
+    Parameters
+    ----------
+    mat : array-like shape (3, 3) or (4, 4)
+        Rotation matrix or affine.
+    axes : str, optional
+        Axis specification; one of 24 axis sequences as string or encoded
+        tuple - e.g. ``sxyz`` (the default).
+
+    Returns
+    -------
+    ai : float
+        First rotation angle (according to `axes`).
+    aj : float
+        Second rotation angle (according to `axes`).
+    ak : float
+        Third rotation angle (according to `axes`).
+
+    Examples
+    --------
     >>> R0 = euleraxes2mat(1, 2, 3, 'syxz')
     >>> al, be, ga = mataxes2euler(R0, 'syxz')
     >>> R1 = euleraxes2mat(al, be, ga, 'syxz')
     >>> np.allclose(R0, R1)
     True
-    >>> angles = (4*math.pi) * (np.random.random(3) - 0.5)
-    >>> for axes in _AXES2TUPLE.keys():
-    ...    R0 = euleraxes2mat(axes=axes, *angles)
-    ...    R1 = euleraxes2mat(axes=axes, *mataxes2euler(R0, axes))
-    ...    if not np.allclose(R0, R1): print(axes, "failed")
-
     """
     try:
         firstaxis, parity, repetition, frame = _AXES2TUPLE[axes.lower()]
