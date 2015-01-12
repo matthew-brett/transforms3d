@@ -4,3 +4,4 @@ build/
 .coverage
 dist/
 transforms3d.egg-info/
+MANIFEST
