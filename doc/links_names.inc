@@ -18,6 +18,10 @@
 .. _transforms3d issues: http://github.com/matthew-brett/transforms3d/issues
 .. _transforms3d travis-ci: https://travis-ci.org/matthew-brett/transforms3d
 .. _versioneer: https://github.com/warner/python-versioneer
+.. _transformations.py:
+   http://www.lfd.uci.edu/~gohlke/code/transformations.py.html
+.. _Christoph Gohlke: http://www.lfd.uci.edu/~gohlke
+.. _Matthew Brett: http://matthew.dynevor.org
 
 .. Transform concepts
 .. _`wikipedia affine`: http://en.wikipedia.org/wiki/Affine_transformation

@@ -53,7 +53,7 @@ def zfdir2mat(factor, direction=None):
 
 
 def zfdir2aff(factor, direction=None, origin=None):
-    """Return matrix to scale by factor around origin in direction.
+    """Return affine to scale by `factor` around `origin` in `direction`.
 
     Use factor -1 for point symmetry.
 

@@ -8,8 +8,9 @@ In the code, we try to abbreviate common concepts in a standard way.
 
 * *aff*  - 4x4 :term:`affine matrix` for operating on homogenous coordinates
   of shape (4,) or (4, N);
-* *mat* - 3x3 :term:`transformation matrix` for operating on non-homogenous
-  coordinate vectors of shape (3,) or (3, N);
+* *mat* - 3x3 transformation matrix for operating on non-homogenous
+  coordinate vectors of shape (3,) or (3, N). A :term:`rotation matrix` is an
+  example of a transformation matrix;
 * *euler* - :term:`euler angles` - sequence of three scalars giving rotations
   about defined axes;
 * *axangle* - :term:`axis angle` - axis (vector) and angle (scalar) giving
