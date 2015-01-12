@@ -34,7 +34,7 @@ Released under the BSD two-clause license - see the file ``LICENSE`` in the
 source distribution.
 
 Much of the code comes from `transformations.py
-<http://www.lfd.uci.edu/~gohlke/code/transformations.py.html>` by Christoph
+<http://www.lfd.uci.edu/~gohlke/code/transformations.py.html>`_ by Christoph
 Gohlke, also released under the BSD license.
 
 `travis-ci <https://travis-ci.org/matthew-brett/transforms3d>`_ kindly tests
