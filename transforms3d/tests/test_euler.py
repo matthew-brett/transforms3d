@@ -23,33 +23,38 @@ from numpy.testing import assert_almost_equal
 def test_euler_axes():
     # Test there and back with all axis specs
     aba_perms = [(v[0], v[1], v[0]) for v in permutations('xyz', 2)]
-    for mat in euler_mats:
-        quat = mat2quat(mat)
-        axis, angle = mat2axangle(mat)
-        for rs, axes in product('rs',
-                                list(permutations('xyz', 3)) + aba_perms):
+    axis_perms = list(permutations('xyz', 3)) + aba_perms
+    for (a, b, c), mat in zip(euler_tuples, euler_mats):
+        for rs, axes in product('rs', axis_perms):
             ax_spec = rs + ''.join(axes)
             conventioned = [EulerFuncs(ax_spec)]
             if ax_spec in euler.__dict__:
                 conventioned.append(euler.__dict__[ax_spec])
-            a, b, c = mat2euler(mat, ax_spec)
-            mat_back = euler2mat(a, b, c, ax_spec)
-            assert_almost_equal(mat, mat_back)
-            a, b, c = quat2euler(quat, ax_spec)
-            quat_back = euler2quat(a, b, c, ax_spec)
-            assert_true(nearly_equivalent(quat, quat_back))
-            a, b, c = axangle2euler(axis, angle, ax_spec)
-            ax_back, ang_back = euler2axangle(a, b, c, ax_spec)
-            mat_back = axangle2mat(ax_back, ang_back)
-            # assert_almost_equal(mat, mat_back)
+            mat = euler2mat(a, b, c, ax_spec)
+            a1, b1, c1 = mat2euler(mat, ax_spec)
+            mat_again = euler2mat(a1, b1, c1, ax_spec)
+            assert_almost_equal(mat, mat_again)
+            quat = euler2quat(a, b, c, ax_spec)
+            a1, b1, c1 = quat2euler(quat, ax_spec)
+            mat_again = euler2mat(a1, b1, c1, ax_spec)
+            assert_almost_equal(mat, mat_again)
+            ax, angle = euler2axangle(a, b, c, ax_spec)
+            a1, b1, c1 = axangle2euler(ax, angle, ax_spec)
+            mat_again = euler2mat(a1, b1, c1, ax_spec)
+            assert_almost_equal(mat, mat_again)
             for obj in conventioned:
-                # test convention-implemening objects
-                a, b, c = obj.mat2euler(mat)
-                mat_back = obj.euler2mat(a, b, c)
-                assert_almost_equal(mat, mat_back)
-                a, b, c = obj.quat2euler(quat)
-                quat_back = obj.euler2quat(a, b, c)
-                # assert_true(nearly_equivalent(quat, quat_back))
+                mat = obj.euler2mat(a, b, c)
+                a1, b1, c1 = obj.mat2euler(mat)
+                mat_again = obj.euler2mat(a1, b1, c1)
+                assert_almost_equal(mat, mat_again)
+                quat = obj.euler2quat(a, b, c)
+                a1, b1, c1 = obj.quat2euler(quat)
+                mat_again = obj.euler2mat(a1, b1, c1)
+                assert_almost_equal(mat, mat_again)
+                ax, angle = obj.euler2axangle(a, b, c)
+                a1, b1, c1 = obj.axangle2euler(ax, angle)
+                mat_again = obj.euler2mat(a1, b1, c1)
+                assert_almost_equal(mat, mat_again)
 
 
 def test_with_euler2mat():

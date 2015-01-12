@@ -489,18 +489,18 @@ class EulerFuncs(object):
         return euler2axangle(ai, aj, ak, self.axes)
 
     def axangle2euler(self, vector, theta):
-        return quat2euler(vector, theta, self.axes)
+        return axangle2euler(vector, theta, self.axes)
 
 
 # Some common conventions
-sxyz = EulerFuncs('sxyz') # Tait-Bryan xyz
+sxyz = EulerFuncs('sxyz') # Tait-Bryan XYZ
 rzxz = EulerFuncs('rzxz')
 physics = rzxz
 
 
 class TBZYX(EulerFuncs):
     def __init__(self):
-        self.axes = 'rzyx'
+        self.axes = 'szyx'
 
     def euler2mat(self, ai, aj, ak):
         return tb.euler2mat(ai, aj, ak)
