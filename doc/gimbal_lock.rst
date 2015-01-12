@@ -140,11 +140,11 @@ Here is what our gimbal lock looks like in code:
 
 >>> import numpy as np
 >>> np.set_printoptions(precision=3, suppress=True)  # neat printing
->>> from transforms3d.euler import euleraxes2mat, mataxes2euler
+>>> from transforms3d.euler import euler2mat, mat2euler
 >>> x_angle = -0.2
 >>> y_angle = -np.pi / 2
 >>> z_angle = -0.2
->>> R = euleraxes2mat(x_angle, y_angle, z_angle, 'sxyz')
+>>> R = euler2mat(x_angle, y_angle, z_angle, 'sxyz')
 >>> R
 array([[ 0.   ,  0.389, -0.921],
        [-0.   ,  0.921,  0.389],
@@ -156,7 +156,7 @@ about the same axis of the object.  So, we can add something to the
 ``x_angle`` and subtract the same value from ``z_angle`` to get the same
 result:
 
->>> R = euleraxes2mat(x_angle + 0.1, y_angle, z_angle - 0.1, 'sxyz')
+>>> R = euler2mat(x_angle + 0.1, y_angle, z_angle - 0.1, 'sxyz')
 >>> R
 array([[ 0.   ,  0.389, -0.921],
        [-0.   ,  0.921,  0.389],
@@ -165,7 +165,7 @@ array([[ 0.   ,  0.389, -0.921],
 In fact, we could omit the z rotation entirely and put all the rotation into
 the original x axis rotation and still get the same rotation matrix:
 
->>> R_dash = euleraxes2mat(x_angle + z_angle, y_angle, 0, 'sxyz')
+>>> R_dash = euler2mat(x_angle + z_angle, y_angle, 0, 'sxyz')
 >>> np.allclose(R, R_dash)
 True
 
@@ -174,7 +174,7 @@ y rotation, if we are rotating with this axis order.  We can get the
 transformation we actually want by doing the rotations in the order x, then z
 then y, like this:
 
->>> R = euleraxes2mat(x_angle, z_angle, y_angle, 'sxzy')
+>>> R = euler2mat(x_angle, z_angle, y_angle, 'sxzy')
 >>> R
 array([[ 0.   ,  0.199, -0.98 ],
        [-0.199,  0.961,  0.195],
@@ -183,10 +183,10 @@ array([[ 0.   ,  0.199, -0.98 ],
 We can get this same transformation using our original x, y, z rotation order,
 but using different rotation angles:
 
->>> x_dash, y_dash, z_dash = mataxes2euler(R, 'sxyz')
+>>> x_dash, y_dash, z_dash = mat2euler(R, 'sxyz')
 >>> np.array((x_dash, y_dash, z_dash))  # np.array for print neatness
 array([ 1.371, -1.371, -1.571])
->>> R = euleraxes2mat(x_dash, y_dash, z_dash, 'sxyz')
+>>> R = euler2mat(x_dash, y_dash, z_dash, 'sxyz')
 >>> R
 array([[ 0.   ,  0.199, -0.98 ],
        [-0.199,  0.961,  0.195],
