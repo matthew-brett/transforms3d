@@ -411,19 +411,19 @@ def quat2axangle(quat, identity_thresh=None):
     Parameters
     ----------
     quat : 4 element sequence
-       w, x, y, z forming quaternion
+       w, x, y, z forming quaternion.
     identity_thresh : None or scalar, optional
-       threshold below which the norm of the vector part of the
-       quaternion (x, y, z) is deemed to be 0, leading to the identity
-       rotation.  None (the default) leads to a threshold estimated
-       based on the precision of the input.
+       Threshold below which the norm of the vector part of the quaternion (x,
+       y, z) is deemed to be 0, leading to the identity rotation.  None (the
+       default) leads to a threshold estimated based on the precision of the
+       input.
 
     Returns
     -------
     theta : scalar
-       angle of rotation
+       angle of rotation.
     vector : array shape (3,)
-       axis around which rotation occurs
+       axis around which rotation occurs.
 
     Examples
     --------
@@ -433,17 +433,16 @@ def quat2axangle(quat, identity_thresh=None):
     >>> np.allclose(theta, np.pi)
     True
 
-    If this is an identity rotation, we return a zero angle and an
-    arbitrary vector
+    If this is an identity rotation, we return a zero angle and an arbitrary
+    vector:
 
     >>> quat2axangle([1, 0, 0, 0])
     (array([ 1.,  0.,  0.]), 0.0)
 
     Notes
     -----
-    A quaternion for which x, y, z are all equal to 0, is an identity
-    rotation.  In this case we return a 0 angle and an  arbitrary
-    vector, here [1, 0, 0]
+    A quaternion for which x, y, z are all equal to 0, is an identity rotation.
+    In this case we return a 0 angle and an arbitrary vector, here [1, 0, 0]
     '''
     w, x, y, z = quat
     vec = np.asarray([x, y, z])

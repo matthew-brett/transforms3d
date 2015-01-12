@@ -303,35 +303,6 @@ def mat2euler(mat, axes='sxyz'):
     return ax, ay, az
 
 
-def quat2euler(quaternion, axes='sxyz'):
-    """Euler angles from `quaternion` for specified axis sequence `axes`
-
-    Parameters
-    ----------
-    q : 4 element sequence
-       w, x, y, z of quaternion
-    axes : str, optional
-        Axis specification; one of 24 axis sequences as string or encoded
-        tuple - e.g. ``sxyz`` (the default).
-
-    Returns
-    -------
-    ai : float
-        First rotation angle (according to `axes`).
-    aj : float
-        Second rotation angle (according to `axes`).
-    ak : float
-        Third rotation angle (according to `axes`).
-
-    Examples
-    --------
-    >>> angles = quat2euler([0.99810947, 0.06146124, 0, 0])
-    >>> np.allclose(angles, [0.123, 0, 0])
-    True
-    """
-    return mat2euler(quat2mat(quaternion), axes)
-
-
 def euler2quat(ai, aj, ak, axes='sxyz'):
     """Return `quaternion` from Euler angles and axis sequence `axes`
 
@@ -404,6 +375,35 @@ def euler2quat(ai, aj, ak, axes='sxyz'):
     return q
 
 
+def quat2euler(quaternion, axes='sxyz'):
+    """Euler angles from `quaternion` for specified axis sequence `axes`
+
+    Parameters
+    ----------
+    q : 4 element sequence
+       w, x, y, z of quaternion
+    axes : str, optional
+        Axis specification; one of 24 axis sequences as string or encoded
+        tuple - e.g. ``sxyz`` (the default).
+
+    Returns
+    -------
+    ai : float
+        First rotation angle (according to `axes`).
+    aj : float
+        Second rotation angle (according to `axes`).
+    ak : float
+        Third rotation angle (according to `axes`).
+
+    Examples
+    --------
+    >>> angles = quat2euler([0.99810947, 0.06146124, 0, 0])
+    >>> np.allclose(angles, [0.123, 0, 0])
+    True
+    """
+    return mat2euler(quat2mat(quaternion), axes)
+
+
 def euler2axangle(ai, aj, ak, axes='sxyz'):
     ''' Return angle, axis corresponding to Euler angles, axis specification
 
@@ -469,46 +469,97 @@ def axangle2euler(vector, theta, axes='sxyz'):
 
 
 class EulerFuncs(object):
+    """ Namespace for Euler angles functions with given axes specification
+    """
 
     def __init__(self, axes):
+        """ Initialize namespace for Euler angles functions
+
+        Parameters
+        ----------
+        axes : str
+            Axis specification; one of 24 axis sequences as string or encoded
+            tuple - e.g. ``sxyz`` (the default).
+        """
         self.axes = axes
 
     def euler2mat(self, ai, aj, ak):
+        """Return rotation matrix from Euler angles
+
+        See :func:`euler2mat` for details.
+        """
         return euler2mat(ai, aj, ak, self.axes)
 
     def mat2euler(self, mat):
+        """Return Euler angles from rotation matrix `mat`
+
+        See :func:`mat2euler` for details.
+        """
         return mat2euler(mat, self.axes)
 
     def euler2quat(self, ai, aj, ak):
+        """ Return `quaternion` from Euler angles
+
+        See :func:`euler2quat` for details.
+        """
         return euler2quat(ai, aj, ak, self.axes)
 
     def quat2euler(self, quat):
+        """Euler angles from `quaternion`
+
+        See :func:`quat2euler` for details.
+        """
         return quat2euler(quat, self.axes)
 
     def euler2axangle(self, ai, aj, ak):
+        """ Angle, axis corresponding to Euler angles
+
+        See :func:`euler2axangle` for details.
+        """
         return euler2axangle(ai, aj, ak, self.axes)
 
     def axangle2euler(self, vector, theta):
+        """ Convert axis, angle pair to Euler angles
+
+        See :func:`axangle2euler` for details.
+        """
         return axangle2euler(vector, theta, self.axes)
 
 
-# Some common conventions
+# Namespaces for some common conventions
 sxyz = EulerFuncs('sxyz') # Tait-Bryan XYZ
 rzxz = EulerFuncs('rzxz')
 physics = rzxz
 
 
 class TBZYX(EulerFuncs):
+    """ Namespace for Tait-Bryan ZYX Euler angle convention functions
+    """
+
     def __init__(self):
+        """ Initialize Tait-Bryan ZYX namespace
+        """
         self.axes = 'szyx'
 
     def euler2mat(self, ai, aj, ak):
+        """Return rotation matrix from Euler angles
+
+        See :func:`taitbryan.euler2mat` for details.
+        """
         return tb.euler2mat(ai, aj, ak)
 
     def mat2euler(self, mat):
+        """Return Euler angles from rotation matrix `mat`
+
+        See :func:`taitbryan.mat2euler` for details.
+        """
         return tb.mat2euler(mat)
 
     def euler2quat(self, ai, aj, ak):
+        """ Return `quaternion` from Euler angles
+
+        See :func:`taitbryan.euler2quat` for details.
+        """
         return tb.euler2quat(ai, aj, ak)
 
 
