@@ -1,0 +1,91 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+:mod:`quaternions`
+==================
+.. automodule:: transforms3d.quaternions
+
+.. currentmodule:: transforms3d.quaternions
+.. autosummary::
+
+   axangle2quat
+   fillpositive
+   mat2quat
+   nearly_equivalent
+   qconjugate
+   qeye
+   qinverse
+   qisunit
+   qmult
+   qnorm
+   quat2axangle
+   quat2mat
+   rotate_vector
+
+
+.. currentmodule:: transforms3d.quaternions
+
+axangle2quat
+~~~~~~~~~~~~
+
+.. autofunction:: axangle2quat
+
+fillpositive
+~~~~~~~~~~~~
+
+.. autofunction:: fillpositive
+
+mat2quat
+~~~~~~~~
+
+.. autofunction:: mat2quat
+
+nearly_equivalent
+~~~~~~~~~~~~~~~~~
+
+.. autofunction:: nearly_equivalent
+
+qconjugate
+~~~~~~~~~~
+
+.. autofunction:: qconjugate
+
+qeye
+~~~~
+
+.. autofunction:: qeye
+
+qinverse
+~~~~~~~~
+
+.. autofunction:: qinverse
+
+qisunit
+~~~~~~~
+
+.. autofunction:: qisunit
+
+qmult
+~~~~~
+
+.. autofunction:: qmult
+
+qnorm
+~~~~~
+
+.. autofunction:: qnorm
+
+quat2axangle
+~~~~~~~~~~~~
+
+.. autofunction:: quat2axangle
+
+quat2mat
+~~~~~~~~
+
+.. autofunction:: quat2mat
+
+rotate_vector
+~~~~~~~~~~~~~
+
+.. autofunction:: rotate_vector
+

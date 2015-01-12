@@ -6,47 +6,31 @@ Note the :ref:`naming-conventions`.
 
 Base the module distinctions on the naming conventions.
 
-In general, routines that create or break down affines, rather than, say
-3x3 matrices, go with the - say - 3x3 routines, and are named ``aff2something``,
+In general, routines that create or break down affines, rather than, say 3x3
+matrices, go with the - say - 3x3 routines, and are named ``aff2something``,
 ``something2aff``.
 
-Routines that only apply to affines, like ``compose``, ``decompose``, go
-into the ``affines`` module. 
+Routines that only apply to affines, like ``compose``, ``decompose``, go into
+the ``affines`` module.
 
-Different decompositions have different names - such as
-``decompose_szrt``, returning transformations in order that they are
-performed - here shears, zooms, rotations, translations.
+Different decompositions might have different names - such as
+``decompose_szrt``, returning transformations in order that they are performed
+- here shears, zooms, rotations, translations.
 
 Move the SPM (ND affine) decompose to ``decompose_szrt_nd``.
 
-Break axis, angle transforms into own module, rename to ``axangle``
-forms.
-
-Create reflection module, move reflections from affine module, rename to
-``refpn`` forms.  Consider 3D forms for reflection. 
-
-Replace my Euler functionality with Christophe's.  Maybe move the
-comments from my code out into ``doc`` tree, or into the documentation
-for Christophe's code.
+Maybe move the comments from Euler code out into ``doc`` tree.
 
 To integrate
 ============
 
-* scale_matrix, scale_from_matrix : move to own module, rename
-  ``zoom2aff``, make 3D versions.
-* projection_matrix, projection_from_matrix: move to own module, rename to ``projpn2aff``. ``aff2projpn``. 
+* projection_matrix, projection_from_matrix: move to own module, rename to
+  ``projpn2aff``. ``aff2projpn``.
 * clip_matrix: move to own module, rename to ``clip2aff``
-* shear_matrix, shear_from_matrix: move to shears module, rename to
-  ``sadpn2aff``, ``aff2sadpn``.
 * decompose_matrix, compose_matrix: move to ``affines`` module, rename
   to ``decompose_zsrtp``, ``compose_zsrtp``
 * orthogonalization_matrix: move to ``misc`` module, rename to ``orth_aff``
 * superimposition_matrix: move to ``misc`` module, rename to ``vecs2aff``
-* euler_matrix, euler_from_matrix: move to ``eulerangles`` module, rename to
-  ``euler2rmat``, harmonize with my ``euler2mat`` (copying docs but
-  keeping Christophe's code).
-* euler_from_quaternion, quaternion_from_euler: move to ``eulerangles``
-  module, check against my code.
 * quaterion_about_axis, quaternion_matrix, quaternion_from_matrix,
   quaternion_multiply, quaternion_conjugate, quaternion_inverse: check
   against my code
@@ -92,8 +76,8 @@ for the C code?  Or the other way round of course::
 or both, and switch the __init__ to import from the C or Python
 namespace with a one-liner.
 
-Questions for Christophe
-========================
+Questions for Christoph
+=======================
 
 Does this refactoring plan make sense?
 
@@ -115,7 +99,3 @@ What do you think of the C / Python scheme (it's about the same as your
 current one)?
 
 How do you see the relationship between your current code and this code?
-
-
-
-

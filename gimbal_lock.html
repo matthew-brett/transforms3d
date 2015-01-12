@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Gimbal lock &mdash; transforms3d 0.1a documentation</title>
+    <title>Gimbal lock &mdash; transforms3d 0.2 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1a',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.1a documentation" href="index.html" />
-    <link rel="next" title="transforms3d reference" href="reference/index.html" />
+    <link rel="top" title="transforms3d 0.2 documentation" href="index.html" />
+    <link rel="next" title="API Reference" href="reference/index.html" />
     <link rel="prev" title="Naming conventions" href="naming_conventions.html" /> 
   </head>
   <body>
@@ -39,12 +39,12 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="reference/index.html" title="transforms3d reference"
+          <a href="reference/index.html" title="API Reference"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="naming_conventions.html" title="Naming conventions"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">transforms3d 0.1a documentation</a> &raquo;</li> 
+        <li><a href="index.html">transforms3d 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -63,6 +63,8 @@ case below, rotation around the <span class="math">\(x\)</span> axis becomes ind
 its effect from rotation around the <span class="math">\(z\)</span> axis, so the <span class="math">\(z\)</span> and <span class="math">\(x\)</span> axis
 angles collapse into one transformation, and the rotation reduces from
 three degrees of freedom to two.</p>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>Imagine that we are using the Euler angle convention of starting with a
 rotation around the <span class="math">\(x\)</span> axis, followed by the <span class="math">\(y\)</span> axis, followed by the
 <span class="math">\(z\)</span> axis.</p>
@@ -71,25 +73,35 @@ is left to right (tail to nose), the <span class="math">\(y\)</span> axis is fro
 to the right wing tip (going away from the screen), and the <span class="math">\(z\)</span> axis is
 from bottom to top:</p>
 <img alt="_images/spitfire_0.png" src="_images/spitfire_0.png" />
-<p>Imagine we wanted to do a slight roll with the left wing tilting down
-(rotation about <span class="math">\(x\)</span>) like this:</p>
-<img alt="_images/spitfire_x.png" src="_images/spitfire_x.png" />
-<p>followed by a violent pitch so we are pointing straight up (rotation
-around <span class="math">\(y\)</span> axis):</p>
-<img alt="_images/spitfire_y.png" src="_images/spitfire_y.png" />
-<p>Now we&#8217;d like to do a turn of the nose towards the viewer (and the tail
-away from the viewer):</p>
+<p>We want to rotate the aircraft to look something like this:</p>
 <img alt="_images/spitfire_hoped.png" src="_images/spitfire_hoped.png" />
-<p>But, wait, let&#8217;s go back over that again.  Look at the result of the
-rotation around the <span class="math">\(y\)</span> axis.  Notice that the <span class="math">\(x\)</span> axis, as was, is now
-aligned with the <span class="math">\(z\)</span> axis, as it is now.  Rotating around the <span class="math">\(z\)</span> axis
-will have exactly the same effect as adding an extra rotation around the
-<span class="math">\(x\)</span> axis at the beginning.  That means that, when there is a <span class="math">\(y\)</span> axis
-rotation that rotates the <span class="math">\(x\)</span> axis onto the <span class="math">\(z\)</span> axis (a rotation of
-<span class="math">\(\pm\pi/2\)</span> around the <span class="math">\(y\)</span> axis) - the <span class="math">\(x\)</span> and <span class="math">\(y\)</span> axes are &#8220;locked&#8221;
-together.</p>
+<p>We might start by doing an x rotation, making a slight roll with the left wing
+tilting down (rotation about <span class="math">\(x\)</span>) like this:</p>
+<img alt="_images/spitfire_x.png" src="_images/spitfire_x.png" />
+<p>Let&#8217;s say that the x rotation is -0.2 radians.</p>
+<p>Then we do a pitch so we are pointing straight up (rotation around <span class="math">\(y\)</span> axis).
+This is a rotation by <span class="math">\(-\pi/2\)</span> radians.</p>
+<img alt="_images/spitfire_y.png" src="_images/spitfire_y.png" />
+<p>To get to our desired position from here, we need to do a turn of something
+like 0.2 radians of the nose towards the viewer (and the tail away from the
+viewer).  All we have left is our z rotation (rotation around the <span class="math">\(z\)</span> axis.
+Unfortunately, the current result of a rotation around the <span class="math">\(z\)</span> axis has now
+become the same as a previous rotation around the <span class="math">\(x\)</span> axis.  To see this, look
+at the result of the rotation around the <span class="math">\(y\)</span> axis.  Notice that the <span class="math">\(x\)</span> axis,
+as was, is now aligned with the <span class="math">\(z\)</span> axis, as it is now.  Rotating around the
+<span class="math">\(z\)</span> axis will have exactly the same effect as adding an extra rotation around
+the <span class="math">\(x\)</span> axis at the beginning.  That means that, when there is a <span class="math">\(y\)</span> axis
+rotation that rotates the <span class="math">\(x\)</span> axis onto the <span class="math">\(z\)</span> axis (a rotation of <span class="math">\(\pm\pi/2\)</span>
+around the <span class="math">\(y\)</span> axis) - the <span class="math">\(x\)</span> and <span class="math">\(y\)</span> axes are &#8220;locked&#8221; together.</p>
+<p>This does not mean that we cannot do the rotations we need, only that we can&#8217;t
+do them by starting with the most obvious x and y rotations.  In fact what we
+will have to do is first rotate around x by <span class="math">\(\pi/2 - 0.2\)</span> radians, then do
+a y rotation of <span class="math">\(-\pi/2 + 0.2\)</span> radians, and finally a z rotation of <span class="math">\(-\pi/2\)</span>
+radians.  See the code below for the details.</p>
+</div>
 <div class="section" id="mathematics-of-gimbal-lock">
 <h2>Mathematics of gimbal lock<a class="headerlink" href="#mathematics-of-gimbal-lock" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="reference/transforms3d.derivations.html#module-transforms3d.derivations.eulerangles" title="transforms3d.derivations.eulerangles"><tt class="xref py py-mod docutils literal"><span class="pre">transforms3d.derivations.eulerangles</span></tt></a>.</p>
 <p>We see gimbal lock for this type of Euler axis convention, when
 <span class="math">\(\cos(\beta) = 0\)</span>, where <span class="math">\(\beta\)</span> is the angle of rotation around the <span class="math">\(y\)</span>
 axis.  By &#8220;this type of convention&#8221; we mean using rotation around all 3
@@ -102,13 +114,11 @@ three component rotations. Recall that, for a rotation of <span class="math">\(\
 radians around <span class="math">\(x\)</span>, followed by a rotation <span class="math">\(\beta\)</span> around <span class="math">\(y\)</span>, followed
 by rotation <span class="math">\(\gamma\)</span> around <span class="math">\(z\)</span>, the rotation matrix <span class="math">\(R\)</span> is:</p>
 <div class="math">
-\[\begin{split}R = \left(\begin{smallmatrix}\operatorname{cos}\left(\beta\right) \operatorname{cos}\left(\gamma\right) &amp; - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\beta\right) &amp; \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\beta\right)\\\operatorname{cos}\left(\beta\right) \operatorname{sin}\left(\gamma\right) &amp; \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\beta\right) \operatorname{sin}\left(\gamma\right) &amp;- \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) + \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\beta\right) \operatorname{sin}\left(\gamma\right)\\- \operatorname{sin}\left(\beta\right) &amp; \operatorname{cos}\left(\beta\right) \operatorname{sin}\left(\alpha\right) &amp; \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\beta\right)\end{smallmatrix}\right)\end{split}\]</div>
-<p>When <span class="math">\(\cos(\beta) = 0\)</span>, <span class="math">\(\sin(\beta) = \pm1\)</span> and <span class="math">\(R\)</span> simplifies to:</p>
+\[\begin{split}R = \left[\begin{matrix}\cos{\left (\beta \right )} \cos{\left (\gamma \right )} &amp; \sin{\left (\alpha \right )} \sin{\left (\beta \right )} \cos{\left (\gamma \right )} - \sin{\left (\gamma \right )} \cos{\left (\alpha \right )} &amp; \sin{\left (\alpha \right )} \sin{\left (\gamma \right )} + \sin{\left (\beta \right )} \cos{\left (\alpha \right )} \cos{\left (\gamma \right )}\\\sin{\left (\gamma \right )} \cos{\left (\beta \right )} &amp; \sin{\left (\alpha \right )} \sin{\left (\beta \right )} \sin{\left (\gamma \right )} + \cos{\left (\alpha \right )} \cos{\left (\gamma \right )} &amp; - \sin{\left (\alpha \right )} \cos{\left (\gamma \right )} + \sin{\left (\beta \right )} \sin{\left (\gamma \right )} \cos{\left (\alpha \right )}\\- \sin{\left (\beta \right )} &amp; \sin{\left (\alpha \right )} \cos{\left (\beta \right )} &amp; \cos{\left (\alpha \right )} \cos{\left (\beta \right )}\end{matrix}\right]\end{split}\]</div>
+<p>In our case the y rotation <span class="math">\(\beta = -\pi / 2, \cos(\beta) = 0, \sin(\beta) =
+-1\)</span>:</p>
 <div class="math">
-\[\begin{split}R = \left(\begin{smallmatrix}0 &amp; - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \pm{1} \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) &amp; \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) + \pm{1} \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right)\\0 &amp; \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \pm{1} \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) &amp; - \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) + \pm{1} \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right)\\- \pm{1} &amp; 0 &amp; 0\end{smallmatrix}\right)\end{split}\]</div>
-<p>When <span class="math">\(\sin(\beta) = 1\)</span>:</p>
-<div class="math">
-\[\begin{split}R = \left(\begin{smallmatrix}0 &amp; \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) &amp; \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right)\\0 &amp; \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) &amp; \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) - \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right)\\-1 &amp; 0 &amp; 0\end{smallmatrix}\right)\end{split}\]</div>
+\[\begin{split}R = \left[\begin{matrix}0 &amp; - \sin{\left (\alpha \right )} \cos{\left (\gamma \right )} - \sin{\left (\gamma \right )} \cos{\left (\alpha \right )} &amp; \sin{\left (\alpha \right )} \sin{\left (\gamma \right )} - \cos{\left (\alpha \right )} \cos{\left (\gamma \right )}\\0 &amp; - \sin{\left (\alpha \right )} \sin{\left (\gamma \right )} + \cos{\left (\alpha \right )} \cos{\left (\gamma \right )} &amp; - \sin{\left (\alpha \right )} \cos{\left (\gamma \right )} - \sin{\left (\gamma \right )} \cos{\left (\alpha \right )}\\1 &amp; 0 &amp; 0\end{matrix}\right]\end{split}\]</div>
 <p>From the <a class="reference external" href="http://en.wikipedia.org/wiki/List_of_trigonometric_identities#Angle_sum_and_difference_identities">angle sum and difference identities</a>
 (see also <a class="reference external" href="http://www.themathpage.com/atrig/sum-proof.htm">geometric proof</a>, <a class="reference external" href="http://mathworld.wolfram.com/TrigonometricAdditionFormulas.html">Mathworld treatment</a>) we
 remind ourselves that, for any two angles <span class="math">\(\alpha\)</span> and <span class="math">\(\beta\)</span>:</p>
@@ -116,17 +126,79 @@ remind ourselves that, for any two angles <span class="math">\(\alpha\)</span> a
 \[\sin(\alpha \pm \beta) = \sin \alpha \cos \beta \pm \cos \alpha \sin \beta \,\]\[\cos(\alpha \pm \beta) = \cos \alpha \cos \beta \mp \sin \alpha \sin \beta\]</div>
 <p>We can rewrite <span class="math">\(R\)</span> as:</p>
 <div class="math">
-\[\begin{split}R = \left(\begin{smallmatrix}0 &amp; V_{1} &amp; V_{2}\\0 &amp; V_{2} &amp; - V_{1}\\-1 &amp; 0 &amp; 0\end{smallmatrix}\right)\end{split}\]</div>
+\[\begin{split}R = \left[\begin{matrix}0 &amp; - W_{1} &amp; - W_{2}\\0 &amp; W_{2} &amp; - W_{1}\\1 &amp; 0 &amp; 0\end{matrix}\right]\end{split}\]</div>
 <p>where:</p>
 <div class="math">
-\[V_1 = \operatorname{cos}\left(\gamma\right) \operatorname{sin}\left(\alpha\right) - \operatorname{cos}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) = \sin(\alpha - \gamma) \,\]\[V_2 =  \operatorname{cos}\left(\alpha\right) \operatorname{cos}\left(\gamma\right) + \operatorname{sin}\left(\alpha\right) \operatorname{sin}\left(\gamma\right) = \cos(\alpha - \gamma)\]</div>
-<p>We immediately see that <span class="math">\(\alpha\)</span> and <span class="math">\(\gamma\)</span> are going to lead the same
-transformation - the mathematical expression of the observation on the
-spitfire above, that rotation around the <span class="math">\(x\)</span> axis is equivalent to
-rotation about the <span class="math">\(z\)</span> axis.</p>
-<p>It&#8217;s easy to do the same set of reductions, with the same conclusion,
-for the case where <span class="math">\(\sin(\beta) = -1\)</span> - see
-<a class="reference external" href="http://www.gregslabaugh.name/publications/euler.pdf">http://www.gregslabaugh.name/publications/euler.pdf</a>.</p>
+\[W_1 = \sin{\left (\alpha \right )} \cos{\left (\gamma \right )} +
+\sin{\left (\gamma \right )} \cos{\left (\alpha \right )}
+= \sin(\alpha + \gamma) \,\]\[W_2 = - \sin{\left (\alpha \right )} \sin{\left (\gamma \right )} +
+\cos{\left (\alpha \right )} \cos{\left (\gamma \right )}
+= \cos(\alpha + \gamma)\]</div>
+<p>We immediately see that <span class="math">\(\alpha\)</span> and <span class="math">\(\gamma\)</span> are going to lead to the same
+transformations - the mathematical expression of the observation on the
+spitfire above, that rotation around the <span class="math">\(x\)</span> axis is equivalent to rotation
+about the <span class="math">\(z\)</span> axis.</p>
+<p>It&#8217;s easy to do the same set of reductions for the case where <span class="math">\(\sin(\beta) =
+1\)</span>; see <a class="reference external" href="http://www.gregslabaugh.name/publications/euler.pdf">http://www.gregslabaugh.name/publications/euler.pdf</a>.</p>
+</div>
+<div class="section" id="the-example-in-code">
+<h2>The example in code<a class="headerlink" href="#the-example-in-code" title="Permalink to this headline">¶</a></h2>
+<p>Here is what our gimbal lock looks like in code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  <span class="c"># neat printing</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">transforms3d.euler</span> <span class="kn">import</span> <span class="n">euler2mat</span><span class="p">,</span> <span class="n">mat2euler</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x_angle</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_angle</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">z_angle</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">euler2mat</span><span class="p">(</span><span class="n">x_angle</span><span class="p">,</span> <span class="n">y_angle</span><span class="p">,</span> <span class="n">z_angle</span><span class="p">,</span> <span class="s">&#39;sxyz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R</span>
+<span class="go">array([[ 0.   ,  0.389, -0.921],</span>
+<span class="go">       [-0.   ,  0.921,  0.389],</span>
+<span class="go">       [ 1.   , -0.   ,  0.   ]])</span>
+</pre></div>
+</div>
+<p>This isn&#8217;t the transformation we actually want because of the gimbal lock.
+The gimbal lock means that <tt class="docutils literal"><span class="pre">x_angle</span></tt> and <tt class="docutils literal"><span class="pre">z_angle</span></tt> result in rotations
+about the same axis of the object.  So, we can add something to the
+<tt class="docutils literal"><span class="pre">x_angle</span></tt> and subtract the same value from <tt class="docutils literal"><span class="pre">z_angle</span></tt> to get the same
+result:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">euler2mat</span><span class="p">(</span><span class="n">x_angle</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">y_angle</span><span class="p">,</span> <span class="n">z_angle</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">,</span> <span class="s">&#39;sxyz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R</span>
+<span class="go">array([[ 0.   ,  0.389, -0.921],</span>
+<span class="go">       [-0.   ,  0.921,  0.389],</span>
+<span class="go">       [ 1.   , -0.   ,  0.   ]])</span>
+</pre></div>
+</div>
+<p>In fact, we could omit the z rotation entirely and put all the rotation into
+the original x axis rotation and still get the same rotation matrix:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">R_dash</span> <span class="o">=</span> <span class="n">euler2mat</span><span class="p">(</span><span class="n">x_angle</span> <span class="o">+</span> <span class="n">z_angle</span><span class="p">,</span> <span class="n">y_angle</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;sxyz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">R_dash</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>So, there is no future in doing our transformations starting with this x and
+y rotation, if we are rotating with this axis order.  We can get the
+transformation we actually want by doing the rotations in the order x, then z
+then y, like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">euler2mat</span><span class="p">(</span><span class="n">x_angle</span><span class="p">,</span> <span class="n">z_angle</span><span class="p">,</span> <span class="n">y_angle</span><span class="p">,</span> <span class="s">&#39;sxzy&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R</span>
+<span class="go">array([[ 0.   ,  0.199, -0.98 ],</span>
+<span class="go">       [-0.199,  0.961,  0.195],</span>
+<span class="go">       [ 0.98 ,  0.195,  0.039]])</span>
+</pre></div>
+</div>
+<p>We can get this same transformation using our original x, y, z rotation order,
+but using different rotation angles:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x_dash</span><span class="p">,</span> <span class="n">y_dash</span><span class="p">,</span> <span class="n">z_dash</span> <span class="o">=</span> <span class="n">mat2euler</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="s">&#39;sxyz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">x_dash</span><span class="p">,</span> <span class="n">y_dash</span><span class="p">,</span> <span class="n">z_dash</span><span class="p">))</span>  <span class="c"># np.array for print neatness</span>
+<span class="go">array([ 1.371, -1.371, -1.571])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">euler2mat</span><span class="p">(</span><span class="n">x_dash</span><span class="p">,</span> <span class="n">y_dash</span><span class="p">,</span> <span class="n">z_dash</span><span class="p">,</span> <span class="s">&#39;sxyz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R</span>
+<span class="go">array([[ 0.   ,  0.199, -0.98 ],</span>
+<span class="go">       [-0.199,  0.961,  0.195],</span>
+<span class="go">       [ 0.98 ,  0.195,  0.039]])</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -139,7 +211,9 @@ for the case where <span class="math">\(\sin(\beta) = -1\)</span> - see
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Gimbal lock</a><ul>
+<li><a class="reference internal" href="#example">Example</a></li>
 <li><a class="reference internal" href="#mathematics-of-gimbal-lock">Mathematics of gimbal lock</a></li>
+<li><a class="reference internal" href="#the-example-in-code">The example in code</a></li>
 </ul>
 </li>
 </ul>
@@ -149,7 +223,7 @@ for the case where <span class="math">\(\sin(\beta) = -1\)</span> - see
                         title="previous chapter">Naming conventions</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="reference/index.html"
-                        title="next chapter">transforms3d reference</a></p>
+                        title="next chapter">API Reference</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/gimbal_lock.txt"
@@ -182,17 +256,17 @@ for the case where <span class="math">\(\sin(\beta) = -1\)</span> - see
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="reference/index.html" title="transforms3d reference"
+          <a href="reference/index.html" title="API Reference"
              >next</a> |</li>
         <li class="right" >
           <a href="naming_conventions.html" title="Naming conventions"
              >previous</a> |</li>
-        <li><a href="index.html">transforms3d 0.1a documentation</a> &raquo;</li> 
+        <li><a href="index.html">transforms3d 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2009-2015, Christoph Gohlke, Matthew Brett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+        &copy; Copyright 2009-2015, Matthew Brett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>

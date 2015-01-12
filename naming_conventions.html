@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Naming conventions &mdash; transforms3d 0.1a documentation</title>
+    <title>Naming conventions &mdash; transforms3d 0.2 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1a',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.1a documentation" href="index.html" />
+    <link rel="top" title="transforms3d 0.2 documentation" href="index.html" />
     <link rel="next" title="Gimbal lock" href="gimbal_lock.html" />
     <link rel="prev" title="Conventions for transforms" href="conventions.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="conventions.html" title="Conventions for transforms"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">transforms3d 0.1a documentation</a> &raquo;</li> 
+        <li><a href="index.html">transforms3d 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,18 +57,24 @@
 <span id="id1"></span><h1>Naming conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this headline">¶</a></h1>
 <p>In the code, we try to abbreviate common concepts in a standard way.</p>
 <ul class="simple">
-<li><em>aff</em>  - 4x4 <a class="reference internal" href="glossary.html#term-affine-matrix"><em class="xref std std-term">affine matrix</em></a></li>
-<li><em>rmat</em> - 3x3 <a class="reference internal" href="glossary.html#term-rotation-matrix"><em class="xref std std-term">rotation matrix</em></a></li>
-<li><em>smat</em> - 3x3 <a class="reference internal" href="glossary.html#term-shear-matrix"><em class="xref std std-term">shear matrix</em></a></li>
-<li><em>euler</em> - <a class="reference internal" href="glossary.html#term-euler-angles"><em class="xref std std-term">euler angles</em></a></li>
-<li><em>axangle</em> - <a class="reference internal" href="glossary.html#term-axis-angle"><em class="xref std std-term">axis angle</em></a></li>
-<li><em>rvec</em> - <a class="reference internal" href="glossary.html#term-rotation-vector"><em class="xref std std-term">rotation vector</em></a></li>
-<li><em>quat</em> - <a class="reference internal" href="glossary.html#term-quaternion"><em class="xref std std-term">quaternion</em></a></li>
-<li><em>rfmat</em> - <a class="reference internal" href="glossary.html#term-reflection"><em class="xref std std-term">reflection</em></a> matrix</li>
-<li><em>rfvec</em> - vector defining plane for <a class="reference internal" href="glossary.html#term-reflection"><em class="xref std std-term">reflection</em></a></li>
-<li><em>zoom</em> - shape (3,) scaling, sometimes</li>
-<li><em>zdir</em> - factor, direction pair to specify 3D zoom matrix</li>
-<li><em>zdiro</em> - factor, direction, origin triple to specify 4D zoom affine</li>
+<li><em>aff</em>  - 4x4 <a class="reference internal" href="glossary.html#term-affine-matrix"><em class="xref std std-term">affine matrix</em></a> for operating on homogenous coordinates
+of shape (4,) or (4, N);</li>
+<li><em>mat</em> - 3x3 transformation matrix for operating on non-homogenous
+coordinate vectors of shape (3,) or (3, N). A <a class="reference internal" href="glossary.html#term-rotation-matrix"><em class="xref std std-term">rotation matrix</em></a> is an
+example of a transformation matrix;</li>
+<li><em>euler</em> - <a class="reference internal" href="glossary.html#term-euler-angles"><em class="xref std std-term">euler angles</em></a> - sequence of three scalars giving rotations
+about defined axes;</li>
+<li><em>axangle</em> - <a class="reference internal" href="glossary.html#term-axis-angle"><em class="xref std std-term">axis angle</em></a> - axis (vector) and angle (scalar) giving
+axis around which to rotate and angle of rotation;</li>
+<li><em>quat</em> - <a class="reference internal" href="glossary.html#term-quaternion"><em class="xref std std-term">quaternion</em></a> - shape (4,);</li>
+<li><em>rfnorm</em> : reflection in plane defined by normal (vector) and optional point
+(vector);</li>
+<li><em>zfdir</em> : zooms encoded by factor (scalar) and direction (vector)</li>
+<li><em>zdir</em> - factor (scalar), direction (vector) pair to specify 3D zoom matrix;</li>
+<li><em>striu</em> : shears encoded by vector giving triangular portion above diagonal
+of NxN array (for ND transformation)</li>
+<li><em>sadn</em> : shears encoded by angle scalar, direction vector, normal vector
+(with optional point vector)</li>
 </ul>
 </div>
 
@@ -121,12 +127,12 @@
         <li class="right" >
           <a href="conventions.html" title="Conventions for transforms"
              >previous</a> |</li>
-        <li><a href="index.html">transforms3d 0.1a documentation</a> &raquo;</li> 
+        <li><a href="index.html">transforms3d 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2009-2015, Christoph Gohlke, Matthew Brett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+        &copy; Copyright 2009-2015, Matthew Brett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>

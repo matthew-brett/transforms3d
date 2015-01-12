@@ -1,0 +1,19 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+:mod:`_version`
+===============
+.. automodule:: transforms3d._version
+
+.. currentmodule:: transforms3d._version
+.. autosummary::
+
+   get_versions
+
+
+.. currentmodule:: transforms3d._version
+
+get_versions
+~~~~~~~~~~~~
+
+.. autofunction:: get_versions
+

@@ -1,0 +1,37 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+:mod:`axangles`
+===============
+.. automodule:: transforms3d.axangles
+
+.. currentmodule:: transforms3d.axangles
+.. autosummary::
+
+   aff2axangle
+   axangle2aff
+   axangle2mat
+   mat2axangle
+
+
+.. currentmodule:: transforms3d.axangles
+
+aff2axangle
+~~~~~~~~~~~
+
+.. autofunction:: aff2axangle
+
+axangle2aff
+~~~~~~~~~~~
+
+.. autofunction:: axangle2aff
+
+axangle2mat
+~~~~~~~~~~~
+
+.. autofunction:: axangle2mat
+
+mat2axangle
+~~~~~~~~~~~
+
+.. autofunction:: mat2axangle
+

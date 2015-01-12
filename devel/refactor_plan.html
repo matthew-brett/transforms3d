@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Refactoring plan &mdash; transforms3d 0.1a documentation</title>
+    <title>Refactoring plan &mdash; transforms3d 0.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1a',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.1a documentation" href="../index.html" /> 
+    <link rel="top" title="transforms3d 0.2 documentation" href="../index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">transforms3d 0.1a documentation</a> &raquo;</li> 
+        <li><a href="../index.html">transforms3d 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -49,40 +49,26 @@
 <h1>Refactoring plan<a class="headerlink" href="#refactoring-plan" title="Permalink to this headline">¶</a></h1>
 <p>Note the <a class="reference internal" href="../naming_conventions.html#naming-conventions"><em>Naming conventions</em></a>.</p>
 <p>Base the module distinctions on the naming conventions.</p>
-<p>In general, routines that create or break down affines, rather than, say
-3x3 matrices, go with the - say - 3x3 routines, and are named <tt class="docutils literal"><span class="pre">aff2something</span></tt>,
+<p>In general, routines that create or break down affines, rather than, say 3x3
+matrices, go with the - say - 3x3 routines, and are named <tt class="docutils literal"><span class="pre">aff2something</span></tt>,
 <tt class="docutils literal"><span class="pre">something2aff</span></tt>.</p>
-<p>Routines that only apply to affines, like <tt class="docutils literal"><span class="pre">compose</span></tt>, <tt class="docutils literal"><span class="pre">decompose</span></tt>, go
-into the <tt class="docutils literal"><span class="pre">affines</span></tt> module.</p>
-<p>Different decompositions have different names - such as
-<tt class="docutils literal"><span class="pre">decompose_szrt</span></tt>, returning transformations in order that they are
-performed - here shears, zooms, rotations, translations.</p>
+<p>Routines that only apply to affines, like <tt class="docutils literal"><span class="pre">compose</span></tt>, <tt class="docutils literal"><span class="pre">decompose</span></tt>, go into
+the <tt class="docutils literal"><span class="pre">affines</span></tt> module.</p>
+<p>Different decompositions might have different names - such as
+<tt class="docutils literal"><span class="pre">decompose_szrt</span></tt>, returning transformations in order that they are performed
+- here shears, zooms, rotations, translations.</p>
 <p>Move the SPM (ND affine) decompose to <tt class="docutils literal"><span class="pre">decompose_szrt_nd</span></tt>.</p>
-<p>Break axis, angle transforms into own module, rename to <tt class="docutils literal"><span class="pre">axangle</span></tt>
-forms.</p>
-<p>Create reflection module, move reflections from affine module, rename to
-<tt class="docutils literal"><span class="pre">refpn</span></tt> forms.  Consider 3D forms for reflection.</p>
-<p>Replace my Euler functionality with Christophe&#8217;s.  Maybe move the
-comments from my code out into <tt class="docutils literal"><span class="pre">doc</span></tt> tree, or into the documentation
-for Christophe&#8217;s code.</p>
+<p>Maybe move the comments from Euler code out into <tt class="docutils literal"><span class="pre">doc</span></tt> tree.</p>
 <div class="section" id="to-integrate">
 <h2>To integrate<a class="headerlink" href="#to-integrate" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>scale_matrix, scale_from_matrix : move to own module, rename
-<tt class="docutils literal"><span class="pre">zoom2aff</span></tt>, make 3D versions.</li>
-<li>projection_matrix, projection_from_matrix: move to own module, rename to <tt class="docutils literal"><span class="pre">projpn2aff</span></tt>. <tt class="docutils literal"><span class="pre">aff2projpn</span></tt>.</li>
+<li>projection_matrix, projection_from_matrix: move to own module, rename to
+<tt class="docutils literal"><span class="pre">projpn2aff</span></tt>. <tt class="docutils literal"><span class="pre">aff2projpn</span></tt>.</li>
 <li>clip_matrix: move to own module, rename to <tt class="docutils literal"><span class="pre">clip2aff</span></tt></li>
-<li>shear_matrix, shear_from_matrix: move to shears module, rename to
-<tt class="docutils literal"><span class="pre">sadpn2aff</span></tt>, <tt class="docutils literal"><span class="pre">aff2sadpn</span></tt>.</li>
 <li>decompose_matrix, compose_matrix: move to <tt class="docutils literal"><span class="pre">affines</span></tt> module, rename
 to <tt class="docutils literal"><span class="pre">decompose_zsrtp</span></tt>, <tt class="docutils literal"><span class="pre">compose_zsrtp</span></tt></li>
 <li>orthogonalization_matrix: move to <tt class="docutils literal"><span class="pre">misc</span></tt> module, rename to <tt class="docutils literal"><span class="pre">orth_aff</span></tt></li>
 <li>superimposition_matrix: move to <tt class="docutils literal"><span class="pre">misc</span></tt> module, rename to <tt class="docutils literal"><span class="pre">vecs2aff</span></tt></li>
-<li>euler_matrix, euler_from_matrix: move to <tt class="docutils literal"><span class="pre">eulerangles</span></tt> module, rename to
-<tt class="docutils literal"><span class="pre">euler2rmat</span></tt>, harmonize with my <tt class="docutils literal"><span class="pre">euler2mat</span></tt> (copying docs but
-keeping Christophe&#8217;s code).</li>
-<li>euler_from_quaternion, quaternion_from_euler: move to <tt class="docutils literal"><span class="pre">eulerangles</span></tt>
-module, check against my code.</li>
 <li>quaterion_about_axis, quaternion_matrix, quaternion_from_matrix,
 quaternion_multiply, quaternion_conjugate, quaternion_inverse: check
 against my code</li>
@@ -130,8 +116,8 @@ like:</p>
 <p>or both, and switch the __init__ to import from the C or Python
 namespace with a one-liner.</p>
 </div>
-<div class="section" id="questions-for-christophe">
-<h2>Questions for Christophe<a class="headerlink" href="#questions-for-christophe" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="questions-for-christoph">
+<h2>Questions for Christoph<a class="headerlink" href="#questions-for-christoph" title="Permalink to this headline">¶</a></h2>
 <p>Does this refactoring plan make sense?</p>
 <p>Does the naming scheme make sense (drawing distinction for example
 between 3x3 rotation matrix and affine)?</p>
@@ -159,7 +145,7 @@ current one)?</p>
 <li><a class="reference internal" href="#">Refactoring plan</a><ul>
 <li><a class="reference internal" href="#to-integrate">To integrate</a></li>
 <li><a class="reference internal" href="#c-python-integration">C / python integration</a></li>
-<li><a class="reference internal" href="#questions-for-christophe">Questions for Christophe</a></li>
+<li><a class="reference internal" href="#questions-for-christoph">Questions for Christoph</a></li>
 </ul>
 </li>
 </ul>
@@ -195,12 +181,12 @@ current one)?</p>
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../index.html">transforms3d 0.1a documentation</a> &raquo;</li> 
+        <li><a href="../index.html">transforms3d 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2009-2015, Christoph Gohlke, Matthew Brett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+        &copy; Copyright 2009-2015, Matthew Brett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>

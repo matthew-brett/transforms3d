@@ -1,0 +1,452 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>derivations &mdash; transforms3d 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="transforms3d 0.2 documentation" href="../index.html" />
+    <link rel="up" title="API Reference" href="index.html" />
+    <link rel="next" title="euler" href="transforms3d.euler.html" />
+    <link rel="prev" title="axangles" href="transforms3d.axangles.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="transforms3d.euler.html" title="euler"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="transforms3d.axangles.html" title="axangles"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">transforms3d 0.2 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">API Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-transforms3d.derivations">
+<span id="derivations"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">derivations</span></tt><a class="headerlink" href="#module-transforms3d.derivations" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+</tbody>
+</table>
+<div class="section" id="module-transforms3d.derivations.angle_axes">
+<span id="module-derivations-angle-axes"></span><h2>Module: <tt class="xref py py-mod docutils literal"><span class="pre">derivations.angle_axes</span></tt><a class="headerlink" href="#module-transforms3d.derivations.angle_axes" title="Permalink to this headline">¶</a></h2>
+<p>Derivations for rotations of angle around axis</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.derivations.angle_axes.angle_axis2mat" title="transforms3d.derivations.angle_axes.angle_axis2mat"><tt class="xref py py-obj docutils literal"><span class="pre">angle_axis2mat</span></tt></a>&nbsp;(theta,&nbsp;vector)</td>
+<td>Rotation matrix of angle <cite>theta</cite> around <cite>vector</cite></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#transforms3d.derivations.angle_axes.angle_axis2quat" title="transforms3d.derivations.angle_axes.angle_axis2quat"><tt class="xref py py-obj docutils literal"><span class="pre">angle_axis2quat</span></tt></a>&nbsp;(theta,&nbsp;vector)</td>
+<td>Quaternion for rotation of angle <cite>theta</cite> around <cite>vector</cite> Notes &#8212;&#8211; Formula from <a class="reference external" href="http://mathworld.wolfram.com/EulerParameters.html">http://mathworld.wolfram.com/EulerParameters.html</a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.derivations.angle_axes.orig_aa2mat" title="transforms3d.derivations.angle_axes.orig_aa2mat"><tt class="xref py py-obj docutils literal"><span class="pre">orig_aa2mat</span></tt></a>&nbsp;(angle,&nbsp;direction)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#transforms3d.derivations.angle_axes.quat2angle_axis" title="transforms3d.derivations.angle_axes.quat2angle_axis"><tt class="xref py py-obj docutils literal"><span class="pre">quat2angle_axis</span></tt></a>&nbsp;(quat)</td>
+<td>Convert quaternion to rotation of angle around axis</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-transforms3d.derivations.decompositions">
+<span id="module-derivations-decompositions"></span><h2>Module: <tt class="xref py py-mod docutils literal"><span class="pre">derivations.decompositions</span></tt><a class="headerlink" href="#module-transforms3d.derivations.decompositions" title="Permalink to this headline">¶</a></h2>
+<p>Derivations for extracting rotations, zooms, shears</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+</tbody>
+</table>
+</div>
+<div class="section" id="module-transforms3d.derivations.eulerangles">
+<span id="module-derivations-eulerangles"></span><h2>Module: <tt class="xref py py-mod docutils literal"><span class="pre">derivations.eulerangles</span></tt><a class="headerlink" href="#module-transforms3d.derivations.eulerangles" title="Permalink to this headline">¶</a></h2>
+<p>These give the derivations for Euler angles to rotation matrix and
+Euler angles to quaternion.  We use the rotation matrix derivation only
+in the tests.  The quaternion derivation is in the tests, and,
+in more compact form, in the <tt class="docutils literal"><span class="pre">euler2quat</span></tt> code.</p>
+<p>The rotation matrices operate on column vectors, thus, if <tt class="docutils literal"><span class="pre">R</span></tt> is the
+3x3 rotation matrix, <tt class="docutils literal"><span class="pre">v</span></tt> is the 3 x N set of N vectors to be rotated,
+and <tt class="docutils literal"><span class="pre">vdash</span></tt> is the matrix of rotated vectors:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">vdash</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.derivations.eulerangles.x_rotation" title="transforms3d.derivations.eulerangles.x_rotation"><tt class="xref py py-obj docutils literal"><span class="pre">x_rotation</span></tt></a>&nbsp;(theta)</td>
+<td>Rotation angle <cite>theta</cite> around x-axis <a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix#Dimension_three">http://en.wikipedia.org/wiki/Rotation_matrix#Dimension_three</a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#transforms3d.derivations.eulerangles.y_rotation" title="transforms3d.derivations.eulerangles.y_rotation"><tt class="xref py py-obj docutils literal"><span class="pre">y_rotation</span></tt></a>&nbsp;(theta)</td>
+<td>Rotation angle <cite>theta</cite> around y-axis <a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix#Dimension_three">http://en.wikipedia.org/wiki/Rotation_matrix#Dimension_three</a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.derivations.eulerangles.z_rotation" title="transforms3d.derivations.eulerangles.z_rotation"><tt class="xref py py-obj docutils literal"><span class="pre">z_rotation</span></tt></a>&nbsp;(theta)</td>
+<td>Rotation angle <cite>theta</cite> around z-axis <a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix#Dimension_three">http://en.wikipedia.org/wiki/Rotation_matrix#Dimension_three</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-transforms3d.derivations.quaternions">
+<span id="module-derivations-quaternions"></span><h2>Module: <tt class="xref py py-mod docutils literal"><span class="pre">derivations.quaternions</span></tt><a class="headerlink" href="#module-transforms3d.derivations.quaternions" title="Permalink to this headline">¶</a></h2>
+<p>Symbolic formulae for quaternions</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.derivations.quaternions.qmult" title="transforms3d.derivations.quaternions.qmult"><tt class="xref py py-obj docutils literal"><span class="pre">qmult</span></tt></a>&nbsp;(q1,&nbsp;q2)</td>
+<td>Multiply two quaternions</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#transforms3d.derivations.quaternions.quat2mat" title="transforms3d.derivations.quaternions.quat2mat"><tt class="xref py py-obj docutils literal"><span class="pre">quat2mat</span></tt></a>&nbsp;(quat)</td>
+<td>Symbolic conversion from quaternion to rotation matrix</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.derivations.quaternions.quat_around_axis" title="transforms3d.derivations.quaternions.quat_around_axis"><tt class="xref py py-obj docutils literal"><span class="pre">quat_around_axis</span></tt></a>&nbsp;(theta,&nbsp;axis)</td>
+<td>Quaternion for rotation of angle <cite>theta</cite> around axis <cite>axis</cite></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-transforms3d.derivations.utils">
+<span id="module-derivations-utils"></span><h2>Module: <tt class="xref py py-mod docutils literal"><span class="pre">derivations.utils</span></tt><a class="headerlink" href="#module-transforms3d.derivations.utils" title="Permalink to this headline">¶</a></h2>
+<p>Utilities for derivations</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.derivations.utils.make_matrix" title="transforms3d.derivations.utils.make_matrix"><tt class="xref py py-obj docutils literal"><span class="pre">make_matrix</span></tt></a>&nbsp;(name_prefix,&nbsp;N,&nbsp;M)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#transforms3d.derivations.utils.matrices_equal" title="transforms3d.derivations.utils.matrices_equal"><tt class="xref py py-obj docutils literal"><span class="pre">matrices_equal</span></tt></a>&nbsp;(M1,&nbsp;M2)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.derivations.utils.matrix_simplify" title="transforms3d.derivations.utils.matrix_simplify"><tt class="xref py py-obj docutils literal"><span class="pre">matrix_simplify</span></tt></a>&nbsp;(M)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="angle-axis2mat">
+<h3>angle_axis2mat<a class="headerlink" href="#angle-axis2mat" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="transforms3d.derivations.angle_axes.angle_axis2mat">
+<tt class="descclassname">transforms3d.derivations.angle_axes.</tt><tt class="descname">angle_axis2mat</tt><big>(</big><em>theta</em>, <em>vector</em><big>)</big><a class="headerlink" href="#transforms3d.derivations.angle_axes.angle_axis2mat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotation matrix of angle <cite>theta</cite> around <cite>vector</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>theta</strong> : scalar</p>
+<blockquote>
+<div><p>angle of rotation</p>
+</div></blockquote>
+<p><strong>vector</strong> : 3 element sequence</p>
+<blockquote>
+<div><p>vector specifying axis for rotation.</p>
+</div></blockquote>
+<p><strong>is_normalized</strong> : bool, optional</p>
+<blockquote>
+<div><p>True if vector is already normalized (has norm of 1).  Default
+False</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>mat</strong> : array shape (3,3)</p>
+<blockquote class="last">
+<div><p>rotation matrix specified rotation</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>From: <a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix#Axis_and_angle">http://en.wikipedia.org/wiki/Rotation_matrix#Axis_and_angle</a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="angle-axis2quat">
+<h3>angle_axis2quat<a class="headerlink" href="#angle-axis2quat" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="transforms3d.derivations.angle_axes.angle_axis2quat">
+<tt class="descclassname">transforms3d.derivations.angle_axes.</tt><tt class="descname">angle_axis2quat</tt><big>(</big><em>theta</em>, <em>vector</em><big>)</big><a class="headerlink" href="#transforms3d.derivations.angle_axes.angle_axis2quat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quaternion for rotation of angle <cite>theta</cite> around <cite>vector</cite>
+Notes
+&#8212;&#8211;
+Formula from <a class="reference external" href="http://mathworld.wolfram.com/EulerParameters.html">http://mathworld.wolfram.com/EulerParameters.html</a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="orig-aa2mat">
+<h3>orig_aa2mat<a class="headerlink" href="#orig-aa2mat" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="transforms3d.derivations.angle_axes.orig_aa2mat">
+<tt class="descclassname">transforms3d.derivations.angle_axes.</tt><tt class="descname">orig_aa2mat</tt><big>(</big><em>angle</em>, <em>direction</em><big>)</big><a class="headerlink" href="#transforms3d.derivations.angle_axes.orig_aa2mat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="quat2angle-axis">
+<h3>quat2angle_axis<a class="headerlink" href="#quat2angle-axis" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="transforms3d.derivations.angle_axes.quat2angle_axis">
+<tt class="descclassname">transforms3d.derivations.angle_axes.</tt><tt class="descname">quat2angle_axis</tt><big>(</big><em>quat</em><big>)</big><a class="headerlink" href="#transforms3d.derivations.angle_axes.quat2angle_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert quaternion to rotation of angle around axis</p>
+</dd></dl>
+
+</div>
+<div class="section" id="x-rotation">
+<h3>x_rotation<a class="headerlink" href="#x-rotation" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="transforms3d.derivations.eulerangles.x_rotation">
+<tt class="descclassname">transforms3d.derivations.eulerangles.</tt><tt class="descname">x_rotation</tt><big>(</big><em>theta</em><big>)</big><a class="headerlink" href="#transforms3d.derivations.eulerangles.x_rotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotation angle <cite>theta</cite> around x-axis
+<a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix#Dimension_three">http://en.wikipedia.org/wiki/Rotation_matrix#Dimension_three</a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="y-rotation">
+<h3>y_rotation<a class="headerlink" href="#y-rotation" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="transforms3d.derivations.eulerangles.y_rotation">
+<tt class="descclassname">transforms3d.derivations.eulerangles.</tt><tt class="descname">y_rotation</tt><big>(</big><em>theta</em><big>)</big><a class="headerlink" href="#transforms3d.derivations.eulerangles.y_rotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotation angle <cite>theta</cite> around y-axis
+<a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix#Dimension_three">http://en.wikipedia.org/wiki/Rotation_matrix#Dimension_three</a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="z-rotation">
+<h3>z_rotation<a class="headerlink" href="#z-rotation" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="transforms3d.derivations.eulerangles.z_rotation">
+<tt class="descclassname">transforms3d.derivations.eulerangles.</tt><tt class="descname">z_rotation</tt><big>(</big><em>theta</em><big>)</big><a class="headerlink" href="#transforms3d.derivations.eulerangles.z_rotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotation angle <cite>theta</cite> around z-axis
+<a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix#Dimension_three">http://en.wikipedia.org/wiki/Rotation_matrix#Dimension_three</a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="qmult">
+<h3>qmult<a class="headerlink" href="#qmult" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="transforms3d.derivations.quaternions.qmult">
+<tt class="descclassname">transforms3d.derivations.quaternions.</tt><tt class="descname">qmult</tt><big>(</big><em>q1</em>, <em>q2</em><big>)</big><a class="headerlink" href="#transforms3d.derivations.quaternions.qmult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiply two quaternions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>q1</strong> : 4 element sequence</p>
+<p><strong>q2</strong> : 4 element sequence</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>q12</strong> : shape (4,) array</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>See : <a class="reference external" href="http://en.wikipedia.org/wiki/Quaternions#Hamilton_product">http://en.wikipedia.org/wiki/Quaternions#Hamilton_product</a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="quat2mat">
+<h3>quat2mat<a class="headerlink" href="#quat2mat" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="transforms3d.derivations.quaternions.quat2mat">
+<tt class="descclassname">transforms3d.derivations.quaternions.</tt><tt class="descname">quat2mat</tt><big>(</big><em>quat</em><big>)</big><a class="headerlink" href="#transforms3d.derivations.quaternions.quat2mat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Symbolic conversion from quaternion to rotation matrix</p>
+<p>For a unit quaternion</p>
+<p>From: <a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix#Quaternion">http://en.wikipedia.org/wiki/Rotation_matrix#Quaternion</a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="quat-around-axis">
+<h3>quat_around_axis<a class="headerlink" href="#quat-around-axis" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="transforms3d.derivations.quaternions.quat_around_axis">
+<tt class="descclassname">transforms3d.derivations.quaternions.</tt><tt class="descname">quat_around_axis</tt><big>(</big><em>theta</em>, <em>axis</em><big>)</big><a class="headerlink" href="#transforms3d.derivations.quaternions.quat_around_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quaternion for rotation of angle <cite>theta</cite> around axis <cite>axis</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>theta</strong> : symbol</p>
+<blockquote>
+<div><p>angle of rotation</p>
+</div></blockquote>
+<p><strong>axis</strong> : 3 element sequence</p>
+<blockquote>
+<div><p>vector (assumed normalized) specifying axis for rotation</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>quat</strong> : 4 element sequence of symbols</p>
+<blockquote class="last">
+<div><p>quaternion giving specified rotation</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Formula from <a class="reference external" href="http://mathworld.wolfram.com/EulerParameters.html">http://mathworld.wolfram.com/EulerParameters.html</a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="make-matrix">
+<h3>make_matrix<a class="headerlink" href="#make-matrix" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="transforms3d.derivations.utils.make_matrix">
+<tt class="descclassname">transforms3d.derivations.utils.</tt><tt class="descname">make_matrix</tt><big>(</big><em>name_prefix</em>, <em>N</em>, <em>M</em><big>)</big><a class="headerlink" href="#transforms3d.derivations.utils.make_matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="matrices-equal">
+<h3>matrices_equal<a class="headerlink" href="#matrices-equal" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="transforms3d.derivations.utils.matrices_equal">
+<tt class="descclassname">transforms3d.derivations.utils.</tt><tt class="descname">matrices_equal</tt><big>(</big><em>M1</em>, <em>M2</em><big>)</big><a class="headerlink" href="#transforms3d.derivations.utils.matrices_equal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="matrix-simplify">
+<h3>matrix_simplify<a class="headerlink" href="#matrix-simplify" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="transforms3d.derivations.utils.matrix_simplify">
+<tt class="descclassname">transforms3d.derivations.utils.</tt><tt class="descname">matrix_simplify</tt><big>(</big><em>M</em><big>)</big><a class="headerlink" href="#transforms3d.derivations.utils.matrix_simplify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">derivations</span></tt></a><ul>
+<li><a class="reference internal" href="#module-transforms3d.derivations.angle_axes">Module: <tt class="docutils literal"><span class="pre">derivations.angle_axes</span></tt></a></li>
+<li><a class="reference internal" href="#module-transforms3d.derivations.decompositions">Module: <tt class="docutils literal"><span class="pre">derivations.decompositions</span></tt></a></li>
+<li><a class="reference internal" href="#module-transforms3d.derivations.eulerangles">Module: <tt class="docutils literal"><span class="pre">derivations.eulerangles</span></tt></a></li>
+<li><a class="reference internal" href="#module-transforms3d.derivations.quaternions">Module: <tt class="docutils literal"><span class="pre">derivations.quaternions</span></tt></a></li>
+<li><a class="reference internal" href="#module-transforms3d.derivations.utils">Module: <tt class="docutils literal"><span class="pre">derivations.utils</span></tt></a><ul>
+<li><a class="reference internal" href="#angle-axis2mat">angle_axis2mat</a></li>
+<li><a class="reference internal" href="#angle-axis2quat">angle_axis2quat</a></li>
+<li><a class="reference internal" href="#orig-aa2mat">orig_aa2mat</a></li>
+<li><a class="reference internal" href="#quat2angle-axis">quat2angle_axis</a></li>
+<li><a class="reference internal" href="#x-rotation">x_rotation</a></li>
+<li><a class="reference internal" href="#y-rotation">y_rotation</a></li>
+<li><a class="reference internal" href="#z-rotation">z_rotation</a></li>
+<li><a class="reference internal" href="#qmult">qmult</a></li>
+<li><a class="reference internal" href="#quat2mat">quat2mat</a></li>
+<li><a class="reference internal" href="#quat-around-axis">quat_around_axis</a></li>
+<li><a class="reference internal" href="#make-matrix">make_matrix</a></li>
+<li><a class="reference internal" href="#matrices-equal">matrices_equal</a></li>
+<li><a class="reference internal" href="#matrix-simplify">matrix_simplify</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="transforms3d.axangles.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">axangles</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="transforms3d.euler.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">euler</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/transforms3d.derivations.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="transforms3d.euler.html" title="euler"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="transforms3d.axangles.html" title="axangles"
+             >previous</a> |</li>
+        <li><a href="../index.html">transforms3d 0.2 documentation</a> &raquo;</li>
+          <li><a href="index.html" >API Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2015, Matthew Brett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

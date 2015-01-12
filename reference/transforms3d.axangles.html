@@ -1,0 +1,347 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>axangles &mdash; transforms3d 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="transforms3d 0.2 documentation" href="../index.html" />
+    <link rel="up" title="API Reference" href="index.html" />
+    <link rel="next" title="derivations" href="transforms3d.derivations.html" />
+    <link rel="prev" title="affines" href="transforms3d.affines.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="transforms3d.derivations.html" title="derivations"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="transforms3d.affines.html" title="affines"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">transforms3d 0.2 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">API Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-transforms3d.axangles">
+<span id="axangles"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">axangles</span></tt><a class="headerlink" href="#module-transforms3d.axangles" title="Permalink to this headline">¶</a></h1>
+<p>Functions for working with axis, angle rotations</p>
+<p>See <tt class="xref py py-mod docutils literal"><span class="pre">quaternions</span></tt> for conversions between axis, angle pairs and
+quaternions.</p>
+<p>Terms used in function names:</p>
+<ul class="simple">
+<li><em>mat</em> : array shape (3, 3) (3D non-homogenous coordinates)</li>
+<li><em>aff</em> : affine array shape (4, 4) (3D homogenous coordinates)</li>
+<li><em>axangle</em> : rotations encoded by axis vector and angle scalar</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.axangles.aff2axangle" title="transforms3d.axangles.aff2axangle"><tt class="xref py py-obj docutils literal"><span class="pre">aff2axangle</span></tt></a>&nbsp;(aff)</td>
+<td>Return axis, angle and point from affine</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#transforms3d.axangles.axangle2aff" title="transforms3d.axangles.axangle2aff"><tt class="xref py py-obj docutils literal"><span class="pre">axangle2aff</span></tt></a>&nbsp;(axis,&nbsp;angle[,&nbsp;point])</td>
+<td>Return affine encoding rotation by <cite>angle</cite> about <cite>axis</cite>.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.axangles.axangle2mat" title="transforms3d.axangles.axangle2mat"><tt class="xref py py-obj docutils literal"><span class="pre">axangle2mat</span></tt></a>&nbsp;(axis,&nbsp;angle[,&nbsp;is_normalized])</td>
+<td>Rotation matrix for rotation angle <cite>angle</cite> around <cite>axis</cite></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#transforms3d.axangles.mat2axangle" title="transforms3d.axangles.mat2axangle"><tt class="xref py py-obj docutils literal"><span class="pre">mat2axangle</span></tt></a>&nbsp;(mat)</td>
+<td>Return axis, angle and point from (3, 3) matrix <cite>mat</cite></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="aff2axangle">
+<h2>aff2axangle<a class="headerlink" href="#aff2axangle" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.axangles.aff2axangle">
+<tt class="descclassname">transforms3d.axangles.</tt><tt class="descname">aff2axangle</tt><big>(</big><em>aff</em><big>)</big><a class="headerlink" href="#transforms3d.axangles.aff2axangle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return axis, angle and point from affine</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>aff</strong> : array-like shape (4,4)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>axis</strong> : array shape (3,)</p>
+<blockquote>
+<div><p>vector giving axis of rotation</p>
+</div></blockquote>
+<p><strong>angle</strong> : scalar</p>
+<blockquote>
+<div><p>angle of rotation in radians.</p>
+</div></blockquote>
+<p><strong>point</strong> : array shape (3,)</p>
+<blockquote class="last">
+<div><p>point around which rotation is performed</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix#Axis_of_a_rotation">http://en.wikipedia.org/wiki/Rotation_matrix#Axis_of_a_rotation</a></p>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">direc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">angle</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R0</span> <span class="o">=</span> <span class="n">axangle2aff</span><span class="p">(</span><span class="n">direc</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">direc</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">point</span> <span class="o">=</span> <span class="n">aff2axangle</span><span class="p">(</span><span class="n">R0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R1</span> <span class="o">=</span> <span class="n">axangle2aff</span><span class="p">(</span><span class="n">direc</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">R0</span><span class="p">,</span> <span class="n">R1</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="axangle2aff">
+<h2>axangle2aff<a class="headerlink" href="#axangle2aff" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.axangles.axangle2aff">
+<tt class="descclassname">transforms3d.axangles.</tt><tt class="descname">axangle2aff</tt><big>(</big><em>axis</em>, <em>angle</em>, <em>point=None</em><big>)</big><a class="headerlink" href="#transforms3d.axangles.axangle2aff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return affine encoding rotation by <cite>angle</cite> about <cite>axis</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>axis</strong> : array shape (3,)</p>
+<blockquote>
+<div><p>vector giving axis of rotation</p>
+</div></blockquote>
+<p><strong>angle</strong> : scalar</p>
+<blockquote>
+<div><p>angle of rotation, in radians.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>A</strong> : array shape (4, 4)</p>
+<blockquote class="last">
+<div><p>Affine array to be multiplied on left of coordinate column vector to
+apply given rotation.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Applying a rotation around a point is the same as applying a
+translation of <tt class="docutils literal"><span class="pre">-point</span></tt> to move <tt class="docutils literal"><span class="pre">point</span></tt> to the origin, rotating,
+then applying a translation of <tt class="docutils literal"><span class="pre">point</span></tt>.  If <tt class="docutils literal"><span class="pre">R</span></tt> is the rotation
+matrix, than the affine for the rotation about point P is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">R00</span><span class="p">,</span> <span class="n">R01</span><span class="p">,</span> <span class="n">R02</span><span class="p">,</span> <span class="n">P0</span> <span class="o">-</span> <span class="n">P0</span><span class="o">*</span><span class="n">R00</span> <span class="o">-</span> <span class="n">P1</span><span class="o">*</span><span class="n">R01</span> <span class="o">-</span> <span class="n">P2</span><span class="o">*</span><span class="n">R02</span><span class="p">]</span>
+<span class="p">[</span><span class="n">R10</span><span class="p">,</span> <span class="n">R11</span><span class="p">,</span> <span class="n">R12</span><span class="p">,</span> <span class="n">P1</span> <span class="o">-</span> <span class="n">P0</span><span class="o">*</span><span class="n">R10</span> <span class="o">-</span> <span class="n">P1</span><span class="o">*</span><span class="n">R11</span> <span class="o">-</span> <span class="n">P2</span><span class="o">*</span><span class="n">R12</span><span class="p">]</span>
+<span class="p">[</span><span class="n">R20</span><span class="p">,</span> <span class="n">R21</span><span class="p">,</span> <span class="n">R22</span><span class="p">,</span> <span class="n">P2</span> <span class="o">-</span> <span class="n">P0</span><span class="o">*</span><span class="n">R20</span> <span class="o">-</span> <span class="n">P1</span><span class="o">*</span><span class="n">R21</span> <span class="o">-</span> <span class="n">P2</span><span class="o">*</span><span class="n">R22</span><span class="p">]</span>
+<span class="p">[</span>  <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>                             <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>(see derivations)</p>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">angle</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">direc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R0</span> <span class="o">=</span> <span class="n">axangle2aff</span><span class="p">(</span><span class="n">direc</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R1</span> <span class="o">=</span> <span class="n">axangle2aff</span><span class="p">(</span><span class="n">direc</span><span class="p">,</span> <span class="n">angle</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">R0</span><span class="p">,</span> <span class="n">R1</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R0</span> <span class="o">=</span> <span class="n">axangle2aff</span><span class="p">(</span><span class="n">direc</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R1</span> <span class="o">=</span> <span class="n">axangle2aff</span><span class="p">(</span><span class="o">-</span><span class="n">direc</span><span class="p">,</span> <span class="o">-</span><span class="n">angle</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">R0</span><span class="p">,</span> <span class="n">R1</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">axangle2aff</span><span class="p">(</span><span class="n">direc</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="mf">2.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">axangle2aff</span><span class="p">(</span><span class="n">direc</span><span class="p">,</span>
+<span class="gp">... </span>                                     <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
+<span class="gp">... </span>                                     <span class="n">point</span><span class="p">)))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="axangle2mat">
+<h2>axangle2mat<a class="headerlink" href="#axangle2mat" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.axangles.axangle2mat">
+<tt class="descclassname">transforms3d.axangles.</tt><tt class="descname">axangle2mat</tt><big>(</big><em>axis</em>, <em>angle</em>, <em>is_normalized=False</em><big>)</big><a class="headerlink" href="#transforms3d.axangles.axangle2mat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotation matrix for rotation angle <cite>angle</cite> around <cite>axis</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>axis</strong> : 3 element sequence</p>
+<blockquote>
+<div><p>vector specifying axis for rotation.</p>
+</div></blockquote>
+<p><strong>angle</strong> : scalar</p>
+<blockquote>
+<div><p>angle of rotation in radians.</p>
+</div></blockquote>
+<p><strong>is_normalized</strong> : bool, optional</p>
+<blockquote>
+<div><p>True if <cite>axis</cite> is already normalized (has norm of 1).  Default False.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>mat</strong> : array shape (3,3)</p>
+<blockquote class="last">
+<div><p>rotation matrix for specified rotation</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>From: <a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix#Axis_and_angle">http://en.wikipedia.org/wiki/Rotation_matrix#Axis_and_angle</a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="mat2axangle">
+<h2>mat2axangle<a class="headerlink" href="#mat2axangle" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.axangles.mat2axangle">
+<tt class="descclassname">transforms3d.axangles.</tt><tt class="descname">mat2axangle</tt><big>(</big><em>mat</em><big>)</big><a class="headerlink" href="#transforms3d.axangles.mat2axangle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return axis, angle and point from (3, 3) matrix <cite>mat</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>mat</strong> : array-like shape (3, 3)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>axis</strong> : array shape (3,)</p>
+<blockquote>
+<div><p>vector giving axis of rotation</p>
+</div></blockquote>
+<p><strong>angle</strong> : scalar</p>
+<blockquote class="last">
+<div><p>angle of rotation in radians.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix#Axis_of_a_rotation">http://en.wikipedia.org/wiki/Rotation_matrix#Axis_of_a_rotation</a></p>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">direc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">angle</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R0</span> <span class="o">=</span> <span class="n">axangle2mat</span><span class="p">(</span><span class="n">direc</span><span class="p">,</span> <span class="n">angle</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">direc</span><span class="p">,</span> <span class="n">angle</span> <span class="o">=</span> <span class="n">mat2axangle</span><span class="p">(</span><span class="n">R0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">R1</span> <span class="o">=</span> <span class="n">axangle2mat</span><span class="p">(</span><span class="n">direc</span><span class="p">,</span> <span class="n">angle</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">R0</span><span class="p">,</span> <span class="n">R1</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">axangles</span></tt></a><ul>
+<li><a class="reference internal" href="#aff2axangle">aff2axangle</a></li>
+<li><a class="reference internal" href="#axangle2aff">axangle2aff</a></li>
+<li><a class="reference internal" href="#axangle2mat">axangle2mat</a></li>
+<li><a class="reference internal" href="#mat2axangle">mat2axangle</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="transforms3d.affines.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">affines</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="transforms3d.derivations.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">derivations</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/transforms3d.axangles.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="transforms3d.derivations.html" title="derivations"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="transforms3d.affines.html" title="affines"
+             >previous</a> |</li>
+        <li><a href="../index.html">transforms3d 0.2 documentation</a> &raquo;</li>
+          <li><a href="index.html" >API Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2009-2015, Matthew Brett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

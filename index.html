@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to the documentation for transforms3d &mdash; transforms3d 0.1a documentation</title>
+    <title>Welcome to the documentation for transforms3d &mdash; transforms3d 0.2 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1a',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.1a documentation" href="#" />
+    <link rel="top" title="transforms3d 0.2 documentation" href="#" />
     <link rel="next" title="3D transformation matrices and others" href="intro.html" /> 
   </head>
   <body>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="intro.html" title="3D transformation matrices and others"
              accesskey="N">next</a> |</li>
-        <li><a href="#">transforms3d 0.1a documentation</a> &raquo;</li> 
+        <li><a href="#">transforms3d 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -58,10 +58,25 @@
 <li class="toctree-l1"><a class="reference internal" href="conventions.html">Conventions for transforms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="naming_conventions.html">Naming conventions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gimbal_lock.html">Gimbal lock</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gimbal_lock.html#example">Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gimbal_lock.html#mathematics-of-gimbal-lock">Mathematics of gimbal lock</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gimbal_lock.html#the-example-in-code">The example in code</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="reference/index.html">transforms3d reference</a><ul class="simple">
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.html"><tt class="docutils literal"><span class="pre">transforms3d</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d._gohlketransforms.html"><tt class="docutils literal"><span class="pre">_gohlketransforms</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d._version.html"><tt class="docutils literal"><span class="pre">_version</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.affines.html"><tt class="docutils literal"><span class="pre">affines</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.axangles.html"><tt class="docutils literal"><span class="pre">axangles</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.derivations.html"><tt class="docutils literal"><span class="pre">derivations</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.euler.html"><tt class="docutils literal"><span class="pre">euler</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.quaternions.html"><tt class="docutils literal"><span class="pre">quaternions</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.reflections.html"><tt class="docutils literal"><span class="pre">reflections</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.shears.html"><tt class="docutils literal"><span class="pre">shears</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.taitbryan.html"><tt class="docutils literal"><span class="pre">taitbryan</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.utils.html"><tt class="docutils literal"><span class="pre">utils</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.zooms.html"><tt class="docutils literal"><span class="pre">zooms</span></tt></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
@@ -96,7 +111,13 @@
   <ul class="this-page-menu">
     <li><a href="_sources/index.txt"
            rel="nofollow">Show Source</a></li>
-  </ul>
+  </ul><h3>Quick links</h3>
+
+<ul>
+    <li><a href="http://pypi.python.org/pypi/transforms3d">transforms3d pypi</a></li>
+    <li><a href="http://github.com/matthew-brett/transforms3d">Git repository</a></li>
+</ul>
+
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -126,12 +147,12 @@
         <li class="right" >
           <a href="intro.html" title="3D transformation matrices and others"
              >next</a> |</li>
-        <li><a href="#">transforms3d 0.1a documentation</a> &raquo;</li> 
+        <li><a href="#">transforms3d 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2009-2015, Christoph Gohlke, Matthew Brett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+        &copy; Copyright 2009-2015, Matthew Brett.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>
