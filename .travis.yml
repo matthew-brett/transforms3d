@@ -15,8 +15,10 @@ matrix:
     # With sympy we can run doctests
     - python: 2.7
       env:
-        - DEPENDS="numpy sympy"
-        - COVERAGE=1 DOCTESTS=1
+        - DEPENDS="numpy sympy sphinx"
+        - COVERAGE=1
+        - DOCTESTS=1
+        - DOC_DOCTEST=1
     # Absolute minimum dependencies
     - python: 2.7
       env:
@@ -48,6 +50,11 @@ script:
       DOCTEST_ARGS="--with-doctest";
       fi
     - nosetests $COVER_ARGS $DOCTEST_ARGS transforms3d
+    - if [ "${DOC_DOCTEST}" == "1" ]; then
+      cd .. ;
+      make html ;
+      cd doc && make doctest ;
+      fi
 
 after_success:
     - if [ "${COVERAGE}" == "1" ]; then coveralls; fi
