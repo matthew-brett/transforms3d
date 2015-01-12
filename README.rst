@@ -1,6 +1,9 @@
 .. image:: https://travis-ci.org/matthew-brett/transforms3d.svg?branch=master
     :target: https://travis-ci.org/matthew-brett/transforms3d
 
+.. image:: https://coveralls.io/repos/matthew-brett/transforms3d/badge.png?branch=master
+    :target: https://coveralls.io/r/matthew-brett/transforms3d?branch=master
+
 ############
 Transforms3d
 ############
