@@ -44,7 +44,7 @@ def decompose44(A44):
        determinant R matrix above
     S : array, shape (3,)
        Shear vector, such that shears fill upper triangle above
-       diagonal to form shear matrix (type ``striu'`).
+       diagonal to form shear matrix (type ``striu``).
 
     Examples
     --------
