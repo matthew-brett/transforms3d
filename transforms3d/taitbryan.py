@@ -74,8 +74,8 @@ def euler2mat(z, y, x):
     The output rotation matrix is equal to the composition of the
     individual rotations
 
-    >>> M1 = euler2mat(zrot)
-    >>> M2 = euler2mat(0, yrot)
+    >>> M1 = euler2mat(zrot, 0, 0)
+    >>> M2 = euler2mat(0, yrot, 0)
     >>> M3 = euler2mat(0, 0, xrot)
     >>> composed_M = np.dot(M3, np.dot(M2, M1))
     >>> np.allclose(M, composed_M)
@@ -92,13 +92,13 @@ def euler2mat(z, y, x):
 
     Rotations are counter-clockwise.
 
-    >>> zred = np.dot(euler2mat(z=np.pi/2), np.eye(3))
+    >>> zred = np.dot(euler2mat(np.pi/2, 0, 0), np.eye(3))
     >>> np.allclose(zred, [[0, -1, 0],[1, 0, 0], [0, 0, 1]])
     True
-    >>> yred = np.dot(euler2mat(y=np.pi/2), np.eye(3))
+    >>> yred = np.dot(euler2mat(0, np.pi/2, 0), np.eye(3))
     >>> np.allclose(yred, [[0, 0, 1],[0, 1, 0], [-1, 0, 0]])
     True
-    >>> xred = np.dot(euler2mat(x=np.pi/2), np.eye(3))
+    >>> xred = np.dot(euler2mat(0, 0, np.pi/2), np.eye(3))
     >>> np.allclose(xred, [[1, 0, 0],[0, 0, -1], [0, 1, 0]])
     True
 
