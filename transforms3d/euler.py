@@ -544,21 +544,21 @@ class TBZYX(EulerFuncs):
     def euler2mat(self, ai, aj, ak):
         """Return rotation matrix from Euler angles
 
-        See :func:`taitbryan.euler2mat` for details.
+        See :func:`transforms3d.taitbryan.euler2mat` for details.
         """
         return tb.euler2mat(ai, aj, ak)
 
     def mat2euler(self, mat):
         """Return Euler angles from rotation matrix `mat`
 
-        See :func:`taitbryan.mat2euler` for details.
+        See :func:`transforms3d.taitbryan.mat2euler` for details.
         """
         return tb.mat2euler(mat)
 
     def euler2quat(self, ai, aj, ak):
         """ Return `quaternion` from Euler angles
 
-        See :func:`taitbryan.euler2quat` for details.
+        See :func:`transforms3d.taitbryan.euler2quat` for details.
         """
         return tb.euler2quat(ai, aj, ak)
 
