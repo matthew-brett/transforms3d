@@ -112,12 +112,16 @@ def axangle2aff(axis, angle, point=None):
     return M
 
 
-def mat2axangle(mat):
+def mat2axangle(mat, unit_thresh=1e-5):
     """Return axis, angle and point from (3, 3) matrix `mat`
 
     Parameters
     ----------
     mat : array-like shape (3, 3)
+        Rotation matrix
+    unit_thresh : float, optional
+        Tolerable difference from 1 when testing for unit eigenvalues to
+        confirm `mat` is a rotation matrix.
 
     Returns
     -------
@@ -143,7 +147,7 @@ def mat2axangle(mat):
     M = np.asarray(mat, dtype=np.float)
     # direction: unit eigenvector of R33 corresponding to eigenvalue of 1
     L, W = np.linalg.eig(M.T)
-    i = np.where(abs(np.real(L) - 1.0) < 1e-8)[0]
+    i = np.where(np.abs(L - 1.0) < unit_thresh)[0]
     if not len(i):
         raise ValueError("no unit eigenvector corresponding to eigenvalue 1")
     direction = np.real(W[:, i[-1]]).squeeze()

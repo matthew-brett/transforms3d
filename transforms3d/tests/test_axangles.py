@@ -9,7 +9,7 @@ from .. import taitbryan as ttb
 
 from .samples import euler_tuples
 
-from numpy.testing import assert_array_almost_equal
+from numpy.testing import assert_array_almost_equal, assert_almost_equal
 
 from nose.tools import assert_raises
 
@@ -40,6 +40,24 @@ def test_aa_points():
                 # do round trip
                 RP_back = axangle2aff(v3, t3, p3)
                 assert_array_almost_equal(RP, RP_back)
+
+
+def test_mat2axangle_thresh():
+    # Test precision threshold to mat2axangle
+    axis, angle = mat2axangle(np.eye(3))
+    assert_almost_equal(axis, [0, 0, 1])
+    assert_almost_equal(angle, 0)
+    offset = 1e-6
+    mat = np.diag([1 + offset] * 3)
+    axis, angle = mat2axangle(mat)
+    assert_almost_equal(axis, [0, 0, 1])
+    assert_almost_equal(angle, 0)
+    offset = 1e-4
+    mat = np.diag([1 + offset] * 3)
+    assert_raises(ValueError, mat2axangle, mat)
+    axis, angle = mat2axangle(mat, 1e-4)
+    assert_almost_equal(axis, [0, 0, 1])
+    assert_almost_equal(angle, 0)
 
 
 def test_angle_axis_imps():
