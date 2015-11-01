@@ -1,4 +1,5 @@
-''' Tests for Euler angles using Tait-Bryan ZYX convention '''
+''' Tests for Euler angles '''
+from __future__ import absolute_import
 
 import math
 import numpy as np
@@ -70,39 +71,43 @@ def test_basic_euler():
     # Rotation matrix composing the three rotations
     M = ttb.euler2mat(zr, yr, xr)
     # Corresponding individual rotation matrices
-    M1 = ttb.euler2mat(zr, 0, 0)
-    M2 = ttb.euler2mat(0, yr, 0)
+    M1 = ttb.euler2mat(zr)
+    M2 = ttb.euler2mat(0, yr)
     M3 = ttb.euler2mat(0, 0, xr)
     # which are all valid rotation matrices
-    assert_true(is_valid_rotation(M))
-    assert_true(is_valid_rotation(M1))
-    assert_true(is_valid_rotation(M2))
-    assert_true(is_valid_rotation(M3))
+    yield assert_true, is_valid_rotation(M)
+    yield assert_true, is_valid_rotation(M1)
+    yield assert_true, is_valid_rotation(M2)
+    yield assert_true, is_valid_rotation(M3)
     # Full matrix is composition of three individual matrices
-    assert_true(np.allclose(M, np.dot(M3, np.dot(M2, M1))))
+    yield assert_true, np.allclose(M, np.dot(M3, np.dot(M2, M1)))
+    # Rotations can be specified with named args, default 0
+    yield assert_true, np.all(ttb.euler2mat(zr) == ttb.euler2mat(z=zr))
+    yield assert_true, np.all(ttb.euler2mat(0, yr) == ttb.euler2mat(y=yr))
+    yield assert_true, np.all(ttb.euler2mat(0, 0, xr) == ttb.euler2mat(x=xr))
     # Applying an opposite rotation same as inverse (the inverse is
     # the same as the transpose, but just for clarity)
-    assert_true(np.allclose(
-        ttb.euler2mat(0, 0, -xr), np.linalg.inv(ttb.euler2mat(0, 0, xr))))
+    yield assert_true, np.allclose(ttb.euler2mat(x=-xr),
+                       np.linalg.inv(ttb.euler2mat(x=xr)))
 
 
 def test_euler_mat():
-    M = ttb.euler2mat(0, 0, 0)
-    assert_array_equal(M, np.eye(3))
+    M = ttb.euler2mat()
+    yield assert_array_equal, M, np.eye(3)
     for x, y, z in euler_tuples:
         M1 = ttb.euler2mat(z, y, x)
         M2 = sympy_euler(z, y, x)
-        assert_array_almost_equal(M1, M2)
+        yield assert_array_almost_equal, M1, M2
         M3 = np.dot(x_only(x), np.dot(y_only(y), z_only(z)))
-        assert_array_almost_equal(M1, M3)
+        yield assert_array_almost_equal, M1, M3
         zp, yp, xp = ttb.mat2euler(M1)
         # The parameters may not be the same as input, but they give the
         # same rotation matrix
         M4 = ttb.euler2mat(zp, yp, xp)
-        assert_array_almost_equal(M1, M4)
+        yield assert_array_almost_equal, M1, M4
 
 
-def sympy_euler2quat(z, y, x):
+def sympy_euler2quat(z=0, y=0, x=0):
     # direct formula for z,y,x quaternion rotations using sympy
     # see derivations subfolder
     cos = math.cos

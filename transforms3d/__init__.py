@@ -4,6 +4,7 @@ Based on, largely using transformations.py by Christoph Gohlke
 
 Additional code monkey work by Matthew Brett
 '''
+from __future__ import absolute_import
 
 from . import taitbryan
 from . import affines

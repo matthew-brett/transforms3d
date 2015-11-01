@@ -22,7 +22,7 @@ def axangle2mat(axis, angle, is_normalized=False):
     axis : 3 element sequence
        vector specifying axis for rotation.
     angle : scalar
-       angle of rotation in radians.
+       angle of rotation.
     is_normalized : bool, optional
        True if `axis` is already normalized (has norm of 1).  Default False.
 

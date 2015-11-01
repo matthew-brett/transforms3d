@@ -1,4 +1,5 @@
 ''' Utilities for transforms3d '''
+from __future__ import absolute_import
 
 import math
 from itertools import permutations

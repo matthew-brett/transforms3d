@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import numpy as np
 
 from ..utils import inique, permuted_signs, permuted_with_signs

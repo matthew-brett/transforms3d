@@ -1,11 +1,61 @@
-''' Euler angle rotations and their conversions for Tait-Bryan zyx convention
+''' Module implementing Euler angle rotations and their conversions
 
-See :mod:`euler` for general discussion of Euler angles and conventions.
+See:
 
-This module has specialized implementations of the extrinsic Z axis, Y axis, X
-axis rotation convention.
+* http://en.wikipedia.org/wiki/Rotation_matrix
+* http://en.wikipedia.org/wiki/Euler_angles
+* http://mathworld.wolfram.com/EulerAngles.html
 
-The conventions in this module are therefore:
+See also: *Representing Attitude with Euler Angles and Quaternions: A
+Reference* (2006) by James Diebel. A cached PDF link last found here:
+
+http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.110.5134
+
+Euler's rotation theorem tells us that any rotation in 3D can be
+described by 3 angles.  Let's call the 3 angles the *Euler angle vector*
+and call the angles in the vector :math:`alpha`, :math:`beta` and
+:math:`gamma`.  The vector is [ :math:`alpha`,
+:math:`beta`. :math:`gamma` ] and, in this description, the order of the
+parameters specifies the order in which the rotations occur (so the
+rotation corresponding to :math:`alpha` is applied first).
+
+In order to specify the meaning of an *Euler angle vector* we need to
+specify the axes around which each of the rotations corresponding to
+:math:`alpha`, :math:`beta` and :math:`gamma` will occur.
+
+There are therefore three axes for the rotations :math:`alpha`,
+:math:`beta` and :math:`gamma`; let's call them :math:`i` :math:`j`,
+:math:`k`.
+
+Let us express the rotation :math:`alpha` around axis `i` as a 3 by 3
+rotation matrix `A`.  Similarly :math:`beta` around `j` becomes 3 x 3
+matrix `B` and :math:`gamma` around `k` becomes matrix `G`.  Then the
+whole rotation expressed by the Euler angle vector [ :math:`alpha`,
+:math:`beta`. :math:`gamma` ], `R` is given by::
+
+   R = np.dot(G, np.dot(B, A))
+
+See http://mathworld.wolfram.com/EulerAngles.html
+
+The order :math:`G B A` expresses the fact that the rotations are
+performed in the order of the vector (:math:`alpha` around axis `i` =
+`A` first).
+
+To convert a given Euler angle vector to a meaningful rotation, and a
+rotation matrix, we need to define:
+
+* the axes `i`, `j`, `k`
+* whether a rotation matrix should be applied on the left of a vector to
+  be transformed (vectors are column vectors) or on the right (vectors
+  are row vectors).
+* whether the rotations move the axes as they are applied (intrinsic
+  rotations) - compared the situation where the axes stay fixed and the
+  vectors move within the axis frame (extrinsic)
+* the handedness of the coordinate system
+
+See: http://en.wikipedia.org/wiki/Rotation_matrix#Ambiguities
+
+We are using the following conventions:
 
 * axes `i`, `j`, `k` are the `z`, `y`, and `x` axes respectively.  Thus
   an Euler angle vector [ :math:`alpha`, :math:`beta`. :math:`gamma` ]
@@ -32,18 +82,18 @@ Terms used in function names:
 * *axangle* : rotations encoded by axis vector and angle scalar
 * *quat* : quaternion shape (4,)
 '''
+from __future__ import absolute_import
 
 import math
-import numpy as np
-
 from functools import reduce
 
-from .axangles import axangle2mat
+import numpy as np
+
 
 _FLOAT_EPS_4 = np.finfo(float).eps * 4.0
 
 
-def euler2mat(z, y, x):
+def euler2mat(z=0, y=0, x=0):
     ''' Return matrix for rotations around z, y and x axes
 
     Uses the z, then y, then x convention above
@@ -68,17 +118,22 @@ def euler2mat(z, y, x):
     >>> yrot = -0.1
     >>> xrot = 0.2
     >>> M = euler2mat(zrot, yrot, xrot)
-    >>> M.shape == (3, 3)
-    True
+    >>> M.shape
+    (3, 3)
 
     The output rotation matrix is equal to the composition of the
     individual rotations
 
-    >>> M1 = euler2mat(zrot, 0, 0)
-    >>> M2 = euler2mat(0, yrot, 0)
+    >>> M1 = euler2mat(zrot)
+    >>> M2 = euler2mat(0, yrot)
     >>> M3 = euler2mat(0, 0, xrot)
     >>> composed_M = np.dot(M3, np.dot(M2, M1))
     >>> np.allclose(M, composed_M)
+    True
+
+    You can specify rotations by named arguments
+
+    >>> np.all(M3 == euler2mat(x=xrot))
     True
 
     When applying M to a vector, the vector should column vector to the
@@ -92,13 +147,13 @@ def euler2mat(z, y, x):
 
     Rotations are counter-clockwise.
 
-    >>> zred = np.dot(euler2mat(np.pi/2, 0, 0), np.eye(3))
+    >>> zred = np.dot(euler2mat(z=np.pi/2), np.eye(3))
     >>> np.allclose(zred, [[0, -1, 0],[1, 0, 0], [0, 0, 1]])
     True
-    >>> yred = np.dot(euler2mat(0, np.pi/2, 0), np.eye(3))
+    >>> yred = np.dot(euler2mat(y=np.pi/2), np.eye(3))
     >>> np.allclose(yred, [[0, 0, 1],[0, 1, 0], [-1, 0, 0]])
     True
-    >>> xred = np.dot(euler2mat(0, 0, np.pi/2), np.eye(3))
+    >>> xred = np.dot(euler2mat(x=np.pi/2), np.eye(3))
     >>> np.allclose(xred, [[1, 0, 0],[0, 0, -1], [0, 1, 0]])
     True
 
@@ -212,7 +267,7 @@ def mat2euler(M, cy_thresh=None):
     return z, y, x
 
 
-def euler2quat(z, y, x):
+def euler2quat(z=0, y=0, x=0):
     ''' Return quaternion corresponding to these Euler angles
 
     Uses the z, then y, then x convention above
@@ -281,8 +336,8 @@ def quat2euler(q):
     return mat2euler(nq.quat2mat(q))
 
 
-def euler2axangle(z, y, x):
-    ''' Return angle, axis corresponding to these Euler angles
+def euler2axangle(z=0, y=0, x=0):
+    ''' Return axis, angle corresponding to these Euler angles
 
     Uses the z, then y, then x convention above
 
@@ -307,7 +362,7 @@ def euler2axangle(z, y, x):
     >>> vec, theta = euler2axangle(0, 1.5, 0)
     >>> np.allclose(vec, [0, 1, 0])
     True
-    >>> theta
+    >>> print(theta)
     1.5
     '''
     # delayed import to avoid cyclic dependencies
@@ -345,4 +400,7 @@ def axangle2euler(vector, theta):
     functions, but the reduction in computation is small, and the code
     repetition is large.
     '''
-    return mat2euler(axangle2mat(vector, theta))
+    # delayed import to avoid cyclic dependencies
+    from . import axangles as ax
+    M = ax.axangle2mat(vector, theta)
+    return mat2euler(M)

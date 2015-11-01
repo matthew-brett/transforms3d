@@ -1,10 +1,20 @@
 ''' Test quaternion calculations '''
+from __future__ import absolute_import
 
 import math
 
 import numpy as np
 
-from nose.tools import (assert_raises, assert_true, assert_equal)
+# Recent (1.2) versions of numpy have this decorator
+try:
+    from numpy.testing.decorators import slow
+except ImportError:
+    def slow(t):
+        t.slow = True
+        return t
+
+from nose.tools import assert_raises, assert_true, assert_false, \
+    assert_equal
 
 from numpy.testing import assert_array_almost_equal, assert_array_equal
 
@@ -22,7 +32,7 @@ eg_pairs = list(zip(euler_mats, euler_quats))
 
 # Set of arbitrary unit quaternions
 unit_quats = set()
-params = range(-2,3)
+params = list(range(-2,3))
 for w in params:
     for x in params:
         for y in params:
@@ -38,34 +48,26 @@ def test_fillpos():
     # Takes np array
     xyz = np.zeros((3,))
     w,x,y,z = tq.fillpositive(xyz)
-    assert_equal(w, 1)
+    yield assert_true, w == 1
     # Or lists
     xyz = [0] * 3
     w,x,y,z = tq.fillpositive(xyz)
-    assert_equal(w, 1)
+    yield assert_true, w == 1
     # Errors with wrong number of values
-    assert_raises(ValueError, tq.fillpositive, [0, 0])
-    assert_raises(ValueError, tq.fillpositive, [0]*4)
+    yield assert_raises, ValueError, tq.fillpositive, [0, 0]
+    yield assert_raises, ValueError, tq.fillpositive, [0]*4
     # Errors with negative w2
-    assert_raises(ValueError, tq.fillpositive, [1.0]*3)
+    yield assert_raises, ValueError, tq.fillpositive, [1.0]*3
     # Test corner case where w is near zero
-    wxyz = tq.fillpositive([1, 0, 0])
-    assert_equal(wxyz[0], 0.0)
-    eps = np.finfo(float).eps
-    wxyz = tq.fillpositive([1 + eps, 0, 0])
-    assert_equal(wxyz[0], 0.0)
-    # Bump up the floating point error - raises error
-    assert_raises(ValueError, tq.fillpositive, [1 + eps * 3, 0, 0])
-    # Increase threshold, happy again
-    wxyz = tq.fillpositive([1 + eps * 3, 0, 0], w2_thresh=eps * -10)
-    assert_equal(wxyz[0], 0.0)
+    wxyz = tq.fillpositive([1,0,0])
+    yield assert_true, wxyz[0] == 0.0
 
 
-def test_qconjugate():
+def test_conjugate():
     # Takes sequence
-    cq = tq.qconjugate((1, 0, 0, 0))
+    cq = tq.conjugate((1, 0, 0, 0))
     # Returns float type
-    assert_true(cq.dtype.kind == 'f')
+    yield assert_true, cq.dtype.kind == 'f'
 
 
 def test_quat2mat():
@@ -82,42 +84,45 @@ def test_quat2mat():
     yield assert_array_almost_equal, M, np.eye(3)
 
 
-def test_qinverse():
+def test_inverse():
     # Takes sequence
-    iq = tq.qinverse((1, 0, 0, 0))
+    iq = tq.inverse((1, 0, 0, 0))
     # Returns float type
     yield assert_true, iq.dtype.kind == 'f'
     for M, q in eg_pairs:
-        iq = tq.qinverse(q)
+        iq = tq.inverse(q)
         iqM = tq.quat2mat(iq)
         iM = np.linalg.inv(M)
         yield assert_true, np.allclose(iM, iqM)
 
 
-def test_qeye():
-    qi = tq.qeye()
+def test_eye():
+    qi = tq.eye()
     yield assert_true, qi.dtype.kind == 'f'
     yield assert_true, np.all([1,0,0,0]==qi)
     yield assert_true, np.allclose(tq.quat2mat(qi), np.eye(3))
 
 
-def test_qnorm():
-    qi = tq.qeye()
-    yield assert_true, tq.qnorm(qi) == 1
-    yield assert_true, tq.qisunit(qi)
+def test_norm():
+    qi = tq.eye()
+    yield assert_true, tq.norm(qi) == 1
+    yield assert_true, tq.isunit(qi)
     qi[1] = 0.2
-    yield assert_true, not tq.qisunit(qi)
+    yield assert_true, not tq.isunit(qi)
 
 
-def test_qmult():
+@slow
+def test_mult():
     # Test that quaternion * same as matrix * 
     for M1, q1 in eg_pairs[0::4]:
         for M2, q2 in eg_pairs[1::4]:
-            q21 = tq.qmult(q2, q1)
+            q21 = tq.mult(q2, q1)
             yield assert_array_almost_equal, np.dot(M2,M1), tq.quat2mat(q21)
 
 
+@slow
 def test_qrotate():
+    vecs = np.eye(3)
     for vec in np.eye(3):
         for M, q in eg_pairs:
             vdash = tq.rotate_vector(vec, q)
@@ -125,6 +130,7 @@ def test_qrotate():
             yield assert_array_almost_equal, vdash, vM
 
 
+@slow
 def test_quaternion_reconstruction():
     # Test reconstruction of arbitrary unit quaternions
     for q in unit_quats:

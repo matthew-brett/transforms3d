@@ -1,5 +1,8 @@
 '''Functions to operate on, or return, quaternions.
 
+The module also includes functions for the closely related angle, axis
+pair as a specification for rotation.
+
 Quaternions here consist of 4 values ``w, x, y, z``, where ``w`` is the
 real (scalar) part, and ``x, y, z`` are the complex (vector) part.
 
@@ -19,6 +22,7 @@ Terms used in function names:
 * *quat* : quaternion shape (4,)
 * *axangle* : rotations encoded by axis vector and angle scalar
 '''
+from __future__ import absolute_import
 
 import math
 import numpy as np
@@ -82,16 +86,16 @@ def fillpositive(xyz, w2_thresh=None):
     # If necessary, guess precision of input
     if w2_thresh is None:
         try: # trap errors for non-array, integer array
-            w2_thresh = -np.finfo(xyz.dtype).eps * 3
+            w2_thresh = -np.finfo(xyz.dtype).eps
         except (AttributeError, ValueError):
-            w2_thresh = -_FLOAT_EPS * 3
+            w2_thresh = -_FLOAT_EPS
     # Use maximum precision
     xyz = np.asarray(xyz, dtype=_MAX_FLOAT)
     # Calculate w
     w2 = 1.0 - np.dot(xyz, xyz)
     if w2 < 0:
         if w2 < w2_thresh:
-            raise ValueError('w2 should be positive, but is %e' % w2)
+            raise ValueError('w2 should be positive, but is %f' % w2)
         w = 0
     else:
         w = np.sqrt(w2)
@@ -133,7 +137,7 @@ def quat2mat(q):
     '''
     w, x, y, z = q
     Nq = w*w + x*x + y*y + z*z
-    if Nq < _FLOAT_EPS:
+    if Nq == 0.0:
         return np.eye(3)
     s = 2.0/Nq
     X = x*s
@@ -173,14 +177,6 @@ def mat2quat(M):
     sign of the reconstructed quaternion is arbitrary, and we return
     quaternions with positive w (q[0]).
 
-    References
-    ----------
-    * http://en.wikipedia.org/wiki/Rotation_matrix#Quaternion
-    * Bar-Itzhack, Itzhack Y. (2000), "New method for extracting the
-      quaternion from a rotation matrix", AIAA Journal of Guidance,
-      Control and Dynamics 23(6):1085-1087 (Engineering Note), ISSN
-      0731-5090
-
     Examples
     --------
     >>> import numpy as np
@@ -211,7 +207,7 @@ def mat2quat(M):
         [Qyx + Qxy,       Qyy - Qxx - Qzz, 0,               0              ],
         [Qzx + Qxz,       Qzy + Qyz,       Qzz - Qxx - Qyy, 0              ],
         [Qyz - Qzy,       Qzx - Qxz,       Qxy - Qyx,       Qxx + Qyy + Qzz]]
-        ) / 3.0
+        ) / 3
     # Use Hermitian eigenvectors, values for speed
     vals, vecs = np.linalg.eigh(K)
     # Select largest eigenvector, reorder to w,x,y,z quaternion
@@ -223,7 +219,7 @@ def mat2quat(M):
     return q
 
 
-def qmult(q1, q2):
+def mult(q1, q2):
     ''' Multiply two quaternions
 
     Parameters
@@ -248,7 +244,7 @@ def qmult(q1, q2):
     return np.array([w, x, y, z])
 
 
-def qconjugate(q):
+def conjugate(q):
     ''' Conjugate of quaternion
 
     Parameters
@@ -264,7 +260,7 @@ def qconjugate(q):
     return np.array(q) * np.array([1.0, -1, -1, -1])
 
 
-def qnorm(q):
+def norm(q):
     ''' Return norm of quaternion
 
     Parameters
@@ -280,12 +276,12 @@ def qnorm(q):
     return np.dot(q, q)
 
 
-def qisunit(q):
+def isunit(q):
     ''' Return True is this is very nearly a unit quaternion '''
-    return np.allclose(qnorm(q), 1)
+    return np.allclose(norm(q), 1)
 
 
-def qinverse(q):
+def inverse(q):
     ''' Return multiplicative inverse of quaternion `q`
 
     Parameters
@@ -298,10 +294,10 @@ def qinverse(q):
     invq : array shape (4,)
        w, i, j, k of quaternion inverse
     '''
-    return qconjugate(q) / qnorm(q)
+    return conjugate(q) / norm(q)
 
 
-def qeye():
+def eye():
     ''' Return identity quaternion '''
     return np.array([1.0,0,0,0])
 
@@ -324,17 +320,18 @@ def rotate_vector(v, q):
     Notes
     -----
     See: http://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Describing_rotations_with_quaternions
+
     '''
     varr = np.zeros((4,))
     varr[1:] = v
-    return qmult(q, qmult(varr, qconjugate(q)))[1:]
+    return mult(q, mult(varr, conjugate(q)))[1:]
 
 
 def nearly_equivalent(q1, q2, rtol=1e-5, atol=1e-8):
     ''' Returns True if `q1` and `q2` give near equivalent transforms
 
-    `q1` may be nearly numerically equal to `q2`, or nearly equal to `q2` * -1
-    (because a quaternion multiplied by -1 gives the same transform).
+    q1 may be nearly numerically equal to q2, or nearly equal to q2 * -1
+    (becuase a quaternion multiplied by -1 gives the same transform).
 
     Parameters
     ----------
@@ -373,7 +370,7 @@ def axangle2quat(vector, theta, is_normalized=False):
     vector : 3 element sequence
        vector specifying axis for rotation.
     theta : scalar
-       angle of rotation in radians.
+       angle of rotation.
     is_normalized : bool, optional
        True if vector is already normalized (has norm of 1).  Default
        False.
@@ -395,9 +392,7 @@ def axangle2quat(vector, theta, is_normalized=False):
     '''
     vector = np.array(vector)
     if not is_normalized:
-        # Cannot divide in-place because input vector may be integer type,
-        # whereas output will be float type; this may raise an error in versions
-        # of numpy > 1.6.1
+        # Not in place to avoid numpy's stricter casting rules
         vector = vector / math.sqrt(np.dot(vector, vector))
     t2 = theta / 2.0
     st2 = math.sin(t2)
@@ -413,10 +408,10 @@ def quat2axangle(quat, identity_thresh=None):
     quat : 4 element sequence
        w, x, y, z forming quaternion.
     identity_thresh : None or scalar, optional
-       Threshold below which the norm of the vector part of the quaternion (x,
-       y, z) is deemed to be 0, leading to the identity rotation.  None (the
-       default) leads to a threshold estimated based on the precision of the
-       input.
+       threshold below which the norm of the vector part of the
+       quaternion (x, y, z) is deemed to be 0, leading to the identity
+       rotation.  None (the default) leads to a threshold estimated
+       based on the precision of the input.
 
     Returns
     -------
@@ -433,26 +428,30 @@ def quat2axangle(quat, identity_thresh=None):
     >>> np.allclose(theta, np.pi)
     True
 
-    If this is an identity rotation, we return a zero angle and an arbitrary
-    vector:
+    If this is an identity rotation, we return a zero angle and an
+    arbitrary vector
 
     >>> quat2axangle([1, 0, 0, 0])
     (array([ 1.,  0.,  0.]), 0.0)
 
     Notes
     -----
-    A quaternion for which x, y, z are all equal to 0, is an identity rotation.
-    In this case we return a 0 angle and an arbitrary vector, here [1, 0, 0]
+    A quaternion for which x, y, z are all equal to 0, is an identity
+    rotation.  In this case we return a 0 angle and an  arbitrary
+    vector, here [1, 0, 0]
     '''
     w, x, y, z = quat
     vec = np.asarray([x, y, z])
     if identity_thresh is None:
         try:
             identity_thresh = np.finfo(vec.dtype).eps * 3
-        except ValueError: # integer type
+        except ValueError:  # integer type
             identity_thresh = _FLOAT_EPS * 3
-    n = math.sqrt(x*x + y*y + z*z)
-    if n < identity_thresh:
+    len2 = x * x + y * y + z * z
+    if len2 < identity_thresh ** 2:
         # if vec is nearly 0,0,0, this is an identity rotation
         return np.array([1.0, 0, 0]), 0.0
-    return  vec / n, 2 * math.acos(w)
+    theta = 2 * math.acos(max(min(w, 1), -1))
+    if len2 == float('inf'):
+        return np.zeros((3,)), theta
+    return vec / math.sqrt(len2), theta
