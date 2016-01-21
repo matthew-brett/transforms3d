@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 ''' Installation script for transforms3d package '''
+# A comment
 import sys
 from os.path import join as pjoin
 
