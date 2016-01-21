@@ -60,7 +60,7 @@ after_success:
     - if [ "${COVERAGE}" == "1" ]; then coveralls; fi
 
 notifications:
-    webhooks: http://169.229.158.11:54856/travis
+    webhooks: http://nipy.bic.berkeley.edu:54856/travis
 
 branches:
     only:
