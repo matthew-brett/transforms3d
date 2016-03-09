@@ -1,0 +1,6 @@
+# Runtime requirements for transforms3d
+# Use with:
+#   pip install -r requirements.txt
+#
+# Check setup.py when updating dependencies
+numpy>=1.5.1

@@ -19,6 +19,14 @@ versioneer.versionfile_build = pjoin('transforms3d', '_version.py')
 versioneer.tag_prefix = ''
 versioneer.parentdir_prefix = 'transforms3d-'
 
+extra_kwargs = {}
+if 'setuptools' in sys.modules:
+    extra_kwargs = dict(
+        zip_safe=False,
+        # Check dependencies also in .travis.yml file
+        requires=['numpy (>=1.5.1)'])
+
+
 setup(name='transforms3d',
       version=versioneer.get_version(),
       cmdclass=versioneer.get_cmdclass(),
@@ -47,4 +55,5 @@ setup(name='transforms3d',
             'Operating System :: MacOS',
         ],
       long_description = open('README.rst', 'rt').read(),
+      **extra_kwargs
       )
