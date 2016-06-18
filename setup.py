@@ -13,12 +13,6 @@ from distutils.core import setup
 
 import versioneer
 
-versioneer.VCS = 'git'
-versioneer.versionfile_source = pjoin('transforms3d', '_version.py')
-versioneer.versionfile_build = pjoin('transforms3d', '_version.py')
-versioneer.tag_prefix = ''
-versioneer.parentdir_prefix = 'transforms3d-'
-
 extra_kwargs = {}
 if 'setuptools' in sys.modules:
     extra_kwargs = dict(
