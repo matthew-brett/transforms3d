@@ -86,8 +86,8 @@ to upstream on github.
 * Once everything looks good, upload the source release to PyPi.  See
   `setuptools intro`_::
 
-    python setup.py register
-    python setup.py sdist --formats=gztar,zip upload
+    python setup.py sdist --formats=gztar,zip
+    twine upload -s dist/*
 
 * Upload wheels by building in virtualenvs, something like::
 
@@ -120,6 +120,13 @@ to upstream on github.
   necessary delete the release and try again if it doesn't look right.
 
 * Push the tag with ``git push origin 0.6.0``
+
+* Upload the docs with::
+
+    pip install -e .  # if you haven't done this already
+    pip install -r doc-requirements.txt
+    cd doc
+    make github
 
 * Announce to the mailing lists.  With fear and trembling.
 
