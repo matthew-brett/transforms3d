@@ -70,6 +70,7 @@ def striu2mat(striu):
         if N != math.floor(N):
             raise ValueError('%d is a strange number of shear elements' %
                              n)
+        N = int(N)
         inds = np.triu(np.ones((N,N)), 1).astype(bool)
     M = np.eye(N)
     M[inds] = striu
