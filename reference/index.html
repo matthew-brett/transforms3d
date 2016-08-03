@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>API Reference &mdash; transforms3d 0.3 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="transforms3d 0.3 documentation" href="../index.html" />
+    <link rel="next" title="transforms3d" href="transforms3d.html" />
+    <link rel="prev" title="Gimbal lock" href="../gimbal_lock.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.html"><code class="docutils literal"><span class="pre">transforms3d</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.affines.html"><code class="docutils literal"><span class="pre">affines</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.affines.html#compose">compose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.affines.html#decompose">decompose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.affines.html#decompose44">decompose44</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.axangles.html"><code class="docutils literal"><span class="pre">axangles</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.axangles.html#aff2axangle">aff2axangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.axangles.html#axangle2aff">axangle2aff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.axangles.html#axangle2mat">axangle2mat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.axangles.html#mat2axangle">mat2axangle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.derivations.html"><code class="docutils literal"><span class="pre">derivations</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html#module-transforms3d.derivations.angle_axes">Module: <code class="docutils literal"><span class="pre">derivations.angle_axes</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html#module-transforms3d.derivations.decompositions">Module: <code class="docutils literal"><span class="pre">derivations.decompositions</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html#module-transforms3d.derivations.eulerangles">Module: <code class="docutils literal"><span class="pre">derivations.eulerangles</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html#module-transforms3d.derivations.quaternions">Module: <code class="docutils literal"><span class="pre">derivations.quaternions</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html#module-transforms3d.derivations.utils">Module: <code class="docutils literal"><span class="pre">derivations.utils</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#angle-axis2mat">angle_axis2mat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#angle-axis2quat">angle_axis2quat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#orig-aa2mat">orig_aa2mat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#quat2angle-axis">quat2angle_axis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#x-rotation">x_rotation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#y-rotation">y_rotation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#z-rotation">z_rotation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#qmult">qmult</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#quat2mat">quat2mat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#quat-around-axis">quat_around_axis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#make-matrix">make_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#matrices-equal">matrices_equal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#matrix-simplify">matrix_simplify</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.euler.html"><code class="docutils literal"><span class="pre">euler</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#defining-rotations">Defining rotations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#rotation-axes">Rotation axes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#specifying-angle-conventions">Specifying angle conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#direction-of-rotation">Direction of rotation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#terms-used-in-function-names">Terms used in function names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#eulerfuncs"><code class="docutils literal"><span class="pre">EulerFuncs</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#tbzyx"><code class="docutils literal"><span class="pre">TBZYX</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#axangle2euler">axangle2euler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#euler2axangle">euler2axangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#euler2mat">euler2mat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#euler2quat">euler2quat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#mat2euler">mat2euler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#quat2euler">quat2euler</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.quaternions.html"><code class="docutils literal"><span class="pre">quaternions</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#axangle2quat">axangle2quat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#fillpositive">fillpositive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#mat2quat">mat2quat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#nearly-equivalent">nearly_equivalent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#qconjugate">qconjugate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#qeye">qeye</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#qinverse">qinverse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#qisunit">qisunit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#qmult">qmult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#qnorm">qnorm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#quat2axangle">quat2axangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#quat2mat">quat2mat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#rotate-vector">rotate_vector</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.reflections.html"><code class="docutils literal"><span class="pre">reflections</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.reflections.html#aff2rfnorm">aff2rfnorm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.reflections.html#mat2rfnorm">mat2rfnorm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.reflections.html#rfnorm2aff">rfnorm2aff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.reflections.html#rfnorm2mat">rfnorm2mat</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.shears.html"><code class="docutils literal"><span class="pre">shears</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html#aff2sadn">aff2sadn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html#mat2sadn">mat2sadn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html#sadn2aff">sadn2aff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html#sadn2mat">sadn2mat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html#striu2mat">striu2mat</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.taitbryan.html"><code class="docutils literal"><span class="pre">taitbryan</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html#axangle2euler">axangle2euler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html#euler2axangle">euler2axangle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html#euler2mat">euler2mat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html#euler2quat">euler2quat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html#mat2euler">mat2euler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html#quat2euler">quat2euler</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.utils.html"><code class="docutils literal"><span class="pre">utils</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html#inique">inique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html#normalized-vector">normalized_vector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html#permuted-signs">permuted_signs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html#permuted-with-signs">permuted_with_signs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html#vector-norm">vector_norm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.zooms.html"><code class="docutils literal"><span class="pre">zooms</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.zooms.html#aff2zfdir">aff2zfdir</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.zooms.html#mat2zfdir">mat2zfdir</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.zooms.html#zfdir2aff">zfdir2aff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.zooms.html#zfdir2mat">zfdir2mat</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../gimbal_lock.html" title="previous chapter">Gimbal lock</a></li>
+      <li>Next: <a href="transforms3d.html" title="next chapter"><code class="docutils literal"><span class="pre">transforms3d</span></code></a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2009-2016, Matthew Brett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/reference/index.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

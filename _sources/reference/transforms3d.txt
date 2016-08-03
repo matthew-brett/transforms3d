@@ -1,0 +1,13 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+:mod:`transforms3d`
+===================
+.. automodule:: transforms3d
+
+.. currentmodule:: transforms3d
+.. autosummary::
+
+
+
+.. currentmodule:: transforms3d
+

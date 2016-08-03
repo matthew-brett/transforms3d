@@ -1,0 +1,37 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+:mod:`reflections`
+==================
+.. automodule:: transforms3d.reflections
+
+.. currentmodule:: transforms3d.reflections
+.. autosummary::
+
+   aff2rfnorm
+   mat2rfnorm
+   rfnorm2aff
+   rfnorm2mat
+
+
+.. currentmodule:: transforms3d.reflections
+
+aff2rfnorm
+~~~~~~~~~~
+
+.. autofunction:: aff2rfnorm
+
+mat2rfnorm
+~~~~~~~~~~
+
+.. autofunction:: mat2rfnorm
+
+rfnorm2aff
+~~~~~~~~~~
+
+.. autofunction:: rfnorm2aff
+
+rfnorm2mat
+~~~~~~~~~~
+
+.. autofunction:: rfnorm2mat
+

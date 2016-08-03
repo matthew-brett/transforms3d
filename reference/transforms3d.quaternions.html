@@ -1,0 +1,642 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>quaternions &mdash; transforms3d 0.3 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="transforms3d 0.3 documentation" href="../index.html" />
+    <link rel="up" title="API Reference" href="index.html" />
+    <link rel="next" title="reflections" href="transforms3d.reflections.html" />
+    <link rel="prev" title="euler" href="transforms3d.euler.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-transforms3d.quaternions">
+<span id="quaternions"></span><h1><code class="xref py py-mod docutils literal"><span class="pre">quaternions</span></code><a class="headerlink" href="#module-transforms3d.quaternions" title="Permalink to this headline">¶</a></h1>
+<p>Functions to operate on, or return, quaternions.</p>
+<p>Quaternions here consist of 4 values <code class="docutils literal"><span class="pre">w,</span> <span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z</span></code>, where <code class="docutils literal"><span class="pre">w</span></code> is the
+real (scalar) part, and <code class="docutils literal"><span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z</span></code> are the complex (vector) part.</p>
+<p>Note - rotation matrices here apply to column vectors, that is,
+they are applied on the left of the vector.  For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="c1"># 180 degree rotation around axis 0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">quat2mat</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="c1"># from this module</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># column vector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tvec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Terms used in function names:</p>
+<ul class="simple">
+<li><em>mat</em> : array shape (3, 3) (3D non-homogenous coordinates)</li>
+<li><em>aff</em> : affine array shape (4, 4) (3D homogenous coordinates)</li>
+<li><em>quat</em> : quaternion shape (4,)</li>
+<li><em>axangle</em> : rotations encoded by axis vector and angle scalar</li>
+</ul>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.quaternions.axangle2quat" title="transforms3d.quaternions.axangle2quat"><code class="xref py py-obj docutils literal"><span class="pre">axangle2quat</span></code></a>(vector,&nbsp;theta[,&nbsp;is_normalized])</td>
+<td>Quaternion for rotation of angle <cite>theta</cite> around <cite>vector</cite></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#transforms3d.quaternions.fillpositive" title="transforms3d.quaternions.fillpositive"><code class="xref py py-obj docutils literal"><span class="pre">fillpositive</span></code></a>(xyz[,&nbsp;w2_thresh])</td>
+<td>Compute unit quaternion from last 3 values</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.quaternions.mat2quat" title="transforms3d.quaternions.mat2quat"><code class="xref py py-obj docutils literal"><span class="pre">mat2quat</span></code></a>(M)</td>
+<td>Calculate quaternion corresponding to given rotation matrix</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#transforms3d.quaternions.nearly_equivalent" title="transforms3d.quaternions.nearly_equivalent"><code class="xref py py-obj docutils literal"><span class="pre">nearly_equivalent</span></code></a>(q1,&nbsp;q2[,&nbsp;rtol,&nbsp;atol])</td>
+<td>Returns True if <cite>q1</cite> and <cite>q2</cite> give near equivalent transforms</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.quaternions.qconjugate" title="transforms3d.quaternions.qconjugate"><code class="xref py py-obj docutils literal"><span class="pre">qconjugate</span></code></a>(q)</td>
+<td>Conjugate of quaternion</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#transforms3d.quaternions.qeye" title="transforms3d.quaternions.qeye"><code class="xref py py-obj docutils literal"><span class="pre">qeye</span></code></a>()</td>
+<td>Return identity quaternion</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.quaternions.qinverse" title="transforms3d.quaternions.qinverse"><code class="xref py py-obj docutils literal"><span class="pre">qinverse</span></code></a>(q)</td>
+<td>Return multiplicative inverse of quaternion <cite>q</cite></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#transforms3d.quaternions.qisunit" title="transforms3d.quaternions.qisunit"><code class="xref py py-obj docutils literal"><span class="pre">qisunit</span></code></a>(q)</td>
+<td>Return True is this is very nearly a unit quaternion</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.quaternions.qmult" title="transforms3d.quaternions.qmult"><code class="xref py py-obj docutils literal"><span class="pre">qmult</span></code></a>(q1,&nbsp;q2)</td>
+<td>Multiply two quaternions</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#transforms3d.quaternions.qnorm" title="transforms3d.quaternions.qnorm"><code class="xref py py-obj docutils literal"><span class="pre">qnorm</span></code></a>(q)</td>
+<td>Return norm of quaternion</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.quaternions.quat2axangle" title="transforms3d.quaternions.quat2axangle"><code class="xref py py-obj docutils literal"><span class="pre">quat2axangle</span></code></a>(quat[,&nbsp;identity_thresh])</td>
+<td>Convert quaternion to rotation of angle around axis</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#transforms3d.quaternions.quat2mat" title="transforms3d.quaternions.quat2mat"><code class="xref py py-obj docutils literal"><span class="pre">quat2mat</span></code></a>(q)</td>
+<td>Calculate rotation matrix corresponding to quaternion</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.quaternions.rotate_vector" title="transforms3d.quaternions.rotate_vector"><code class="xref py py-obj docutils literal"><span class="pre">rotate_vector</span></code></a>(v,&nbsp;q)</td>
+<td>Apply transformation in quaternion <cite>q</cite> to vector <cite>v</cite></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="axangle2quat">
+<h2>axangle2quat<a class="headerlink" href="#axangle2quat" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.quaternions.axangle2quat">
+<code class="descclassname">transforms3d.quaternions.</code><code class="descname">axangle2quat</code><span class="sig-paren">(</span><em>vector</em>, <em>theta</em>, <em>is_normalized=False</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.quaternions.axangle2quat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quaternion for rotation of angle <cite>theta</cite> around <cite>vector</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>vector</strong> : 3 element sequence</p>
+<blockquote>
+<div><p>vector specifying axis for rotation.</p>
+</div></blockquote>
+<p><strong>theta</strong> : scalar</p>
+<blockquote>
+<div><p>angle of rotation in radians.</p>
+</div></blockquote>
+<p><strong>is_normalized</strong> : bool, optional</p>
+<blockquote>
+<div><p>True if vector is already normalized (has norm of 1).  Default
+False.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>quat</strong> : 4 element sequence of symbols</p>
+<blockquote class="last">
+<div><p>quaternion giving specified rotation</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Formula from <a class="reference external" href="http://mathworld.wolfram.com/EulerParameters.html">http://mathworld.wolfram.com/EulerParameters.html</a></p>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">axangle2quat</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">])</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="fillpositive">
+<h2>fillpositive<a class="headerlink" href="#fillpositive" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.quaternions.fillpositive">
+<code class="descclassname">transforms3d.quaternions.</code><code class="descname">fillpositive</code><span class="sig-paren">(</span><em>xyz</em>, <em>w2_thresh=None</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.quaternions.fillpositive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute unit quaternion from last 3 values</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>xyz</strong> : iterable</p>
+<blockquote>
+<div><p>iterable containing 3 values, corresponding to quaternion x, y, z</p>
+</div></blockquote>
+<p><strong>w2_thresh</strong> : None or float, optional</p>
+<blockquote>
+<div><p>threshold to determine if w squared is really negative.
+If None (default) then w2_thresh set equal to
+<code class="docutils literal"><span class="pre">-np.finfo(xyz.dtype).eps</span></code>, if possible, otherwise
+<code class="docutils literal"><span class="pre">-np.finfo(np.float).eps</span></code></p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>wxyz</strong> : array shape (4,)</p>
+<blockquote class="last">
+<div><p>Full 4 values of quaternion</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>If w, x, y, z are the values in the full quaternion, assumes w is
+positive.</p>
+<p>Gives error if w*w is estimated to be negative</p>
+<p>w = 0 corresponds to a 180 degree rotation</p>
+<p>The unit quaternion specifies that np.dot(wxyz, wxyz) == 1.</p>
+<p>If w is positive (assumed here), w is given by:</p>
+<p>w = np.sqrt(1.0-(x*x+y*y+z*z))</p>
+<p>w2 = 1.0-(x*x+y*y+z*z) can be near zero, which will lead to
+numerical instability in sqrt.  Here we use the system maximum
+float type to reduce numerical instability</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wxyz</span> <span class="o">=</span> <span class="n">fillpositive</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">wxyz</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wxyz</span> <span class="o">=</span> <span class="n">fillpositive</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># Corner case; w is 0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">wxyz</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">wxyz</span><span class="p">,</span> <span class="n">wxyz</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="mat2quat">
+<h2>mat2quat<a class="headerlink" href="#mat2quat" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.quaternions.mat2quat">
+<code class="descclassname">transforms3d.quaternions.</code><code class="descname">mat2quat</code><span class="sig-paren">(</span><em>M</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.quaternions.mat2quat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate quaternion corresponding to given rotation matrix</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>M</strong> : array-like</p>
+<blockquote>
+<div><p>3x3 rotation matrix</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>q</strong> : (4,) array</p>
+<blockquote class="last">
+<div><p>closest quaternion to input matrix, having positive q[0]</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix#Quaternion">http://en.wikipedia.org/wiki/Rotation_matrix#Quaternion</a></p>
+<p>Bar-Itzhack, Itzhack Y. (2000), &#8220;New method for extracting the
+quaternion from a rotation matrix&#8221;, AIAA Journal of Guidance,
+Control and Dynamics 23(6):1085-1087 (Engineering Note), ISSN
+0731-5090</p>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix#Quaternion">http://en.wikipedia.org/wiki/Rotation_matrix#Quaternion</a></li>
+<li>Bar-Itzhack, Itzhack Y. (2000), &#8220;New method for extracting the
+quaternion from a rotation matrix&#8221;, AIAA Journal of Guidance,
+Control and Dynamics 23(6):1085-1087 (Engineering Note), ISSN
+0731-5090</li>
+</ul>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">mat2quat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="c1"># Identity rotation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">mat2quat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="c1"># 180 degree rotn around axis 0</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="nearly-equivalent">
+<h2>nearly_equivalent<a class="headerlink" href="#nearly-equivalent" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.quaternions.nearly_equivalent">
+<code class="descclassname">transforms3d.quaternions.</code><code class="descname">nearly_equivalent</code><span class="sig-paren">(</span><em>q1</em>, <em>q2</em>, <em>rtol=1e-05</em>, <em>atol=1e-08</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.quaternions.nearly_equivalent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if <cite>q1</cite> and <cite>q2</cite> give near equivalent transforms</p>
+<p><cite>q1</cite> may be nearly numerically equal to <cite>q2</cite>, or nearly equal to <cite>q2</cite> * -1
+(because a quaternion multiplied by -1 gives the same transform).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>q1</strong> : 4 element sequence</p>
+<blockquote>
+<div><p>w, x, y, z of first quaternion</p>
+</div></blockquote>
+<p><strong>q2</strong> : 4 element sequence</p>
+<blockquote>
+<div><p>w, x, y, z of second quaternion</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>equiv</strong> : bool</p>
+<blockquote class="last">
+<div><p>True if <cite>q1</cite> and <cite>q2</cite> are nearly equivalent, False otherwise</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nearly_equivalent</span><span class="p">(</span><span class="n">q1</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nearly_equivalent</span><span class="p">(</span><span class="n">q1</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nearly_equivalent</span><span class="p">(</span><span class="n">q1</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="qconjugate">
+<h2>qconjugate<a class="headerlink" href="#qconjugate" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.quaternions.qconjugate">
+<code class="descclassname">transforms3d.quaternions.</code><code class="descname">qconjugate</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.quaternions.qconjugate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Conjugate of quaternion</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>q</strong> : 4 element sequence</p>
+<blockquote>
+<div><p>w, i, j, k of quaternion</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>conjq</strong> : array shape (4,)</p>
+<blockquote class="last">
+<div><p>w, i, j, k of conjugate of <cite>q</cite></p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="qeye">
+<h2>qeye<a class="headerlink" href="#qeye" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.quaternions.qeye">
+<code class="descclassname">transforms3d.quaternions.</code><code class="descname">qeye</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.quaternions.qeye" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return identity quaternion</p>
+</dd></dl>
+
+</div>
+<div class="section" id="qinverse">
+<h2>qinverse<a class="headerlink" href="#qinverse" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.quaternions.qinverse">
+<code class="descclassname">transforms3d.quaternions.</code><code class="descname">qinverse</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.quaternions.qinverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return multiplicative inverse of quaternion <cite>q</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>q</strong> : 4 element sequence</p>
+<blockquote>
+<div><p>w, i, j, k of quaternion</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>invq</strong> : array shape (4,)</p>
+<blockquote class="last">
+<div><p>w, i, j, k of quaternion inverse</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="qisunit">
+<h2>qisunit<a class="headerlink" href="#qisunit" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.quaternions.qisunit">
+<code class="descclassname">transforms3d.quaternions.</code><code class="descname">qisunit</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.quaternions.qisunit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True is this is very nearly a unit quaternion</p>
+</dd></dl>
+
+</div>
+<div class="section" id="qmult">
+<h2>qmult<a class="headerlink" href="#qmult" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.quaternions.qmult">
+<code class="descclassname">transforms3d.quaternions.</code><code class="descname">qmult</code><span class="sig-paren">(</span><em>q1</em>, <em>q2</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.quaternions.qmult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiply two quaternions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>q1</strong> : 4 element sequence</p>
+<p><strong>q2</strong> : 4 element sequence</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>q12</strong> : shape (4,) array</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>See : <a class="reference external" href="http://en.wikipedia.org/wiki/Quaternions#Hamilton_product">http://en.wikipedia.org/wiki/Quaternions#Hamilton_product</a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="qnorm">
+<h2>qnorm<a class="headerlink" href="#qnorm" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.quaternions.qnorm">
+<code class="descclassname">transforms3d.quaternions.</code><code class="descname">qnorm</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.quaternions.qnorm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return norm of quaternion</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>q</strong> : 4 element sequence</p>
+<blockquote>
+<div><p>w, i, j, k of quaternion</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>n</strong> : scalar</p>
+<blockquote class="last">
+<div><p>quaternion norm</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="quat2axangle">
+<h2>quat2axangle<a class="headerlink" href="#quat2axangle" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.quaternions.quat2axangle">
+<code class="descclassname">transforms3d.quaternions.</code><code class="descname">quat2axangle</code><span class="sig-paren">(</span><em>quat</em>, <em>identity_thresh=None</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.quaternions.quat2axangle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert quaternion to rotation of angle around axis</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>quat</strong> : 4 element sequence</p>
+<blockquote>
+<div><p>w, x, y, z forming quaternion.</p>
+</div></blockquote>
+<p><strong>identity_thresh</strong> : None or scalar, optional</p>
+<blockquote>
+<div><p>Threshold below which the norm of the vector part of the quaternion (x,
+y, z) is deemed to be 0, leading to the identity rotation.  None (the
+default) leads to a threshold estimated based on the precision of the
+input.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>theta</strong> : scalar</p>
+<blockquote>
+<div><p>angle of rotation.</p>
+</div></blockquote>
+<p><strong>vector</strong> : array shape (3,)</p>
+<blockquote class="last">
+<div><p>axis around which rotation occurs.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>A quaternion for which x, y, z are all equal to 0, is an identity rotation.
+In this case we return a 0 angle and an arbitrary vector, here [1, 0, 0].</p>
+<p>The algorithm allows for quaternions that have not been normalized.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">quat2axangle</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span>
+<span class="go">array([ 1.,  0.,  0.])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>If this is an identity rotation, we return a zero angle and an arbitrary
+vector:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">quat2axangle</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="go">(array([ 1.,  0.,  0.]), 0.0)</span>
+</pre></div>
+</div>
+<p>If any of the quaternion values are not finite, we return a NaN in the
+angle, and an arbitrary vector:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">quat2axangle</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="go">(array([ 1.,  0.,  0.]), nan)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="quat2mat">
+<h2>quat2mat<a class="headerlink" href="#quat2mat" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.quaternions.quat2mat">
+<code class="descclassname">transforms3d.quaternions.</code><code class="descname">quat2mat</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.quaternions.quat2mat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate rotation matrix corresponding to quaternion</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>q</strong> : 4 element array-like</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>M</strong> : (3,3) array</p>
+<blockquote class="last">
+<div><p>Rotation matrix corresponding to input quaternion <em>q</em></p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Rotation matrix applies to column vectors, and is applied to the
+left of coordinate vectors.  The algorithm here allows quaternions that
+have not been normalized.</p>
+<p class="rubric">References</p>
+<p>Algorithm from <a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix#Quaternion">http://en.wikipedia.org/wiki/Rotation_matrix#Quaternion</a></p>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">quat2mat</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="c1"># Identity quaternion</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">quat2mat</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="c1"># 180 degree rotn around axis 0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="rotate-vector">
+<h2>rotate_vector<a class="headerlink" href="#rotate-vector" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="transforms3d.quaternions.rotate_vector">
+<code class="descclassname">transforms3d.quaternions.</code><code class="descname">rotate_vector</code><span class="sig-paren">(</span><em>v</em>, <em>q</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.quaternions.rotate_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply transformation in quaternion <cite>q</cite> to vector <cite>v</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>v</strong> : 3 element sequence</p>
+<blockquote>
+<div><p>3 dimensional vector</p>
+</div></blockquote>
+<p><strong>q</strong> : 4 element sequence</p>
+<blockquote>
+<div><p>w, i, j, k of quaternion</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>vdash</strong> : array shape (3,)</p>
+<blockquote class="last">
+<div><p><cite>v</cite> rotated by quaternion <cite>q</cite></p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>See: <a class="reference external" href="http://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Describing_rotations_with_quaternions">http://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Describing_rotations_with_quaternions</a></p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="docutils literal"><span class="pre">quaternions</span></code></a><ul>
+<li><a class="reference internal" href="#axangle2quat">axangle2quat</a></li>
+<li><a class="reference internal" href="#fillpositive">fillpositive</a></li>
+<li><a class="reference internal" href="#mat2quat">mat2quat</a></li>
+<li><a class="reference internal" href="#nearly-equivalent">nearly_equivalent</a></li>
+<li><a class="reference internal" href="#qconjugate">qconjugate</a></li>
+<li><a class="reference internal" href="#qeye">qeye</a></li>
+<li><a class="reference internal" href="#qinverse">qinverse</a></li>
+<li><a class="reference internal" href="#qisunit">qisunit</a></li>
+<li><a class="reference internal" href="#qmult">qmult</a></li>
+<li><a class="reference internal" href="#qnorm">qnorm</a></li>
+<li><a class="reference internal" href="#quat2axangle">quat2axangle</a></li>
+<li><a class="reference internal" href="#quat2mat">quat2mat</a></li>
+<li><a class="reference internal" href="#rotate-vector">rotate_vector</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">API Reference</a><ul>
+      <li>Previous: <a href="transforms3d.euler.html" title="previous chapter"><code class="docutils literal"><span class="pre">euler</span></code></a></li>
+      <li>Next: <a href="transforms3d.reflections.html" title="next chapter"><code class="docutils literal"><span class="pre">reflections</span></code></a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/transforms3d.quaternions.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2009-2016, Matthew Brett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/reference/transforms3d.quaternions.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

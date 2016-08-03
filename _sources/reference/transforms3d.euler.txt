@@ -1,0 +1,75 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+:mod:`euler`
+============
+.. automodule:: transforms3d.euler
+
+.. currentmodule:: transforms3d.euler
+.. autosummary::
+
+   EulerFuncs
+   TBZYX
+   axangle2euler
+   euler2axangle
+   euler2mat
+   euler2quat
+   mat2euler
+   quat2euler
+
+
+.. currentmodule:: transforms3d.euler
+
+
+:class:`EulerFuncs`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: EulerFuncs
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+
+:class:`TBZYX`
+~~~~~~~~~~~~~~
+
+
+.. autoclass:: TBZYX
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+axangle2euler
+~~~~~~~~~~~~~
+
+.. autofunction:: axangle2euler
+
+euler2axangle
+~~~~~~~~~~~~~
+
+.. autofunction:: euler2axangle
+
+euler2mat
+~~~~~~~~~
+
+.. autofunction:: euler2mat
+
+euler2quat
+~~~~~~~~~~
+
+.. autofunction:: euler2quat
+
+mat2euler
+~~~~~~~~~
+
+.. autofunction:: mat2euler
+
+quat2euler
+~~~~~~~~~~
+
+.. autofunction:: quat2euler
+
