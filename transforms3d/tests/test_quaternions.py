@@ -6,7 +6,8 @@ import numpy as np
 
 from nose.tools import (assert_raises, assert_true, assert_equal)
 
-from numpy.testing import assert_array_almost_equal, assert_array_equal
+from numpy.testing import (assert_array_almost_equal, assert_array_equal,
+                           assert_almost_equal)
 
 from .. import quaternions as tq
 from .. import axangles as taa
@@ -72,11 +73,14 @@ def test_quat2mat():
     # also tested in roundtrip case below
     M = tq.quat2mat([1, 0, 0, 0])
     yield assert_array_almost_equal, M, np.eye(3)
+    # Non-unit quaternion
     M = tq.quat2mat([3, 0, 0, 0])
     yield assert_array_almost_equal, M, np.eye(3)
     M = tq.quat2mat([0, 1, 0, 0])
     yield assert_array_almost_equal, M, np.diag([1, -1, -1])
+    # Non-unit quaternion, same result as normalized
     M = tq.quat2mat([0, 2, 0, 0])
+    yield assert_array_almost_equal, M, np.diag([1, -1, -1])
     yield assert_array_almost_equal, M, np.diag([1, -1, -1])
     M = tq.quat2mat([0, 0, 0, 0])
     yield assert_array_almost_equal, M, np.eye(3)
@@ -138,13 +142,50 @@ def test_quaternion_reconstruction():
 
 def test_angle_axis2quat():
     q = tq.axangle2quat([1, 0, 0], 0)
-    yield assert_array_equal, q, [1, 0, 0, 0]
+    assert_array_equal(q, [1, 0, 0, 0])
     q = tq.axangle2quat([1, 0, 0], np.pi)
-    yield assert_array_almost_equal, q, [0, 1, 0, 0]
+    assert_array_almost_equal(q, [0, 1, 0, 0])
     q = tq.axangle2quat([1, 0, 0], np.pi, True)
-    yield assert_array_almost_equal, q, [0, 1, 0, 0]
+    assert_array_almost_equal(q, [0, 1, 0, 0])
     q = tq.axangle2quat([2, 0, 0], np.pi, False)
-    yield assert_array_almost_equal, q, [0, 1, 0, 0]
+    assert_array_almost_equal(q, [0, 1, 0, 0])
+
+
+def test_quat2axangle():
+    ax, angle = tq.quat2axangle([1, 0, 0, 0])
+    assert_array_equal(ax, [1, 0, 0])
+    assert_array_equal(angle, 0)
+    # Non-normalized quaternion, unit quaternion
+    ax, angle = tq.quat2axangle([5, 0, 0, 0])
+    assert_array_equal(ax, [1, 0, 0])
+    assert_array_equal(angle, 0)
+    # Rotation by 90 degrees around x
+    r2d2 = np.sqrt(2) / 2.
+    quat_x_90 = np.array([r2d2, r2d2, 0, 0])
+    ax, angle = tq.quat2axangle(quat_x_90)
+    assert_almost_equal(ax, [1, 0, 0])
+    assert_almost_equal(angle, np.pi / 2)
+    # Not-normalized version of same, gives same output
+    ax, angle = tq.quat2axangle(quat_x_90 * 7)
+    assert_almost_equal(ax, [1, 0, 0])
+    assert_almost_equal(angle, np.pi / 2)
+    # Any non-finite value gives nan angle
+    for pos in range(4):
+        for val in np.nan, np.inf, -np.inf:
+            q = [1, 0, 0, 0]
+            q[pos] = val
+            ax, angle = tq.quat2axangle(q)
+            assert_almost_equal(ax, [1, 0, 0])
+            assert_true(np.isnan(angle))
+    # Infinite length likewise, because of length overflow
+    f64info = np.finfo(np.float64)
+    ax, angle = tq.quat2axangle([2, f64info.max, 0, 0])
+    assert_almost_equal(ax, [1, 0, 0])
+    assert_true(np.isnan(angle))
+    # Very small values give indentity transformation
+    ax, angle = tq.quat2axangle([0, f64info.eps / 2, 0, 0])
+    assert_almost_equal(ax, [1, 0, 0])
+    assert_equal(angle, 0)
 
 
 def sympy_aa2mat(vec, theta):

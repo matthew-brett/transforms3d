@@ -113,13 +113,12 @@ def quat2mat(q):
     Notes
     -----
     Rotation matrix applies to column vectors, and is applied to the
-    left of coordinate vectors.  The algorithm here allows non-unit
-    quaternions.
+    left of coordinate vectors.  The algorithm here allows quaternions that
+    have not been normalized.
 
     References
     ----------
-    Algorithm from
-    http://en.wikipedia.org/wiki/Rotation_matrix#Quaternion
+    Algorithm from http://en.wikipedia.org/wiki/Rotation_matrix#Quaternion
 
     Examples
     --------
@@ -439,20 +438,37 @@ def quat2axangle(quat, identity_thresh=None):
     >>> quat2axangle([1, 0, 0, 0])
     (array([ 1.,  0.,  0.]), 0.0)
 
+    If any of the quaternion values are not finite, we return a NaN in the
+    angle, and an arbitrary vector:
+
+    >>> quat2axangle([1, np.inf, 0, 0])
+    (array([ 1.,  0.,  0.]), nan)
+
     Notes
     -----
     A quaternion for which x, y, z are all equal to 0, is an identity rotation.
-    In this case we return a 0 angle and an arbitrary vector, here [1, 0, 0]
+    In this case we return a 0 angle and an arbitrary vector, here [1, 0, 0].
+
+    The algorithm allows for quaternions that have not been normalized.
     '''
     w, x, y, z = quat
-    vec = np.asarray([x, y, z])
+    Nq = w * w + x * x + y * y + z * z
+    if not np.isfinite(Nq):
+        return np.array([1.0, 0, 0]), float('nan')
     if identity_thresh is None:
         try:
-            identity_thresh = np.finfo(vec.dtype).eps * 3
-        except ValueError: # integer type
+            identity_thresh = np.finfo(Nq.type).eps * 3
+        except (AttributeError, ValueError): # Not a numpy type or not float
             identity_thresh = _FLOAT_EPS * 3
-    n = math.sqrt(x*x + y*y + z*z)
-    if n < identity_thresh:
+    if Nq < _FLOAT_EPS ** 2:  # Results unreliable after normalization
+        return np.array([1.0, 0, 0]), 0.0
+    if Nq != 1:  # Normalize if not normalized
+        s = math.sqrt(Nq)
+        w, x, y, z = w / s, x / s, y / s, z / s
+    len2 = x * x + y * y + z * z
+    if len2 < identity_thresh ** 2:
         # if vec is nearly 0,0,0, this is an identity rotation
         return np.array([1.0, 0, 0]), 0.0
-    return  vec / n, 2 * math.acos(w)
+    # Make sure w is not slightly above 1 or below -1
+    theta = 2 * math.acos(max(min(w, 1), -1))
+    return  np.array([x, y, z]) / math.sqrt(len2), theta
