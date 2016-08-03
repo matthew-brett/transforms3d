@@ -3,7 +3,6 @@ language: python
 env:
     global:
         - DEPENDS="numpy"
-        - INSTALL_TYPE="setup"
 
 python:
     - 2.6
@@ -24,6 +23,9 @@ matrix:
     - python: 2.7
       env:
         - DEPENDS="numpy==1.5.1"
+    - python: 2.7
+      env:
+        - INSTALL_TYPE=setup
     - python: 2.7
       env:
         - INSTALL_TYPE=sdist
