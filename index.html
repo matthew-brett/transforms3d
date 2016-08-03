@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to the documentation for transforms3d &mdash; transforms3d 0.2.1+14.ga6c2f6d.dirty documentation</title>
+    <title>Transforms3d &mdash; transforms3d 0.3 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.2.1+14.ga6c2f6d.dirty',
+        VERSION:     '0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.2.1+14.ga6c2f6d.dirty documentation" href="#" />
-    <link rel="next" title="3D transformation matrices and others" href="intro.html" />
+    <link rel="top" title="transforms3d 0.3 documentation" href="#" />
+    <link rel="next" title="Conventions for transforms" href="conventions.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -41,12 +41,19 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="welcome-to-the-documentation-for-transforms3d">
-<h1>Welcome to the documentation for transforms3d<a class="headerlink" href="#welcome-to-the-documentation-for-transforms3d" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
+  <div class="section" id="transforms3d">
+<h1>Transforms3d<a class="headerlink" href="#transforms3d" title="Permalink to this headline">¶</a></h1>
+<p>This package is a collection of Python functions and classes to create and
+convert 3-dimensional transformations such as rotations, zooms, shears and
+reflections.</p>
+<p>It is based on <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/code/transformations.py.html">transformations.py</a> by <a class="reference external" href="http://www.lfd.uci.edu/~gohlke">Christoph Gohlke</a>, with some
+restructuring by <a class="reference external" href="http://matthew.dynevor.org">Matthew Brett</a>.</p>
+<p>Install the latest version with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">transforms3d</span>
+</pre></div>
+</div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">3D transformation matrices and others</a></li>
 <li class="toctree-l1"><a class="reference internal" href="conventions.html">Conventions for transforms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="naming_conventions.html">Naming conventions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gimbal_lock.html">Gimbal lock</a><ul>
@@ -55,33 +62,19 @@
 <li class="toctree-l2"><a class="reference internal" href="gimbal_lock.html#the-example-in-code">The example in code</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="reference/index.html">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.html"><code class="docutils literal"><span class="pre">transforms3d</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.affines.html"><code class="docutils literal"><span class="pre">affines</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.axangles.html"><code class="docutils literal"><span class="pre">axangles</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.derivations.html"><code class="docutils literal"><span class="pre">derivations</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.euler.html"><code class="docutils literal"><span class="pre">euler</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.quaternions.html"><code class="docutils literal"><span class="pre">quaternions</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.reflections.html"><code class="docutils literal"><span class="pre">reflections</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.shears.html"><code class="docutils literal"><span class="pre">shears</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.taitbryan.html"><code class="docutils literal"><span class="pre">taitbryan</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.utils.html"><code class="docutils literal"><span class="pre">utils</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/transforms3d.zooms.html"><code class="docutils literal"><span class="pre">zooms</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
 </div>
-</div>
 <div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
 <li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
 <li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
 </ul>
+</div>
 </div>
 
 
@@ -92,16 +85,16 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to the documentation for transforms3d</a><ul>
+<li><a class="reference internal" href="#">Transforms3d</a><ul>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="intro.html" title="next chapter">3D transformation matrices and others</a></li>
+      <li>Next: <a href="conventions.html" title="next chapter">Conventions for transforms</a></li>
   </ul></li>
 </ul>
 </div>
@@ -133,7 +126,7 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2015, Matthew Brett.
+      &copy;2009-2016, Matthew Brett.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>

@@ -3,15 +3,24 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to the documentation for transforms3d
-=============================================
+############
+Transforms3d
+############
 
-Contents:
+This package is a collection of Python functions and classes to create and
+convert 3-dimensional transformations such as rotations, zooms, shears and
+reflections.
+
+It is based on `transformations.py`_ by `Christoph Gohlke`_, with some
+restructuring by `Matthew Brett`_.
+
+Install the latest version with::
+
+    pip install transforms3d
 
 .. toctree::
    :maxdepth: 2
 
-   intro
    conventions
    naming_conventions
    gimbal_lock
@@ -31,3 +40,4 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
+.. include:: links_names.inc
