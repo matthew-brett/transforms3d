@@ -1,0 +1,43 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+:mod:`utils`
+============
+.. automodule:: transforms3d.utils
+
+.. currentmodule:: transforms3d.utils
+.. autosummary::
+
+   inique
+   normalized_vector
+   permuted_signs
+   permuted_with_signs
+   vector_norm
+
+
+.. currentmodule:: transforms3d.utils
+
+inique
+~~~~~~
+
+.. autofunction:: inique
+
+normalized_vector
+~~~~~~~~~~~~~~~~~
+
+.. autofunction:: normalized_vector
+
+permuted_signs
+~~~~~~~~~~~~~~
+
+.. autofunction:: permuted_signs
+
+permuted_with_signs
+~~~~~~~~~~~~~~~~~~~
+
+.. autofunction:: permuted_with_signs
+
+vector_norm
+~~~~~~~~~~~
+
+.. autofunction:: vector_norm
+

@@ -1,0 +1,49 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+:mod:`taitbryan`
+================
+.. automodule:: transforms3d.taitbryan
+
+.. currentmodule:: transforms3d.taitbryan
+.. autosummary::
+
+   axangle2euler
+   euler2axangle
+   euler2mat
+   euler2quat
+   mat2euler
+   quat2euler
+
+
+.. currentmodule:: transforms3d.taitbryan
+
+axangle2euler
+~~~~~~~~~~~~~
+
+.. autofunction:: axangle2euler
+
+euler2axangle
+~~~~~~~~~~~~~
+
+.. autofunction:: euler2axangle
+
+euler2mat
+~~~~~~~~~
+
+.. autofunction:: euler2mat
+
+euler2quat
+~~~~~~~~~~
+
+.. autofunction:: euler2quat
+
+mat2euler
+~~~~~~~~~
+
+.. autofunction:: mat2euler
+
+quat2euler
+~~~~~~~~~~
+
+.. autofunction:: quat2euler
+

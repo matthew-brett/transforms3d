@@ -1,0 +1,31 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+:mod:`affines`
+==============
+.. automodule:: transforms3d.affines
+
+.. currentmodule:: transforms3d.affines
+.. autosummary::
+
+   compose
+   decompose
+   decompose44
+
+
+.. currentmodule:: transforms3d.affines
+
+compose
+~~~~~~~
+
+.. autofunction:: compose
+
+decompose
+~~~~~~~~~
+
+.. autofunction:: decompose
+
+decompose44
+~~~~~~~~~~~
+
+.. autofunction:: decompose44
+
