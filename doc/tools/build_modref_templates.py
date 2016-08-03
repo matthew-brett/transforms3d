@@ -67,6 +67,7 @@ if __name__ == '__main__':
                                         r'\.externals$',
                                         r'\.externals.*$',
                                         r'.*test.*$',
+                                        r'\._.*$',
                                         r'\.info.*$',
                                         r'\.pkg_info.*$',
                                         ]

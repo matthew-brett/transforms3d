@@ -1,0 +1,8 @@
+# Requirements for building docs
+# Check these dependencies against doc/conf.py
+-r dev-requirements.txt
+sphinx>=1.0
+numpydoc
+matplotlib
+texext
+ghp-import

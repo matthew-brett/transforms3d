@@ -108,3 +108,9 @@ doctest: api-clean
 	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) _build/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in _build/doctest/output.txt."
+
+github: html
+	ghp-import -n $(BUILDROOT)/html/
+	git push origin gh-pages:gh-pages --force
+	@echo
+	@echo "Published to Github"
