@@ -1,4 +1,4 @@
-''' Euler angle rotations and their conversions for Tait-Bryan zyx convention
+r''' Euler angle rotations and their conversions for Tait-Bryan zyx convention
 
 See :mod:`euler` for general discussion of Euler angles and conventions.
 
@@ -7,15 +7,15 @@ axis rotation convention.
 
 The conventions in this module are therefore:
 
-* axes `i`, `j`, `k` are the `z`, `y`, and `x` axes respectively.  Thus
-  an Euler angle vector [ :math:`alpha`, :math:`beta`. :math:`gamma` ]
-  in our convention implies a :math:`alpha` radian rotation around the
-  `z` axis, followed by a :math:`beta` rotation around the `y` axis,
-  followed by a :math:`gamma` rotation around the `x` axis.
+* axes $i, j, k$ are the $z, y, x$ axes respectively.  Thus
+  an Euler angle vector $[ \alpha, \beta, \gamma ]$ in our convention
+  implies a $\alpha$ radian rotation around the $z$ axis, followed by a $\beta$
+  rotation around the $y$ axis, followed by a $\gamma$ rotation around the $x$
+  axis.
 * the rotation matrix applies on the left, to column vectors on the
-  right, so if `R` is the rotation matrix, and `v` is a 3 x N matrix
-  with N column vectors, the transformed vector set `vdash` is given by
-  ``vdash = np.dot(R, v)``.
+  right, so if ``R`` is the rotation matrix, and ``v`` is a 3 x N matrix with N
+  column vectors, the transformed vector set ``vdash`` is given by ``vdash =
+  np.dot(R, v)``.
 * extrinsic rotations - the axes are fixed, and do not move with the
   rotations.
 * a right-handed coordinate system
@@ -34,9 +34,10 @@ Terms used in function names:
 '''
 
 import math
-import numpy as np
 
 from functools import reduce
+
+import numpy as np
 
 from .axangles import axangle2mat
 
@@ -46,7 +47,8 @@ _FLOAT_EPS_4 = np.finfo(float).eps * 4.0
 def euler2mat(z, y, x):
     ''' Return matrix for rotations around z, y and x axes
 
-    Uses the z, then y, then x convention above
+    Uses the convention of static-frame rotation around the z, then y, then x
+    axis.
 
     Parameters
     ----------
@@ -168,20 +170,20 @@ def mat2euler(M, cy_thresh=None):
       [cos(x)*sin(z) + cos(z)*sin(x)*sin(y), cos(x)*cos(z) - sin(x)*sin(y)*sin(z), -cos(y)*sin(x)],
       [sin(x)*sin(z) - cos(x)*cos(z)*sin(y), cos(z)*sin(x) + cos(x)*sin(y)*sin(z),  cos(x)*cos(y)]
 
-    with the obvious derivations for z, y, and x
+    This gives the following solutions for ``[z, y, x]``::
 
        z = atan2(-r12, r11)
        y = asin(r13)
        x = atan2(-r23, r33)
 
-    Problems arise when cos(y) is close to zero, because both of::
+    Problems arise when ``cos(y)`` is close to zero, because both of::
 
        z = atan2(cos(y)*sin(z), cos(y)*cos(z))
        x = atan2(cos(y)*sin(x), cos(x)*cos(y))
 
-    will be close to atan2(0, 0), and highly unstable.
+    will be close to ``atan2(0, 0)``, and highly unstable.
 
-    The ``cy`` fix for numerical instability below is from: *Euler Angle
+    The ``cy`` fix for numerical instability in this code is from: *Euler Angle
     Conversion* by Ken Shoemake, p222-9 ; in: *Graphics Gems IV*, Paul Heckbert
     (editor), Academic Press, 1994, ISBN: 0123361559.  Specifically it comes
     from ``EulerAngles.c`` and deals with the case where cos(y) is close to
