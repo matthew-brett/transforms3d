@@ -104,12 +104,12 @@ def euler2mat(z, y, x):
 
     Notes
     -----
-    The direction of rotation is given by the right-hand rule (orient
-    the thumb of the right hand along the axis around which the rotation
-    occurs, with the end of the thumb at the positive end of the axis;
-    curl your fingers; the direction your fingers curl is the direction
-    of rotation).  Therefore, the rotations are counterclockwise if
-    looking along the axis of rotation from positive to negative.
+    The direction of rotation is given by the right-hand rule.  Orient the
+    thumb of the right hand along the axis around which the rotation occurs,
+    with the end of the thumb at the positive end of the axis; curl your
+    fingers; the direction your fingers curl is the direction of rotation.
+    Therefore, the rotations are counterclockwise if looking along the axis of
+    rotation from positive to negative.
     '''
     Ms = []
     if z:
