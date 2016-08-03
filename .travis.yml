@@ -3,6 +3,7 @@ language: python
 env:
     global:
         - DEPENDS="numpy"
+        - INSTALL_TYPE="pip"
 
 python:
     - 2.6
@@ -23,6 +24,9 @@ matrix:
     - python: 2.7
       env:
         - DEPENDS="numpy==1.5.1"
+    - python: 2.7
+      env:
+        - INSTALL_TYPE=pipe
     - python: 2.7
       env:
         - INSTALL_TYPE=setup
@@ -51,7 +55,11 @@ before_install:
 
 install:
     - |
-      if [ "$INSTALL_TYPE" == "setup" ]; then
+      if [ "$INSTALL_TYPE" == "pip" ]; then
+          pip install .
+      elif [ "$INSTALL_TYPE" == "pipe" ]; then
+          pip install -e .
+      elif [ "$INSTALL_TYPE" == "setup" ]; then
           python setup.py install
       elif [ "$INSTALL_TYPE" == "sdist" ]; then
           python setup.py egg_info  # check egg_info while we're here
