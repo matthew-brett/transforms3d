@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3D transformation matrices and others &mdash; transforms3d 0.2 documentation</title>
+    <title>3D transformation matrices and others &mdash; transforms3d 0.2.1+14.ga6c2f6d.dirty documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.2',
+        VERSION:     '0.2.1+14.ga6c2f6d.dirty',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,99 +23,82 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.2 documentation" href="index.html" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="transforms3d 0.2.1+14.ga6c2f6d.dirty documentation" href="index.html" />
     <link rel="next" title="Conventions for transforms" href="conventions.html" />
-    <link rel="prev" title="Welcome to the documentation for transforms3d" href="index.html" /> 
+    <link rel="prev" title="Welcome to the documentation for transforms3d" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
   </head>
-  <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="conventions.html" title="Conventions for transforms"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Welcome to the documentation for transforms3d"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">transforms3d 0.2 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">
+  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="d-transformation-matrices-and-others">
 <h1>3D transformation matrices and others<a class="headerlink" href="#d-transformation-matrices-and-others" title="Permalink to this headline">¶</a></h1>
 <p>This package is a collection of functions and classes to create and convert 3D
 transformations such as rotations, zooms, shears and reflections.</p>
-<p>It is based on <a href="#id1"><span class="problematic" id="id2">`transformations.py`_</span></a> by <a href="#id3"><span class="problematic" id="id4">`Christoph Gohlke`_</span></a>, with some
-restructuring by <a href="#id5"><span class="problematic" id="id6">`Matthew Brett`_</span></a>.</p>
+<p>It is based on <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/code/transformations.py.html">transformations.py</a> by <a class="reference external" href="http://www.lfd.uci.edu/~gohlke">Christoph Gohlke</a>, with some
+restructuring by <a class="reference external" href="http://matthew.dynevor.org">Matthew Brett</a>.</p>
 </div>
 
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to the documentation for transforms3d</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="conventions.html"
-                        title="next chapter">Conventions for transforms</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/intro.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to the documentation for transforms3d</a></li>
+      <li>Next: <a href="conventions.html" title="next chapter">Conventions for transforms</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/intro.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="conventions.html" title="Conventions for transforms"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Welcome to the documentation for transforms3d"
-             >previous</a> |</li>
-        <li><a href="index.html">transforms3d 0.2 documentation</a> &raquo;</li> 
-      </ul>
-    </div>
     <div class="footer">
-        &copy; Copyright 2009-2015, Matthew Brett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      &copy;2009-2015, Matthew Brett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/intro.txt"
+          rel="nofollow">Page source</a>
     </div>
+
+    
+
+    
   </body>
 </html>

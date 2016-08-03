@@ -18,6 +18,12 @@ Contents:
    reference/index
    glossary
 
+.. toctree::
+    :hidden:
+
+    devel/make_release
+    devel/refactor_plan
+
 Indices and tables
 ==================
 

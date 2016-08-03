@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Guide to making a transforms3d release &mdash; transforms3d 0.2 documentation</title>
+    <title>Guide to making a transforms3d release &mdash; transforms3d 0.2.1+14.ga6c2f6d.dirty documentation</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.2',
+        VERSION:     '0.2.1+14.ga6c2f6d.dirty',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,27 +23,24 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.2 documentation" href="../index.html" /> 
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="transforms3d 0.2.1+14.ga6c2f6d.dirty documentation" href="../index.html" />
+    <link rel="next" title="Refactoring plan" href="refactor_plan.html" />
+    <link rel="prev" title="Glossary" href="../glossary.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
   </head>
-  <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../index.html">transforms3d 0.2 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body role="document">
+  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="guide-to-making-a-transforms3d-release">
 <span id="release-guide"></span><h1>Guide to making a transforms3d release<a class="headerlink" href="#guide-to-making-a-transforms3d-release" title="Permalink to this headline">¶</a></h1>
@@ -55,58 +52,58 @@
 outstanding issues that can be closed, and whether there are any issues that
 should delay the release.  Label them !</p>
 </li>
-<li><p class="first">Review and update the release notes.  Review and update the <tt class="file docutils literal"><span class="pre">Changelog</span></tt>
+<li><p class="first">Review and update the release notes.  Review and update the <code class="file docutils literal"><span class="pre">Changelog</span></code>
 file.  Get a partial list of contributors with something like:</p>
-<div class="highlight-python"><div class="highlight"><pre>git shortlog -ns 0.6.0..
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">shortlog</span> <span class="o">-</span><span class="n">ns</span> <span class="mf">0.6</span><span class="o">.</span><span class="mf">0.</span><span class="o">.</span>
 </pre></div>
 </div>
-<p>where <tt class="docutils literal"><span class="pre">0.6.0</span></tt> was the last release tag name.</p>
-<p>Then manually go over <tt class="docutils literal"><span class="pre">git</span> <span class="pre">shortlog</span> <span class="pre">0.6.0..</span></tt> to make sure the release notes
+<p>where <code class="docutils literal"><span class="pre">0.6.0</span></code> was the last release tag name.</p>
+<p>Then manually go over <code class="docutils literal"><span class="pre">git</span> <span class="pre">shortlog</span> <span class="pre">0.6.0..</span></code> to make sure the release notes
 are as complete as possible and that every contributor was recognized.</p>
 </li>
-<li><p class="first">Use the opportunity to update the <tt class="docutils literal"><span class="pre">.mailmap</span></tt> file if there are any
-duplicate authors listed from <tt class="docutils literal"><span class="pre">git</span> <span class="pre">shortlog</span> <span class="pre">-ns</span></tt>.</p>
+<li><p class="first">Use the opportunity to update the <code class="docutils literal"><span class="pre">.mailmap</span></code> file if there are any
+duplicate authors listed from <code class="docutils literal"><span class="pre">git</span> <span class="pre">shortlog</span> <span class="pre">-ns</span></code>.</p>
 </li>
-<li><p class="first">Add any new authors to the <tt class="docutils literal"><span class="pre">AUTHORS</span></tt> file.  Add any new entries to the
-<tt class="docutils literal"><span class="pre">THANKS</span></tt> file.</p>
+<li><p class="first">Add any new authors to the <code class="docutils literal"><span class="pre">AUTHORS</span></code> file.  Add any new entries to the
+<code class="docutils literal"><span class="pre">THANKS</span></code> file.</p>
 </li>
-<li><p class="first">Check the copyright years in <tt class="docutils literal"><span class="pre">doc/conf.py</span></tt> and <tt class="docutils literal"><span class="pre">LICENSE</span></tt></p>
+<li><p class="first">Check the copyright years in <code class="docutils literal"><span class="pre">doc/conf.py</span></code> and <code class="docutils literal"><span class="pre">LICENSE</span></code></p>
 </li>
 <li><p class="first">If you have <a class="reference external" href="https://travis-ci.org">travis-ci</a> building set up you might want to push the code in its
 current state to a branch that will build, e.g:</p>
-<div class="highlight-python"><div class="highlight"><pre>git branch -D pre-release-test # in case branch already exists
-git co -b pre-release-test
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">branch</span> <span class="o">-</span><span class="n">D</span> <span class="n">pre</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">test</span> <span class="c1"># in case branch already exists</span>
+<span class="n">git</span> <span class="n">co</span> <span class="o">-</span><span class="n">b</span> <span class="n">pre</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">test</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Clean:</p>
-<div class="highlight-python"><div class="highlight"><pre>git clean -fxd
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clean</span> <span class="o">-</span><span class="n">fxd</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Make sure all tests pass on your local machine (from the transforms3d root
 directory):</p>
-<div class="highlight-python"><div class="highlight"><pre>nosetests --with-doctest transforms3d
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nosetests</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">doctest</span> <span class="n">transforms3d</span>
 </pre></div>
 </div>
 <p>Do this on a Python 2 and Python 3 setup.</p>
 </li>
 <li><p class="first">Run the same tests after installing into a virtualenv, to test that
 installing works correctly:</p>
-<div class="highlight-python"><div class="highlight"><pre>mkvirtualenv transforms3d-test
-pip install nose wheel
-git clean -fxd
-python setup.py install
-mkdir for_test
-cd for_test
-nosetests --with-doctest transforms3d
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mkvirtualenv</span> <span class="n">transforms3d</span><span class="o">-</span><span class="n">test</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">nose</span> <span class="n">wheel</span>
+<span class="n">git</span> <span class="n">clean</span> <span class="o">-</span><span class="n">fxd</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+<span class="n">mkdir</span> <span class="n">for_test</span>
+<span class="n">cd</span> <span class="n">for_test</span>
+<span class="n">nosetests</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">doctest</span> <span class="n">transforms3d</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Check the documentation doctests:</p>
-<div class="highlight-python"><div class="highlight"><pre>cd doc
-make doctest
-cd ..
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">doc</span>
+<span class="n">make</span> <span class="n">doctest</span>
+<span class="n">cd</span> <span class="o">..</span>
 </pre></div>
 </div>
 </li>
@@ -120,8 +117,8 @@ cd ..
 <a class="reference external" href="http://pypi.python.org/pypi">pypi</a>, review, fix, rebase, until all is good.  Then and only then do you push
 to upstream on github.</p>
 <ul>
-<li><p class="first">Make an annotated tag for the release with tag of form <tt class="docutils literal"><span class="pre">0.6.0</span></tt>:</p>
-<div class="highlight-python"><div class="highlight"><pre>git tag -am &#39;Fifth public release&#39; 0.6.0
+<li><p class="first">Make an annotated tag for the release with tag of form <code class="docutils literal"><span class="pre">0.6.0</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">tag</span> <span class="o">-</span><span class="n">am</span> <span class="s1">&#39;Fifth public release&#39;</span> <span class="mf">0.6</span><span class="o">.</span><span class="mi">0</span>
 </pre></div>
 </div>
 <p>Because we&#8217;re using <a class="reference external" href="https://github.com/warner/python-versioneer">versioneer</a> it is the tag which sets the package
@@ -129,44 +126,44 @@ version.</p>
 </li>
 <li><p class="first">Once everything looks good, upload the source release to PyPi.  See
 <a class="reference external" href="http://packages.python.org/an_example_pypi_project/setuptools.html">setuptools intro</a>:</p>
-<div class="highlight-python"><div class="highlight"><pre>python setup.py register
-python setup.py sdist --formats=gztar,zip upload
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">register</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">sdist</span> <span class="o">--</span><span class="n">formats</span><span class="o">=</span><span class="n">gztar</span><span class="p">,</span><span class="nb">zip</span> <span class="n">upload</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Upload wheels by building in virtualenvs, something like:</p>
-<div class="highlight-python"><div class="highlight"><pre>workon py27
-rm -rf build
-python setup.py bdist_wheel upload
-workon py33
-rm -rf build
-python setup.py bdist_wheel upload
-workon py34
-rm -rf build
-python setup.py bdist_wheel upload
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">workon</span> <span class="n">py27</span>
+<span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="n">build</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">bdist_wheel</span> <span class="n">upload</span>
+<span class="n">workon</span> <span class="n">py33</span>
+<span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="n">build</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">bdist_wheel</span> <span class="n">upload</span>
+<span class="n">workon</span> <span class="n">py34</span>
+<span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="n">build</span>
+<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">bdist_wheel</span> <span class="n">upload</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Remember you&#8217;ll need your <tt class="docutils literal"><span class="pre">~/.pypirc</span></tt> file set up right for this to work.
+<li><p class="first">Remember you&#8217;ll need your <code class="docutils literal"><span class="pre">~/.pypirc</span></code> file set up right for this to work.
 See <a class="reference external" href="http://packages.python.org/an_example_pypi_project/setuptools.html">setuptools intro</a>.  The file should look something like this:</p>
-<div class="highlight-python"><div class="highlight"><pre>[distutils]
-index-servers =
-    pypi
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">distutils</span><span class="p">]</span>
+<span class="n">index</span><span class="o">-</span><span class="n">servers</span> <span class="o">=</span>
+    <span class="n">pypi</span>
 
-[pypi]
-username:your.pypi.username
-password:your-password
+<span class="p">[</span><span class="n">pypi</span><span class="p">]</span>
+<span class="n">username</span><span class="p">:</span><span class="n">your</span><span class="o">.</span><span class="n">pypi</span><span class="o">.</span><span class="n">username</span>
+<span class="n">password</span><span class="p">:</span><span class="n">your</span><span class="o">-</span><span class="n">password</span>
 
-[server-login]
-username:your.pypi.username
-password:your-password
+<span class="p">[</span><span class="n">server</span><span class="o">-</span><span class="n">login</span><span class="p">]</span>
+<span class="n">username</span><span class="p">:</span><span class="n">your</span><span class="o">.</span><span class="n">pypi</span><span class="o">.</span><span class="n">username</span>
+<span class="n">password</span><span class="p">:</span><span class="n">your</span><span class="o">-</span><span class="n">password</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Check how everything looks on pypi - the description, the packages.  If
 necessary delete the release and try again if it doesn&#8217;t look right.</p>
 </li>
-<li><p class="first">Push the tag with <tt class="docutils literal"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">0.6.0</span></tt></p>
+<li><p class="first">Push the tag with <code class="docutils literal"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">0.6.0</span></code></p>
 </li>
 <li><p class="first">Announce to the mailing lists.  With fear and trembling.</p>
 </li>
@@ -178,7 +175,7 @@ necessary delete the release and try again if it doesn&#8217;t look right.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -188,44 +185,50 @@ necessary delete the release and try again if it doesn&#8217;t look right.</p>
 </ul>
 </li>
 </ul>
-
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/devel/make_release.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../glossary.html" title="previous chapter">Glossary</a></li>
+      <li>Next: <a href="refactor_plan.html" title="next chapter">Refactoring plan</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/devel/make_release.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../index.html">transforms3d 0.2 documentation</a> &raquo;</li> 
-      </ul>
-    </div>
     <div class="footer">
-        &copy; Copyright 2009-2015, Matthew Brett.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      &copy;2009-2015, Matthew Brett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/devel/make_release.txt"
+          rel="nofollow">Page source</a>
     </div>
+
+    
+
+    
   </body>
 </html>
