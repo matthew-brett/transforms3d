@@ -27,6 +27,13 @@ https://github.com/matthew-brett/transforms3d and get on down,
 algorithmically.  Feel free to use the github issue tracker and pull request
 system to ask for advice and support.
 
+*************
+Documentation
+*************
+
+Documentation for latest released version at
+http://matthew-brett.github.io/transforms3d
+
 ****
 Code
 ****

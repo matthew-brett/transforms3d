@@ -76,9 +76,9 @@ You might want to make tag the release commit on your local machine, push to
 pypi_, review, fix, rebase, until all is good.  Then and only then do you push
 to upstream on github.
 
-* Make an annotated tag for the release with tag of form ``0.6.0``::
+* Make a signed annotated tag for the release with tag of form ``0.6.0``::
 
-    git tag -am 'Fifth public release' 0.6.0
+    git tag -sm 'Fifth public release' 0.6.0
 
   Because we're using `versioneer`_ it is the tag which sets the package
   version.

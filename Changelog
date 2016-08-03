@@ -1,0 +1,30 @@
+.. -*- mode: rst -*-
+.. vim:ft=rst
+
+.. _changelog:
+
+######################
+Transforms3d Changelog
+######################
+
+See: http://github.com/matthew-brett/transforms3d
+
+********
+Releases
+********
+
+* 0.3 (Wednesday 3rd August 2016)
+
+  * Change in calculation of quaternion to axis-angle; quaternions now not
+    assumed normalized - input quaternions normalized to unit quaternions on
+    input.  This may give you different results from the previous calculation;
+  * Fix for warning running NumPy 1.11;
+  * DOC updates and refactoring.
+
+* 0.2.1
+
+  * Fixes to setup.py and MANIFEST file for correct installation;
+
+* <= 0.2
+
+  * See ``git log``.
