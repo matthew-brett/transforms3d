@@ -16,7 +16,7 @@ matrix:
     # With sympy we can run doctests
     - python: 2.7
       env:
-        - DEPENDS="numpy sympy sphinx"
+        - DEPENDS="-r doc-requirements.txt"
         - COVERAGE=1
         - DOCTESTS=1
         - DOC_DOCTEST=1
