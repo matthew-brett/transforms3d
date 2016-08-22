@@ -21,7 +21,7 @@ add_test(nose ${NOSE} ${CMAKE_CURRENT_SOURCE_DIR}/transforms3d)
 
 install(CODE "execute_process(
 	COMMAND ${PYTHON_EXECUTABLE} ${setup_py} install
-	--prefix=${CMAKE_INSTALL_PREFIX} --root=${DESTDIR}
+	--prefix=${CMAKE_INSTALL_PREFIX}
 	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	)")
 
