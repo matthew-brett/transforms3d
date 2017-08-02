@@ -150,6 +150,18 @@ def quat2mat(q):
 def mat2quat(M):
     ''' Calculate quaternion corresponding to given rotation matrix
 
+    Method claimed to be robust to numerical errors in `M`.
+
+    Constructs quaternion by calculating maximum eigenvector for matrix
+    ``K`` (constructed from input `M`).  Although this is not tested, a maximum
+    eigenvalue of 1 corresponds to a valid rotation.
+
+    A quaternion ``q*-1`` corresponds to the same rotation as ``q``; thus the
+    sign of the reconstructed quaternion is arbitrary, and we return
+    quaternions with positive w (q[0]).
+
+    See notes.
+
     Parameters
     ----------
     M : array-like
@@ -159,18 +171,6 @@ def mat2quat(M):
     -------
     q : (4,) array
       closest quaternion to input matrix, having positive q[0]
-
-    Notes
-    -----
-    Method claimed to be robust to numerical errors in M
-
-    Constructs quaternion by calculating maximum eigenvector for matrix
-    K (constructed from input `M`).  Although this is not tested, a
-    maximum eigenvalue of 1 corresponds to a valid rotation.
-
-    A quaternion q*-1 corresponds to the same rotation as q; thus the
-    sign of the reconstructed quaternion is arbitrary, and we return
-    quaternions with positive w (q[0]).
 
     References
     ----------
