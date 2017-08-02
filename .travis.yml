@@ -4,12 +4,13 @@ env:
     global:
         - DEPENDS="numpy"
         - INSTALL_TYPE="pip"
+        - EXTRA_WHEELS="https://5cf40426d9f06eb7461d-6fe47d9331aba7cd62fc36c7196769e4.ssl.cf2.rackcdn.com"
+        - EXTRA_PIP_FLAGS="--find-links=$EXTRA_WHEELS"
 
 python:
-    - 2.6
-    - 3.3
     - 3.4
     - 3.5
+    - 3.6
 
 matrix:
   include:
@@ -43,11 +44,15 @@ matrix:
         - INSTALL_TYPE=requirements
 
 before_install:
-    - source tools/travis_tools.sh
-    - virtualenv venv
+    - python -m pip install --upgrade pip
+    - pip install --upgrade virtualenv
+    - virtualenv --python=python venv
+    - python --version # just to check
     - source venv/bin/activate
-    - retry pip install nose # always
-    - if [ -n "$DEPENDS" ]; then wheelhouse_pip_install $DEPENDS; fi
+    - pip install nose # always
+    - if [ -n "$DEPENDS" ]; then
+        pip install $EXTRA_PIP_FLAGS $DEPENDS;
+      fi;
     - if [ "${COVERAGE}" == "1" ]; then
       pip install coverage;
       pip install coveralls;
@@ -64,14 +69,14 @@ install:
       elif [ "$INSTALL_TYPE" == "sdist" ]; then
           python setup.py egg_info  # check egg_info while we're here
           python setup.py sdist
-          wheelhouse_pip_install dist/*.tar.gz
+          pip install $EXTRA_PIP_FLAGS dist/*.tar.gz
       elif [ "$INSTALL_TYPE" == "wheel" ]; then
           pip install wheel
           python setup.py bdist_wheel
-          wheelhouse_pip_install dist/*.whl
+          pip install $EXTRA_PIP_FLAGS dist/*.whl
       elif [ "$INSTALL_TYPE" == "requirements" ]; then
-          wheelhouse_pip_install -r requirements.txt
-          python setup.py install
+          pip install $EXTRA_PIP_FLAGS -r requirements.txt
+          pip install .
       fi
 
 script:
