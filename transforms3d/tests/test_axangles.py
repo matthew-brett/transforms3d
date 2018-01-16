@@ -2,16 +2,16 @@ import math
 
 import numpy as np
 
-from ..axangles import axangle2aff, aff2axangle, axangle2mat, mat2axangle
+from transforms3d.axangles import axangle2aff, aff2axangle, axangle2mat, mat2axangle
 
-from .. import quaternions as tq
-from .. import taitbryan as ttb
+from transforms3d import quaternions as tq
+from transforms3d import taitbryan as ttb
 
-from .samples import euler_tuples
+from transforms3d.tests.samples import euler_tuples
 
 from numpy.testing import assert_array_almost_equal, assert_almost_equal
 
-from nose.tools import assert_raises
+from transforms3d.testing import assert_raises
 
 
 def test_aa_points():

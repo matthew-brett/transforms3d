@@ -5,3 +5,4 @@ build/
 dist/
 transforms3d.egg-info/
 MANIFEST
+.cache/

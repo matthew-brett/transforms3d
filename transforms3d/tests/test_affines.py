@@ -3,13 +3,12 @@
 import numpy as np
 from itertools import permutations
 
-from numpy.testing import (assert_array_equal, assert_raises, dec,
+from numpy.testing import (assert_array_equal, dec,
                            assert_array_almost_equal)
 
-from nose.tools import assert_true, assert_false
-
-from ..affines import (compose, decompose, decompose44)
-from ..taitbryan import euler2mat
+from transforms3d.affines import (compose, decompose, decompose44)
+from transforms3d.taitbryan import euler2mat
+from transforms3d.testing import assert_raises
 
 
 def test_compose():
@@ -17,7 +16,7 @@ def test_compose():
     T = np.ones(3)
     R = np.ones(3)
     Z = np.ones(3)
-    yield assert_raises, ValueError, compose, T, R, Z
+    assert_raises(ValueError, compose, T, R, Z)
 
 
 @dec.slow
@@ -31,17 +30,17 @@ def test_de_compose():
                     M = compose(trans, Rmat, zooms, shears)
                     for func in decompose, decompose44:
                         T, R, Z, S = func(M)
-                        yield (assert_true,
-                               np.allclose(trans, T) and
-                               np.allclose(Rmat, R) and
-                               np.allclose(zooms, Z) and
-                               np.allclose(shears, S))
+                        assert (
+                            np.allclose(trans, T) and
+                            np.allclose(Rmat, R) and
+                            np.allclose(zooms, Z) and
+                            np.allclose(shears, S))
 
 
 def test_decompose_shears():
     # Check that zeros shears are also returned
     T, R, Z, S = decompose(np.eye(4))
-    yield assert_array_equal, S, np.zeros(3)
+    assert_array_equal(S, np.zeros(3))
 
 
 def test_rand_de_compose():
@@ -52,4 +51,4 @@ def test_rand_de_compose():
         for func in decompose, decompose44:
             T, R, Z, S = func(M)
             M2 = compose(T, R, Z, S)
-            yield assert_array_almost_equal, M, M2
+            assert_array_almost_equal(M, M2)

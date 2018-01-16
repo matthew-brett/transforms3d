@@ -3,15 +3,15 @@
 
 import numpy as np
 
-from ..reflections import rfnorm2mat, rfnorm2aff, mat2rfnorm, aff2rfnorm
-from ..utils import normalized_vector
+from transforms3d.reflections import rfnorm2mat, rfnorm2aff, mat2rfnorm, aff2rfnorm
+from transforms3d.utils import normalized_vector
 
-from nose.tools import assert_true, assert_false, assert_equal, assert_raises
-from nose import SkipTest
+from transforms3d.testing import assert_raises
 
 from numpy.testing import assert_array_equal, assert_array_almost_equal
 
-from .samples import euler_mats
+from transforms3d.tests.samples import euler_mats
+
 
 def assert_almost_equal_sign(v1, v2):
     # Assert vectors are almost equal or v1 * -1 ~= v2

@@ -1,8 +1,11 @@
+""" Various samples for testing
+"""
+
 import numpy as np
 
-from ..utils import inique, permuted_signs, permuted_with_signs
+from transforms3d.utils import inique, permuted_signs, permuted_with_signs
 
-from ..taitbryan import euler2mat
+from transforms3d.taitbryan import euler2mat
 
 # Regular points around a sphere
 _r13 = np.sqrt(1/3.0)

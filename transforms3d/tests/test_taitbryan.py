@@ -4,15 +4,13 @@ import math
 import numpy as np
 from numpy import pi
 
-from .. import quaternions as tq
-from .. import taitbryan as ttb
-from .. import axangles as taa
-
-from nose.tools import assert_true, assert_false, assert_equal
+from transforms3d import quaternions as tq
+from transforms3d import taitbryan as ttb
+from transforms3d import axangles as taa
 
 from numpy.testing import assert_array_equal, assert_array_almost_equal
 
-from .samples import euler_tuples
+from transforms3d.tests.samples import euler_tuples
 
 FLOAT_EPS = np.finfo(np.float).eps
 
@@ -74,16 +72,14 @@ def test_basic_euler():
     M2 = ttb.euler2mat(0, yr, 0)
     M3 = ttb.euler2mat(0, 0, xr)
     # which are all valid rotation matrices
-    assert_true(is_valid_rotation(M))
-    assert_true(is_valid_rotation(M1))
-    assert_true(is_valid_rotation(M2))
-    assert_true(is_valid_rotation(M3))
+    for rot in (M, M1, M2, M3):
+        assert is_valid_rotation(rot)
     # Full matrix is composition of three individual matrices
-    assert_true(np.allclose(M, np.dot(M3, np.dot(M2, M1))))
+    assert np.allclose(M, np.dot(M3, np.dot(M2, M1)))
     # Applying an opposite rotation same as inverse (the inverse is
     # the same as the transpose, but just for clarity)
-    assert_true(np.allclose(
-        ttb.euler2mat(0, 0, -xr), np.linalg.inv(ttb.euler2mat(0, 0, xr))))
+    assert np.allclose(
+        ttb.euler2mat(0, 0, -xr), np.linalg.inv(ttb.euler2mat(0, 0, xr)))
 
 
 def test_euler_mat():
@@ -128,15 +124,15 @@ def test_euler_instability():
     M = ttb.euler2mat(*zyx)
     # Round trip
     M_back = ttb.euler2mat(*ttb.mat2euler(M))
-    yield assert_true, np.allclose(M, M_back)
+    assert np.allclose(M, M_back)
     # disturb matrix slightly
     M_e = M - FLOAT_EPS
     # round trip to test - OK
     M_e_back = ttb.euler2mat(*ttb.mat2euler(M_e))
-    yield assert_true, np.allclose(M_e, M_e_back)
+    assert np.allclose(M_e, M_e_back)
     # not so with crude routine
     M_e_back = ttb.euler2mat(*crude_mat2euler(M_e))
-    yield assert_false, np.allclose(M_e, M_e_back)
+    assert not np.allclose(M_e, M_e_back)
 
 
 def test_quats():
@@ -144,14 +140,14 @@ def test_quats():
         M1 = ttb.euler2mat(z, y, x)
         quatM = tq.mat2quat(M1)
         quat = ttb.euler2quat(z, y, x)
-        yield tq.nearly_equivalent, quatM, quat
+        assert tq.nearly_equivalent(quatM, quat)
         quatS = sympy_euler2quat(z, y, x)
-        yield tq.nearly_equivalent, quat, quatS
+        assert tq.nearly_equivalent(quat, quatS)
         zp, yp, xp = ttb.quat2euler(quat)
         # The parameters may not be the same as input, but they give the
         # same rotation matrix
         M2 = ttb.euler2mat(zp, yp, xp)
-        yield assert_array_almost_equal, M1, M2
+        assert_array_almost_equal(M1, M2)
 
 
 def test_axangle_euler():

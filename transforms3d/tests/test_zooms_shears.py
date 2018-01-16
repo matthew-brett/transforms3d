@@ -5,12 +5,11 @@ import warnings
 
 import numpy as np
 
-from nose.tools import assert_true, assert_false, assert_equal, assert_raises
-
-from numpy.testing import assert_array_equal, assert_array_almost_equal
-
 import transforms3d.zooms as tzs
 import transforms3d.shears as tss
+
+from numpy.testing import assert_array_equal, assert_array_almost_equal
+from transforms3d.testing import assert_raises
 
 
 def test_zdir_zmat_aff():
@@ -22,22 +21,22 @@ def test_zdir_zmat_aff():
         S0 = tzs.zfdir2mat(factor, None)
         f2, d2 = tzs.mat2zfdir(S0)
         S1 = tzs.zfdir2mat(f2, d2)
-        yield assert_array_almost_equal, S0, S1
+        assert_array_almost_equal(S0, S1)
         direct = np.random.random(3) - 0.5
         S0 = tzs.zfdir2mat(factor, direct)
         f2, d2 = tzs.mat2zfdir(S0)
         S1 = tzs.zfdir2mat(f2, d2)
-        yield assert_array_almost_equal, S0, S1
+        assert_array_almost_equal(S0, S1)
         # affine versions of same
         S0 = tzs.zfdir2aff(factor)
         f2, d2, o2 = tzs.aff2zfdir(S0)
-        yield assert_array_almost_equal, S0, tzs.zfdir2aff(f2, d2, o2)
+        assert_array_almost_equal(S0, tzs.zfdir2aff(f2, d2, o2))
         S0 = tzs.zfdir2aff(factor, direct)
         f2, d2, o2 = tzs.aff2zfdir(S0)
-        yield assert_array_almost_equal, S0, tzs.zfdir2aff(f2, d2, o2)
+        assert_array_almost_equal(S0, tzs.zfdir2aff(f2, d2, o2))
         S0 = tzs.zfdir2aff(factor, direct, origin)
         f2, d2, o2 = tzs.aff2zfdir(S0)
-        yield assert_array_almost_equal, S0, tzs.zfdir2aff(f2, d2, o2)
+        assert_array_almost_equal(S0, tzs.zfdir2aff(f2, d2, o2))
 
 
 def test_striu():

@@ -4,15 +4,14 @@ import math
 
 import numpy as np
 
-from nose.tools import (assert_raises, assert_true, assert_equal)
-
 from numpy.testing import (assert_array_almost_equal, assert_array_equal,
                            assert_almost_equal)
 
-from .. import quaternions as tq
-from .. import axangles as taa
+from transforms3d import quaternions as tq
+from transforms3d import axangles as taa
+from transforms3d.testing import assert_raises
 
-from .samples import euler_mats
+from transforms3d.tests.samples import euler_mats
 
 # Example quaternions (from rotations)
 euler_quats = []
@@ -39,11 +38,11 @@ def test_fillpos():
     # Takes np array
     xyz = np.zeros((3,))
     w,x,y,z = tq.fillpositive(xyz)
-    assert_equal(w, 1)
+    assert w == 1
     # Or lists
     xyz = [0] * 3
     w,x,y,z = tq.fillpositive(xyz)
-    assert_equal(w, 1)
+    assert w == 1
     # Errors with wrong number of values
     assert_raises(ValueError, tq.fillpositive, [0, 0])
     assert_raises(ValueError, tq.fillpositive, [0]*4)
@@ -51,66 +50,66 @@ def test_fillpos():
     assert_raises(ValueError, tq.fillpositive, [1.0]*3)
     # Test corner case where w is near zero
     wxyz = tq.fillpositive([1, 0, 0])
-    assert_equal(wxyz[0], 0.0)
+    assert wxyz[0] == 0.0
     eps = np.finfo(float).eps
     wxyz = tq.fillpositive([1 + eps, 0, 0])
-    assert_equal(wxyz[0], 0.0)
+    assert wxyz[0] == 0.0
     # Bump up the floating point error - raises error
     assert_raises(ValueError, tq.fillpositive, [1 + eps * 3, 0, 0])
     # Increase threshold, happy again
     wxyz = tq.fillpositive([1 + eps * 3, 0, 0], w2_thresh=eps * -10)
-    assert_equal(wxyz[0], 0.0)
+    assert wxyz[0] == 0.0
 
 
 def test_qconjugate():
     # Takes sequence
     cq = tq.qconjugate((1, 0, 0, 0))
     # Returns float type
-    assert_true(cq.dtype.kind == 'f')
+    assert cq.dtype.kind == 'f'
 
 
 def test_quat2mat():
     # also tested in roundtrip case below
     M = tq.quat2mat([1, 0, 0, 0])
-    yield assert_array_almost_equal, M, np.eye(3)
+    assert_array_almost_equal(M, np.eye(3))
     # Non-unit quaternion
     M = tq.quat2mat([3, 0, 0, 0])
-    yield assert_array_almost_equal, M, np.eye(3)
+    assert_array_almost_equal(M, np.eye(3))
     M = tq.quat2mat([0, 1, 0, 0])
-    yield assert_array_almost_equal, M, np.diag([1, -1, -1])
+    assert_array_almost_equal(M, np.diag([1, -1, -1]))
     # Non-unit quaternion, same result as normalized
     M = tq.quat2mat([0, 2, 0, 0])
-    yield assert_array_almost_equal, M, np.diag([1, -1, -1])
-    yield assert_array_almost_equal, M, np.diag([1, -1, -1])
+    assert_array_almost_equal(M, np.diag([1, -1, -1]))
+    assert_array_almost_equal(M, np.diag([1, -1, -1]))
     M = tq.quat2mat([0, 0, 0, 0])
-    yield assert_array_almost_equal, M, np.eye(3)
+    assert_array_almost_equal(M, np.eye(3))
 
 
 def test_qinverse():
     # Takes sequence
     iq = tq.qinverse((1, 0, 0, 0))
     # Returns float type
-    yield assert_true, iq.dtype.kind == 'f'
+    assert iq.dtype.kind == 'f'
     for M, q in eg_pairs:
         iq = tq.qinverse(q)
         iqM = tq.quat2mat(iq)
         iM = np.linalg.inv(M)
-        yield assert_true, np.allclose(iM, iqM)
+        assert np.allclose(iM, iqM)
 
 
 def test_qeye():
     qi = tq.qeye()
-    yield assert_true, qi.dtype.kind == 'f'
-    yield assert_true, np.all([1,0,0,0]==qi)
-    yield assert_true, np.allclose(tq.quat2mat(qi), np.eye(3))
+    assert qi.dtype.kind == 'f'
+    assert np.all([1,0,0,0]==qi)
+    assert np.allclose(tq.quat2mat(qi), np.eye(3))
 
 
 def test_qnorm():
     qi = tq.qeye()
-    yield assert_true, tq.qnorm(qi) == 1
-    yield assert_true, tq.qisunit(qi)
+    assert tq.qnorm(qi) == 1
+    assert tq.qisunit(qi)
     qi[1] = 0.2
-    yield assert_true, not tq.qisunit(qi)
+    assert not tq.qisunit(qi)
 
 
 def test_qmult():
@@ -118,7 +117,7 @@ def test_qmult():
     for M1, q1 in eg_pairs[0::4]:
         for M2, q2 in eg_pairs[1::4]:
             q21 = tq.qmult(q2, q1)
-            yield assert_array_almost_equal, np.dot(M2,M1), tq.quat2mat(q21)
+            assert_array_almost_equal(np.dot(M2,M1), tq.quat2mat(q21))
 
 
 def test_qrotate():
@@ -126,7 +125,7 @@ def test_qrotate():
         for M, q in eg_pairs:
             vdash = tq.rotate_vector(vec, q)
             vM = np.dot(M, vec.reshape(3,1))[:,0]
-            yield assert_array_almost_equal, vdash, vM
+            assert_array_almost_equal(vdash, vM)
 
 
 def test_quaternion_reconstruction():
@@ -137,7 +136,7 @@ def test_quaternion_reconstruction():
         # Accept positive or negative match
         posm = np.allclose(q, qt)
         negm = np.allclose(q, -qt)
-        yield assert_true, posm or negm
+        assert posm or negm
 
 
 def test_angle_axis2quat():
@@ -176,16 +175,16 @@ def test_quat2axangle():
             q[pos] = val
             ax, angle = tq.quat2axangle(q)
             assert_almost_equal(ax, [1, 0, 0])
-            assert_true(np.isnan(angle))
+            assert np.isnan(angle)
     # Infinite length likewise, because of length overflow
     f64info = np.finfo(np.float64)
     ax, angle = tq.quat2axangle([2, f64info.max, 0, 0])
     assert_almost_equal(ax, [1, 0, 0])
-    assert_true(np.isnan(angle))
+    assert np.isnan(angle)
     # Very small values give indentity transformation
     ax, angle = tq.quat2axangle([0, f64info.eps / 2, 0, 0])
     assert_almost_equal(ax, [1, 0, 0])
-    assert_equal(angle, 0)
+    assert angle == 0
 
 
 def sympy_aa2mat(vec, theta):
@@ -220,10 +219,10 @@ def test_axis_angle():
     for M, q in eg_pairs:
         vec, theta = tq.quat2axangle(q)
         q2 = tq.axangle2quat(vec, theta)
-        yield tq.nearly_equivalent, q, q2
+        assert tq.nearly_equivalent(q, q2)
         aa_mat = taa.axangle2mat(vec, theta)
-        yield assert_array_almost_equal, aa_mat, M
+        assert_array_almost_equal(aa_mat, M)
         aa_mat2 = sympy_aa2mat(vec, theta)
-        yield assert_array_almost_equal, aa_mat, aa_mat2
+        assert_array_almost_equal(aa_mat, aa_mat2)
         aa_mat22 = sympy_aa2mat2(vec, theta)
-        yield assert_array_almost_equal, aa_mat, aa_mat22
+        assert_array_almost_equal(aa_mat, aa_mat22)

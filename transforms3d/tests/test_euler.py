@@ -7,16 +7,13 @@ from itertools import product, permutations
 
 import numpy as np
 
-from .. import euler
-from ..quaternions import mat2quat, nearly_equivalent
-from ..axangles import mat2axangle, axangle2mat
-from ..euler import (euler2mat, mat2euler, euler2quat, quat2euler,
+from transforms3d import euler
+from transforms3d.euler import (euler2mat, mat2euler, euler2quat, quat2euler,
                      euler2axangle, axangle2euler, EulerFuncs)
-from .. import taitbryan as tb
+from transforms3d import taitbryan as tb
 
-from .samples import euler_tuples, euler_mats
+from transforms3d.tests.samples import euler_tuples, euler_mats
 
-from nose.tools import assert_true, assert_equal
 from numpy.testing import assert_almost_equal
 
 
@@ -86,4 +83,4 @@ def test_mat2euler():
 
 
 def test_names():
-    assert_equal(euler.__dict__['physics'], euler.__dict__['rzxz'])
+    assert euler.__dict__['physics'] == euler.__dict__['rzxz']

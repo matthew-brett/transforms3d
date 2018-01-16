@@ -5,4 +5,4 @@
 # Include run-time requirements
 -r requirements.txt
 sympy
-nose
+pytest

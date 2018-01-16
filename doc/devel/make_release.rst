@@ -43,10 +43,10 @@ Release checklist
 
     git clean -fxd
 
-* Make sure all tests pass on your local machine (from the transforms3d root
+* Make sure all tests pass on your local machine (from the Transforms3d root
   directory)::
 
-    nosetests --with-doctest transforms3d
+    py.test --doctest-modules transforms3d
 
   Do this on a Python 2 and Python 3 setup.
 
@@ -54,12 +54,12 @@ Release checklist
   installing works correctly::
 
     mkvirtualenv transforms3d-test
-    pip install nose wheel
+    pip install pytest wheel
     git clean -fxd
     python setup.py install
     mkdir for_test
     cd for_test
-    nosetests --with-doctest transforms3d
+    py.test --doctest-modules transforms3d
 
 * Check the documentation doctests::
 
