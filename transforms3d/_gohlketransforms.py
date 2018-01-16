@@ -6,8 +6,8 @@
 
 # transformations.py
 
-# Copyright (c) 2006-2014, Christoph Gohlke
-# Copyright (c) 2006-2014, The Regents of the University of California
+# Copyright (c) 2006-2017, Christoph Gohlke
+# Copyright (c) 2006-2017, The Regents of the University of California
 # Produced at the Laboratory for Fluorescence Dynamics
 # All rights reserved.
 #
@@ -49,13 +49,13 @@ functions to decompose transformation matrices.
 :Organization:
   Laboratory for Fluorescence Dynamics, University of California, Irvine
 
-:Version: 2013.06.29
+:Version: 2017.02.17
 
 Requirements
 ------------
-* `CPython 2.7 or 3.3 <http://www.python.org>`_
-* `Numpy 1.7 <http://www.numpy.org>`_
-* `Transformations.c 2013.01.18 <http://www.lfd.uci.edu/~gohlke/>`_
+* `CPython 2.7 or 3.5 <http://www.python.org>`_
+* `Numpy 1.11 <http://www.numpy.org>`_
+* `Transformations.c 2017.02.17 <http://www.lfd.uci.edu/~gohlke/>`_
   (recommended for speedup of some functions)
 
 Notes
@@ -104,6 +104,13 @@ be specified using a 4 character string or encoded 4-tuple:
     by 'z', or 'z' is followed by 'x'. Otherwise odd (1).
   - repetition : first and last axis are same (1) or different (0).
   - frame : rotations are applied to static (0) or rotating (1) frame.
+
+Other Python packages and modules for 3D transformations and quaternions:
+
+* `Transforms3d <https://pypi.python.org/pypi/transforms3d>`_
+   includes most code of this module.
+* `Blender.mathutils <http://www.blender.org/api/blender_python_api>`_
+* `numpy-dtypes <https://github.com/numpy/numpy-dtypes>`_
 
 References
 ----------
@@ -197,9 +204,9 @@ import math
 
 import numpy
 
-__version__ = '2013.06.29'
+__version__ = '2017.02.17'
 __docformat__ = 'restructuredtext en'
-__all__ = []
+__all__ = ()
 
 
 def identity_matrix():
@@ -797,7 +804,7 @@ def decompose_matrix(matrix):
         angles[0] = math.atan2(row[1, 2], row[2, 2])
         angles[2] = math.atan2(row[0, 1], row[0, 0])
     else:
-        #angles[0] = math.atan2(row[1, 0], row[1, 1])
+        # angles[0] = math.atan2(row[1, 0], row[1, 1])
         angles[0] = math.atan2(-row[2, 1], row[1, 1])
         angles[2] = 0.0
 
@@ -1306,6 +1313,13 @@ def quaternion_from_matrix(matrix, isprecise=False):
     >>> q = quaternion_from_matrix(R)
     >>> is_same_transform(R, quaternion_matrix(q))
     True
+    >>> is_same_quaternion(quaternion_from_matrix(R, isprecise=False),
+    ...                    quaternion_from_matrix(R, isprecise=True))
+    True
+    >>> R = euler_matrix(0.0, 0.0, numpy.pi/2.0)
+    >>> is_same_quaternion(quaternion_from_matrix(R, isprecise=False),
+    ...                    quaternion_from_matrix(R, isprecise=True))
+    True
 
     """
     M = numpy.array(matrix, dtype=numpy.float64, copy=False)[:4, :4]
@@ -1318,16 +1332,17 @@ def quaternion_from_matrix(matrix, isprecise=False):
             q[2] = M[0, 2] - M[2, 0]
             q[1] = M[2, 1] - M[1, 2]
         else:
-            i, j, k = 1, 2, 3
+            i, j, k = 0, 1, 2
             if M[1, 1] > M[0, 0]:
-                i, j, k = 2, 3, 1
+                i, j, k = 1, 2, 0
             if M[2, 2] > M[i, i]:
-                i, j, k = 3, 1, 2
+                i, j, k = 2, 0, 1
             t = M[i, i] - (M[j, j] + M[k, k]) + M[3, 3]
             q[i] = t
             q[j] = M[i, j] + M[j, i]
             q[k] = M[k, i] + M[i, k]
             q[3] = M[k, j] - M[j, k]
+            q = q[[3, 0, 1, 2]]
         q *= 0.5 / math.sqrt(t * M[3, 3])
     else:
         m00 = M[0, 0]
@@ -1363,10 +1378,11 @@ def quaternion_multiply(quaternion1, quaternion0):
     """
     w0, x0, y0, z0 = quaternion0
     w1, x1, y1, z1 = quaternion1
-    return numpy.array([-x1*x0 - y1*y0 - z1*z0 + w1*w0,
-                         x1*w0 + y1*z0 - z1*y0 + w1*x0,
-                        -x1*z0 + y1*w0 + z1*x0 + w1*y0,
-                         x1*y0 - y1*x0 + z1*w0 + w1*z0], dtype=numpy.float64)
+    return numpy.array([
+        -x1*x0 - y1*y0 - z1*z0 + w1*w0,
+        x1*w0 + y1*z0 - z1*y0 + w1*x0,
+        -x1*z0 + y1*w0 + z1*x0 + w1*y0,
+        x1*y0 - y1*x0 + z1*w0 + w1*z0], dtype=numpy.float64)
 
 
 def quaternion_conjugate(quaternion):
@@ -1872,6 +1888,13 @@ def is_same_transform(matrix0, matrix1):
     return numpy.allclose(matrix0, matrix1)
 
 
+def is_same_quaternion(q0, q1):
+    """Return True if two quaternions are equal."""
+    q0 = numpy.array(q0)
+    q1 = numpy.array(q1)
+    return numpy.allclose(q0, q1) or numpy.allclose(q0, -q1)
+
+
 def _import_module(name, package=None, warn=True, prefix='_py_', ignore='_'):
     """Try import all public attributes from module into global namespace.
 
@@ -1905,9 +1928,8 @@ def _import_module(name, package=None, warn=True, prefix='_py_', ignore='_'):
 
 
 # _import_module('_transformations')
-
 if __name__ == "__main__":
     import doctest
-    import random  # used in doctests
+    import random  # noqa: used in doctests
     numpy.set_printoptions(suppress=True, precision=5)
     doctest.testmod()

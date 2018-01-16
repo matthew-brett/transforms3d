@@ -1,6 +1,8 @@
-TRANSFORMS_URL=http://www.lfd.uci.edu/~gohlke/code/transformations.py
+TRANSFORMS_URL=https://www.lfd.uci.edu/~gohlke/code/transformations.py
 
 update:
+	# Not currently working - go to the URL and copy paste into
+	# transformations.py
 	curl -O $(TRANSFORMS_URL)
 
 make-patch:
