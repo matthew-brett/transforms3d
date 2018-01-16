@@ -44,12 +44,12 @@ def striu2mat(striu):
     --------
     >>> S = [0.1, 0.2, 0.3]
     >>> striu2mat(S)
-    array([[ 1. ,  0.1,  0.2],
-           [ 0. ,  1. ,  0.3],
-           [ 0. ,  0. ,  1. ]])
+    array([[1. , 0.1, 0.2],
+           [0. , 1. , 0.3],
+           [0. , 0. , 1. ]])
     >>> striu2mat([1])
-    array([[ 1.,  1.],
-           [ 0.,  1.]])
+    array([[1., 1.],
+           [0., 1.]])
     >>> striu2mat([1, 2])
     Traceback (most recent call last):
        ...
@@ -245,7 +245,7 @@ def aff2sadn(aff):
     >>> A = sadn2aff(0.5, [1, 0, 0], [0, 1, 0])
     >>> angle, direction, normal, point = aff2sadn(A)
     >>> angle, direction, normal, point
-    (0.5, array([-1.,  0.,  0.]), array([ 0., -1.,  0.]), array([ 0.,  0.,  0.]))
+    (0.5, array([-1.,  0.,  0.]), array([ 0., -1.,  0.]), array([0., 0., 0.]))
     >>> A_again = sadn2aff(angle, direction, normal, point)
     >>> np.allclose(A, A_again)
     True

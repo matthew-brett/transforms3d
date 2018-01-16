@@ -428,7 +428,7 @@ def quat2axangle(quat, identity_thresh=None):
     --------
     >>> vec, theta = quat2axangle([0, 1, 0, 0])
     >>> vec
-    array([ 1.,  0.,  0.])
+    array([1., 0., 0.])
     >>> np.allclose(theta, np.pi)
     True
 
@@ -436,13 +436,13 @@ def quat2axangle(quat, identity_thresh=None):
     vector:
 
     >>> quat2axangle([1, 0, 0, 0])
-    (array([ 1.,  0.,  0.]), 0.0)
+    (array([1., 0., 0.]), 0.0)
 
     If any of the quaternion values are not finite, we return a NaN in the
     angle, and an arbitrary vector:
 
     >>> quat2axangle([1, np.inf, 0, 0])
-    (array([ 1.,  0.,  0.]), nan)
+    (array([1., 0., 0.]), nan)
 
     Notes
     -----
