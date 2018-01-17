@@ -6,7 +6,6 @@ env:
         - INSTALL_TYPE="pip"
         - EXTRA_WHEELS="https://5cf40426d9f06eb7461d-6fe47d9331aba7cd62fc36c7196769e4.ssl.cf2.rackcdn.com"
         - EXTRA_PIP_FLAGS="--find-links=$EXTRA_WHEELS"
-        - TESTER=pytest
 
 python:
     - 3.4
@@ -19,15 +18,14 @@ matrix:
     - python: 2.7
       env:
         - DEPENDS="-r doc-requirements.txt"
-        - COVERAGE=1
-        - DOCTESTS=1
+        - COVER_ARGS="--cov=transforms3d"
+        - DOCTEST_ARGS="--doctest-modules"
         - DOC_DOCTEST=1
     # Check nose tests still working (for now)
     - python: 2.7
       env:
         - DEPENDS="numpy sympy"
-        - DOCTESTS=1
-        - TESTER=nose
+        - NOSETESTS=1
     # Absolute minimum dependencies
     - python: 2.7
       env:
@@ -56,14 +54,10 @@ before_install:
     - virtualenv --python=python venv
     - python --version # just to check
     - source venv/bin/activate
-    - pip install $TESTER # always
+    - pip install pytest # always
     - if [ -n "$DEPENDS" ]; then
         pip install $EXTRA_PIP_FLAGS $DEPENDS;
       fi;
-    - if [ "${COVERAGE}" == "1" ]; then
-      pip install pytest-cov;
-      pip install coveralls;
-      fi
 
 install:
     - |
@@ -87,30 +81,29 @@ install:
       fi
 
 script:
-    # Change into an innocuous directory and find tests from installation
-    - mkdir for_testing
-    - cd for_testing
+    # Change into an innocuous directory and find tests from
+    # installation
     - |
-      if [ "${COVERAGE}" == "1" ]; then
-        cp ../.coveragerc .
-        COVER_ARGS="--cov=transforms3d"
+      mkdir for_testing
+      cd for_testing
+      if [ -n "${COVER_ARGS}" ]; then
+          cp ../.coveragerc .
+          pip install pytest-cov
+          pip install coveralls
       fi
-      if [ "${TESTER}" == "pytest" ]; then
-        if [ "${DOCTESTS}" == "1" ]; then
-          DOCTEST_ARGS="--doctest-modules"
-        fi
-        TEST_ARGS="--pyargs"
+      # Check that nose still works.  Drop at will.
+      if [ -n "${NOSETESTS}" ]; then
+          pip uninstall -y pytest
+          pip install nose
+          nosetests --with-doctest transforms3d
       else
-        if [ "${DOCTESTS}" == "1" ]; then
-          DOCTEST_ARGS="--with-doctest"
-        fi
+          py.test $COVER_ARGS $DOCTEST_ARGS --pyargs transforms3d
       fi
-    - $TESTER $COVER_ARGS $DOCTEST_ARGS $TEST_ARGS transforms3d
-    - if [ "${DOC_DOCTEST}" == "1" ]; then
-      cd .. ;
-      make html ;
-      cd doc && make doctest ;
+      cd ..
+      if [ -n "${DOC_DOCTEST}" ]; then
+          make html
+          cd doc && make doctest
       fi
 
 after_success:
-    - if [ "${COVERAGE}" == "1" ]; then coveralls; fi
+    - if [ -n "${COVER_ARGS}" ]; then coveralls; fi
