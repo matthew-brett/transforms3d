@@ -6,6 +6,7 @@ env:
         - INSTALL_TYPE="pip"
         - EXTRA_WHEELS="https://5cf40426d9f06eb7461d-6fe47d9331aba7cd62fc36c7196769e4.ssl.cf2.rackcdn.com"
         - EXTRA_PIP_FLAGS="--find-links=$EXTRA_WHEELS"
+        - TESTER=pytest
 
 python:
     - 3.4
@@ -21,6 +22,12 @@ matrix:
         - COVERAGE=1
         - DOCTESTS=1
         - DOC_DOCTEST=1
+    # Check nose tests still working (for now)
+    - python: 2.7
+      env:
+        - DEPENDS="numpy sympy"
+        - DOCTESTS=1
+        - TESTER=nose
     # Absolute minimum dependencies
     - python: 2.7
       env:
@@ -49,12 +56,12 @@ before_install:
     - virtualenv --python=python venv
     - python --version # just to check
     - source venv/bin/activate
-    - pip install nose # always
+    - pip install $TESTER # always
     - if [ -n "$DEPENDS" ]; then
         pip install $EXTRA_PIP_FLAGS $DEPENDS;
       fi;
     - if [ "${COVERAGE}" == "1" ]; then
-      pip install coverage;
+      pip install pytest-cov;
       pip install coveralls;
       fi
 
@@ -83,14 +90,22 @@ script:
     # Change into an innocuous directory and find tests from installation
     - mkdir for_testing
     - cd for_testing
-    - if [ "${COVERAGE}" == "1" ]; then
-      cp ../.coveragerc .;
-      COVER_ARGS="--with-coverage --cover-package transforms3d";
+    - |
+      if [ "${COVERAGE}" == "1" ]; then
+        cp ../.coveragerc .
+        COVER_ARGS="--cov=transforms3d"
       fi
-    - if [ "${DOCTESTS}" == "1" ]; then
-      DOCTEST_ARGS="--with-doctest";
+      if [ "${TESTER}" == "pytest" ]; then
+        if [ "${DOCTESTS}" == "1" ]; then
+          DOCTEST_ARGS="--doctest-modules"
+        fi
+        TEST_ARGS="--pyargs"
+      else
+        if [ "${DOCTESTS}" == "1" ]; then
+          DOCTEST_ARGS="--with-doctest"
+        fi
       fi
-    - nosetests $COVER_ARGS $DOCTEST_ARGS transforms3d
+    - $TESTER $COVER_ARGS $DOCTEST_ARGS $TEST_ARGS transforms3d
     - if [ "${DOC_DOCTEST}" == "1" ]; then
       cd .. ;
       make html ;

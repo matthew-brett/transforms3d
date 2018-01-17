@@ -5,3 +5,4 @@ include = */transforms3d/*
 omit =
     */_gohlketransforms.py
     */benchmarks/*
+    */_version.py
