@@ -1,6 +1,7 @@
 ''' Test quaternion calculations '''
 
 import math
+from itertools import product
 
 import numpy as np
 
@@ -20,18 +21,18 @@ for M in euler_mats:
 # M, quaternion pairs
 eg_pairs = list(zip(euler_mats, euler_quats))
 
-# Set of arbitrary unit quaternions
+# Sets of arbitrary unit and not-unit quaternions
+quats = set()
 unit_quats = set()
-params = range(-2,3)
-for w in params:
-    for x in params:
-        for y in params:
-            for z in params:
-                q = (w, x, y, z)
-                Nq = np.sqrt(np.dot(q, q))
-                if not Nq == 0:
-                    q = tuple([e / Nq for e in q])
-                    unit_quats.add(q)
+params = range(-2, 3)
+for w, x, y, z in product(params, params, params, params):
+    q = (w, x, y, z)
+    Nq = np.sqrt(np.dot(q, q))
+    if Nq == 0:
+        continue
+    quats.add(q)
+    q_n = tuple([e / Nq for e in q])
+    unit_quats.add(q_n)
 
 
 def test_fillpos():
@@ -110,6 +111,12 @@ def test_qnorm():
     assert tq.qisunit(qi)
     qi[1] = 0.2
     assert not tq.qisunit(qi)
+    # Test norm is sqrt of scalar for multiplication with conjugate.
+    # https://en.wikipedia.org/wiki/Quaternion#Conjugation,_the_norm,_and_reciprocal
+    for q in quats:
+        q_c = tq.qconjugate(q)
+        exp_norm = np.sqrt(tq.qmult(q, q_c)[0])
+        assert np.allclose(tq.qnorm(q), exp_norm)
 
 
 def test_qmult():

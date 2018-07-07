@@ -275,8 +275,12 @@ def qnorm(q):
     -------
     n : scalar
        quaternion norm
+
+    Notes
+    -----
+    http://mathworld.wolfram.com/QuaternionNorm.html
     '''
-    return np.dot(q, q)
+    return np.sqrt(np.dot(q, q))
 
 
 def qisunit(q):
