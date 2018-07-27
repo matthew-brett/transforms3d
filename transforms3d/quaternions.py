@@ -308,6 +308,28 @@ def qeye():
     ''' Return identity quaternion '''
     return np.array([1.0,0,0,0])
 
+def qexp(q):
+    ''' Return exponential of quaternion
+    Parameters
+    ----------
+    q : 4 element sequence
+       w, i, j, k of quaternion
+
+    Returns
+    -------
+    exp(q) : the quaternion exponential
+    '''
+    w, v = q[0], q[1:]
+    norm = np.sqrt(np.dot(v, v))
+    result = np.zeros((4,), norm.dtype)
+
+    if norm == 0.:
+        return qeye()
+
+    result[0] =  np.cos(norm)
+    result[1:] = np.sin(norm)/norm * v
+    return result * np.exp(w)
+
 
 def rotate_vector(v, q):
     ''' Apply transformation in quaternion `q` to vector `v`

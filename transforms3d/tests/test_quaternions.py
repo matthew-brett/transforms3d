@@ -104,6 +104,15 @@ def test_qeye():
     assert np.all([1,0,0,0]==qi)
     assert np.allclose(tq.quat2mat(qi), np.eye(3))
 
+def test_qexp():
+    angular_velocity_pure_quaterion = np.array([0., math.pi, 0, 0])
+    dt = 1.0
+    q_integrate_angular_vel = tq.qexp(angular_velocity_pure_quaterion * dt/2)
+    #see https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/ near the end. 
+    #The formula q(t) = qexp(q_w * t / 2), where q_w is [0 w_x, w_y, w_z] represents angular velocity in x,y,z, 
+    #produces a quaternion that represents the integration of angular velocity w during time t  
+    #so this test rotate the y vector [0 1 0], at math.pi ras/s around the x axis for 1 sec. This is the main use case for using qexp
+    assert np.allclose(tq.rotate_vector(np.array([0,1,0]), q_integrate_angular_vel), np.array([0,-1,0]))
 
 def test_qnorm():
     qi = tq.qeye()
