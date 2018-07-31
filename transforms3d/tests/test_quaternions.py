@@ -113,6 +113,18 @@ def test_qexp():
     #produces a quaternion that represents the integration of angular velocity w during time t  
     #so this test rotate the y vector [0 1 0], at math.pi ras/s around the x axis for 1 sec. This is the main use case for using qexp
     assert np.allclose(tq.rotate_vector(np.array([0,1,0]), q_integrate_angular_vel), np.array([0,-1,0]))
+    
+    # from https://www.mathworks.com/help/aerotbx/ug/quatexp.html
+    assert np.allclose(tq.qexp(np.array([0, 0, 0.7854, 0])), np.array([0.7071, 0., 0.7071, 0.]), atol=1e-05)
+
+def test_qln():
+    #from https://www.mathworks.com/help/aerotbx/ug/quatlog.html?s_tid=doc_ta
+    assert np.allclose(tq.qln(np.array([0.7071, 0, 0.7071, 0])), np.array([0., 0., 0.7854, 0.]), atol=1e-05)
+
+    
+def test_qpow():
+    #https://www.mathworks.com/help/aerotbx/ug/quatpower.html?searchHighlight=quaternion%20power&s_tid=doc_srchtitle
+    assert np.allclose(tq.qpow(np.array([0.7071, 0, 0.7071, 0]), 2), np.array([0, 0, 1, 0]), atol=1e-05)   
 
 def test_qnorm():
     qi = tq.qeye()
