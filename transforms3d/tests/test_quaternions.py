@@ -117,9 +117,9 @@ def test_qexp():
     # from https://www.mathworks.com/help/aerotbx/ug/quatexp.html
     assert np.allclose(tq.qexp(np.array([0, 0, 0.7854, 0])), np.array([0.7071, 0., 0.7071, 0.]), atol=1e-05)
 
-def test_qln():
+def test_qlog():
     #from https://www.mathworks.com/help/aerotbx/ug/quatlog.html?s_tid=doc_ta
-    assert np.allclose(tq.qln(np.array([0.7071, 0, 0.7071, 0])), np.array([0., 0., 0.7854, 0.]), atol=1e-05)
+    assert np.allclose(tq.qlog(np.array([0.7071, 0, 0.7071, 0])), np.array([0., 0., 0.7854, 0.]), atol=1e-05)
 
     
 def test_qpow():

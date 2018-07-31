@@ -335,7 +335,7 @@ def qexp(q):
     result[1:] = np.sin(norm)/norm * v
     return result * np.exp(w)
 
-def qln(q):
+def qlog(q):
     ''' Return natual logarithm of quaternion
     Parameters
     ----------
@@ -344,7 +344,7 @@ def qln(q):
 
     Returns
     -------
-    ln(q) : natual logarithm of quaternion
+    log(q) : natual logarithm of quaternion
     
     Notes
     -----
