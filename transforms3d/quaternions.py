@@ -352,7 +352,7 @@ def qlog(q):
     '''
     q = np.array(q) #to ensure there is a dtype
     qnorm_ = qnorm(q)
-    if qnorm == 0.:
+    if qnorm_ == 0.:
         return qeye(q.dtype)
     
     w, v = q[0], q[1:]
@@ -385,7 +385,7 @@ def qpow(q, n):
     q = np.array(q) #to ensure there is a dtype
     qnorm_ = qnorm(q)
     
-    if qnorm == 0.:
+    if qnorm_ == 0.:
         return qeye(q.dtype)
     
     w, v = q[0], q[1:]
