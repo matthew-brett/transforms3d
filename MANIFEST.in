@@ -2,3 +2,4 @@ include versioneer.py
 include transforms3d/_version.py
 include setup.cfg
 include README.rst
+recursive-include transforms3d/tests/data *

@@ -24,7 +24,7 @@ eg_pairs = list(zip(euler_mats, euler_quats))
 # Sets of arbitrary unit and not-unit quaternions
 quats = set()
 unit_quats = set()
-params = range(-2, 3)
+params = np.arange(-2, 3, 0.5)
 for w, x, y, z in product(params, params, params, params):
     q = (w, x, y, z)
     Nq = np.sqrt(np.dot(q, q))
