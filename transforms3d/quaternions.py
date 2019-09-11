@@ -308,8 +308,10 @@ def qeye(dtype = np.float):
     ''' Return identity quaternion '''
     return np.array([1.0,0,0,0], dtype = dtype)
 
+
 def qexp(q):
     ''' Return exponential of quaternion
+
     Parameters
     ----------
     q : 4 element sequence
@@ -317,13 +319,17 @@ def qexp(q):
 
     Returns
     -------
-    exp(q) : the quaternion exponential
-    
+    q_exp : array shape (4,)
+        The quaternion exponential
+
     Notes
     -----
-    See: https://en.wikipedia.org/wiki/Quaternion#Exponential,_logarithm,_and_power
+    See:
+
+    * https://en.wikipedia.org/wiki/Quaternion#Exponential,_logarithm,_and_power
+    * https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation
     '''
-    q = np.array(q) #to ensure there is a dtype
+    q = np.array(q)  # to ensure there is a dtype
     w, v = q[0], q[1:]
     norm = np.sqrt(np.dot(v, v))
     result = np.zeros((4,), q.dtype)
@@ -335,8 +341,10 @@ def qexp(q):
     result[1:] = np.sin(norm)/norm * v
     return result * np.exp(w)
 
+
 def qlog(q):
-    ''' Return natual logarithm of quaternion
+    ''' Return natural logarithm of quaternion
+
     Parameters
     ----------
     q : 4 element sequence
@@ -344,17 +352,18 @@ def qlog(q):
 
     Returns
     -------
-    log(q) : natual logarithm of quaternion
-    
+    q_log : array shape (4,)
+        Natual logarithm of quaternion
+
     Notes
     -----
     See: https://en.wikipedia.org/wiki/Quaternion#Exponential,_logarithm,_and_power
     '''
-    q = np.array(q) #to ensure there is a dtype
+    q = np.array(q)  # To ensure there is a dtype
     qnorm_ = qnorm(q)
     if qnorm_ == 0.:
         return qeye(q.dtype)
-    
+
     w, v = q[0], q[1:]
     vnorm = np.sqrt(np.dot(v, v))
     result = np.zeros((4,), q.dtype)
@@ -366,43 +375,46 @@ def qlog(q):
     result[1:] = v/vnorm * np.arccos(w/qnorm_)
     return result
 
+
 def qpow(q, n):
     ''' Return the power of quaternion
+
     Parameters
     ----------
     q : 4 element sequence
        w, i, j, k of quaternion
     n : a real number
-    
+
     Returns
     -------
-    pow(q,n) : the quaternion nth power, 
-    
+    q_pow : array shape (4,)
+        The quaternion `q` to `n`th power.
+
     Notes
     -----
     See: https://en.wikipedia.org/wiki/Quaternion#Exponential,_logarithm,_and_power
     '''
-    q = np.array(q) #to ensure there is a dtype
+    q = np.array(q)  # To ensure there is a dtype.
     qnorm_ = qnorm(q)
-    
+
     if qnorm_ == 0.:
         return qeye(q.dtype)
-    
+
     w, v = q[0], q[1:]
-     
+
     nnorm = np.sqrt(np.dot(v, v))
     result = np.zeros((4,), q.dtype)
 
     if nnorm == 0.:
         return qeye(q.dtype)
-    
+
     theta = np.arccos(w/qnorm_)
     n_hat = v/nnorm
-
 
     result[0] = np.cos(n*theta)
     result[1:] = n_hat * np.sin(n*theta)
     return result *  np.power(qnorm_, n)
+
 
 def rotate_vector(v, q):
     ''' Apply transformation in quaternion `q` to vector `v`
