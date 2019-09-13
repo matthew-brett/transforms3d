@@ -130,6 +130,13 @@ def test_qlog():
     assert np.allclose(tq.qlog(np.array([0.7071, 0, 0.7071, 0])), np.array([0., 0., 0.7854, 0.]), atol=1e-05)
 
 
+def test_qexp_qlog():
+    # Test round trip
+    for unit_quat in unit_quats:
+        assert tq.nearly_equivalent(tq.qlog(tq.qexp(unit_quat)), unit_quat)
+        assert tq.nearly_equivalent(tq.qexp(tq.qlog(unit_quat)), unit_quat)
+
+
 def test_qpow():
     # https://www.mathworks.com/help/aerotbx/ug/quatpower.html?searchHighlight=quaternion%20power&s_tid=doc_srchtitle
     assert np.allclose(tq.qpow(np.array([0.7071, 0, 0.7071, 0]), 2), np.array([0, 0, 1, 0]), atol=1e-05)   
