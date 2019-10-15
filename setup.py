@@ -33,6 +33,8 @@ setup(name='transforms3d',
       packages=['transforms3d',
                 'transforms3d.derivations',
                 'transforms3d.tests'],
+      package_data = {'transforms3d':
+                      [pjoin('tests', 'data', '*')]},
       license='BSD license',
       classifiers = [
             'Development Status :: 4 - Beta',
