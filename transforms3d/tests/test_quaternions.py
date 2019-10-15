@@ -2,6 +2,7 @@
 
 import math
 from itertools import product
+from os.path import dirname, join as pjoin
 
 import numpy as np
 
@@ -13,6 +14,9 @@ from transforms3d import axangles as taa
 from transforms3d.testing import assert_raises
 
 from transforms3d.tests.samples import euler_mats
+
+
+DATA_DIR = pjoin(dirname(__file__), 'data')
 
 # Example quaternions (from rotations)
 euler_quats = []
@@ -103,6 +107,51 @@ def test_qeye():
     assert qi.dtype.kind == 'f'
     assert np.all([1,0,0,0]==qi)
     assert np.allclose(tq.quat2mat(qi), np.eye(3))
+
+
+def test_qexp():
+    angular_velocity_pure_quaterion = np.array([0., math.pi, 0, 0])
+    dt = 1.0
+    q_integrate_angular_vel = tq.qexp(angular_velocity_pure_quaterion * dt/2)
+    # See https://www.ashwinnarayan.com/post/how-to-integrate-quaternions/ near the end. 
+    # The formula q(t) = qexp(q_w * t / 2), where q_w is [0 w_x, w_y, w_z]
+    # represents angular velocity in x,y,z, produces a quaternion that
+    # represents the integration of angular velocity w during time t  so this
+    # test rotate the y vector [0 1 0], at math.pi ras/s around the x axis for
+    # 1 sec. This is the main use case for using qexp
+    assert np.allclose(tq.rotate_vector(np.array([0,1,0]), q_integrate_angular_vel), np.array([0,-1,0]))
+
+    # from https://www.mathworks.com/help/aerotbx/ug/quatexp.html
+    assert np.allclose(tq.qexp(np.array([0, 0, 0.7854, 0])), np.array([0.7071, 0., 0.7071, 0.]), atol=1e-05)
+
+
+def test_qlog():
+    # From https://www.mathworks.com/help/aerotbx/ug/quatlog.html?s_tid=doc_ta
+    assert np.allclose(tq.qlog(np.array([0.7071, 0, 0.7071, 0])), np.array([0., 0., 0.7854, 0.]), atol=1e-05)
+
+
+def test_qexp_qlog():
+    # Test round trip
+    for unit_quat in unit_quats:
+        assert tq.nearly_equivalent(tq.qlog(tq.qexp(unit_quat)), unit_quat)
+        assert tq.nearly_equivalent(tq.qexp(tq.qlog(unit_quat)), unit_quat)
+
+
+def test_qpow():
+    # https://www.mathworks.com/help/aerotbx/ug/quatpower.html?searchHighlight=quaternion%20power&s_tid=doc_srchtitle
+    assert np.allclose(tq.qpow(np.array([0.7071, 0, 0.7071, 0]), 2), np.array([0, 0, 1, 0]), atol=1e-05)   
+
+
+def test_qexp_matlab():
+    from scipy.io import loadmat
+    ml_quats = loadmat(pjoin(DATA_DIR, 'processed_quats.mat'))
+    o_quats, o_unit_quats, quat_e, quat_p = [
+        ml_quats[k] for k in ['quats', 'unit_quats', 'quat_e', 'quat_p']]
+    for i in range(len(o_quats)):
+        assert np.allclose(tq.qexp(o_quats[i]), quat_e[i])
+    for i in range(len(o_unit_quats)):
+        for p_i, p in enumerate(np.arange(1, 4, 0.5)):
+            assert np.allclose(tq.qpow(o_unit_quats[i], p), quat_p[0, p_i][i])
 
 
 def test_qnorm():
