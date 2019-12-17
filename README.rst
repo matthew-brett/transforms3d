@@ -23,9 +23,9 @@ hope that this code can be a teaching reference.  We document the math behind
 some of the algorithms using `sympy <http://www.sympy.org>`_ in
 ``transforms3d/derivations``.  We would be very pleased if y'all would like to
 add your own algorithms and derivations - please get a copy of the code from
-https://github.com/matthew-brett/transforms3d and get on down,
-algorithmically.  Feel free to use the github issue tracker and pull request
-system to ask for advice and support.
+https://github.com/matthew-brett/transforms3d and get on down, algorithmically.
+Feel free to use the Github issue tracker and pull request system to ask for
+advice and support.
 
 *************
 Documentation
@@ -48,7 +48,7 @@ Much of the code comes from `transformations.py
 Gohlke, also released under the BSD license.
 
 `travis-ci <https://travis-ci.org/matthew-brett/transforms3d>`_ kindly tests
-the code automatically under Python 2.6, 2.7, 3.2, 3.3 and 3.4.
+the code automatically under Python 2.7, and 3.4 through 3.8.
 
 We depend on numpy >= 1.5.  You could probably make it work on an earlier
 numpy if you really needed that.
