@@ -76,7 +76,7 @@ install:
           python setup.py bdist_wheel
           pip install $EXTRA_PIP_FLAGS dist/*.whl
       elif [ "$INSTALL_TYPE" == "requirements" ]; then
-          pip install $EXTRA_PIP_FLAGS -r requirements.txt
+          pip install $EXTRA_PIP_FLAGS -r test-requirements.txt
           pip install .
       fi
 

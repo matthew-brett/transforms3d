@@ -2,7 +2,6 @@
 # Use with:
 #   pip install -r dev-requirements.txt
 #
-# Include run-time requirements
--r requirements.txt
+# Include test requirements
+-r test-requirements.txt
 sympy
-pytest

@@ -1,0 +1,8 @@
+# Runtime requirements for testing transforms3d
+# Use with:
+#   pip install -r test-requirements.txt
+#
+# Include run-time requirements
+-r requirements.txt
+scipy
+pytest
