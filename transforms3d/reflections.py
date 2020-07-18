@@ -39,7 +39,7 @@ def rfnorm2mat(normal):
 
     .. math::
 
-       R_{ij} = I_{ij} - 2\\frac{a_i a_j}{\|a\|^2}
+       R_{ij} = I_{ij} - 2\\frac{a_i a_j}{\\|a\\|^2}
 
     where $I$ is the identity matrix.
     """
