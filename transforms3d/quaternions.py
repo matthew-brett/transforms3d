@@ -377,22 +377,24 @@ def qlog(q):
 
 
 def qpow(q, n):
-    ''' Return the power of quaternion
+    r''' Return the `n` th power of quaternion `q`
 
     Parameters
     ----------
     q : 4 element sequence
        w, i, j, k of quaternion
-    n : a real number
+    n : int or float
+       A real number
 
     Returns
     -------
     q_pow : array shape (4,)
-        The quaternion `q` to `n`th power.
+        The quaternion `q` to `n` th power.
 
     Notes
     -----
-    See: https://en.wikipedia.org/wiki/Quaternion#Exponential,_logarithm,_and_power
+    See:
+    https://en.wikipedia.org/wiki/Quaternion#Exponential,_logarithm,_and_power
     '''
     q = np.array(q)  # To ensure there is a dtype.
     qnorm_ = qnorm(q)
