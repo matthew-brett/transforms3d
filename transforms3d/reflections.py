@@ -13,7 +13,7 @@ from .utils import normalized_vector
 
 
 def rfnorm2mat(normal):
-    """ Matrix to reflect in plane through origin, orthogonal to `normal`
+    r""" Matrix to reflect in plane through origin, orthogonal to `normal`
 
     Parameters
     ----------
@@ -32,14 +32,14 @@ def rfnorm2mat(normal):
 
     .. math::
 
-       \\mathrm{Ref}_a(v) = v - 2\\frac{v\\cdot a}{a\\cdot a}a
+       \mathrm{Ref}_a(v) = v - 2\frac{v\cdot a}{a\cdot a}a
 
     The entries of the corresponding orthogonal transformation matrix
     `R` are given by:
 
     .. math::
 
-       R_{ij} = I_{ij} - 2\\frac{a_i a_j}{\\|a\\|^2}
+       R_{ij} = I_{ij} - 2\frac{a_i a_j}{\|a\|^2}
 
     where $I$ is the identity matrix.
     """
