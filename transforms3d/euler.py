@@ -178,7 +178,7 @@ def euler2mat(ai, aj, ak, axes='sxyz'):
 
     Returns
     -------
-    mat : array-like shape (3, 3) or (4, 4)
+    mat : array (3, 3)
         Rotation matrix or affine.
 
     Examples
