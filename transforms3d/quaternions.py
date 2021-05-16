@@ -23,8 +23,8 @@ Terms used in function names:
 import math
 import numpy as np
 
-_MAX_FLOAT = np.maximum_sctype(np.float)
-_FLOAT_EPS = np.finfo(np.float).eps
+_MAX_FLOAT = np.maximum_sctype(float)
+_FLOAT_EPS = np.finfo(float).eps
 
 
 def fillpositive(xyz, w2_thresh=None):
@@ -38,7 +38,7 @@ def fillpositive(xyz, w2_thresh=None):
        threshold to determine if w squared is really negative.
        If None (default) then w2_thresh set equal to
        ``-np.finfo(xyz.dtype).eps``, if possible, otherwise
-       ``-np.finfo(np.float).eps``
+       ``-np.finfo(float).eps``
 
     Returns
     -------
@@ -304,9 +304,9 @@ def qinverse(q):
     return qconjugate(q) / qnorm(q)
 
 
-def qeye(dtype = np.float):
+def qeye(dtype=float):
     ''' Return identity quaternion '''
-    return np.array([1.0,0,0,0], dtype = dtype)
+    return np.array([1.0,0,0,0], dtype=dtype)
 
 
 def qexp(q):

@@ -133,7 +133,7 @@ def mat2zfdir(mat):
     >>> np.allclose(S0, S1)
     True
     """
-    mat = np.asarray(mat, dtype=np.float)
+    mat = np.asarray(mat, dtype=float)
     factor = np.trace(mat) - 2.0
     # direction: unit eigenvector corresponding to eigenvalue factor
     l, V = np.linalg.eig(mat)
@@ -179,7 +179,7 @@ def aff2zfdir(aff):
     True
     >>> S0 = zfdir2aff(factor, direct, origin)
     """
-    M = np.asarray(aff, dtype=np.float)
+    M = np.asarray(aff, dtype=float)
     factor, direction = mat2zfdir(M[:3,:3])
     # origin: any eigenvector corresponding to eigenvalue 1
     l, V = np.linalg.eig(M)

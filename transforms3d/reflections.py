@@ -43,7 +43,7 @@ def rfnorm2mat(normal):
 
     where $I$ is the identity matrix.
     """
-    normal = np.asarray(normal, dtype=np.float)
+    normal = np.asarray(normal, dtype=float)
     norm2 = (normal**2).sum()
     M = np.eye(3)
     return M - 2.0 * np.outer(normal, normal) / norm2
