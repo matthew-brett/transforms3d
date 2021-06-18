@@ -144,7 +144,7 @@ def mat2axangle(mat, unit_thresh=1e-5):
     -----
     http://en.wikipedia.org/wiki/Rotation_matrix#Axis_of_a_rotation
     """
-    M = np.asarray(mat, dtype=np.float)
+    M = np.asarray(mat, dtype=np.float64)
     # direction: unit eigenvector of R33 corresponding to eigenvalue of 1
     L, W = np.linalg.eig(M.T)
     i = np.where(np.abs(L - 1.0) < unit_thresh)[0]
@@ -194,7 +194,7 @@ def aff2axangle(aff):
     -----
     http://en.wikipedia.org/wiki/Rotation_matrix#Axis_of_a_rotation
     """
-    R = np.asarray(aff, dtype=np.float)
+    R = np.asarray(aff, dtype=np.float64)
     direction, angle = mat2axangle(R[:3, :3])
     # point: unit eigenvector of R33 corresponding to eigenvalue of 1
     L, Q = np.linalg.eig(R)
