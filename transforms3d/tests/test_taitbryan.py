@@ -12,7 +12,7 @@ from numpy.testing import assert_array_equal, assert_array_almost_equal
 
 from transforms3d.tests.samples import euler_tuples
 
-FLOAT_EPS = np.finfo(np.float).eps
+FLOAT_EPS = np.finfo(np.float64).eps
 
 
 def x_only(x):
