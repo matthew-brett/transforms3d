@@ -84,3 +84,14 @@ def test_mat2euler():
 
 def test_names():
     assert euler.__dict__['physics'] == euler.__dict__['rzxz']
+
+
+def test_euler2quat_inplace():
+    """https://github.com/matthew-brett/transforms3d/pull/48"""
+    angle = np.array(1.0)
+    euler2quat(angle, 0, 0)
+    np.testing.assert_allclose(angle, 1.0)
+    euler2quat(0, angle, 0)
+    np.testing.assert_allclose(angle, 1.0)
+    euler2quat(0, 0, angle)
+    np.testing.assert_allclose(angle, 1.0)
