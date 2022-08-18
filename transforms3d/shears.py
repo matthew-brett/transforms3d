@@ -12,11 +12,9 @@ Terms used in function names:
 
 import math
 
-import warnings
-
 import numpy as np
 
-from .utils import normalized_vector, vector_norm
+from .utils import normalized_vector
 
 
 # Caching dictionary for common shear Ns, indices
