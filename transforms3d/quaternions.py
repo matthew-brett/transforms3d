@@ -564,8 +564,8 @@ def quat2axangle(quat, identity_thresh=None):
 
     The algorithm allows for quaternions that have not been normalized.
     '''
-    w, x, y, z = quat
-    Nq = w * w + x * x + y * y + z * z
+    quat = np.asarray(quat)
+    Nq = np.sum(quat ** 2)
     if not np.isfinite(Nq):
         return np.array([1.0, 0, 0]), float('nan')
     if identity_thresh is None:
@@ -577,11 +577,12 @@ def quat2axangle(quat, identity_thresh=None):
         return np.array([1.0, 0, 0]), 0.0
     if Nq != 1:  # Normalize if not normalized
         s = math.sqrt(Nq)
-        w, x, y, z = w / s, x / s, y / s, z / s
-    len2 = x * x + y * y + z * z
+        quat = quat / s
+    xyz = quat[1:]
+    len2 = np.sum(xyz ** 2)
     if len2 < identity_thresh ** 2:
         # if vec is nearly 0,0,0, this is an identity rotation
         return np.array([1.0, 0, 0]), 0.0
     # Make sure w is not slightly above 1 or below -1
-    theta = 2 * math.acos(max(min(w, 1), -1))
-    return  np.array([x, y, z]) / math.sqrt(len2), theta
+    theta = 2 * math.acos(max(min(quat[0], 1), -1))
+    return  xyz / math.sqrt(len2), theta
