@@ -1,7 +1,7 @@
 """ Testing zooms and shears 
 
 """
-import warnings
+
 import math
 
 import numpy as np
@@ -135,7 +135,7 @@ def test_ref_aff2sadn():
 
 def test_aff2sadn():
     # Test actual implemtation
-    rng = np.random.RandomState(12)
+    rng = np.random.RandomState()
     for i in range(10000):
         angle = rng.random_sample() * np.pi
         direct = rng.random_sample(3) - 0.5

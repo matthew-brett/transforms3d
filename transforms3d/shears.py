@@ -169,7 +169,7 @@ def sadn2aff(angle, direction, normal, point=None):
 
 
 def inverse_outer(mat):
-    """ Return unit vectors `a`, `b`, scalar `t` so `mat = t * np.outer(a, b)`
+    """ Return scalar t, unit vectors `a`, `b` so `mat = t * np.outer(a, b)`
 
     Parameters
     ----------
@@ -178,12 +178,12 @@ def inverse_outer(mat):
 
     Returns
     -------
+    t : float
+        Scalar such that `mat = t * np.outer(a, b)`
     a : array, shape (3,)
         Unit vector such that `mat = t * np.outer(a, b)`
     b : array, shape (3,)
         Unit vector such that `mat = t * np.outer(a, b)`
-    c : float
-        Scalar such that `mat = t * np.outer(a, b)`
     """
     u, s, vh = np.linalg.svd(mat)
     return s[0], u.T[0], vh[0]
