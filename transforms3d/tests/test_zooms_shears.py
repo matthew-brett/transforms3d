@@ -8,7 +8,8 @@ import numpy as np
 
 import transforms3d.zooms as tzs
 import transforms3d.shears as tss
-from transforms3d.utils import vector_norm
+from transforms3d.axangles import axangle2mat
+from transforms3d.utils import vector_norm, random_unit_vector
 
 from numpy.testing import assert_array_equal, assert_array_almost_equal
 from transforms3d.testing import assert_raises
@@ -133,18 +134,42 @@ def test_ref_aff2sadn():
         assert_array_almost_equal(S0, S_actual)
 
 
+def rotate_vec(vec, ax, angle):
+    M = axangle2mat(ax, angle, is_normalized=True)
+    return M @ vec
+
+
+def random_normal(direct, rng):
+    vect = random_unit_vector(rng)
+    theta = rng.uniform(-1, 1) * np.pi
+    # orthogonalize against direct
+    normal = np.cross(direct, vect)
+    theta = rng.uniform(-1, 1) * np.pi
+    return rotate_vec(normal, direct, theta)
+
+
 def test_aff2sadn():
     # Test actual implemtation
     rng = np.random.RandomState()
     for i in range(10000):
-        angle = rng.random_sample() * np.pi
-        direct = rng.random_sample(3) - 0.5
-        vect = rng.random_sample(3)  # random vector
-        normal = np.cross(direct, vect) # orthogonalize against direct
-        point = rng.random_sample(3) - 0.5
+        angle = rng.uniform(-1, 1) * np.pi
+        direct = random_unit_vector(rng)
+        rnorm = random_normal(direct, rng)
+        point = random_unit_vector(rng)
         # Make shear affine from angle, direction, normal and point
-        S0 = tss.sadn2aff(angle, direct, normal, point)
+        S0 = tss.sadn2aff(angle, direct, rnorm, point)
         # Reconstruct angle, direction, normal, point from affine
         a, d, n, p = tss.aff2sadn(S0)
         S_actual = tss.sadn2aff(a, d, n, p)
         assert_array_almost_equal(S0, S_actual)
+
+
+def test_inverse_outer():
+    rng = np.random.RandomState()
+    for i in range(10000):
+        in_t = np.tan(rng.uniform(-1, 1) * np.pi)
+        direct = random_unit_vector(rng)
+        rnorm = random_normal(direct, rng)
+        M = in_t * np.outer(direct, rnorm)
+        t, a, b = tss.inverse_outer(M)
+        assert np.allclose(M, t * np.outer(a, b))
