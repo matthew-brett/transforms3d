@@ -8,7 +8,6 @@ import numpy as np
 
 import transforms3d.zooms as tzs
 import transforms3d.shears as tss
-from transforms3d.axangles import axangle2mat
 from transforms3d.utils import vector_norm, random_unit_vector
 
 from numpy.testing import assert_array_equal, assert_array_almost_equal
@@ -134,18 +133,11 @@ def test_ref_aff2sadn():
         assert_array_almost_equal(S0, S_actual)
 
 
-def rotate_vec(vec, ax, angle):
-    M = axangle2mat(ax, angle, is_normalized=True)
-    return M @ vec
-
-
 def random_normal(direct, rng):
+    # Make another random vector to form cross-product.
     vect = random_unit_vector(rng)
-    theta = rng.uniform(-1, 1) * np.pi
-    # orthogonalize against direct
-    normal = np.cross(direct, vect)
-    theta = rng.uniform(-1, 1) * np.pi
-    return rotate_vec(normal, direct, theta)
+    # Cross-product is orthogonal to direct.
+    return np.cross(direct, vect)
 
 
 def test_aff2sadn():
