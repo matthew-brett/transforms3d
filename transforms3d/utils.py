@@ -129,3 +129,25 @@ def permuted_with_signs(seq):
     for pseq in permutations(seq):
         for sseq in permuted_signs(pseq):
             yield sseq
+
+
+def random_unit_vector(rng=None):
+    """ Return random normalized 3D unit vector
+
+    Parameters
+    ----------
+    rng : None or random number generator, optional
+        `rng` must have function / method `normal` that allows `size=` keyword.
+
+    Returns
+    -------
+    vec : shape (3,) array
+        Vector at random on unit sphere.
+
+    Notes
+    -----
+    https://mathworld.wolfram.com/SpherePointPicking.html
+    """
+    if rng is None:
+        rng = np.random.default_rng()
+    return normalized_vector(rng.normal(size=3))
