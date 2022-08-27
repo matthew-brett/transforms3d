@@ -257,8 +257,10 @@ def aff2sadn(aff):
     --------
     >>> A = sadn2aff(0.5, [1, 0, 0], [0, 1, 0])
     >>> angle, direction, normal, point = aff2sadn(A)
-    >>> angle, direction, normal, point
+    >>> angle, direction, normal
     (0.5, array([1., 0., 0.]), array([0., 1., 0.]))
+    >>> np.all(point == [0, 0, 0])
+    True
     >>> A_again = sadn2aff(angle, direction, normal, point)
     >>> np.allclose(A, A_again)
     True
