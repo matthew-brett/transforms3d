@@ -153,7 +153,7 @@ def test_aff2sadn():
         # Reconstruct angle, direction, normal, point from affine
         a, d, n, p = tss.aff2sadn(S0)
         S_actual = tss.sadn2aff(a, d, n, p)
-        assert_array_almost_equal(S0, S_actual)
+        assert_array_almost_equal(S0, S_actual, decimal=5)
 
 
 def test_inverse_outer():
