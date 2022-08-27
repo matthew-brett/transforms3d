@@ -282,3 +282,23 @@ def test_axis_angle():
         assert_array_almost_equal(aa_mat, aa_mat2)
         aa_mat22 = sympy_aa2mat2(vec, theta)
         assert_array_almost_equal(aa_mat, aa_mat22)
+
+
+def test_rotate_normalize():
+    # From: https://github.com/matthew-brett/transforms3d/issues/16
+    q = np.array([1 ,0 ,1, 0])
+    r = np.array([1,1,1])
+    R = tq.quat2mat(q)
+    mat_rot_vec = np.dot(R,r)
+    # Using Trans3d library directly to rotate the vector.
+    # This q is not normalized.
+    non_norm_rv = tq.rotate_vector(r, q)
+    assert not np.allclose(non_norm_rv, mat_rot_vec)
+    # This q normalized.
+    norm_rv = tq.rotate_vector(r, q / tq.qnorm(q))
+    assert np.allclose(norm_rv, mat_rot_vec)
+    # Specify normalization.
+    norm_rv2 = tq.rotate_vector(r, q, is_normalized=False)
+    assert np.allclose(norm_rv2, mat_rot_vec)
+    norm_rv3 = tq.rotate_vector(r, q, False)
+    assert np.allclose(norm_rv3, mat_rot_vec)

@@ -418,15 +418,18 @@ def qpow(q, n):
     return result *  np.power(qnorm_, n)
 
 
-def rotate_vector(v, q):
+def rotate_vector(v, q, is_normalized=True):
     ''' Apply transformation in quaternion `q` to vector `v`
 
     Parameters
     ----------
     v : 3 element sequence
-       3 dimensional vector
+        3 dimensional vector
     q : 4 element sequence
-       w, i, j, k of quaternion
+        w, i, j, k of quaternion
+    is_normalized : {True, False}, optional
+        If True, assume `q` is normalized.  If False, normalize `q` before
+        applying.
 
     Returns
     -------
@@ -437,6 +440,8 @@ def rotate_vector(v, q):
     -----
     See: http://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Describing_rotations_with_quaternions
     '''
+    if not is_normalized:
+        q = q / qnorm(q)
     varr = np.zeros((4,))
     varr[1:] = v
     return qmult(q, qmult(varr, qconjugate(q)))[1:]
