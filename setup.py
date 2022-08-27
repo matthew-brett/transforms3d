@@ -1,24 +1,11 @@
 #!/usr/bin/env python
 ''' Installation script for transforms3d package '''
-import sys
 from os.path import join as pjoin
 
-# For some commands, use setuptools.
-if len(set(('develop', 'bdist_egg', 'bdist_rpm', 'bdist', 'bdist_dumb',
-            'install_egg_info', 'egg_info', 'easy_install', 'bdist_wheel',
-            'bdist_mpkg')).intersection(sys.argv)) > 0:
-    import setuptools
-
-from distutils.core import setup
+# Always use setuptools.
+from setuptools import setup
 
 import versioneer
-
-extra_kwargs = {}
-if 'setuptools' in sys.modules:
-    extra_kwargs = dict(
-        zip_safe=False,
-        # Check dependencies also in .travis.yml file
-        requires=['numpy (>=1.5.1)'])
 
 
 setup(name='transforms3d',
@@ -51,5 +38,7 @@ setup(name='transforms3d',
             'Operating System :: MacOS',
         ],
       long_description = open('README.rst', 'rt').read(),
-      **extra_kwargs
+      zip_safe=False,
+      # Check dependencies also in .github/workflows/testing.yml file
+      requires=['numpy (>=1.15)']
       )

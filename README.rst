@@ -1,9 +1,3 @@
-.. image:: https://travis-ci.org/matthew-brett/transforms3d.svg?branch=master
-    :target: https://travis-ci.org/matthew-brett/transforms3d
-
-.. image:: https://coveralls.io/repos/matthew-brett/transforms3d/badge.png?branch=master
-    :target: https://coveralls.io/r/matthew-brett/transforms3d?branch=master
-
 ############
 Transforms3d
 ############
@@ -47,10 +41,10 @@ Much of the code comes from `transformations.py
 <http://www.lfd.uci.edu/~gohlke/code/transformations.py.html>`_ by Christoph
 Gohlke, also released under the BSD license.
 
-`travis-ci <https://travis-ci.org/matthew-brett/transforms3d>`_ kindly tests
-the code automatically under Python 2.6, 2.7, 3.2, 3.3 and 3.4.
+We use Github actions to test the code automatically under Pythons 3.7 through
+3.10.
 
-We depend on numpy >= 1.5.  You could probably make it work on an earlier
+We depend on numpy >= 1.15.  You may be able to make it work on an earlier
 numpy if you really needed that.
 
 The latest released version is at https://pypi.python.org/pypi/transforms3d

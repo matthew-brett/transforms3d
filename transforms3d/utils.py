@@ -5,6 +5,13 @@ from itertools import permutations
 
 import numpy as np
 
+# Numpy default random number generator, allowing for older Numpy
+try:
+    np_default_rng = np.random.default_rng
+except AttributeError:
+    np_default_rng = np.random.RandomState
+
+
 
 def normalized_vector(vec):
     ''' Return vector divided by Euclidean (L2) norm
@@ -149,5 +156,5 @@ def random_unit_vector(rng=None):
     https://mathworld.wolfram.com/SpherePointPicking.html
     """
     if rng is None:
-        rng = np.random.default_rng()
+        rng = np_default_rng()
     return normalized_vector(rng.normal(size=3))

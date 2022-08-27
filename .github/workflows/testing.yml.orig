@@ -1,0 +1,93 @@
+name: Build and run tests
+
+on:
+  push:
+  pull_request:
+
+env:
+  PKG_NAME: texext
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+<<<<<<< HEAD
+        depends: "-r test-requirements.txt"
+        python-version: [3.7, 3.8, 3.9, "3.10"]
+||||||| 74e7385
+        os: ['ubuntu-latest', 'windows-latest', 'macos-latest']
+        depends: "-r test-requirements.txt"
+        python-version: [3.7, 3.8, 3.9, "3.10"]
+=======
+>>>>>>> test-ci
+        include:
+<<<<<<< HEAD
+          # Basic dependencies only
+          # Check against test-requirements.txt
+            python-version: 3.7
+            depends: "sphinx==1.3.1 sympy==0.7.0 matplotlib==1.4.3 docutils==0.13.1 sphinxtesters==0.2"
+    env:
+      DEPENDS: ${{ matrix.depends }}
+||||||| 74e7385
+          # Basic dependencies only
+          # Check against test-requirements.txt
+          - os: ubuntu-latest
+            python-version: 3.7
+            depends: "sphinx==1.3.1 sympy==0.7.0 matplotlib==1.4.3 docutils==0.13.1 sphinxtesters==0.2"
+    env:
+      DEPENDS: ${{ matrix.depends }}
+=======
+          - python-version: 3.7
+            pip_dep_var: "-r test-requirements.txt"
+          - python-version: 3.8
+            pip_dep_var: "-r test-requirements.txt"
+          - python-version: 3.9
+            pip_dep_var: "-r test-requirements.txt"
+          - python-version: "3.10"
+            pip_dep_var: "-r test-requirements.txt"
+          - python-version: 3.7
+            # Minimum dependencies; check against test-requirements.txt
+            pip_dep_var: "sphinx==1.3.1 sympy==1.0 matplotlib==2.2.5 docutils==0.13.1 sphinxtesters==0.2"
+>>>>>>> test-ci
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+<<<<<<< HEAD
+      - name: Install main test dependencies
+        run: |
+          pip install $DEPENDS
+||||||| 74e7385
+      - name: Install main test dependencies
+        run: |
+          pip install "$DEPENDS"
+=======
+      - name: Install specified dependencies
+        run: pip install $PIP_DEPENDS
+        env:
+          PIP_DEPENDS:  ${{ matrix.pip_dep_var }}
+>>>>>>> test-ci
+      - name: Install coverage dependencies
+        run: |
+          pip install pytest-cov
+      - name: Install package
+        run: |
+          pip install .
+      - name: Run tests
+        run: |
+          mkdir tmp
+          cd tmp
+          pytest --log-level DEBUG --cov-config=../.coveragerc --cov=$PKG_NAME --doctest-modules --pyargs $PKG_NAME
+      - name: Collect code coverage data
+        run: |
+          coverage xml --data-file=tmp/.coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          fail_ci_if_error: true

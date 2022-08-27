@@ -4,5 +4,6 @@
 #
 # Include run-time requirements
 -r requirements.txt
+sympy
 scipy
 pytest
