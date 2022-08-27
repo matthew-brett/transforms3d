@@ -14,8 +14,8 @@ from numpy.testing import assert_array_equal, assert_array_almost_equal
 from transforms3d.testing import assert_raises
 
 
-def test_zdir_zmat_aff():
-    # test zdir to zmat and back
+def test_zfdir_zmat_aff():
+    # test zfdir to zmat and back
     for i in range(10):
         factor = np.random.random() * 10 - 5
         direct = np.random.random(3) - 0.5
