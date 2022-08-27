@@ -6,6 +6,8 @@ API Reference
 .. toctree::
 
    transforms3d.rst
+   transforms3d._gohlketransforms.rst
+   transforms3d._version.rst
    transforms3d.affines.rst
    transforms3d.axangles.rst
    transforms3d.derivations.rst

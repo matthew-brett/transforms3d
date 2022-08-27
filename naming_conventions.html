@@ -1,30 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Naming conventions &mdash; transforms3d 0.3 documentation</title>
-    
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Naming conventions &#8212; transforms3d 0.4 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.3 documentation" href="index.html" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Gimbal lock" href="gimbal_lock.html" />
     <link rel="prev" title="Conventions for transforms" href="conventions.html" />
    
@@ -33,46 +22,71 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="naming-conventions">
 <span id="id1"></span><h1>Naming conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this headline">¶</a></h1>
 <p>In the code, we try to abbreviate common concepts in a standard way.</p>
 <ul class="simple">
-<li><em>aff</em>  - 4x4 <a class="reference internal" href="glossary.html#term-affine-matrix"><span class="xref std std-term">affine matrix</span></a> for operating on homogenous coordinates
-of shape (4,) or (4, N);</li>
-<li><em>mat</em> - 3x3 transformation matrix for operating on non-homogenous
-coordinate vectors of shape (3,) or (3, N). A <a class="reference internal" href="glossary.html#term-rotation-matrix"><span class="xref std std-term">rotation matrix</span></a> is an
-example of a transformation matrix;</li>
-<li><em>euler</em> - <a class="reference internal" href="glossary.html#term-euler-angles"><span class="xref std std-term">euler angles</span></a> - sequence of three scalars giving rotations
-about defined axes;</li>
-<li><em>axangle</em> - <a class="reference internal" href="glossary.html#term-axis-angle"><span class="xref std std-term">axis angle</span></a> - axis (vector) and angle (scalar) giving
-axis around which to rotate and angle of rotation;</li>
-<li><em>quat</em> - <a class="reference internal" href="glossary.html#term-quaternion"><span class="xref std std-term">quaternion</span></a> - shape (4,);</li>
-<li><em>rfnorm</em> : reflection in plane defined by normal (vector) and optional point
-(vector);</li>
-<li><em>zfdir</em> : zooms encoded by factor (scalar) and direction (vector)</li>
-<li><em>zdir</em> - factor (scalar), direction (vector) pair to specify 3D zoom matrix;</li>
-<li><em>striu</em> : shears encoded by vector giving triangular portion above diagonal
-of NxN array (for ND transformation)</li>
-<li><em>sadn</em> : shears encoded by angle scalar, direction vector, normal vector
-(with optional point vector)</li>
+<li><p><em>aff</em>  - 4x4 <a class="reference internal" href="glossary.html#term-Affine-matrix"><span class="xref std std-term">affine matrix</span></a> for operating on homogenous coordinates
+of shape (4,) or (4, N);</p></li>
+<li><p><em>mat</em> - 3x3 transformation matrix for operating on non-homogenous
+coordinate vectors of shape (3,) or (3, N). A <a class="reference internal" href="glossary.html#term-Rotation-matrix"><span class="xref std std-term">rotation matrix</span></a> is an
+example of a transformation matrix;</p></li>
+<li><p><em>euler</em> - <a class="reference internal" href="glossary.html#term-Euler-angles"><span class="xref std std-term">euler angles</span></a> - sequence of three scalars giving rotations
+about defined axes;</p></li>
+<li><p><em>axangle</em> - <a class="reference internal" href="glossary.html#term-Axis-angle"><span class="xref std std-term">axis angle</span></a> - axis (vector) and angle (scalar) giving
+axis around which to rotate and angle of rotation;</p></li>
+<li><p><em>quat</em> - <a class="reference internal" href="glossary.html#term-Quaternion"><span class="xref std std-term">quaternion</span></a> - shape (4,);</p></li>
+<li><p><em>rfnorm</em> : reflection in plane defined by normal (vector) and optional point
+(vector);</p></li>
+<li><p><em>zfdir</em> : zooms encoded by factor (scalar) and direction (vector)</p></li>
+<li><p><em>zdir</em> - factor (scalar), direction (vector) pair to specify 3D zoom matrix;</p></li>
+<li><p><em>striu</em> : shears encoded by vector giving triangular portion above diagonal
+of NxN array (for ND transformation)</p></li>
+<li><p><em>sadn</em> : shears encoded by angle scalar, direction vector, normal vector
+(with optional point vector)</p></li>
 </ul>
 </div>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">transforms3d</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="conventions.html">Conventions for transforms</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Naming conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gimbal_lock.html">Gimbal lock</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="devel/make_release.html">Guide to making a Transforms3d release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="devel/refactor_plan.html">Refactoring plan</a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
@@ -81,36 +95,37 @@ of NxN array (for ND transformation)</li>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/naming_conventions.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2016, Matthew Brett.
+      &copy;2009-2022, Matthew Brett, Christoph Gohlke.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/naming_conventions.txt"
+      <a href="_sources/naming_conventions.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

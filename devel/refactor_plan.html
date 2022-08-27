@@ -1,44 +1,34 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Refactoring plan &mdash; transforms3d 0.3 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Refactoring plan &#8212; transforms3d 0.4 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.3 documentation" href="../index.html" />
-    <link rel="prev" title="Guide to making a transforms3d release" href="make_release.html" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Guide to making a Transforms3d release" href="make_release.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="refactoring-plan">
@@ -46,40 +36,40 @@
 <p>Note the <a class="reference internal" href="../naming_conventions.html#naming-conventions"><span class="std std-ref">Naming conventions</span></a>.</p>
 <p>Base the module distinctions on the naming conventions.</p>
 <p>In general, routines that create or break down affines, rather than, say 3x3
-matrices, go with the - say - 3x3 routines, and are named <code class="docutils literal"><span class="pre">aff2something</span></code>,
-<code class="docutils literal"><span class="pre">something2aff</span></code>.</p>
-<p>Routines that only apply to affines, like <code class="docutils literal"><span class="pre">compose</span></code>, <code class="docutils literal"><span class="pre">decompose</span></code>, go into
-the <code class="docutils literal"><span class="pre">affines</span></code> module.</p>
+matrices, go with the - say - 3x3 routines, and are named <code class="docutils literal notranslate"><span class="pre">aff2something</span></code>,
+<code class="docutils literal notranslate"><span class="pre">something2aff</span></code>.</p>
+<p>Routines that only apply to affines, like <code class="docutils literal notranslate"><span class="pre">compose</span></code>, <code class="docutils literal notranslate"><span class="pre">decompose</span></code>, go into
+the <code class="docutils literal notranslate"><span class="pre">affines</span></code> module.</p>
 <p>Different decompositions might have different names - such as
-<code class="docutils literal"><span class="pre">decompose_szrt</span></code>, returning transformations in order that they are performed
+<code class="docutils literal notranslate"><span class="pre">decompose_szrt</span></code>, returning transformations in order that they are performed
 - here shears, zooms, rotations, translations.</p>
-<p>Move the SPM (ND affine) decompose to <code class="docutils literal"><span class="pre">decompose_szrt_nd</span></code>.</p>
-<p>Maybe move the comments from Euler code out into <code class="docutils literal"><span class="pre">doc</span></code> tree.</p>
+<p>Move the SPM (ND affine) decompose to <code class="docutils literal notranslate"><span class="pre">decompose_szrt_nd</span></code>.</p>
+<p>Maybe move the comments from Euler code out into <code class="docutils literal notranslate"><span class="pre">doc</span></code> tree.</p>
 <div class="section" id="to-integrate">
 <h2>To integrate<a class="headerlink" href="#to-integrate" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>projection_matrix, projection_from_matrix: move to own module, rename to
-<code class="docutils literal"><span class="pre">projpn2aff</span></code>. <code class="docutils literal"><span class="pre">aff2projpn</span></code>.</li>
-<li>clip_matrix: move to own module, rename to <code class="docutils literal"><span class="pre">clip2aff</span></code></li>
-<li>decompose_matrix, compose_matrix: move to <code class="docutils literal"><span class="pre">affines</span></code> module, rename
-to <code class="docutils literal"><span class="pre">decompose_zsrtp</span></code>, <code class="docutils literal"><span class="pre">compose_zsrtp</span></code></li>
-<li>orthogonalization_matrix: move to <code class="docutils literal"><span class="pre">misc</span></code> module, rename to <code class="docutils literal"><span class="pre">orth_aff</span></code></li>
-<li>superimposition_matrix: move to <code class="docutils literal"><span class="pre">misc</span></code> module, rename to <code class="docutils literal"><span class="pre">vecs2aff</span></code></li>
-<li>quaterion_about_axis, quaternion_matrix, quaternion_from_matrix,
+<li><p>projection_matrix, projection_from_matrix: move to own module, rename to
+<code class="docutils literal notranslate"><span class="pre">projpn2aff</span></code>. <code class="docutils literal notranslate"><span class="pre">aff2projpn</span></code>.</p></li>
+<li><p>clip_matrix: move to own module, rename to <code class="docutils literal notranslate"><span class="pre">clip2aff</span></code></p></li>
+<li><p>decompose_matrix, compose_matrix: move to <code class="docutils literal notranslate"><span class="pre">affines</span></code> module, rename
+to <code class="docutils literal notranslate"><span class="pre">decompose_zsrtp</span></code>, <code class="docutils literal notranslate"><span class="pre">compose_zsrtp</span></code></p></li>
+<li><p>orthogonalization_matrix: move to <code class="docutils literal notranslate"><span class="pre">misc</span></code> module, rename to <code class="docutils literal notranslate"><span class="pre">orth_aff</span></code></p></li>
+<li><p>superimposition_matrix: move to <code class="docutils literal notranslate"><span class="pre">misc</span></code> module, rename to <code class="docutils literal notranslate"><span class="pre">vecs2aff</span></code></p></li>
+<li><p>quaterion_about_axis, quaternion_matrix, quaternion_from_matrix,
 quaternion_multiply, quaternion_conjugate, quaternion_inverse: check
-against my code</li>
-<li>quaternion_real, quaternion_imag: needed?</li>
-<li>quaternion_slerp, random_quaternion: move to <code class="docutils literal"><span class="pre">quaternions</span></code> module,
-rename <code class="docutils literal"><span class="pre">qslerp</span></code>, <code class="docutils literal"><span class="pre">rand_quat</span></code>.</li>
-<li>random_rotation_matrix: move to some module as <code class="docutils literal"><span class="pre">rand_rmat</span></code></li>
-<li>Arcball class, arcball_map_to_sphere, arcball_constrain_to_axis,
-arcball_nearest_axis: to own module</li>
-<li>vector_norm: move to <code class="docutils literal"><span class="pre">utils</span></code> module, review use after refactoring</li>
-<li>unit_vector: replace with <code class="docutils literal"><span class="pre">utils.normalized_vector</span></code></li>
-<li>random_vector, inverse_matrix, concatenate_matrices: not obviously
-used, very simple code, remove?</li>
-<li>_import_module: for preferring C functions.  Move to <code class="docutils literal"><span class="pre">utils</span></code> for
-now, consider C / python cooexistence strategy.</li>
+against my code</p></li>
+<li><p>quaternion_real, quaternion_imag: needed?</p></li>
+<li><p>quaternion_slerp, random_quaternion: move to <code class="docutils literal notranslate"><span class="pre">quaternions</span></code> module,
+rename <code class="docutils literal notranslate"><span class="pre">qslerp</span></code>, <code class="docutils literal notranslate"><span class="pre">rand_quat</span></code>.</p></li>
+<li><p>random_rotation_matrix: move to some module as <code class="docutils literal notranslate"><span class="pre">rand_rmat</span></code></p></li>
+<li><p>Arcball class, arcball_map_to_sphere, arcball_constrain_to_axis,
+arcball_nearest_axis: to own module</p></li>
+<li><p>vector_norm: move to <code class="docutils literal notranslate"><span class="pre">utils</span></code> module, review use after refactoring</p></li>
+<li><p>unit_vector: replace with <code class="docutils literal notranslate"><span class="pre">utils.normalized_vector</span></code></p></li>
+<li><p>random_vector, inverse_matrix, concatenate_matrices: not obviously
+used, very simple code, remove?</p></li>
+<li><p>_import_module: for preferring C functions.  Move to <code class="docutils literal notranslate"><span class="pre">utils</span></code> for
+now, consider C / python cooexistence strategy.</p></li>
 </ul>
 </div>
 <div class="section" id="c-python-integration">
@@ -88,24 +78,23 @@ now, consider C / python cooexistence strategy.</li>
 simple case.</p>
 <p>How about:</p>
 <ol class="arabic">
-<li><p class="first">Import all the Python names via the __init__.py</p>
-</li>
-<li><p class="first">Import all the C names (after renaming with agreed scheme as above or
-differently) into a <code class="docutils literal"><span class="pre">c.py</span></code> __init__ -like module. Thus something
+<li><p>Import all the Python names via the __init__.py</p></li>
+<li><p>Import all the C names (after renaming with agreed scheme as above or
+differently) into a <code class="docutils literal notranslate"><span class="pre">c.py</span></code> __init__ -like module. Thus something
 like:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">transforms3d</span> <span class="k">as</span> <span class="nn">t3d</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">transforms3d</span> <span class="k">as</span> <span class="nn">t3d</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">t3d</span><span class="o">.</span><span class="n">euler3rmat</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
 </pre></div>
 </div>
 </li>
 </ol>
 <p>for the python code, and:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">transforms3d.c</span> <span class="k">as</span> <span class="nn">t3dc</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">transforms3d.c</span> <span class="k">as</span> <span class="nn">t3dc</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">t3dc</span><span class="o">.</span><span class="n">euler2mat</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>for the C code?  Or the other way round of course:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">transforms3d</span> <span class="k">as</span> <span class="nn">t3d</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">transforms3d</span> <span class="k">as</span> <span class="nn">t3d</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">transforms3d.python</span> <span class="k">as</span> <span class="nn">t3dpy</span>
 </pre></div>
 </div>
@@ -117,14 +106,14 @@ namespace with a one-liner.</p>
 <p>Does this refactoring plan make sense?</p>
 <p>Does the naming scheme make sense (drawing distinction for example
 between 3x3 rotation matrix and affine)?</p>
-<p>Now about the naming scheme for <code class="docutils literal"><span class="pre">compose</span></code> - e.g <code class="docutils literal"><span class="pre">compose_szrtp</span></code>?</p>
-<p>OK to return a 3x3 rotation matrix from <code class="docutils literal"><span class="pre">decompose</span></code> rather then Euler
+<p>Now about the naming scheme for <code class="docutils literal notranslate"><span class="pre">compose</span></code> - e.g <code class="docutils literal notranslate"><span class="pre">compose_szrtp</span></code>?</p>
+<p>OK to return a 3x3 rotation matrix from <code class="docutils literal notranslate"><span class="pre">decompose</span></code> rather then Euler
 angles?</p>
-<p>How to classify <code class="docutils literal"><span class="pre">clip_matrix</span></code>, <code class="docutils literal"><span class="pre">orthogonalization_matrix</span></code>,
-<code class="docutils literal"><span class="pre">superimposition_matrix</span></code>?</p>
-<p>OK to remove: <code class="docutils literal"><span class="pre">quaternion_real</span></code>, <code class="docutils literal"><span class="pre">quaternion_imag</span></code>,
-<code class="docutils literal"><span class="pre">random_vector</span></code>, <code class="docutils literal"><span class="pre">inverse_matrix</span></code>, <code class="docutils literal"><span class="pre">concatenate_matrices</span></code> ?</p>
-<p>What do you think of the C / Python scheme (it&#8217;s about the same as your
+<p>How to classify <code class="docutils literal notranslate"><span class="pre">clip_matrix</span></code>, <code class="docutils literal notranslate"><span class="pre">orthogonalization_matrix</span></code>,
+<code class="docutils literal notranslate"><span class="pre">superimposition_matrix</span></code>?</p>
+<p>OK to remove: <code class="docutils literal notranslate"><span class="pre">quaternion_real</span></code>, <code class="docutils literal notranslate"><span class="pre">quaternion_imag</span></code>,
+<code class="docutils literal notranslate"><span class="pre">random_vector</span></code>, <code class="docutils literal notranslate"><span class="pre">inverse_matrix</span></code>, <code class="docutils literal notranslate"><span class="pre">concatenate_matrices</span></code> ?</p>
+<p>What do you think of the C / Python scheme (it’s about the same as your
 current one)?</p>
 <p>How do you see the relationship between your current code and this code?</p>
 </div>
@@ -132,57 +121,77 @@ current one)?</p>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Refactoring plan</a><ul>
-<li><a class="reference internal" href="#to-integrate">To integrate</a></li>
-<li><a class="reference internal" href="#c-python-integration">C / python integration</a></li>
-<li><a class="reference internal" href="#questions-for-christoph">Questions for Christoph</a></li>
+<h1 class="logo"><a href="../index.html">transforms3d</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../conventions.html">Conventions for transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../naming_conventions.html">Naming conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gimbal_lock.html">Gimbal lock</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="make_release.html">Guide to making a Transforms3d release</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Refactoring plan</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#to-integrate">To integrate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#c-python-integration">C / python integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#questions-for-christoph">Questions for Christoph</a></li>
 </ul>
 </li>
 </ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="make_release.html" title="previous chapter">Guide to making a transforms3d release</a></li>
+      <li>Previous: <a href="make_release.html" title="previous chapter">Guide to making a Transforms3d release</a></li>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/devel/refactor_plan.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2016, Matthew Brett.
+      &copy;2009-2022, Matthew Brett, Christoph Gohlke.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/devel/refactor_plan.txt"
+      <a href="../_sources/devel/refactor_plan.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

@@ -1,117 +1,96 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>affines &mdash; transforms3d 0.3 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>affines &#8212; transforms3d 0.4 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.3 documentation" href="../index.html" />
-    <link rel="up" title="API Reference" href="index.html" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="axangles" href="transforms3d.axangles.html" />
-    <link rel="prev" title="transforms3d" href="transforms3d.html" />
+    <link rel="prev" title="_version" href="transforms3d._version.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-transforms3d.affines">
-<span id="affines"></span><h1><code class="xref py py-mod docutils literal"><span class="pre">affines</span></code><a class="headerlink" href="#module-transforms3d.affines" title="Permalink to this headline">¶</a></h1>
+<span id="affines"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">affines</span></code><a class="headerlink" href="#module-transforms3d.affines" title="Permalink to this headline">¶</a></h1>
 <p>Compose and decompose homogenous affine - usually 4x4 - matrices</p>
-<table border="1" class="longtable docutils">
+<table class="longtable docutils align-default">
 <colgroup>
-<col width="10%" />
-<col width="90%" />
+<col style="width: 10%" />
+<col style="width: 90%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.affines.compose" title="transforms3d.affines.compose"><code class="xref py py-obj docutils literal"><span class="pre">compose</span></code></a>(T,&nbsp;R,&nbsp;Z[,&nbsp;S])</td>
-<td>Compose translations, rotations, zooms, [shears]  to affine</td>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transforms3d.affines.compose" title="transforms3d.affines.compose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compose</span></code></a>(T, R, Z[, S])</p></td>
+<td><p>Compose translations, rotations, zooms, [shears]  to affine</p></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#transforms3d.affines.decompose" title="transforms3d.affines.decompose"><code class="xref py py-obj docutils literal"><span class="pre">decompose</span></code></a>(A)</td>
-<td>Decompose homogenous affine transformation matrix <cite>A</cite> into parts.</td>
+<tr class="row-even"><td><p><a class="reference internal" href="#transforms3d.affines.decompose" title="transforms3d.affines.decompose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decompose</span></code></a>(A)</p></td>
+<td><p>Decompose homogenous affine transformation matrix <cite>A</cite> into parts.</p></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.affines.decompose44" title="transforms3d.affines.decompose44"><code class="xref py py-obj docutils literal"><span class="pre">decompose44</span></code></a>(A44)</td>
-<td>Decompose 4x4 homogenous affine matrix into parts.</td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transforms3d.affines.decompose44" title="transforms3d.affines.decompose44"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decompose44</span></code></a>(A44)</p></td>
+<td><p>Decompose 4x4 homogenous affine matrix into parts.</p></td>
 </tr>
 </tbody>
 </table>
 <div class="section" id="compose">
 <h2>compose<a class="headerlink" href="#compose" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.affines.compose">
-<code class="descclassname">transforms3d.affines.</code><code class="descname">compose</code><span class="sig-paren">(</span><em>T</em>, <em>R</em>, <em>Z</em>, <em>S=None</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.affines.compose" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.affines.</span></code><code class="sig-name descname"><span class="pre">compose</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">R</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.affines.compose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compose translations, rotations, zooms, [shears]  to affine</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>T</strong> : array-like shape (N,)</p>
-<blockquote>
-<div><p>Translations, where N is usually 3 (3D case)</p>
-</div></blockquote>
-<p><strong>R</strong> : array-like shape (N,N)</p>
-<blockquote>
-<div><p>Rotation matrix where N is usually 3 (3D case)</p>
-</div></blockquote>
-<p><strong>Z</strong> : array-like shape (N,)</p>
-<blockquote>
-<div><p>Zooms, where N is usually 3 (3D case)</p>
-</div></blockquote>
-<p><strong>S</strong> : array-like, shape (P,), optional</p>
-<blockquote>
-<div><p>Shear vector, such that shears fill upper triangle above
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>T</strong><span class="classifier">array-like shape (N,)</span></dt><dd><p>Translations, where N is usually 3 (3D case)</p>
+</dd>
+<dt><strong>R</strong><span class="classifier">array-like shape (N,N)</span></dt><dd><p>Rotation matrix where N is usually 3 (3D case)</p>
+</dd>
+<dt><strong>Z</strong><span class="classifier">array-like shape (N,)</span></dt><dd><p>Zooms, where N is usually 3 (3D case)</p>
+</dd>
+<dt><strong>S</strong><span class="classifier">array-like, shape (P,), optional</span></dt><dd><p>Shear vector, such that shears fill upper triangle above
 diagonal to form shear matrix.  P is the (N-2)th Triangular
 number, which happens to be 3 for a 4x4 affine (3D case)</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>A</strong> : array, shape (N+1, N+1)</p>
-<blockquote class="last">
-<div><p>Affine transformation matrix where N usually == 3
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>A</strong><span class="classifier">array, shape (N+1, N+1)</span></dt><dd><p>Affine transformation matrix where N usually == 3
 (3D case)</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">T</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span> <span class="c1"># translations</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">T</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span> <span class="c1"># translations</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span> <span class="c1"># rotation matrix</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]</span> <span class="c1"># zooms</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">compose</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">A</span>
-<span class="go">array([[  0.,  -3.,   0.,  20.],</span>
-<span class="go">       [  2.,   0.,   0.,  30.],</span>
-<span class="go">       [  0.,   0.,   4.,  40.],</span>
-<span class="go">       [  0.,   0.,   0.,   1.]])</span>
+<span class="go">array([[ 0., -3.,  0., 20.],</span>
+<span class="go">       [ 2.,  0.,  0., 30.],</span>
+<span class="go">       [ 0.,  0.,  4., 40.],</span>
+<span class="go">       [ 0.,  0.,  0.,  1.]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">B</span> <span class="o">=</span> <span class="n">compose</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">A</span> <span class="o">==</span> <span class="n">B</span><span class="p">)</span>
@@ -119,11 +98,11 @@ number, which happens to be 3 for a 4x4 affine (3D case)</p>
 </pre></div>
 </div>
 <p>A null set</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">compose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
-<span class="go">array([[ 1.,  0.,  0.,  0.],</span>
-<span class="go">       [ 0.,  1.,  0.,  0.],</span>
-<span class="go">       [ 0.,  0.,  1.,  0.],</span>
-<span class="go">       [ 0.,  0.,  0.,  1.]])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">compose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="go">array([[1., 0., 0., 0.],</span>
+<span class="go">       [0., 1., 0., 0.],</span>
+<span class="go">       [0., 0., 1., 0.],</span>
+<span class="go">       [0., 0., 0., 1.]])</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -131,14 +110,14 @@ number, which happens to be 3 for a 4x4 affine (3D case)</p>
 </div>
 <div class="section" id="decompose">
 <h2>decompose<a class="headerlink" href="#decompose" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.affines.decompose">
-<code class="descclassname">transforms3d.affines.</code><code class="descname">decompose</code><span class="sig-paren">(</span><em>A</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.affines.decompose" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.affines.</span></code><code class="sig-name descname"><span class="pre">decompose</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.affines.decompose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decompose homogenous affine transformation matrix <cite>A</cite> into parts.</p>
 <p>The parts are translations, rotations, zooms, shears.</p>
 <p><cite>A</cite> can be any square matrix, but is typically shape (4,4).</p>
-<p>Decomposes A into <code class="docutils literal"><span class="pre">T,</span> <span class="pre">R,</span> <span class="pre">Z,</span> <span class="pre">S</span></code>, such that, if A is shape (4,4):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Smat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+<p>Decomposes A into <code class="docutils literal notranslate"><span class="pre">T,</span> <span class="pre">R,</span> <span class="pre">Z,</span> <span class="pre">S</span></code>, such that, if A is shape (4,4):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Smat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span>    <span class="mi">1</span><span class="p">,</span> <span class="n">S</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span>
                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>    <span class="mi">1</span><span class="p">]])</span>
 <span class="n">RZS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">Z</span><span class="p">),</span> <span class="n">Smat</span><span class="p">))</span>
@@ -151,48 +130,40 @@ number, which happens to be 3 for a 4x4 affine (3D case)</p>
 zooms, followed by rotations, followed by translations.</p>
 <p>The case above (A.shape == (4,4)) is the most common, and
 corresponds to a 3D affine, but in fact A need only be square.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>A</strong> : array shape (N,N)</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>T</strong> : array, shape (N-1,)</p>
-<blockquote>
-<div><p>Translation vector</p>
-</div></blockquote>
-<p><strong>R</strong> : array shape (N-1, N-1)</p>
-<blockquote>
-<div><p>rotation matrix</p>
-</div></blockquote>
-<p><strong>Z</strong> : array, shape (N-1,)</p>
-<blockquote>
-<div><p>Zoom vector.  May have one negative zoom to prevent need for negative
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>A</strong><span class="classifier">array shape (N,N)</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>T</strong><span class="classifier">array, shape (N-1,)</span></dt><dd><p>Translation vector</p>
+</dd>
+<dt><strong>R</strong><span class="classifier">array shape (N-1, N-1)</span></dt><dd><p>rotation matrix</p>
+</dd>
+<dt><strong>Z</strong><span class="classifier">array, shape (N-1,)</span></dt><dd><p>Zoom vector.  May have one negative zoom to prevent need for negative
 determinant R matrix above</p>
-</div></blockquote>
-<p><strong>S</strong> : array, shape (P,)</p>
-<blockquote class="last">
-<div><p>Shear vector, such that shears fill upper triangle above
+</dd>
+<dt><strong>S</strong><span class="classifier">array, shape (P,)</span></dt><dd><p>Shear vector, such that shears fill upper triangle above
 diagonal to form shear matrix.  P is the (N-2)th Triangular
 number, which happens to be 3 for a 4x4 affine.</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Notes</p>
 <p>We have used a nice trick from SPM to get the shears.  Let us call the
-starting N-1 by N-1 matrix <code class="docutils literal"><span class="pre">RZS</span></code>, because it is the composition of the
-rotations on the zooms on the shears.  The rotation matrix <code class="docutils literal"><span class="pre">R</span></code> must have
-the property <code class="docutils literal"><span class="pre">np.dot(R.T,</span> <span class="pre">R)</span> <span class="pre">==</span> <span class="pre">np.eye(N-1)</span></code>.  Thus <code class="docutils literal"><span class="pre">np.dot(RZS.T,</span>
-<span class="pre">RZS)</span></code> will, by the transpose rules, be equal to <code class="docutils literal"><span class="pre">np.dot((ZS).T,</span> <span class="pre">(ZS))</span></code>.
+starting N-1 by N-1 matrix <code class="docutils literal notranslate"><span class="pre">RZS</span></code>, because it is the composition of the
+rotations on the zooms on the shears.  The rotation matrix <code class="docutils literal notranslate"><span class="pre">R</span></code> must have
+the property <code class="docutils literal notranslate"><span class="pre">np.dot(R.T,</span> <span class="pre">R)</span> <span class="pre">==</span> <span class="pre">np.eye(N-1)</span></code>.  Thus <code class="docutils literal notranslate"><span class="pre">np.dot(RZS.T,</span>
+<span class="pre">RZS)</span></code> will, by the transpose rules, be equal to <code class="docutils literal notranslate"><span class="pre">np.dot((ZS).T,</span> <span class="pre">(ZS))</span></code>.
 Because we are doing shears with the upper right part of the matrix, that
-means that the Cholesky decomposition of <code class="docutils literal"><span class="pre">np.dot(RZS.T,</span> <span class="pre">RZS)</span></code> will give
-us our <code class="docutils literal"><span class="pre">ZS</span></code> matrix, from which we take the zooms from the diagonal, and
+means that the Cholesky decomposition of <code class="docutils literal notranslate"><span class="pre">np.dot(RZS.T,</span> <span class="pre">RZS)</span></code> will give
+us our <code class="docutils literal notranslate"><span class="pre">ZS</span></code> matrix, from which we take the zooms from the diagonal, and
 the shear values from the off-diagonal elements.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">T</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span> <span class="c1"># translations</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">T</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span> <span class="c1"># translations</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span> <span class="c1"># rotation matrix</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]</span> <span class="c1"># zooms</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]</span> <span class="c1"># shears</span>
@@ -220,14 +191,14 @@ the shear values from the off-diagonal elements.</p>
 </div>
 <div class="section" id="decompose44">
 <h2>decompose44<a class="headerlink" href="#decompose44" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.affines.decompose44">
-<code class="descclassname">transforms3d.affines.</code><code class="descname">decompose44</code><span class="sig-paren">(</span><em>A44</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.affines.decompose44" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.affines.</span></code><code class="sig-name descname"><span class="pre">decompose44</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A44</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.affines.decompose44" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decompose 4x4 homogenous affine matrix into parts.</p>
 <p>The parts are translations, rotations, zooms, shears.</p>
-<p>This is the same as <a class="reference internal" href="#transforms3d.affines.decompose" title="transforms3d.affines.decompose"><code class="xref py py-func docutils literal"><span class="pre">decompose()</span></code></a> but specialized for 4x4 affines.</p>
-<p>Decomposes <cite>A44</cite> into <code class="docutils literal"><span class="pre">T,</span> <span class="pre">R,</span> <span class="pre">Z,</span> <span class="pre">S</span></code>, such that:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Smat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+<p>This is the same as <a class="reference internal" href="#transforms3d.affines.decompose" title="transforms3d.affines.decompose"><code class="xref py py-func docutils literal notranslate"><span class="pre">decompose()</span></code></a> but specialized for 4x4 affines.</p>
+<p>Decomposes <cite>A44</cite> into <code class="docutils literal notranslate"><span class="pre">T,</span> <span class="pre">R,</span> <span class="pre">Z,</span> <span class="pre">S</span></code>, such that:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Smat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span>    <span class="mi">1</span><span class="p">,</span> <span class="n">S</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span>
                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>    <span class="mi">1</span><span class="p">]])</span>
 <span class="n">RZS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">Z</span><span class="p">),</span> <span class="n">Smat</span><span class="p">))</span>
@@ -239,83 +210,75 @@ the shear values from the off-diagonal elements.</p>
 <p>The order of transformations is therefore shears, followed by
 zooms, followed by rotations, followed by translations.</p>
 <p>This routine only works for shape (4,4) matrices</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>A44</strong> : array shape (4,4)</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>T</strong> : array, shape (3,)</p>
-<blockquote>
-<div><p>Translation vector</p>
-</div></blockquote>
-<p><strong>R</strong> : array shape (3,3)</p>
-<blockquote>
-<div><p>rotation matrix</p>
-</div></blockquote>
-<p><strong>Z</strong> : array, shape (3,)</p>
-<blockquote>
-<div><p>Zoom vector.  May have one negative zoom to prevent need for negative
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>A44</strong><span class="classifier">array shape (4,4)</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>T</strong><span class="classifier">array, shape (3,)</span></dt><dd><p>Translation vector</p>
+</dd>
+<dt><strong>R</strong><span class="classifier">array shape (3,3)</span></dt><dd><p>rotation matrix</p>
+</dd>
+<dt><strong>Z</strong><span class="classifier">array, shape (3,)</span></dt><dd><p>Zoom vector.  May have one negative zoom to prevent need for negative
 determinant R matrix above</p>
-</div></blockquote>
-<p><strong>S</strong> : array, shape (3,)</p>
-<blockquote class="last">
-<div><p>Shear vector, such that shears fill upper triangle above
-diagonal to form shear matrix (type <code class="docutils literal"><span class="pre">striu</span></code>).</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt><strong>S</strong><span class="classifier">array, shape (3,)</span></dt><dd><p>Shear vector, such that shears fill upper triangle above
+diagonal to form shear matrix (type <code class="docutils literal notranslate"><span class="pre">striu</span></code>).</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Notes</p>
 <p>The implementation inspired by:</p>
 <p><em>Decomposing a matrix into simple transformations</em> by Spencer
 W. Thomas, pp 320-323 in <em>Graphics Gems II</em>, James Arvo (editor),
 Academic Press, 1991, ISBN: 0120644819.</p>
-<p>The upper left 3x3 of the affine consists of a matrix we&#8217;ll call
+<p>The upper left 3x3 of the affine consists of a matrix we’ll call
 RZS:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">RZS</span> <span class="o">=</span> <span class="n">R</span> <span class="o">*</span> <span class="n">Z</span> <span class="o">*</span><span class="n">S</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RZS</span> <span class="o">=</span> <span class="n">R</span> <span class="o">*</span> <span class="n">Z</span> <span class="o">*</span><span class="n">S</span>
 </pre></div>
 </div>
 <p>where R is a rotation matrix, Z is a diagonal matrix of scalings:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Z</span> <span class="o">=</span> <span class="n">diag</span><span class="p">([</span><span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">sz</span><span class="p">])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Z</span> <span class="o">=</span> <span class="n">diag</span><span class="p">([</span><span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">sz</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>and S is a shear matrix of form:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">S</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="n">sxy</span><span class="p">,</span> <span class="n">sxz</span><span class="p">],</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">S</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="n">sxy</span><span class="p">,</span> <span class="n">sxz</span><span class="p">],</span>
      <span class="p">[</span><span class="mi">0</span><span class="p">,</span>   <span class="mi">1</span><span class="p">,</span> <span class="n">syz</span><span class="p">],</span>
      <span class="p">[</span><span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>   <span class="mi">1</span><span class="p">]])</span>
 </pre></div>
 </div>
-<p>Running all this through sympy (see &#8216;derivations&#8217; folder) gives
-<code class="docutils literal"><span class="pre">RZS</span></code> as</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R00</span><span class="o">*</span><span class="n">sx</span><span class="p">,</span> <span class="n">R01</span><span class="o">*</span><span class="n">sy</span> <span class="o">+</span> <span class="n">R00</span><span class="o">*</span><span class="n">sx</span><span class="o">*</span><span class="n">sxy</span><span class="p">,</span> <span class="n">R02</span><span class="o">*</span><span class="n">sz</span> <span class="o">+</span> <span class="n">R00</span><span class="o">*</span><span class="n">sx</span><span class="o">*</span><span class="n">sxz</span> <span class="o">+</span> <span class="n">R01</span><span class="o">*</span><span class="n">sy</span><span class="o">*</span><span class="n">syz</span><span class="p">]</span>
+<p>Running all this through sympy (see ‘derivations’ folder) gives
+<code class="docutils literal notranslate"><span class="pre">RZS</span></code> as</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R00</span><span class="o">*</span><span class="n">sx</span><span class="p">,</span> <span class="n">R01</span><span class="o">*</span><span class="n">sy</span> <span class="o">+</span> <span class="n">R00</span><span class="o">*</span><span class="n">sx</span><span class="o">*</span><span class="n">sxy</span><span class="p">,</span> <span class="n">R02</span><span class="o">*</span><span class="n">sz</span> <span class="o">+</span> <span class="n">R00</span><span class="o">*</span><span class="n">sx</span><span class="o">*</span><span class="n">sxz</span> <span class="o">+</span> <span class="n">R01</span><span class="o">*</span><span class="n">sy</span><span class="o">*</span><span class="n">syz</span><span class="p">]</span>
 <span class="p">[</span><span class="n">R10</span><span class="o">*</span><span class="n">sx</span><span class="p">,</span> <span class="n">R11</span><span class="o">*</span><span class="n">sy</span> <span class="o">+</span> <span class="n">R10</span><span class="o">*</span><span class="n">sx</span><span class="o">*</span><span class="n">sxy</span><span class="p">,</span> <span class="n">R12</span><span class="o">*</span><span class="n">sz</span> <span class="o">+</span> <span class="n">R10</span><span class="o">*</span><span class="n">sx</span><span class="o">*</span><span class="n">sxz</span> <span class="o">+</span> <span class="n">R11</span><span class="o">*</span><span class="n">sy</span><span class="o">*</span><span class="n">syz</span><span class="p">]</span>
 <span class="p">[</span><span class="n">R20</span><span class="o">*</span><span class="n">sx</span><span class="p">,</span> <span class="n">R21</span><span class="o">*</span><span class="n">sy</span> <span class="o">+</span> <span class="n">R20</span><span class="o">*</span><span class="n">sx</span><span class="o">*</span><span class="n">sxy</span><span class="p">,</span> <span class="n">R22</span><span class="o">*</span><span class="n">sz</span> <span class="o">+</span> <span class="n">R20</span><span class="o">*</span><span class="n">sx</span><span class="o">*</span><span class="n">sxz</span> <span class="o">+</span> <span class="n">R21</span><span class="o">*</span><span class="n">sy</span><span class="o">*</span><span class="n">syz</span><span class="p">]</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">R</span></code> is defined as being a rotation matrix, so the dot products between
-the columns of <code class="docutils literal"><span class="pre">R</span></code> are zero, and the norm of each column is 1.  Thus
+<p><code class="docutils literal notranslate"><span class="pre">R</span></code> is defined as being a rotation matrix, so the dot products between
+the columns of <code class="docutils literal notranslate"><span class="pre">R</span></code> are zero, and the norm of each column is 1.  Thus
 the dot product:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">R</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">RZS</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">R</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">RZS</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>that results in:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R00</span><span class="o">*</span><span class="n">R01</span><span class="o">*</span><span class="n">sy</span> <span class="o">+</span> <span class="n">R10</span><span class="o">*</span><span class="n">R11</span><span class="o">*</span><span class="n">sy</span> <span class="o">+</span> <span class="n">R20</span><span class="o">*</span><span class="n">R21</span><span class="o">*</span><span class="n">sy</span> <span class="o">+</span> <span class="n">sx</span><span class="o">*</span><span class="n">sxy</span><span class="o">*</span><span class="n">R00</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">sx</span><span class="o">*</span><span class="n">sxy</span><span class="o">*</span><span class="n">R10</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">sx</span><span class="o">*</span><span class="n">sxy</span><span class="o">*</span><span class="n">R20</span><span class="o">**</span><span class="mi">2</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R00</span><span class="o">*</span><span class="n">R01</span><span class="o">*</span><span class="n">sy</span> <span class="o">+</span> <span class="n">R10</span><span class="o">*</span><span class="n">R11</span><span class="o">*</span><span class="n">sy</span> <span class="o">+</span> <span class="n">R20</span><span class="o">*</span><span class="n">R21</span><span class="o">*</span><span class="n">sy</span> <span class="o">+</span> <span class="n">sx</span><span class="o">*</span><span class="n">sxy</span><span class="o">*</span><span class="n">R00</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">sx</span><span class="o">*</span><span class="n">sxy</span><span class="o">*</span><span class="n">R10</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">sx</span><span class="o">*</span><span class="n">sxy</span><span class="o">*</span><span class="n">R20</span><span class="o">**</span><span class="mi">2</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>simplifies to <code class="docutils literal"><span class="pre">sy*0</span> <span class="pre">+</span> <span class="pre">sx*sxy*1</span></code> == <code class="docutils literal"><span class="pre">sx*sxy</span></code>.  Therefore:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">R</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">sy</span> <span class="o">=</span> <span class="n">RZS</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">R</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">R</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">RZS</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<p>simplifies to <code class="docutils literal notranslate"><span class="pre">sy*0</span> <span class="pre">+</span> <span class="pre">sx*sxy*1</span></code> == <code class="docutils literal notranslate"><span class="pre">sx*sxy</span></code>.  Therefore:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">R</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">sy</span> <span class="o">=</span> <span class="n">RZS</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">R</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">R</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">RZS</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>allowing us to get <code class="docutils literal"><span class="pre">sy</span></code> with the norm, and sxy with <code class="docutils literal"><span class="pre">R[:,0].T</span> <span class="pre">*</span>
+<p>allowing us to get <code class="docutils literal notranslate"><span class="pre">sy</span></code> with the norm, and sxy with <code class="docutils literal notranslate"><span class="pre">R[:,0].T</span> <span class="pre">*</span>
 <span class="pre">RZS[:,1]</span> <span class="pre">/</span> <span class="pre">sx</span></code>.</p>
-<p>Similarly <code class="docutils literal"><span class="pre">R[:,0].T</span> <span class="pre">*</span> <span class="pre">RZS[:,2]</span></code> simplifies to <code class="docutils literal"><span class="pre">sx*sxz</span></code>, and
-<code class="docutils literal"><span class="pre">R[:,1].T</span> <span class="pre">*</span> <span class="pre">RZS[:,2]</span></code> to <code class="docutils literal"><span class="pre">sy*syz</span></code> giving us the remaining
+<p>Similarly <code class="docutils literal notranslate"><span class="pre">R[:,0].T</span> <span class="pre">*</span> <span class="pre">RZS[:,2]</span></code> simplifies to <code class="docutils literal notranslate"><span class="pre">sx*sxz</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">R[:,1].T</span> <span class="pre">*</span> <span class="pre">RZS[:,2]</span></code> to <code class="docutils literal notranslate"><span class="pre">sy*syz</span></code> giving us the remaining
 unknowns.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">T</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span> <span class="c1"># translations</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">T</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">]</span> <span class="c1"># translations</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span> <span class="c1"># rotation matrix</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]</span> <span class="c1"># zooms</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]</span> <span class="c1"># shears</span>
@@ -345,60 +308,90 @@ unknowns.</p>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#"><code class="docutils literal"><span class="pre">affines</span></code></a><ul>
-<li><a class="reference internal" href="#compose">compose</a></li>
-<li><a class="reference internal" href="#decompose">decompose</a></li>
-<li><a class="reference internal" href="#decompose44">decompose44</a></li>
+<h1 class="logo"><a href="../index.html">transforms3d</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../conventions.html">Conventions for transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../naming_conventions.html">Naming conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gimbal_lock.html">Gimbal lock</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">transforms3d</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_gohlketransforms</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_version</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">affines</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.axangles.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axangles</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">derivations</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">euler</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quaternions</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.reflections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reflections</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shears</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taitbryan</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.zooms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zooms</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 </ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../devel/make_release.html">Guide to making a Transforms3d release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devel/refactor_plan.html">Refactoring plan</a></li>
+</ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="index.html">API Reference</a><ul>
-      <li>Previous: <a href="transforms3d.html" title="previous chapter"><code class="docutils literal"><span class="pre">transforms3d</span></code></a></li>
-      <li>Next: <a href="transforms3d.axangles.html" title="next chapter"><code class="docutils literal"><span class="pre">axangles</span></code></a></li>
+      <li>Previous: <a href="transforms3d._version.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_version</span></code></a></li>
+      <li>Next: <a href="transforms3d.axangles.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axangles</span></code></a></li>
   </ul></li>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/reference/transforms3d.affines.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2016, Matthew Brett.
+      &copy;2009-2022, Matthew Brett, Christoph Gohlke.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/reference/transforms3d.affines.txt"
+      <a href="../_sources/reference/transforms3d.affines.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

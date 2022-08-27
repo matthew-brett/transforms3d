@@ -8,6 +8,7 @@
 .. autosummary::
 
    aff2sadn
+   inverse_outer
    mat2sadn
    sadn2aff
    sadn2mat
@@ -20,6 +21,11 @@ aff2sadn
 ~~~~~~~~
 
 .. autofunction:: aff2sadn
+
+inverse_outer
+~~~~~~~~~~~~~
+
+.. autofunction:: inverse_outer
 
 mat2sadn
 ~~~~~~~~

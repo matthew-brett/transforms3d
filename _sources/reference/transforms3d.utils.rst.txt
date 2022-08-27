@@ -11,6 +11,7 @@
    normalized_vector
    permuted_signs
    permuted_with_signs
+   random_unit_vector
    vector_norm
 
 
@@ -35,6 +36,11 @@ permuted_with_signs
 ~~~~~~~~~~~~~~~~~~~
 
 .. autofunction:: permuted_with_signs
+
+random_unit_vector
+~~~~~~~~~~~~~~~~~~
+
+.. autofunction:: random_unit_vector
 
 vector_norm
 ~~~~~~~~~~~

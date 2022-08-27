@@ -1,31 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>reflections &mdash; transforms3d 0.3 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>reflections &#8212; transforms3d 0.4 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.3 documentation" href="../index.html" />
-    <link rel="up" title="API Reference" href="index.html" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="shears" href="transforms3d.shears.html" />
     <link rel="prev" title="quaternions" href="transforms3d.quaternions.html" />
    
@@ -34,86 +23,79 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-transforms3d.reflections">
-<span id="reflections"></span><h1><code class="xref py py-mod docutils literal"><span class="pre">reflections</span></code><a class="headerlink" href="#module-transforms3d.reflections" title="Permalink to this headline">¶</a></h1>
+<span id="reflections"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">reflections</span></code><a class="headerlink" href="#module-transforms3d.reflections" title="Permalink to this headline">¶</a></h1>
 <p>Functions to work with reflections</p>
 <p>Terms used in function names:</p>
 <ul class="simple">
-<li><em>mat</em> : array shape (3, 3) (3D non-homogenous coordinates)</li>
-<li><em>aff</em> : affine array shape (4, 4) (3D homogenous coordinates)</li>
-<li><em>rfnorm</em> : reflection in plane defined by normal vector and optional point.</li>
+<li><p><em>mat</em> : array shape (3, 3) (3D non-homogenous coordinates)</p></li>
+<li><p><em>aff</em> : affine array shape (4, 4) (3D homogenous coordinates)</p></li>
+<li><p><em>rfnorm</em> : reflection in plane defined by normal vector and optional point.</p></li>
 </ul>
-<table border="1" class="longtable docutils">
+<table class="longtable docutils align-default">
 <colgroup>
-<col width="10%" />
-<col width="90%" />
+<col style="width: 10%" />
+<col style="width: 90%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.reflections.aff2rfnorm" title="transforms3d.reflections.aff2rfnorm"><code class="xref py py-obj docutils literal"><span class="pre">aff2rfnorm</span></code></a>(aff)</td>
-<td>Mirror plane normal vector and point from affine <cite>aff</cite></td>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transforms3d.reflections.aff2rfnorm" title="transforms3d.reflections.aff2rfnorm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aff2rfnorm</span></code></a>(aff)</p></td>
+<td><p>Mirror plane normal vector and point from affine <cite>aff</cite></p></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#transforms3d.reflections.mat2rfnorm" title="transforms3d.reflections.mat2rfnorm"><code class="xref py py-obj docutils literal"><span class="pre">mat2rfnorm</span></code></a>(mat)</td>
-<td>Mirror plane normal vector from <cite>mat</cite> matrix.</td>
+<tr class="row-even"><td><p><a class="reference internal" href="#transforms3d.reflections.mat2rfnorm" title="transforms3d.reflections.mat2rfnorm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mat2rfnorm</span></code></a>(mat)</p></td>
+<td><p>Mirror plane normal vector from <cite>mat</cite> matrix.</p></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.reflections.rfnorm2aff" title="transforms3d.reflections.rfnorm2aff"><code class="xref py py-obj docutils literal"><span class="pre">rfnorm2aff</span></code></a>(normal[,&nbsp;point])</td>
-<td>Affine to mirror at plane defined by point and normal vector.</td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transforms3d.reflections.rfnorm2aff" title="transforms3d.reflections.rfnorm2aff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rfnorm2aff</span></code></a>(normal[, point])</p></td>
+<td><p>Affine to mirror at plane defined by point and normal vector.</p></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#transforms3d.reflections.rfnorm2mat" title="transforms3d.reflections.rfnorm2mat"><code class="xref py py-obj docutils literal"><span class="pre">rfnorm2mat</span></code></a>(normal)</td>
-<td>Matrix to reflect in plane through origin, orthogonal to <cite>normal</cite></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#transforms3d.reflections.rfnorm2mat" title="transforms3d.reflections.rfnorm2mat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rfnorm2mat</span></code></a>(normal)</p></td>
+<td><p>Matrix to reflect in plane through origin, orthogonal to <cite>normal</cite></p></td>
 </tr>
 </tbody>
 </table>
 <div class="section" id="aff2rfnorm">
 <h2>aff2rfnorm<a class="headerlink" href="#aff2rfnorm" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.reflections.aff2rfnorm">
-<code class="descclassname">transforms3d.reflections.</code><code class="descname">aff2rfnorm</code><span class="sig-paren">(</span><em>aff</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.reflections.aff2rfnorm" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.reflections.</span></code><code class="sig-name descname"><span class="pre">aff2rfnorm</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aff</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.reflections.aff2rfnorm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mirror plane normal vector and point from affine <cite>aff</cite></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>aff</strong> : array-like, shape (4,4)</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>normal</strong> : array shape (3,)</p>
-<blockquote>
-<div><p>vector normal to point (and therefore mirror plane).</p>
-</div></blockquote>
-<p><strong>point</strong> : array shape (3,)</p>
-<blockquote>
-<div><p>x, y, x coordinates of point that, together with normal, define the
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>aff</strong><span class="classifier">array-like, shape (4,4)</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>normal</strong><span class="classifier">array shape (3,)</span></dt><dd><p>vector normal to point (and therefore mirror plane).</p>
+</dd>
+<dt><strong>point</strong><span class="classifier">array shape (3,)</span></dt><dd><p>x, y, x coordinates of point that, together with normal, define the
 reflection plane.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><strong>ValueError</strong></p>
-<blockquote>
-<div><p>If there is no eigenvector for <code class="docutils literal"><span class="pre">aff[:3,:3]</span></code> with eigenvalue -1</p>
-</div></blockquote>
-<p><strong>ValueError</strong></p>
-<blockquote>
-<div><p>If determinant of <code class="docutils literal"><span class="pre">aff[:3,</span> <span class="pre">:3]</span></code> is not close to -1</p>
-</div></blockquote>
-<p><strong>ValueError</strong></p>
-<blockquote class="last">
-<div><p>If there is no eigenvector for <cite>aff</cite> with eigenvalue 1.</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ValueError</dt><dd><p>If there is no eigenvector for <code class="docutils literal notranslate"><span class="pre">aff[:3,:3]</span></code> with eigenvalue -1</p>
+</dd>
+<dt>ValueError</dt><dd><p>If determinant of <code class="docutils literal notranslate"><span class="pre">aff[:3,</span> <span class="pre">:3]</span></code> is not close to -1</p>
+</dd>
+<dt>ValueError</dt><dd><p>If there is no eigenvector for <cite>aff</cite> with eigenvalue 1.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">v0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">v0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">v1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">M0</span> <span class="o">=</span> <span class="n">rfnorm2aff</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">normal</span><span class="p">,</span> <span class="n">point</span> <span class="o">=</span> <span class="n">aff2rfnorm</span><span class="p">(</span><span class="n">M0</span><span class="p">)</span>
@@ -127,37 +109,33 @@ reflection plane.</p>
 </div>
 <div class="section" id="mat2rfnorm">
 <h2>mat2rfnorm<a class="headerlink" href="#mat2rfnorm" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.reflections.mat2rfnorm">
-<code class="descclassname">transforms3d.reflections.</code><code class="descname">mat2rfnorm</code><span class="sig-paren">(</span><em>mat</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.reflections.mat2rfnorm" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.reflections.</span></code><code class="sig-name descname"><span class="pre">mat2rfnorm</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.reflections.mat2rfnorm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mirror plane normal vector from <cite>mat</cite> matrix.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>mat</strong> : array-like, shape (3,3)</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>normal</strong> : array shape (3,)</p>
-<blockquote>
-<div><p>vector normal to point (and therefore mirror plane)</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><strong>ValueError</strong></p>
-<blockquote>
-<div><p>If there is no eigenvector with eigenvalue -1</p>
-</div></blockquote>
-<p><strong>ValueError</strong></p>
-<blockquote class="last">
-<div><p>If determinant of <cite>mat</cite> is not close to -1</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>mat</strong><span class="classifier">array-like, shape (3,3)</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>normal</strong><span class="classifier">array shape (3,)</span></dt><dd><p>vector normal to point (and therefore mirror plane)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ValueError</dt><dd><p>If there is no eigenvector with eigenvalue -1</p>
+</dd>
+<dt>ValueError</dt><dd><p>If determinant of <cite>mat</cite> is not close to -1</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">M0</span> <span class="o">=</span> <span class="n">rfnorm2mat</span><span class="p">(</span><span class="n">normal</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">normal</span> <span class="o">=</span> <span class="n">mat2rfnorm</span><span class="p">(</span><span class="n">M0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">M1</span> <span class="o">=</span> <span class="n">rfnorm2mat</span><span class="p">(</span><span class="n">normal</span><span class="p">)</span>
@@ -170,33 +148,29 @@ reflection plane.</p>
 </div>
 <div class="section" id="rfnorm2aff">
 <h2>rfnorm2aff<a class="headerlink" href="#rfnorm2aff" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.reflections.rfnorm2aff">
-<code class="descclassname">transforms3d.reflections.</code><code class="descname">rfnorm2aff</code><span class="sig-paren">(</span><em>normal</em>, <em>point=None</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.reflections.rfnorm2aff" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.reflections.</span></code><code class="sig-name descname"><span class="pre">rfnorm2aff</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.reflections.rfnorm2aff" title="Permalink to this definition">¶</a></dt>
 <dd><p>Affine to mirror at plane defined by point and normal vector.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>normal</strong> : 3 element sequence</p>
-<blockquote>
-<div><p>vector normal to point (and therefore mirror plane)</p>
-</div></blockquote>
-<p><strong>point</strong> : 3 element sequence</p>
-<blockquote>
-<div><p>x, y, x coordinates of point</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>aff</strong> : array shape (4,4)</p>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>normal</strong><span class="classifier">3 element sequence</span></dt><dd><p>vector normal to point (and therefore mirror plane)</p>
+</dd>
+<dt><strong>point</strong><span class="classifier">3 element sequence</span></dt><dd><p>x, y, x coordinates of point</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>aff</strong><span class="classifier">array shape (4,4)</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Notes</p>
-<p>See <a class="reference internal" href="#transforms3d.reflections.rfnorm2mat" title="transforms3d.reflections.rfnorm2mat"><code class="xref py py-func docutils literal"><span class="pre">rfnorm2mat()</span></code></a></p>
+<p>See <a class="reference internal" href="#transforms3d.reflections.rfnorm2mat" title="transforms3d.reflections.rfnorm2mat"><code class="xref py py-func docutils literal notranslate"><span class="pre">rfnorm2mat()</span></code></a></p>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">rfnorm2aff</span><span class="p">(</span><span class="n">normal</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="mf">2.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">R</span><span class="p">))</span>
@@ -210,35 +184,33 @@ reflection plane.</p>
 </div>
 <div class="section" id="rfnorm2mat">
 <h2>rfnorm2mat<a class="headerlink" href="#rfnorm2mat" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.reflections.rfnorm2mat">
-<code class="descclassname">transforms3d.reflections.</code><code class="descname">rfnorm2mat</code><span class="sig-paren">(</span><em>normal</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.reflections.rfnorm2mat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.reflections.</span></code><code class="sig-name descname"><span class="pre">rfnorm2mat</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.reflections.rfnorm2mat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Matrix to reflect in plane through origin, orthogonal to <cite>normal</cite></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>normal</strong> : array-like, shape (3,)</p>
-<blockquote>
-<div><p>vector normal to plane of reflection</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>mat</strong> : array shape (3,3)</p>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>normal</strong><span class="classifier">array-like, shape (3,)</span></dt><dd><p>vector normal to plane of reflection</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>mat</strong><span class="classifier">array shape (3,3)</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Notes</p>
 <p><a class="reference external" href="http://en.wikipedia.org/wiki/Reflection_(mathematics">http://en.wikipedia.org/wiki/Reflection_(mathematics</a>)</p>
 <p>The reflection of a vector <cite>v</cite> in a plane normal to vector <cite>a</cite> is:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\mathrm{Ref}_a(v) = v - 2\frac{v\cdot a}{a\cdot a}a\]</div>
 <p>The entries of the corresponding orthogonal transformation matrix
 <cite>R</cite> are given by:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[R_{ij} = I_{ij} - 2\frac{a_i a_j}{\|a\|^2}\]</div>
-<p>where <span class="math">\(I\)</span> is the identity matrix.</p>
+<p>where <span class="math notranslate nohighlight">\(I\)</span> is the identity matrix.</p>
 </dd></dl>
 
 </div>
@@ -246,61 +218,90 @@ reflection plane.</p>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#"><code class="docutils literal"><span class="pre">reflections</span></code></a><ul>
-<li><a class="reference internal" href="#aff2rfnorm">aff2rfnorm</a></li>
-<li><a class="reference internal" href="#mat2rfnorm">mat2rfnorm</a></li>
-<li><a class="reference internal" href="#rfnorm2aff">rfnorm2aff</a></li>
-<li><a class="reference internal" href="#rfnorm2mat">rfnorm2mat</a></li>
+<h1 class="logo"><a href="../index.html">transforms3d</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../conventions.html">Conventions for transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../naming_conventions.html">Naming conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gimbal_lock.html">Gimbal lock</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">transforms3d</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_gohlketransforms</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_version</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.affines.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">affines</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.axangles.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axangles</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">derivations</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">euler</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quaternions</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reflections</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shears</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taitbryan</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.zooms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zooms</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 </ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../devel/make_release.html">Guide to making a Transforms3d release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devel/refactor_plan.html">Refactoring plan</a></li>
+</ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="index.html">API Reference</a><ul>
-      <li>Previous: <a href="transforms3d.quaternions.html" title="previous chapter"><code class="docutils literal"><span class="pre">quaternions</span></code></a></li>
-      <li>Next: <a href="transforms3d.shears.html" title="next chapter"><code class="docutils literal"><span class="pre">shears</span></code></a></li>
+      <li>Previous: <a href="transforms3d.quaternions.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quaternions</span></code></a></li>
+      <li>Next: <a href="transforms3d.shears.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shears</span></code></a></li>
   </ul></li>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/reference/transforms3d.reflections.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2016, Matthew Brett.
+      &copy;2009-2022, Matthew Brett, Christoph Gohlke.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/reference/transforms3d.reflections.txt"
+      <a href="../_sources/reference/transforms3d.reflections.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

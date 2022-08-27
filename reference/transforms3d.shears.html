@@ -1,31 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>shears &mdash; transforms3d 0.3 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>shears &#8212; transforms3d 0.4 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.3 documentation" href="../index.html" />
-    <link rel="up" title="API Reference" href="index.html" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="taitbryan" href="transforms3d.taitbryan.html" />
     <link rel="prev" title="reflections" href="transforms3d.reflections.html" />
    
@@ -34,91 +22,93 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-transforms3d.shears">
-<span id="shears"></span><h1><code class="xref py py-mod docutils literal"><span class="pre">shears</span></code><a class="headerlink" href="#module-transforms3d.shears" title="Permalink to this headline">¶</a></h1>
+<span id="shears"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">shears</span></code><a class="headerlink" href="#module-transforms3d.shears" title="Permalink to this headline">¶</a></h1>
 <p>Functions for working with shears</p>
 <p>Terms used in function names:</p>
 <ul class="simple">
-<li><em>mat</em> : array shape (3, 3) (3D non-homogenous coordinates)</li>
-<li><em>aff</em> : affine array shape (4, 4) (3D homogenous coordinates)</li>
-<li><em>striu</em> : shears encoded by vector giving triangular portion above diagonal
-of NxN array (for ND transformation)</li>
-<li><em>sadn</em> : shears encoded by angle scalar, direction vector, normal vector
-(with optional point vector)</li>
+<li><p><em>mat</em> : array shape (3, 3) (3D non-homogenous coordinates)</p></li>
+<li><p><em>aff</em> : affine array shape (4, 4) (3D homogenous coordinates)</p></li>
+<li><p><em>striu</em> : shears encoded by vector giving triangular portion above diagonal
+of NxN array (for ND transformation)</p></li>
+<li><p><em>sadn</em> : shears encoded by angle scalar, direction vector, normal vector
+(with optional point vector)</p></li>
 </ul>
-<table border="1" class="longtable docutils">
+<table class="longtable docutils align-default">
 <colgroup>
-<col width="10%" />
-<col width="90%" />
+<col style="width: 10%" />
+<col style="width: 90%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.shears.aff2sadn" title="transforms3d.shears.aff2sadn"><code class="xref py py-obj docutils literal"><span class="pre">aff2sadn</span></code></a>(aff)</td>
-<td>Return shear angle, direction and plane normal from shear matrix.</td>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transforms3d.shears.aff2sadn" title="transforms3d.shears.aff2sadn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aff2sadn</span></code></a>(aff)</p></td>
+<td><p>Return shear angle, direction and plane normal from shear matrix.</p></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#transforms3d.shears.mat2sadn" title="transforms3d.shears.mat2sadn"><code class="xref py py-obj docutils literal"><span class="pre">mat2sadn</span></code></a>(mat)</td>
-<td>Return shear angle, direction and plane normal from shear matrix.</td>
+<tr class="row-even"><td><p><a class="reference internal" href="#transforms3d.shears.inverse_outer" title="transforms3d.shears.inverse_outer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverse_outer</span></code></a>(mat)</p></td>
+<td><p>Return scalar t, unit vectors <cite>a</cite>, <cite>b</cite> so <cite>mat = t * np.outer(a, b)</cite></p></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.shears.sadn2aff" title="transforms3d.shears.sadn2aff"><code class="xref py py-obj docutils literal"><span class="pre">sadn2aff</span></code></a>(angle,&nbsp;direction,&nbsp;normal[,&nbsp;point])</td>
-<td>Affine for shear by <cite>angle</cite> along vector <cite>direction</cite> on shear plane.</td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transforms3d.shears.mat2sadn" title="transforms3d.shears.mat2sadn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mat2sadn</span></code></a>(mat)</p></td>
+<td><p>Return shear angle, direction and plane normal from shear matrix.</p></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#transforms3d.shears.sadn2mat" title="transforms3d.shears.sadn2mat"><code class="xref py py-obj docutils literal"><span class="pre">sadn2mat</span></code></a>(angle,&nbsp;direction,&nbsp;normal)</td>
-<td>Matrix for shear by <cite>angle</cite> along <cite>direction</cite> vector on shear plane.</td>
+<tr class="row-even"><td><p><a class="reference internal" href="#transforms3d.shears.sadn2aff" title="transforms3d.shears.sadn2aff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sadn2aff</span></code></a>(angle, direction, normal[, point])</p></td>
+<td><p>Affine for shear by <cite>angle</cite> along vector <cite>direction</cite> on shear plane.</p></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.shears.striu2mat" title="transforms3d.shears.striu2mat"><code class="xref py py-obj docutils literal"><span class="pre">striu2mat</span></code></a>(striu)</td>
-<td>Construct shear matrix from upper triangular vector</td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transforms3d.shears.sadn2mat" title="transforms3d.shears.sadn2mat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sadn2mat</span></code></a>(angle, direction, normal)</p></td>
+<td><p>Matrix for shear by <cite>angle</cite> along <cite>direction</cite> vector on shear plane.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#transforms3d.shears.striu2mat" title="transforms3d.shears.striu2mat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">striu2mat</span></code></a>(striu)</p></td>
+<td><p>Construct shear matrix from upper triangular vector</p></td>
 </tr>
 </tbody>
 </table>
 <div class="section" id="aff2sadn">
 <h2>aff2sadn<a class="headerlink" href="#aff2sadn" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.shears.aff2sadn">
-<code class="descclassname">transforms3d.shears.</code><code class="descname">aff2sadn</code><span class="sig-paren">(</span><em>aff</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.shears.aff2sadn" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.shears.</span></code><code class="sig-name descname"><span class="pre">aff2sadn</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aff</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.shears.aff2sadn" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return shear angle, direction and plane normal from shear matrix.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>mat</strong> : array-like, shape (3,3)</p>
-<blockquote>
-<div><p>shear matrix.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>angle</strong> : scalar</p>
-<blockquote>
-<div><p>angle to shear, in radians</p>
-</div></blockquote>
-<p><strong>direction</strong> : array, shape (3,)</p>
-<blockquote>
-<div><p>direction along which to shear</p>
-</div></blockquote>
-<p><strong>normal</strong> : array, shape (3,)</p>
-<blockquote>
-<div><p>vector normal to shear plane</p>
-</div></blockquote>
-<p><strong>point</strong> : array, shape (3,)</p>
-<blockquote class="last">
-<div><p>point that, with <cite>normal</cite>, defines shear plane.</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>mat</strong><span class="classifier">array-like, shape (3,3)</span></dt><dd><p>shear matrix.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>angle</strong><span class="classifier">scalar</span></dt><dd><p>angle to shear, in radians</p>
+</dd>
+<dt><strong>direction</strong><span class="classifier">array, shape (3,)</span></dt><dd><p>direction along which to shear</p>
+</dd>
+<dt><strong>normal</strong><span class="classifier">array, shape (3,)</span></dt><dd><p>vector normal to shear plane</p>
+</dd>
+<dt><strong>point</strong><span class="classifier">array, shape (3,)</span></dt><dd><p>point that, with <cite>normal</cite>, defines shear plane.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The translation part of the affine shear matrix is calculated using:</p>
+<p>This holds for the <a href="#id1"><span class="problematic" id="id2">``</span></a>i``th coordinate:</p>
+<p>Then:</p>
+<p>This can be compared with the equation of the plane:</p>
+<p>where <code class="docutils literal notranslate"><span class="pre">d</span></code> is the distance from the plane to the origin.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">sadn2aff</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">sadn2aff</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">angle</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">normal</span><span class="p">,</span> <span class="n">point</span> <span class="o">=</span> <span class="n">aff2sadn</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">angle</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">normal</span><span class="p">,</span> <span class="n">point</span>
-<span class="go">(0.5, array([-1.,  0.,  0.]), array([ 0., -1.,  0.]), array([ 0.,  0.,  0.]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">angle</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">normal</span>
+<span class="go">(0.5, array([1., 0., 0.]), array([0., 1., 0.]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">point</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">A_again</span> <span class="o">=</span> <span class="n">sadn2aff</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">normal</span><span class="p">,</span> <span class="n">point</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">A_again</span><span class="p">)</span>
 <span class="go">True</span>
@@ -127,44 +117,67 @@ of NxN array (for ND transformation)</li>
 </dd></dl>
 
 </div>
+<div class="section" id="inverse-outer">
+<h2>inverse_outer<a class="headerlink" href="#inverse-outer" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="transforms3d.shears.inverse_outer">
+<code class="sig-prename descclassname"><span class="pre">transforms3d.shears.</span></code><code class="sig-name descname"><span class="pre">inverse_outer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.shears.inverse_outer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return scalar t, unit vectors <cite>a</cite>, <cite>b</cite> so <cite>mat = t * np.outer(a, b)</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>mat</strong><span class="classifier">array-like, shape (3,3)</span></dt><dd><p>shear matrix</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>t</strong><span class="classifier">float</span></dt><dd><p>Scalar such that <cite>mat = t * np.outer(a, b)</cite></p>
+</dd>
+<dt><strong>a</strong><span class="classifier">array, shape (3,)</span></dt><dd><p>Unit vector such that <cite>mat = t * np.outer(a, b)</cite></p>
+</dd>
+<dt><strong>b</strong><span class="classifier">array, shape (3,)</span></dt><dd><p>Unit vector such that <cite>mat = t * np.outer(a, b)</cite></p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
 <div class="section" id="mat2sadn">
 <h2>mat2sadn<a class="headerlink" href="#mat2sadn" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.shears.mat2sadn">
-<code class="descclassname">transforms3d.shears.</code><code class="descname">mat2sadn</code><span class="sig-paren">(</span><em>mat</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.shears.mat2sadn" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.shears.</span></code><code class="sig-name descname"><span class="pre">mat2sadn</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.shears.mat2sadn" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return shear angle, direction and plane normal from shear matrix.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>mat</strong> : array-like, shape (3,3)</p>
-<blockquote>
-<div><p>shear matrix</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>angle</strong> : scalar</p>
-<blockquote>
-<div><p>angle to shear, in radians</p>
-</div></blockquote>
-<p><strong>direction</strong> : array, shape (3,)</p>
-<blockquote>
-<div><p>direction along which to shear</p>
-</div></blockquote>
-<p><strong>normal</strong> : array, shape (3,)</p>
-<blockquote class="last">
-<div><p>vector defining shear plane, where shear plane passes through
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>mat</strong><span class="classifier">array-like, shape (3,3)</span></dt><dd><p>shear matrix</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>angle</strong><span class="classifier">scalar</span></dt><dd><p>angle to shear, in radians</p>
+</dd>
+<dt><strong>direction</strong><span class="classifier">array, shape (3,)</span></dt><dd><p>direction along which to shear</p>
+</dd>
+<dt><strong>normal</strong><span class="classifier">array, shape (3,)</span></dt><dd><p>vector defining shear plane, where shear plane passes through
 origin</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The shear matrix we are decomposing was calculated using:</p>
+<p>So the idea is to use an “inverse outer product” to recover the shears.
+See <a class="reference internal" href="#transforms3d.shears.inverse_outer" title="transforms3d.shears.inverse_outer"><code class="xref py py-func docutils literal notranslate"><span class="pre">inverse_outer()</span></code></a> for the implementation.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">sadn2mat</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">sadn2mat</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">angle</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">normal</span> <span class="o">=</span> <span class="n">mat2sadn</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">angle</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">normal</span>
-<span class="go">(0.5, array([-1.,  0.,  0.]), array([ 0., -1.,  0.]))</span>
+<span class="go">(0.5, array([1., 0., 0.]), array([0., 1., 0.]))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">M_again</span> <span class="o">=</span> <span class="n">sadn2mat</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">normal</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">M_again</span><span class="p">)</span>
 <span class="go">True</span>
@@ -175,49 +188,39 @@ origin</p>
 </div>
 <div class="section" id="sadn2aff">
 <h2>sadn2aff<a class="headerlink" href="#sadn2aff" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.shears.sadn2aff">
-<code class="descclassname">transforms3d.shears.</code><code class="descname">sadn2aff</code><span class="sig-paren">(</span><em>angle</em>, <em>direction</em>, <em>normal</em>, <em>point=None</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.shears.sadn2aff" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.shears.</span></code><code class="sig-name descname"><span class="pre">sadn2aff</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.shears.sadn2aff" title="Permalink to this definition">¶</a></dt>
 <dd><p>Affine for shear by <cite>angle</cite> along vector <cite>direction</cite> on shear plane.</p>
 <p>The shear plane is defined by a point and normal vector. The direction
-vector must be orthogonal to the plane&#8217;s normal vector.</p>
-<p>A point P is transformed by the shear matrix into P&#8221; such that
-the vector P-P&#8221; is parallel to the direction vector and its extent is
-given by the angle of P-P&#8217;-P&#8221;, where P&#8217; is the orthogonal projection
+vector must be orthogonal to the plane’s normal vector.</p>
+<p>A point P is transformed by the shear matrix into P” such that
+the vector P-P” is parallel to the direction vector and its extent is
+given by the angle of P-P’-P”, where P’ is the orthogonal projection
 of P onto the shear plane.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>angle</strong> : scalar</p>
-<blockquote>
-<div><p>angle to shear, in radians</p>
-</div></blockquote>
-<p><strong>direction</strong> : array-like, shape (3,)</p>
-<blockquote>
-<div><p>direction along which to shear</p>
-</div></blockquote>
-<p><strong>normal</strong> : array-like, shape (3,)</p>
-<blockquote>
-<div><p>vector normal to shear-plane</p>
-</div></blockquote>
-<p><strong>point</strong> : None or array-like, shape (3,), optional</p>
-<blockquote>
-<div><p>point, that, with <cite>normal</cite> defines shear plane.  Defaults to
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>angle</strong><span class="classifier">scalar</span></dt><dd><p>angle to shear, in radians</p>
+</dd>
+<dt><strong>direction</strong><span class="classifier">array-like, shape (3,)</span></dt><dd><p>direction along which to shear</p>
+</dd>
+<dt><strong>normal</strong><span class="classifier">array-like, shape (3,)</span></dt><dd><p>vector normal to shear-plane</p>
+</dd>
+<dt><strong>point</strong><span class="classifier">None or array-like, shape (3,), optional</span></dt><dd><p>point, that, with <cite>normal</cite> defines shear plane.  Defaults to
 None, equivalent to shear-plane through origin.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>aff</strong> : array shape (4,4)</p>
-<blockquote class="last">
-<div><p>affine shearing matrix</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>aff</strong><span class="classifier">array shape (4,4)</span></dt><dd><p>affine shearing matrix</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">angle</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">angle</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">direct</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">direct</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="n">sadn2mat</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">direct</span><span class="p">,</span> <span class="n">normal</span><span class="p">)</span>
@@ -230,46 +233,38 @@ None, equivalent to shear-plane through origin.</p>
 </div>
 <div class="section" id="sadn2mat">
 <h2>sadn2mat<a class="headerlink" href="#sadn2mat" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.shears.sadn2mat">
-<code class="descclassname">transforms3d.shears.</code><code class="descname">sadn2mat</code><span class="sig-paren">(</span><em>angle</em>, <em>direction</em>, <em>normal</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.shears.sadn2mat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.shears.</span></code><code class="sig-name descname"><span class="pre">sadn2mat</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.shears.sadn2mat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Matrix for shear by <cite>angle</cite> along <cite>direction</cite> vector on shear plane.</p>
 <p>The shear plane is defined by normal vector <cite>normal</cite>, and passes through
-the origin. The direction vector must be orthogonal to the plane&#8217;s normal
+the origin. The direction vector must be orthogonal to the plane’s normal
 vector.</p>
-<p>A point P is transformed by the shear matrix into P&#8221; such that
-the vector P-P&#8221; is parallel to the direction vector and its extent is
-given by the angle of P-P&#8217;-P&#8221;, where P&#8217; is the orthogonal projection
+<p>A point P is transformed by the shear matrix into P” such that
+the vector P-P” is parallel to the direction vector and its extent is
+given by the angle of P-P’-P”, where P’ is the orthogonal projection
 of P onto the shear plane.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>angle</strong> : scalar</p>
-<blockquote>
-<div><p>angle to shear, in radians</p>
-</div></blockquote>
-<p><strong>direction</strong> : array-like, shape (3,)</p>
-<blockquote>
-<div><p>direction along which to shear</p>
-</div></blockquote>
-<p><strong>normal</strong> : array-like, shape (3,)</p>
-<blockquote>
-<div><p>vector defining shear plane, where shear plane passes through
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>angle</strong><span class="classifier">scalar</span></dt><dd><p>angle to shear, in radians</p>
+</dd>
+<dt><strong>direction</strong><span class="classifier">array-like, shape (3,)</span></dt><dd><p>direction along which to shear</p>
+</dd>
+<dt><strong>normal</strong><span class="classifier">array-like, shape (3,)</span></dt><dd><p>vector defining shear plane, where shear plane passes through
 origin</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>mat</strong> : array shape (3,3)</p>
-<blockquote class="last">
-<div><p>shear matrix</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>mat</strong><span class="classifier">array shape (3,3)</span></dt><dd><p>shear matrix</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">angle</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">angle</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">direct</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">direct</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="n">sadn2aff</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">direct</span><span class="p">,</span> <span class="n">normal</span><span class="p">)</span>
@@ -282,40 +277,36 @@ origin</p>
 </div>
 <div class="section" id="striu2mat">
 <h2>striu2mat<a class="headerlink" href="#striu2mat" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.shears.striu2mat">
-<code class="descclassname">transforms3d.shears.</code><code class="descname">striu2mat</code><span class="sig-paren">(</span><em>striu</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.shears.striu2mat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.shears.</span></code><code class="sig-name descname"><span class="pre">striu2mat</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">striu</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.shears.striu2mat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct shear matrix from upper triangular vector</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>striu</strong> : array, shape (N,)</p>
-<blockquote>
-<div><p>vector giving triangle above diagonal of shear matrix.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>SM</strong> : array, shape (N, N)</p>
-<blockquote class="last">
-<div><p>shear matrix</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>striu</strong><span class="classifier">array, shape (N,)</span></dt><dd><p>vector giving triangle above diagonal of shear matrix.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>SM</strong><span class="classifier">array, shape (N, N)</span></dt><dd><p>shear matrix</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Notes</p>
 <p>Shear lengths are triangular numbers.</p>
 <p>See <a class="reference external" href="http://en.wikipedia.org/wiki/Triangular_number">http://en.wikipedia.org/wiki/Triangular_number</a></p>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">striu2mat</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
-<span class="go">array([[ 1. ,  0.1,  0.2],</span>
-<span class="go">       [ 0. ,  1. ,  0.3],</span>
-<span class="go">       [ 0. ,  0. ,  1. ]])</span>
+<span class="go">array([[1. , 0.1, 0.2],</span>
+<span class="go">       [0. , 1. , 0.3],</span>
+<span class="go">       [0. , 0. , 1. ]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">striu2mat</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
-<span class="go">array([[ 1.,  1.],</span>
-<span class="go">       [ 0.,  1.]])</span>
+<span class="go">array([[1., 1.],</span>
+<span class="go">       [0., 1.]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">striu2mat</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
 <span class="gt">Traceback (most recent call last):</span>
    <span class="c">...</span>
@@ -329,62 +320,90 @@ origin</p>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#"><code class="docutils literal"><span class="pre">shears</span></code></a><ul>
-<li><a class="reference internal" href="#aff2sadn">aff2sadn</a></li>
-<li><a class="reference internal" href="#mat2sadn">mat2sadn</a></li>
-<li><a class="reference internal" href="#sadn2aff">sadn2aff</a></li>
-<li><a class="reference internal" href="#sadn2mat">sadn2mat</a></li>
-<li><a class="reference internal" href="#striu2mat">striu2mat</a></li>
+<h1 class="logo"><a href="../index.html">transforms3d</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../conventions.html">Conventions for transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../naming_conventions.html">Naming conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gimbal_lock.html">Gimbal lock</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">transforms3d</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_gohlketransforms</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_version</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.affines.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">affines</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.axangles.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axangles</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">derivations</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">euler</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quaternions</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.reflections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reflections</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shears</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taitbryan</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.zooms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zooms</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 </ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../devel/make_release.html">Guide to making a Transforms3d release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devel/refactor_plan.html">Refactoring plan</a></li>
+</ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="index.html">API Reference</a><ul>
-      <li>Previous: <a href="transforms3d.reflections.html" title="previous chapter"><code class="docutils literal"><span class="pre">reflections</span></code></a></li>
-      <li>Next: <a href="transforms3d.taitbryan.html" title="next chapter"><code class="docutils literal"><span class="pre">taitbryan</span></code></a></li>
+      <li>Previous: <a href="transforms3d.reflections.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reflections</span></code></a></li>
+      <li>Next: <a href="transforms3d.taitbryan.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taitbryan</span></code></a></li>
   </ul></li>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/reference/transforms3d.shears.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2016, Matthew Brett.
+      &copy;2009-2022, Matthew Brett, Christoph Gohlke.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/reference/transforms3d.shears.txt"
+      <a href="../_sources/reference/transforms3d.shears.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

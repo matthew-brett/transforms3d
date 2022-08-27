@@ -1,31 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>utils &mdash; transforms3d 0.3 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>utils &#8212; transforms3d 0.4 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.3 documentation" href="../index.html" />
-    <link rel="up" title="API Reference" href="index.html" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="zooms" href="transforms3d.zooms.html" />
     <link rel="prev" title="taitbryan" href="transforms3d.taitbryan.html" />
    
@@ -34,64 +22,66 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-transforms3d.utils">
-<span id="utils"></span><h1><code class="xref py py-mod docutils literal"><span class="pre">utils</span></code><a class="headerlink" href="#module-transforms3d.utils" title="Permalink to this headline">¶</a></h1>
+<span id="utils"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code><a class="headerlink" href="#module-transforms3d.utils" title="Permalink to this headline">¶</a></h1>
 <p>Utilities for transforms3d</p>
-<table border="1" class="longtable docutils">
+<table class="longtable docutils align-default">
 <colgroup>
-<col width="10%" />
-<col width="90%" />
+<col style="width: 10%" />
+<col style="width: 90%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.utils.inique" title="transforms3d.utils.inique"><code class="xref py py-obj docutils literal"><span class="pre">inique</span></code></a>(iterable)</td>
-<td>Generate unique elements from <cite>iterable</cite></td>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transforms3d.utils.inique" title="transforms3d.utils.inique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inique</span></code></a>(iterable)</p></td>
+<td><p>Generate unique elements from <cite>iterable</cite></p></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#transforms3d.utils.normalized_vector" title="transforms3d.utils.normalized_vector"><code class="xref py py-obj docutils literal"><span class="pre">normalized_vector</span></code></a>(vec)</td>
-<td>Return vector divided by Euclidean (L2) norm</td>
+<tr class="row-even"><td><p><a class="reference internal" href="#transforms3d.utils.normalized_vector" title="transforms3d.utils.normalized_vector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normalized_vector</span></code></a>(vec)</p></td>
+<td><p>Return vector divided by Euclidean (L2) norm</p></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.utils.permuted_signs" title="transforms3d.utils.permuted_signs"><code class="xref py py-obj docutils literal"><span class="pre">permuted_signs</span></code></a>(seq)</td>
-<td>Generate permuted signs for sequence <cite>seq</cite></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transforms3d.utils.permuted_signs" title="transforms3d.utils.permuted_signs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">permuted_signs</span></code></a>(seq)</p></td>
+<td><p>Generate permuted signs for sequence <cite>seq</cite></p></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#transforms3d.utils.permuted_with_signs" title="transforms3d.utils.permuted_with_signs"><code class="xref py py-obj docutils literal"><span class="pre">permuted_with_signs</span></code></a>(seq)</td>
-<td>Return all permutations of <cite>seq</cite> with all sign permutations</td>
+<tr class="row-even"><td><p><a class="reference internal" href="#transforms3d.utils.permuted_with_signs" title="transforms3d.utils.permuted_with_signs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">permuted_with_signs</span></code></a>(seq)</p></td>
+<td><p>Return all permutations of <cite>seq</cite> with all sign permutations</p></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.utils.vector_norm" title="transforms3d.utils.vector_norm"><code class="xref py py-obj docutils literal"><span class="pre">vector_norm</span></code></a>(vec)</td>
-<td>Return vector Euclidaan (L2) norm</td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transforms3d.utils.random_unit_vector" title="transforms3d.utils.random_unit_vector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random_unit_vector</span></code></a>([rng])</p></td>
+<td><p>Return random normalized 3D unit vector</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#transforms3d.utils.vector_norm" title="transforms3d.utils.vector_norm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vector_norm</span></code></a>(vec)</p></td>
+<td><p>Return vector Euclidaan (L2) norm</p></td>
 </tr>
 </tbody>
 </table>
 <div class="section" id="inique">
 <h2>inique<a class="headerlink" href="#inique" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.utils.inique">
-<code class="descclassname">transforms3d.utils.</code><code class="descname">inique</code><span class="sig-paren">(</span><em>iterable</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.utils.inique" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.utils.</span></code><code class="sig-name descname"><span class="pre">inique</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.utils.inique" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate unique elements from <cite>iterable</cite></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>iterable</strong> : iterable</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>gen</strong> : generator</p>
-<blockquote class="last">
-<div><p>generator that yields unique elements from <cite>iterable</cite></p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>iterable</strong><span class="classifier">iterable</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>gen</strong><span class="classifier">generator</span></dt><dd><p>generator that yields unique elements from <cite>iterable</cite></p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">tuple</span><span class="p">(</span><span class="n">inique</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">tuple</span><span class="p">(</span><span class="n">inique</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
 <span class="go">(0, 1, 2, 3)</span>
 </pre></div>
 </div>
@@ -100,28 +90,26 @@
 </div>
 <div class="section" id="normalized-vector">
 <h2>normalized_vector<a class="headerlink" href="#normalized-vector" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.utils.normalized_vector">
-<code class="descclassname">transforms3d.utils.</code><code class="descname">normalized_vector</code><span class="sig-paren">(</span><em>vec</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.utils.normalized_vector" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.utils.</span></code><code class="sig-name descname"><span class="pre">normalized_vector</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.utils.normalized_vector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return vector divided by Euclidean (L2) norm</p>
-<p>See <a class="reference internal" href="../glossary.html#term-unit-vector"><span class="xref std std-term">unit vector</span></a> and <a class="reference internal" href="../glossary.html#term-euclidean-norm"><span class="xref std std-term">Euclidean norm</span></a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>vec</strong> : array-like shape (3,)</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>nvec</strong> : array shape (3,)</p>
-<blockquote class="last">
-<div><p>vector divided by L2 norm</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<p>See <a class="reference internal" href="../glossary.html#term-Unit-vector"><span class="xref std std-term">unit vector</span></a> and <a class="reference internal" href="../glossary.html#term-Euclidean-norm"><span class="xref std std-term">Euclidean norm</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>vec</strong><span class="classifier">array-like shape (3,)</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>nvec</strong><span class="classifier">array shape (3,)</span></dt><dd><p>vector divided by L2 norm</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">l2n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">vec</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nvec</span> <span class="o">=</span> <span class="n">normalized_vector</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="o">/</span> <span class="n">l2n</span><span class="p">,</span> <span class="n">nvec</span><span class="p">)</span>
@@ -138,27 +126,25 @@
 </div>
 <div class="section" id="permuted-signs">
 <h2>permuted_signs<a class="headerlink" href="#permuted-signs" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.utils.permuted_signs">
-<code class="descclassname">transforms3d.utils.</code><code class="descname">permuted_signs</code><span class="sig-paren">(</span><em>seq</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.utils.permuted_signs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.utils.</span></code><code class="sig-name descname"><span class="pre">permuted_signs</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.utils.permuted_signs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate permuted signs for sequence <cite>seq</cite></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>seq</strong> : sequence</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>gen</strong> : generator</p>
-<blockquote class="last">
-<div><p>generator returning <cite>seq</cite> with signs permuted</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>seq</strong><span class="classifier">sequence</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>gen</strong><span class="classifier">generator</span></dt><dd><p>generator returning <cite>seq</cite> with signs permuted</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">tuple</span><span class="p">(</span><span class="n">permuted_signs</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">tuple</span><span class="p">(</span><span class="n">permuted_signs</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
 <span class="go">((1, -2, 0), (1, -2, 0), (1, 2, 0), (1, 2, 0), (-1, -2, 0), (-1, -2, 0), (-1, 2, 0), (-1, 2, 0))</span>
 </pre></div>
 </div>
@@ -167,52 +153,77 @@
 </div>
 <div class="section" id="permuted-with-signs">
 <h2>permuted_with_signs<a class="headerlink" href="#permuted-with-signs" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.utils.permuted_with_signs">
-<code class="descclassname">transforms3d.utils.</code><code class="descname">permuted_with_signs</code><span class="sig-paren">(</span><em>seq</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.utils.permuted_with_signs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.utils.</span></code><code class="sig-name descname"><span class="pre">permuted_with_signs</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.utils.permuted_with_signs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return all permutations of <cite>seq</cite> with all sign permutations</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>seq</strong> : sequence</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>gen</strong> : generator</p>
-<blockquote class="last">
-<div><p>generator returning permutations and sign permutations</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>seq</strong><span class="classifier">sequence</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>gen</strong><span class="classifier">generator</span></dt><dd><p>generator returning permutations and sign permutations</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">tuple</span><span class="p">(</span><span class="n">permuted_with_signs</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">tuple</span><span class="p">(</span><span class="n">permuted_with_signs</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
 <span class="go">((1, 2), (1, -2), (-1, 2), (-1, -2), (2, 1), (2, -1), (-2, 1), (-2, -1))</span>
 </pre></div>
 </div>
 </dd></dl>
 
 </div>
+<div class="section" id="random-unit-vector">
+<h2>random_unit_vector<a class="headerlink" href="#random-unit-vector" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="transforms3d.utils.random_unit_vector">
+<code class="sig-prename descclassname"><span class="pre">transforms3d.utils.</span></code><code class="sig-name descname"><span class="pre">random_unit_vector</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.utils.random_unit_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return random normalized 3D unit vector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>rng</strong><span class="classifier">None or random number generator, optional</span></dt><dd><p><cite>rng</cite> must have function / method <cite>normal</cite> that allows <cite>size=</cite> keyword.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>vec</strong><span class="classifier">shape (3,) array</span></dt><dd><p>Vector at random on unit sphere.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p><a class="reference external" href="https://mathworld.wolfram.com/SpherePointPicking.html">https://mathworld.wolfram.com/SpherePointPicking.html</a></p>
+</dd></dl>
+
+</div>
 <div class="section" id="vector-norm">
 <h2>vector_norm<a class="headerlink" href="#vector-norm" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.utils.vector_norm">
-<code class="descclassname">transforms3d.utils.</code><code class="descname">vector_norm</code><span class="sig-paren">(</span><em>vec</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.utils.vector_norm" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.utils.</span></code><code class="sig-name descname"><span class="pre">vector_norm</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.utils.vector_norm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return vector Euclidaan (L2) norm</p>
-<p>See <a class="reference internal" href="../glossary.html#term-unit-vector"><span class="xref std std-term">unit vector</span></a> and <a class="reference internal" href="../glossary.html#term-euclidean-norm"><span class="xref std std-term">Euclidean norm</span></a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vec</strong> : array-like shape (3,)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>norm</strong> : scalar</td>
-</tr>
-</tbody>
-</table>
+<p>See <a class="reference internal" href="../glossary.html#term-Unit-vector"><span class="xref std std-term">unit vector</span></a> and <a class="reference internal" href="../glossary.html#term-Euclidean-norm"><span class="xref std std-term">Euclidean norm</span></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>vec</strong><span class="classifier">array-like shape (3,)</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>norm</strong><span class="classifier">scalar</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">l2n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">vec</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nvec</span> <span class="o">=</span> <span class="n">vector_norm</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">nvec</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">vec</span><span class="p">)))</span>
@@ -226,62 +237,90 @@
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#"><code class="docutils literal"><span class="pre">utils</span></code></a><ul>
-<li><a class="reference internal" href="#inique">inique</a></li>
-<li><a class="reference internal" href="#normalized-vector">normalized_vector</a></li>
-<li><a class="reference internal" href="#permuted-signs">permuted_signs</a></li>
-<li><a class="reference internal" href="#permuted-with-signs">permuted_with_signs</a></li>
-<li><a class="reference internal" href="#vector-norm">vector_norm</a></li>
+<h1 class="logo"><a href="../index.html">transforms3d</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../conventions.html">Conventions for transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../naming_conventions.html">Naming conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gimbal_lock.html">Gimbal lock</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">transforms3d</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_gohlketransforms</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_version</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.affines.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">affines</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.axangles.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axangles</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">derivations</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">euler</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quaternions</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.reflections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reflections</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shears</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taitbryan</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.zooms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zooms</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 </ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../devel/make_release.html">Guide to making a Transforms3d release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devel/refactor_plan.html">Refactoring plan</a></li>
+</ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="index.html">API Reference</a><ul>
-      <li>Previous: <a href="transforms3d.taitbryan.html" title="previous chapter"><code class="docutils literal"><span class="pre">taitbryan</span></code></a></li>
-      <li>Next: <a href="transforms3d.zooms.html" title="next chapter"><code class="docutils literal"><span class="pre">zooms</span></code></a></li>
+      <li>Previous: <a href="transforms3d.taitbryan.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taitbryan</span></code></a></li>
+      <li>Next: <a href="transforms3d.zooms.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zooms</span></code></a></li>
   </ul></li>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/reference/transforms3d.utils.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2016, Matthew Brett.
+      &copy;2009-2022, Matthew Brett, Christoph Gohlke.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/reference/transforms3d.utils.txt"
+      <a href="../_sources/reference/transforms3d.utils.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

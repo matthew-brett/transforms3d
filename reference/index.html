@@ -1,30 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>API Reference &mdash; transforms3d 0.3 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Reference &#8212; transforms3d 0.4 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.3 documentation" href="../index.html" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="transforms3d" href="transforms3d.html" />
     <link rel="prev" title="Gimbal lock" href="../gimbal_lock.html" />
    
@@ -33,39 +22,98 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="api-reference">
 <h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="transforms3d.html"><code class="docutils literal"><span class="pre">transforms3d</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="transforms3d.affines.html"><code class="docutils literal"><span class="pre">affines</span></code></a><ul>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">transforms3d</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d._gohlketransforms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_gohlketransforms</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#notes">Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#references">References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#arcball"><code class="xref py py-class docutils literal notranslate"><span class="pre">Arcball</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#affine-matrix-from-points">affine_matrix_from_points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#angle-between-vectors">angle_between_vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#arcball-constrain-to-axis">arcball_constrain_to_axis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#arcball-map-to-sphere">arcball_map_to_sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#arcball-nearest-axis">arcball_nearest_axis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#clip-matrix">clip_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#compose-matrix">compose_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#concatenate-matrices">concatenate_matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#decompose-matrix">decompose_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#euler-from-matrix">euler_from_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#euler-from-quaternion">euler_from_quaternion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#euler-matrix">euler_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#identity-matrix">identity_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#inverse-matrix">inverse_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#is-same-quaternion">is_same_quaternion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#is-same-transform">is_same_transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#orthogonalization-matrix">orthogonalization_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#projection-from-matrix">projection_from_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#projection-matrix">projection_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#quaternion-about-axis">quaternion_about_axis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#quaternion-conjugate">quaternion_conjugate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#quaternion-from-euler">quaternion_from_euler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#quaternion-from-matrix">quaternion_from_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#quaternion-imag">quaternion_imag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#quaternion-inverse">quaternion_inverse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#quaternion-matrix">quaternion_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#quaternion-multiply">quaternion_multiply</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#quaternion-real">quaternion_real</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#quaternion-slerp">quaternion_slerp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#random-quaternion">random_quaternion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#random-rotation-matrix">random_rotation_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#random-vector">random_vector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#reflection-from-matrix">reflection_from_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#reflection-matrix">reflection_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#rotation-from-matrix">rotation_from_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#rotation-matrix">rotation_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#scale-from-matrix">scale_from_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#scale-matrix">scale_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#shear-from-matrix">shear_from_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#shear-matrix">shear_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#superimposition-matrix">superimposition_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#translation-from-matrix">translation_from_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#translation-matrix">translation_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#unit-vector">unit_vector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#vector-norm">vector_norm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html#vector-product">vector_product</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_version</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._version.html#get-versions">get_versions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.affines.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">affines</span></code></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.affines.html#compose">compose</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.affines.html#decompose">decompose</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.affines.html#decompose44">decompose44</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="transforms3d.axangles.html"><code class="docutils literal"><span class="pre">axangles</span></code></a><ul>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.axangles.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axangles</span></code></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.axangles.html#aff2axangle">aff2axangle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.axangles.html#axangle2aff">axangle2aff</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.axangles.html#axangle2mat">axangle2mat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.axangles.html#mat2axangle">mat2axangle</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="transforms3d.derivations.html"><code class="docutils literal"><span class="pre">derivations</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html#module-transforms3d.derivations.angle_axes">Module: <code class="docutils literal"><span class="pre">derivations.angle_axes</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html#module-transforms3d.derivations.decompositions">Module: <code class="docutils literal"><span class="pre">derivations.decompositions</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html#module-transforms3d.derivations.eulerangles">Module: <code class="docutils literal"><span class="pre">derivations.eulerangles</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html#module-transforms3d.derivations.quaternions">Module: <code class="docutils literal"><span class="pre">derivations.quaternions</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html#module-transforms3d.derivations.utils">Module: <code class="docutils literal"><span class="pre">derivations.utils</span></code></a><ul>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.derivations.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">derivations</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html#module-transforms3d.derivations.angle_axes">Module: <code class="xref py py-mod docutils literal notranslate"><span class="pre">derivations.angle_axes</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html#module-transforms3d.derivations.decompositions">Module: <code class="xref py py-mod docutils literal notranslate"><span class="pre">derivations.decompositions</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html#module-transforms3d.derivations.eulerangles">Module: <code class="xref py py-mod docutils literal notranslate"><span class="pre">derivations.eulerangles</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html#module-transforms3d.derivations.quaternions">Module: <code class="xref py py-mod docutils literal notranslate"><span class="pre">derivations.quaternions</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html#module-transforms3d.derivations.utils">Module: <code class="xref py py-mod docutils literal notranslate"><span class="pre">derivations.utils</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#angle-axis2mat">angle_axis2mat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#angle-axis2quat">angle_axis2quat</a></li>
 <li class="toctree-l3"><a class="reference internal" href="transforms3d.derivations.html#orig-aa2mat">orig_aa2mat</a></li>
@@ -83,14 +131,14 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="transforms3d.euler.html"><code class="docutils literal"><span class="pre">euler</span></code></a><ul>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.euler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">euler</span></code></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#defining-rotations">Defining rotations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#rotation-axes">Rotation axes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#specifying-angle-conventions">Specifying angle conventions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#direction-of-rotation">Direction of rotation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#terms-used-in-function-names">Terms used in function names</a></li>
-<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#eulerfuncs"><code class="docutils literal"><span class="pre">EulerFuncs</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#tbzyx"><code class="docutils literal"><span class="pre">TBZYX</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#eulerfuncs"><code class="xref py py-class docutils literal notranslate"><span class="pre">EulerFuncs</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#tbzyx"><code class="xref py py-class docutils literal notranslate"><span class="pre">TBZYX</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#axangle2euler">axangle2euler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#euler2axangle">euler2axangle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#euler2mat">euler2mat</a></li>
@@ -99,38 +147,42 @@
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html#quat2euler">quat2euler</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="transforms3d.quaternions.html"><code class="docutils literal"><span class="pre">quaternions</span></code></a><ul>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.quaternions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quaternions</span></code></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#axangle2quat">axangle2quat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#fillpositive">fillpositive</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#mat2quat">mat2quat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#nearly-equivalent">nearly_equivalent</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#qconjugate">qconjugate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#qexp">qexp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#qeye">qeye</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#qinverse">qinverse</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#qisunit">qisunit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#qlog">qlog</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#qmult">qmult</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#qnorm">qnorm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#qpow">qpow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#quat2axangle">quat2axangle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#quat2mat">quat2mat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html#rotate-vector">rotate_vector</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="transforms3d.reflections.html"><code class="docutils literal"><span class="pre">reflections</span></code></a><ul>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.reflections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reflections</span></code></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.reflections.html#aff2rfnorm">aff2rfnorm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.reflections.html#mat2rfnorm">mat2rfnorm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.reflections.html#rfnorm2aff">rfnorm2aff</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.reflections.html#rfnorm2mat">rfnorm2mat</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="transforms3d.shears.html"><code class="docutils literal"><span class="pre">shears</span></code></a><ul>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.shears.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shears</span></code></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html#aff2sadn">aff2sadn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html#inverse-outer">inverse_outer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html#mat2sadn">mat2sadn</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html#sadn2aff">sadn2aff</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html#sadn2mat">sadn2mat</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html#striu2mat">striu2mat</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="transforms3d.taitbryan.html"><code class="docutils literal"><span class="pre">taitbryan</span></code></a><ul>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.taitbryan.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taitbryan</span></code></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html#axangle2euler">axangle2euler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html#euler2axangle">euler2axangle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html#euler2mat">euler2mat</a></li>
@@ -139,15 +191,16 @@
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html#quat2euler">quat2euler</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="transforms3d.utils.html"><code class="docutils literal"><span class="pre">utils</span></code></a><ul>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html#inique">inique</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html#normalized-vector">normalized_vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html#permuted-signs">permuted_signs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html#permuted-with-signs">permuted_with_signs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html#random-unit-vector">random_unit_vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html#vector-norm">vector_norm</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="transforms3d.zooms.html"><code class="docutils literal"><span class="pre">zooms</span></code></a><ul>
+<li class="toctree-l1"><a class="reference internal" href="transforms3d.zooms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zooms</span></code></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.zooms.html#aff2zfdir">aff2zfdir</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.zooms.html#mat2zfdir">mat2zfdir</a></li>
 <li class="toctree-l2"><a class="reference internal" href="transforms3d.zooms.html#zfdir2aff">zfdir2aff</a></li>
@@ -160,48 +213,88 @@
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">transforms3d</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../conventions.html">Conventions for transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../naming_conventions.html">Naming conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gimbal_lock.html">Gimbal lock</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">transforms3d</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_gohlketransforms</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_version</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.affines.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">affines</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.axangles.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axangles</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">derivations</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.euler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">euler</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quaternions</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.reflections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reflections</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shears</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taitbryan</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.zooms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zooms</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../devel/make_release.html">Guide to making a Transforms3d release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devel/refactor_plan.html">Refactoring plan</a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
       <li>Previous: <a href="../gimbal_lock.html" title="previous chapter">Gimbal lock</a></li>
-      <li>Next: <a href="transforms3d.html" title="next chapter"><code class="docutils literal"><span class="pre">transforms3d</span></code></a></li>
+      <li>Next: <a href="transforms3d.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">transforms3d</span></code></a></li>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/reference/index.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2016, Matthew Brett.
+      &copy;2009-2022, Matthew Brett, Christoph Gohlke.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/reference/index.txt"
+      <a href="../_sources/reference/index.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

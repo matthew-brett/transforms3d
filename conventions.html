@@ -1,30 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Conventions for transforms &mdash; transforms3d 0.3 documentation</title>
-    
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conventions for transforms &#8212; transforms3d 0.4 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.3 documentation" href="index.html" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Naming conventions" href="naming_conventions.html" />
     <link rel="prev" title="Transforms3d" href="index.html" />
    
@@ -33,13 +23,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="conventions-for-transforms">
@@ -48,11 +39,11 @@
 that are not universal, but seem common enough.</p>
 <p>Transformation matrices are matrices for application on the left,
 applied to coodinates on the right, stored as column vectors.</p>
-<p>Let&#8217;s say you are transforming a set of points. The points are vectors
-<span class="math">\(v^1, v^2 \ldots v^N\)</span>, and the vectors are composed of <span class="math">\(x\)</span>, <span class="math">\(y\)</span> and <span class="math">\(z\)</span>
-coordinates, so that <span class="math">\(v^1 = \left(x^1, y^1, z^1\right)\)</span>, then your points
-matrix <span class="math">\(P\)</span> would look like:</p>
-<div class="math">
+<p>Let’s say you are transforming a set of points. The points are vectors
+<span class="math notranslate nohighlight">\(v^1, v^2 \ldots v^N\)</span>, and the vectors are composed of <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(z\)</span>
+coordinates, so that <span class="math notranslate nohighlight">\(v^1 = \left(x^1, y^1, z^1\right)\)</span>, then your points
+matrix <span class="math notranslate nohighlight">\(P\)</span> would look like:</p>
+<div class="math notranslate nohighlight">
 \[\begin{split}P = \left(
   \begin{matrix}
   x^1, x^2, \ldots, x^N \\
@@ -60,18 +51,42 @@ matrix <span class="math">\(P\)</span> would look like:</p>
   z^1, z^2, \ldots, z^N \\
   \end{matrix}
   \right)\end{split}\]</div>
-<p>If we are applying a 3x3 transformation matrix <span class="math">\(M\)</span>, to transform points
-<span class="math">\(P\)</span>, then the transformed points <span class="math">\(v^{\prime}\)</span> are given by:</p>
-<div class="math">
+<p>If we are applying a 3x3 transformation matrix <span class="math notranslate nohighlight">\(M\)</span>, to transform points
+<span class="math notranslate nohighlight">\(P\)</span>, then the transformed points <span class="math notranslate nohighlight">\(v^{\prime}\)</span> are given by:</p>
+<div class="math notranslate nohighlight">
 \[v^\prime = M \cdot P\]</div>
 </div>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">transforms3d</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Conventions for transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="naming_conventions.html">Naming conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gimbal_lock.html">Gimbal lock</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="devel/make_release.html">Guide to making a Transforms3d release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="devel/refactor_plan.html">Refactoring plan</a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
@@ -80,36 +95,37 @@ matrix <span class="math">\(P\)</span> would look like:</p>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/conventions.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2016, Matthew Brett.
+      &copy;2009-2022, Matthew Brett, Christoph Gohlke.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/conventions.txt"
+      <a href="_sources/conventions.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

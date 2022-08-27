@@ -1,30 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Guide to making a transforms3d release &mdash; transforms3d 0.3 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guide to making a Transforms3d release &#8212; transforms3d 0.4 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.3 documentation" href="../index.html" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Refactoring plan" href="refactor_plan.html" />
     <link rel="prev" title="Glossary" href="../glossary.html" />
    
@@ -33,82 +22,77 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="guide-to-making-a-transforms3d-release">
-<span id="release-guide"></span><h1>Guide to making a transforms3d release<a class="headerlink" href="#guide-to-making-a-transforms3d-release" title="Permalink to this headline">¶</a></h1>
-<p>A guide for developers who are doing a transforms3d release</p>
+<span id="release-guide"></span><h1>Guide to making a Transforms3d release<a class="headerlink" href="#guide-to-making-a-transforms3d-release" title="Permalink to this headline">¶</a></h1>
+<p>A guide for developers who are doing a Transforms3d release</p>
 <div class="section" id="release-checklist">
 <span id="id1"></span><h2>Release checklist<a class="headerlink" href="#release-checklist" title="Permalink to this headline">¶</a></h2>
 <ul>
-<li><p class="first">Review the open list of <a class="reference external" href="http://github.com/matthew-brett/transforms3d/issues">transforms3d issues</a>.  Check whether there are
+<li><p>Review the open list of <a class="reference external" href="http://github.com/matthew-brett/transforms3d/issues">transforms3d issues</a>.  Check whether there are
 outstanding issues that can be closed, and whether there are any issues that
-should delay the release.  Label them !</p>
-</li>
-<li><p class="first">Review and update the release notes.  Review and update the <code class="file docutils literal"><span class="pre">Changelog</span></code>
+should delay the release.  Label them !</p></li>
+<li><p>Review and update the release notes.  Review and update the <code class="file docutils literal notranslate"><span class="pre">Changelog</span></code>
 file.  Get a partial list of contributors with something like:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">shortlog</span> <span class="o">-</span><span class="n">ns</span> <span class="mf">0.6</span><span class="o">.</span><span class="mf">0.</span><span class="o">.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">shortlog</span> <span class="o">-</span><span class="n">ns</span> <span class="mf">0.6.0</span><span class="o">..</span>
 </pre></div>
 </div>
-<p>where <code class="docutils literal"><span class="pre">0.6.0</span></code> was the last release tag name.</p>
-<p>Then manually go over <code class="docutils literal"><span class="pre">git</span> <span class="pre">shortlog</span> <span class="pre">0.6.0..</span></code> to make sure the release notes
+<p>where <code class="docutils literal notranslate"><span class="pre">0.6.0</span></code> was the last release tag name.</p>
+<p>Then manually go over <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">shortlog</span> <span class="pre">0.6.0..</span></code> to make sure the release notes
 are as complete as possible and that every contributor was recognized.</p>
 </li>
-<li><p class="first">Use the opportunity to update the <code class="docutils literal"><span class="pre">.mailmap</span></code> file if there are any
-duplicate authors listed from <code class="docutils literal"><span class="pre">git</span> <span class="pre">shortlog</span> <span class="pre">-ns</span></code>.</p>
-</li>
-<li><p class="first">Add any new authors to the <code class="docutils literal"><span class="pre">AUTHORS</span></code> file.  Add any new entries to the
-<code class="docutils literal"><span class="pre">THANKS</span></code> file.</p>
-</li>
-<li><p class="first">Check the copyright years in <code class="docutils literal"><span class="pre">doc/conf.py</span></code> and <code class="docutils literal"><span class="pre">LICENSE</span></code></p>
-</li>
-<li><p class="first">If you have <a class="reference external" href="https://travis-ci.org">travis-ci</a> building set up you might want to push the code in its
+<li><p>Use the opportunity to update the <code class="docutils literal notranslate"><span class="pre">.mailmap</span></code> file if there are any
+duplicate authors listed from <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">shortlog</span> <span class="pre">-ns</span></code>.</p></li>
+<li><p>Add any new authors to the <code class="docutils literal notranslate"><span class="pre">AUTHORS</span></code> file.  Add any new entries to the
+<code class="docutils literal notranslate"><span class="pre">THANKS</span></code> file.</p></li>
+<li><p>Check the copyright years in <code class="docutils literal notranslate"><span class="pre">doc/conf.py</span></code> and <code class="docutils literal notranslate"><span class="pre">LICENSE</span></code></p></li>
+<li><p>If you have <a class="reference external" href="https://travis-ci.org">travis-ci</a> building set up you might want to push the code in its
 current state to a branch that will build, e.g:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">branch</span> <span class="o">-</span><span class="n">D</span> <span class="n">pre</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">test</span> <span class="c1"># in case branch already exists</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">branch</span> <span class="o">-</span><span class="n">D</span> <span class="n">pre</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">test</span> <span class="c1"># in case branch already exists</span>
 <span class="n">git</span> <span class="n">co</span> <span class="o">-</span><span class="n">b</span> <span class="n">pre</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">test</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Clean:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clean</span> <span class="o">-</span><span class="n">fxd</span>
+<li><p>Clean:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clean</span> <span class="o">-</span><span class="n">fxd</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Make sure all tests pass on your local machine (from the transforms3d root
+<li><p>Make sure all tests pass on your local machine (from the Transforms3d root
 directory):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nosetests</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">doctest</span> <span class="n">transforms3d</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pytest</span> <span class="o">--</span><span class="n">doctest</span><span class="o">-</span><span class="n">modules</span> <span class="n">transforms3d</span>
 </pre></div>
 </div>
-<p>Do this on a Python 2 and Python 3 setup.</p>
 </li>
-<li><p class="first">Run the same tests after installing into a virtualenv, to test that
+<li><p>Run the same tests after installing into a virtualenv, to test that
 installing works correctly:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mkvirtualenv</span> <span class="n">transforms3d</span><span class="o">-</span><span class="n">test</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">nose</span> <span class="n">wheel</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkvirtualenv</span> <span class="n">transforms3d</span><span class="o">-</span><span class="n">test</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">pytest</span> <span class="n">wheel</span>
 <span class="n">git</span> <span class="n">clean</span> <span class="o">-</span><span class="n">fxd</span>
 <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
 <span class="n">mkdir</span> <span class="n">for_test</span>
 <span class="n">cd</span> <span class="n">for_test</span>
-<span class="n">nosetests</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">doctest</span> <span class="n">transforms3d</span>
+<span class="n">pytest</span> <span class="o">--</span><span class="n">doctest</span><span class="o">-</span><span class="n">modules</span> <span class="n">transforms3d</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Check the documentation doctests:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">doc</span>
+<li><p>Check the documentation Doctests:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">doc</span>
 <span class="n">make</span> <span class="n">doctest</span>
 <span class="n">cd</span> <span class="o">..</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">The release should now be ready.</p>
-</li>
+<li><p>The release should now be ready.</p></li>
 </ul>
 </div>
 <div class="section" id="doing-the-release">
@@ -117,74 +101,77 @@ installing works correctly:</p>
 <a class="reference external" href="http://pypi.python.org/pypi">pypi</a>, review, fix, rebase, until all is good.  Then and only then do you push
 to upstream on github.</p>
 <ul>
-<li><p class="first">Make a signed annotated tag for the release with tag of form <code class="docutils literal"><span class="pre">0.6.0</span></code>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">tag</span> <span class="o">-</span><span class="n">sm</span> <span class="s1">&#39;Fifth public release&#39;</span> <span class="mf">0.6</span><span class="o">.</span><span class="mi">0</span>
+<li><p>Make a signed annotated tag for the release with tag of form <code class="docutils literal notranslate"><span class="pre">0.6.0</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">tag</span> <span class="o">-</span><span class="n">sm</span> <span class="s1">&#39;Fifth public release&#39;</span> <span class="mf">0.6.0</span>
 </pre></div>
 </div>
-<p>Because we&#8217;re using <a class="reference external" href="https://github.com/warner/python-versioneer">versioneer</a> it is the tag which sets the package
+<p>Because we’re using <a class="reference external" href="https://github.com/warner/python-versioneer">versioneer</a> it is the tag which sets the package
 version.</p>
 </li>
-<li><p class="first">Once everything looks good, upload the source release to PyPi.  See
+<li><p>Once everything looks good, upload the source release to PyPi.  See
 <a class="reference external" href="http://packages.python.org/an_example_pypi_project/setuptools.html">setuptools intro</a>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">register</span>
-<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">sdist</span> <span class="o">--</span><span class="n">formats</span><span class="o">=</span><span class="n">gztar</span><span class="p">,</span><span class="nb">zip</span> <span class="n">upload</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">sdist</span>
+<span class="n">twine</span> <span class="n">upload</span> <span class="o">-</span><span class="n">s</span> <span class="n">dist</span><span class="o">/*</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Upload wheels by building in virtualenvs, something like:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">workon</span> <span class="n">py27</span>
-<span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="n">build</span>
-<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">bdist_wheel</span> <span class="n">upload</span>
-<span class="n">workon</span> <span class="n">py33</span>
-<span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="n">build</span>
-<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">bdist_wheel</span> <span class="n">upload</span>
-<span class="n">workon</span> <span class="n">py34</span>
-<span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="n">build</span>
-<span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">bdist_wheel</span> <span class="n">upload</span>
+<li><p>Remember you’ll need your <code class="docutils literal notranslate"><span class="pre">~/.pypirc</span></code> file set up right for this to work.
+See <a class="reference external" href="http://packages.python.org/an_example_pypi_project/setuptools.html">setuptools intro</a>.  If you have 2-factor authentication, the file may
+look something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">pypi</span><span class="p">]</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">__token__</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Remember you&#8217;ll need your <code class="docutils literal"><span class="pre">~/.pypirc</span></code> file set up right for this to work.
-See <a class="reference external" href="http://packages.python.org/an_example_pypi_project/setuptools.html">setuptools intro</a>.  The file should look something like this:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">distutils</span><span class="p">]</span>
-<span class="n">index</span><span class="o">-</span><span class="n">servers</span> <span class="o">=</span>
-    <span class="n">pypi</span>
-
-<span class="p">[</span><span class="n">pypi</span><span class="p">]</span>
-<span class="n">username</span><span class="p">:</span><span class="n">your</span><span class="o">.</span><span class="n">pypi</span><span class="o">.</span><span class="n">username</span>
-<span class="n">password</span><span class="p">:</span><span class="n">your</span><span class="o">-</span><span class="n">password</span>
-
-<span class="p">[</span><span class="n">server</span><span class="o">-</span><span class="n">login</span><span class="p">]</span>
-<span class="n">username</span><span class="p">:</span><span class="n">your</span><span class="o">.</span><span class="n">pypi</span><span class="o">.</span><span class="n">username</span>
-<span class="n">password</span><span class="p">:</span><span class="n">your</span><span class="o">-</span><span class="n">password</span>
+<li><p>Check how everything looks on Pypi - the description, the packages.  If
+necessary delete the release and try again if it doesn’t look right.</p></li>
+<li><p>Push the tag with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">--tags</span></code></p></li>
+<li><p>Upload the docs with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>  <span class="c1"># if you haven&#39;t done this already</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">doc</span><span class="o">-</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">cd</span> <span class="n">doc</span>
+<span class="n">make</span> <span class="n">github</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Check how everything looks on pypi - the description, the packages.  If
-necessary delete the release and try again if it doesn&#8217;t look right.</p>
-</li>
-<li><p class="first">Push the tag with <code class="docutils literal"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">0.6.0</span></code></p>
-</li>
-<li><p class="first">Announce to the mailing lists.  With fear and trembling.</p>
-</li>
+<li><p>Announce to the mailing lists.  With fear and trembling.</p></li>
 </ul>
 </div>
 </div>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Guide to making a transforms3d release</a><ul>
-<li><a class="reference internal" href="#release-checklist">Release checklist</a></li>
-<li><a class="reference internal" href="#doing-the-release">Doing the release</a></li>
+<h1 class="logo"><a href="../index.html">transforms3d</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../conventions.html">Conventions for transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../naming_conventions.html">Naming conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gimbal_lock.html">Gimbal lock</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Guide to making a Transforms3d release</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#release-checklist">Release checklist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#doing-the-release">Doing the release</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="refactor_plan.html">Refactoring plan</a></li>
 </ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -194,36 +181,37 @@ necessary delete the release and try again if it doesn&#8217;t look right.</p>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/devel/make_release.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2016, Matthew Brett.
+      &copy;2009-2022, Matthew Brett, Christoph Gohlke.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/devel/make_release.txt"
+      <a href="../_sources/devel/make_release.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

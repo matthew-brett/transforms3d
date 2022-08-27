@@ -1,31 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>euler &mdash; transforms3d 0.3 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>euler &#8212; transforms3d 0.4 documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="transforms3d 0.3 documentation" href="../index.html" />
-    <link rel="up" title="API Reference" href="index.html" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="quaternions" href="transforms3d.quaternions.html" />
     <link rel="prev" title="derivations" href="transforms3d.derivations.html" />
    
@@ -34,70 +23,71 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-transforms3d.euler">
-<span id="euler"></span><h1><code class="xref py py-mod docutils literal"><span class="pre">euler</span></code><a class="headerlink" href="#module-transforms3d.euler" title="Permalink to this headline">¶</a></h1>
+<span id="euler"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">euler</span></code><a class="headerlink" href="#module-transforms3d.euler" title="Permalink to this headline">¶</a></h1>
 <p>Generic Euler rotations</p>
 <p>See:</p>
 <ul class="simple">
-<li><a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix">http://en.wikipedia.org/wiki/Rotation_matrix</a></li>
-<li><a class="reference external" href="http://en.wikipedia.org/wiki/Euler_angles">http://en.wikipedia.org/wiki/Euler_angles</a></li>
-<li><a class="reference external" href="http://mathworld.wolfram.com/EulerAngles.html">http://mathworld.wolfram.com/EulerAngles.html</a></li>
+<li><p><a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix">http://en.wikipedia.org/wiki/Rotation_matrix</a></p></li>
+<li><p><a class="reference external" href="http://en.wikipedia.org/wiki/Euler_angles">http://en.wikipedia.org/wiki/Euler_angles</a></p></li>
+<li><p><a class="reference external" href="http://mathworld.wolfram.com/EulerAngles.html">http://mathworld.wolfram.com/EulerAngles.html</a></p></li>
 </ul>
 <p>See also: <em>Representing Attitude with Euler Angles and Quaternions: A
 Reference</em> (2006) by James Diebel. A cached PDF link last found here:</p>
 <p><a class="reference external" href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.110.5134">http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.110.5134</a></p>
 <div class="section" id="defining-rotations">
 <h2>Defining rotations<a class="headerlink" href="#defining-rotations" title="Permalink to this headline">¶</a></h2>
-<p>Euler&#8217;s rotation theorem tells us that any rotation in 3D can be described by 3
-angles.  Let&#8217;s call the 3 angles the <em>Euler angle vector</em> and call the angles
-in the vector <span class="math">\(alpha\)</span>, <span class="math">\(beta\)</span> and <span class="math">\(gamma\)</span>.  The vector is [
-<span class="math">\(alpha\)</span>, <span class="math">\(beta\)</span>. <span class="math">\(gamma\)</span> ] and, in this description, the
+<p>Euler’s rotation theorem tells us that any rotation in 3D can be described by 3
+angles.  Let’s call the 3 angles the <em>Euler angle vector</em> and call the angles
+in the vector <span class="math notranslate nohighlight">\(alpha\)</span>, <span class="math notranslate nohighlight">\(beta\)</span> and <span class="math notranslate nohighlight">\(gamma\)</span>.  The vector is [
+<span class="math notranslate nohighlight">\(alpha\)</span>, <span class="math notranslate nohighlight">\(beta\)</span>. <span class="math notranslate nohighlight">\(gamma\)</span> ] and, in this description, the
 order of the parameters specifies the order in which the rotations occur (so
-the rotation corresponding to <span class="math">\(alpha\)</span> is applied first).</p>
+the rotation corresponding to <span class="math notranslate nohighlight">\(alpha\)</span> is applied first).</p>
 <p>In order to specify the meaning of an <em>Euler angle vector</em> we need to specify
-the axes around which each of the rotations corresponding to <span class="math">\(alpha\)</span>,
-<span class="math">\(beta\)</span> and <span class="math">\(gamma\)</span> will occur.</p>
-<p>There are therefore three axes for the rotations <span class="math">\(alpha\)</span>, <span class="math">\(beta\)</span>
-and <span class="math">\(gamma\)</span>; let&#8217;s call them <span class="math">\(i\)</span> <span class="math">\(j\)</span>, <span class="math">\(k\)</span>.</p>
-<p>Let us express the rotation <span class="math">\(alpha\)</span> around axis <cite>i</cite> as a 3 by 3 rotation
-matrix <cite>A</cite>.  Similarly <span class="math">\(beta\)</span> around <cite>j</cite> becomes 3 x 3 matrix <cite>B</cite> and
-<span class="math">\(gamma\)</span> around <cite>k</cite> becomes matrix <cite>G</cite>.  Then the whole rotation expressed
-by the Euler angle vector [ <span class="math">\(alpha\)</span>, <span class="math">\(beta\)</span>. <span class="math">\(gamma\)</span> ], <cite>R</cite>
+the axes around which each of the rotations corresponding to <span class="math notranslate nohighlight">\(alpha\)</span>,
+<span class="math notranslate nohighlight">\(beta\)</span> and <span class="math notranslate nohighlight">\(gamma\)</span> will occur.</p>
+<p>There are therefore three axes for the rotations <span class="math notranslate nohighlight">\(alpha\)</span>, <span class="math notranslate nohighlight">\(beta\)</span>
+and <span class="math notranslate nohighlight">\(gamma\)</span>; let’s call them <span class="math notranslate nohighlight">\(i\)</span> <span class="math notranslate nohighlight">\(j\)</span>, <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<p>Let us express the rotation <span class="math notranslate nohighlight">\(alpha\)</span> around axis <cite>i</cite> as a 3 by 3 rotation
+matrix <cite>A</cite>.  Similarly <span class="math notranslate nohighlight">\(beta\)</span> around <cite>j</cite> becomes 3 x 3 matrix <cite>B</cite> and
+<span class="math notranslate nohighlight">\(gamma\)</span> around <cite>k</cite> becomes matrix <cite>G</cite>.  Then the whole rotation expressed
+by the Euler angle vector [ <span class="math notranslate nohighlight">\(alpha\)</span>, <span class="math notranslate nohighlight">\(beta\)</span>. <span class="math notranslate nohighlight">\(gamma\)</span> ], <cite>R</cite>
 is given by:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>See <a class="reference external" href="http://mathworld.wolfram.com/EulerAngles.html">http://mathworld.wolfram.com/EulerAngles.html</a></p>
-<p>The order <span class="math">\(G B A\)</span> expresses the fact that the rotations are
-performed in the order of the vector (<span class="math">\(alpha\)</span> around axis <cite>i</cite> =
+<p>The order <span class="math notranslate nohighlight">\(G B A\)</span> expresses the fact that the rotations are
+performed in the order of the vector (<span class="math notranslate nohighlight">\(alpha\)</span> around axis <cite>i</cite> =
 <cite>A</cite> first).</p>
 <p>To convert a given Euler angle vector to a meaningful rotation, and a
 rotation matrix, we need to define:</p>
 <ul class="simple">
-<li>the axes <cite>i</cite>, <cite>j</cite>, <cite>k</cite>;</li>
-<li>whether the rotations move the axes as they are applied (intrinsic
+<li><p>the axes <cite>i</cite>, <cite>j</cite>, <cite>k</cite>;</p></li>
+<li><p>whether the rotations move the axes as they are applied (intrinsic
 rotations) - compared the situation where the axes stay fixed and the
-vectors move within the axis frame (extrinsic);</li>
-<li>whether a rotation matrix should be applied on the left of a vector to
+vectors move within the axis frame (extrinsic);</p></li>
+<li><p>whether a rotation matrix should be applied on the left of a vector to
 be transformed (vectors are column vectors) or on the right (vectors
-are row vectors);</li>
-<li>the handedness of the coordinate system.</li>
+are row vectors);</p></li>
+<li><p>the handedness of the coordinate system.</p></li>
 </ul>
 <p>See: <a class="reference external" href="http://en.wikipedia.org/wiki/Rotation_matrix#Ambiguities">http://en.wikipedia.org/wiki/Rotation_matrix#Ambiguities</a></p>
 <p>This module implements intrinsic and extrinsic axes, with standard conventions
 for axes <cite>i</cite>, <cite>j</cite>, <cite>k</cite>.  We assume that the matrix should be applied on the
 left of the vector, and right-handed coordinate systems.  To get the matrix to
 apply on the right of the vector, you need the transpose of the matrix we
-supply here, by the matrix transpose rule: <span class="math">\((M . V)^T = V^T M^T\)</span>.</p>
+supply here, by the matrix transpose rule: <span class="math notranslate nohighlight">\((M . V)^T = V^T M^T\)</span>.</p>
 </div>
 <div class="section" id="rotation-axes">
 <h2>Rotation axes<a class="headerlink" href="#rotation-axes" title="Permalink to this headline">¶</a></h2>
@@ -121,16 +111,16 @@ matrices for which you can specify any of the 24 different conventions.</p>
 <h2>Specifying angle conventions<a class="headerlink" href="#specifying-angle-conventions" title="Permalink to this headline">¶</a></h2>
 <p>You specify conventions for interpreting the sequence of angles with a four
 character string.</p>
-<p>The first character is &#8216;r&#8217; (rotating == intrinsic), or &#8216;s&#8217; (static ==
+<p>The first character is ‘r’ (rotating == intrinsic), or ‘s’ (static ==
 extrinsic).</p>
-<p>The next three characters give the axis (&#8216;x&#8217;, &#8216;y&#8217; or &#8216;z&#8217;) about which to
+<p>The next three characters give the axis (‘x’, ‘y’ or ‘z’) about which to
 perform the rotation, in the order in which the rotations will be performed.</p>
-<p>For example the string &#8216;szyx&#8217; specifies that the angles should be interpreted
+<p>For example the string ‘szyx’ specifies that the angles should be interpreted
 relative to extrinsic (static) coordinate axes, and be performed in the order:
 rotation about z axis; rotation about y axis; rotation about x axis. This
 is a relatively common convention, with customized implementations in
-<code class="xref py py-mod docutils literal"><span class="pre">taitbryan</span></code> in this package.</p>
-<p>The string &#8216;rzxz&#8217; specifies that the angles should be interpreted
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">taitbryan</span></code> in this package.</p>
+<p>The string ‘rzxz’ specifies that the angles should be interpreted
 relative to intrinsic (rotating) coordinate axes, and be performed in the
 order: rotation about z axis; rotation about the rotated x axis; rotation
 about the rotated z axis. Wolfram Mathworld claim this is the most common
@@ -148,148 +138,144 @@ negative.</p>
 <div class="section" id="terms-used-in-function-names">
 <h2>Terms used in function names<a class="headerlink" href="#terms-used-in-function-names" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><em>mat</em> : array shape (3, 3) (3D non-homogenous coordinates)</li>
-<li><em>euler</em> : (sequence of) rotation angles about the z, y, x axes (in that
-order)</li>
-<li><em>axangle</em> : rotations encoded by axis vector and angle scalar</li>
-<li><em>quat</em> : quaternion shape (4,)</li>
+<li><p><em>mat</em> : array shape (3, 3) (3D non-homogenous coordinates)</p></li>
+<li><p><em>euler</em> : (sequence of) rotation angles about the z, y, x axes (in that
+order)</p></li>
+<li><p><em>axangle</em> : rotations encoded by axis vector and angle scalar</p></li>
+<li><p><em>quat</em> : quaternion shape (4,)</p></li>
 </ul>
 </div>
-<table border="1" class="longtable docutils">
+<table class="longtable docutils align-default">
 <colgroup>
-<col width="10%" />
-<col width="90%" />
+<col style="width: 10%" />
+<col style="width: 90%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.euler.EulerFuncs" title="transforms3d.euler.EulerFuncs"><code class="xref py py-obj docutils literal"><span class="pre">EulerFuncs</span></code></a>(axes)</td>
-<td>Namespace for Euler angles functions with given axes specification</td>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transforms3d.euler.EulerFuncs" title="transforms3d.euler.EulerFuncs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EulerFuncs</span></code></a>(axes)</p></td>
+<td><p>Namespace for Euler angles functions with given axes specification</p></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#transforms3d.euler.TBZYX" title="transforms3d.euler.TBZYX"><code class="xref py py-obj docutils literal"><span class="pre">TBZYX</span></code></a>()</td>
-<td>Namespace for Tait-Bryan ZYX Euler angle convention functions</td>
+<tr class="row-even"><td><p><a class="reference internal" href="#transforms3d.euler.TBZYX" title="transforms3d.euler.TBZYX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TBZYX</span></code></a>()</p></td>
+<td><p>Namespace for Tait-Bryan ZYX Euler angle convention functions</p></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.euler.axangle2euler" title="transforms3d.euler.axangle2euler"><code class="xref py py-obj docutils literal"><span class="pre">axangle2euler</span></code></a>(vector,&nbsp;theta[,&nbsp;axes])</td>
-<td>Convert axis, angle pair to Euler angles</td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transforms3d.euler.axangle2euler" title="transforms3d.euler.axangle2euler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">axangle2euler</span></code></a>(vector, theta[, axes])</p></td>
+<td><p>Convert axis, angle pair to Euler angles</p></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#transforms3d.euler.euler2axangle" title="transforms3d.euler.euler2axangle"><code class="xref py py-obj docutils literal"><span class="pre">euler2axangle</span></code></a>(ai,&nbsp;aj,&nbsp;ak[,&nbsp;axes])</td>
-<td>Return angle, axis corresponding to Euler angles, axis specification</td>
+<tr class="row-even"><td><p><a class="reference internal" href="#transforms3d.euler.euler2axangle" title="transforms3d.euler.euler2axangle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">euler2axangle</span></code></a>(ai, aj, ak[, axes])</p></td>
+<td><p>Return angle, axis corresponding to Euler angles, axis specification</p></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.euler.euler2mat" title="transforms3d.euler.euler2mat"><code class="xref py py-obj docutils literal"><span class="pre">euler2mat</span></code></a>(ai,&nbsp;aj,&nbsp;ak[,&nbsp;axes])</td>
-<td>Return rotation matrix from Euler angles and axis sequence.</td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transforms3d.euler.euler2mat" title="transforms3d.euler.euler2mat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">euler2mat</span></code></a>(ai, aj, ak[, axes])</p></td>
+<td><p>Return rotation matrix from Euler angles and axis sequence.</p></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#transforms3d.euler.euler2quat" title="transforms3d.euler.euler2quat"><code class="xref py py-obj docutils literal"><span class="pre">euler2quat</span></code></a>(ai,&nbsp;aj,&nbsp;ak[,&nbsp;axes])</td>
-<td>Return <cite>quaternion</cite> from Euler angles and axis sequence <cite>axes</cite></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#transforms3d.euler.euler2quat" title="transforms3d.euler.euler2quat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">euler2quat</span></code></a>(ai, aj, ak[, axes])</p></td>
+<td><p>Return <cite>quaternion</cite> from Euler angles and axis sequence <cite>axes</cite></p></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#transforms3d.euler.mat2euler" title="transforms3d.euler.mat2euler"><code class="xref py py-obj docutils literal"><span class="pre">mat2euler</span></code></a>(mat[,&nbsp;axes])</td>
-<td>Return Euler angles from rotation matrix for specified axis sequence.</td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#transforms3d.euler.mat2euler" title="transforms3d.euler.mat2euler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mat2euler</span></code></a>(mat[, axes])</p></td>
+<td><p>Return Euler angles from rotation matrix for specified axis sequence.</p></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#transforms3d.euler.quat2euler" title="transforms3d.euler.quat2euler"><code class="xref py py-obj docutils literal"><span class="pre">quat2euler</span></code></a>(quaternion[,&nbsp;axes])</td>
-<td>Euler angles from <cite>quaternion</cite> for specified axis sequence <cite>axes</cite></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#transforms3d.euler.quat2euler" title="transforms3d.euler.quat2euler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quat2euler</span></code></a>(quaternion[, axes])</p></td>
+<td><p>Euler angles from <cite>quaternion</cite> for specified axis sequence <cite>axes</cite></p></td>
 </tr>
 </tbody>
 </table>
 <div class="section" id="eulerfuncs">
-<h2><a class="reference internal" href="#transforms3d.euler.EulerFuncs" title="transforms3d.euler.EulerFuncs"><code class="xref py py-class docutils literal"><span class="pre">EulerFuncs</span></code></a><a class="headerlink" href="#eulerfuncs" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<h2><a class="reference internal" href="#transforms3d.euler.EulerFuncs" title="transforms3d.euler.EulerFuncs"><code class="xref py py-class docutils literal notranslate"><span class="pre">EulerFuncs</span></code></a><a class="headerlink" href="#eulerfuncs" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
 <dt id="transforms3d.euler.EulerFuncs">
-<em class="property">class </em><code class="descclassname">transforms3d.euler.</code><code class="descname">EulerFuncs</code><span class="sig-paren">(</span><em>axes</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">transforms3d.euler.</span></code><code class="sig-name descname"><span class="pre">EulerFuncs</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Namespace for Euler angles functions with given axes specification</p>
-<dl class="method">
+<dl class="py method">
 <dt id="transforms3d.euler.EulerFuncs.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>axes</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize namespace for Euler angles functions</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>axes</strong> : str</p>
-<blockquote class="last">
-<div><p>Axis specification; one of 24 axis sequences as string or encoded
-tuple - e.g. <code class="docutils literal"><span class="pre">sxyz</span></code> (the default).</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>axes</strong><span class="classifier">str</span></dt><dd><p>Axis specification; one of 24 axis sequences as string or encoded
+tuple - e.g. <code class="docutils literal notranslate"><span class="pre">sxyz</span></code> (the default).</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="transforms3d.euler.EulerFuncs.axangle2euler">
-<code class="descname">axangle2euler</code><span class="sig-paren">(</span><em>vector</em>, <em>theta</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs.axangle2euler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">axangle2euler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs.axangle2euler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert axis, angle pair to Euler angles</p>
-<p>See <a class="reference internal" href="#transforms3d.euler.axangle2euler" title="transforms3d.euler.axangle2euler"><code class="xref py py-func docutils literal"><span class="pre">axangle2euler()</span></code></a> for details.</p>
+<p>See <a class="reference internal" href="#transforms3d.euler.axangle2euler" title="transforms3d.euler.axangle2euler"><code class="xref py py-func docutils literal notranslate"><span class="pre">axangle2euler()</span></code></a> for details.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="transforms3d.euler.EulerFuncs.euler2axangle">
-<code class="descname">euler2axangle</code><span class="sig-paren">(</span><em>ai</em>, <em>aj</em>, <em>ak</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs.euler2axangle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">euler2axangle</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ak</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs.euler2axangle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Angle, axis corresponding to Euler angles</p>
-<p>See <a class="reference internal" href="#transforms3d.euler.euler2axangle" title="transforms3d.euler.euler2axangle"><code class="xref py py-func docutils literal"><span class="pre">euler2axangle()</span></code></a> for details.</p>
+<p>See <a class="reference internal" href="#transforms3d.euler.euler2axangle" title="transforms3d.euler.euler2axangle"><code class="xref py py-func docutils literal notranslate"><span class="pre">euler2axangle()</span></code></a> for details.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="transforms3d.euler.EulerFuncs.euler2mat">
-<code class="descname">euler2mat</code><span class="sig-paren">(</span><em>ai</em>, <em>aj</em>, <em>ak</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs.euler2mat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">euler2mat</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ak</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs.euler2mat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return rotation matrix from Euler angles</p>
-<p>See <a class="reference internal" href="#transforms3d.euler.euler2mat" title="transforms3d.euler.euler2mat"><code class="xref py py-func docutils literal"><span class="pre">euler2mat()</span></code></a> for details.</p>
+<p>See <a class="reference internal" href="#transforms3d.euler.euler2mat" title="transforms3d.euler.euler2mat"><code class="xref py py-func docutils literal notranslate"><span class="pre">euler2mat()</span></code></a> for details.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="transforms3d.euler.EulerFuncs.euler2quat">
-<code class="descname">euler2quat</code><span class="sig-paren">(</span><em>ai</em>, <em>aj</em>, <em>ak</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs.euler2quat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">euler2quat</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ak</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs.euler2quat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return <cite>quaternion</cite> from Euler angles</p>
-<p>See <a class="reference internal" href="#transforms3d.euler.euler2quat" title="transforms3d.euler.euler2quat"><code class="xref py py-func docutils literal"><span class="pre">euler2quat()</span></code></a> for details.</p>
+<p>See <a class="reference internal" href="#transforms3d.euler.euler2quat" title="transforms3d.euler.euler2quat"><code class="xref py py-func docutils literal notranslate"><span class="pre">euler2quat()</span></code></a> for details.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="transforms3d.euler.EulerFuncs.mat2euler">
-<code class="descname">mat2euler</code><span class="sig-paren">(</span><em>mat</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs.mat2euler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">mat2euler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs.mat2euler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return Euler angles from rotation matrix <cite>mat</cite></p>
-<p>See <a class="reference internal" href="#transforms3d.euler.mat2euler" title="transforms3d.euler.mat2euler"><code class="xref py py-func docutils literal"><span class="pre">mat2euler()</span></code></a> for details.</p>
+<p>See <a class="reference internal" href="#transforms3d.euler.mat2euler" title="transforms3d.euler.mat2euler"><code class="xref py py-func docutils literal notranslate"><span class="pre">mat2euler()</span></code></a> for details.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="transforms3d.euler.EulerFuncs.quat2euler">
-<code class="descname">quat2euler</code><span class="sig-paren">(</span><em>quat</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs.quat2euler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">quat2euler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.EulerFuncs.quat2euler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Euler angles from <cite>quaternion</cite></p>
-<p>See <a class="reference internal" href="#transforms3d.euler.quat2euler" title="transforms3d.euler.quat2euler"><code class="xref py py-func docutils literal"><span class="pre">quat2euler()</span></code></a> for details.</p>
+<p>See <a class="reference internal" href="#transforms3d.euler.quat2euler" title="transforms3d.euler.quat2euler"><code class="xref py py-func docutils literal notranslate"><span class="pre">quat2euler()</span></code></a> for details.</p>
 </dd></dl>
 
 </dd></dl>
 
 </div>
 <div class="section" id="tbzyx">
-<h2><a class="reference internal" href="#transforms3d.euler.TBZYX" title="transforms3d.euler.TBZYX"><code class="xref py py-class docutils literal"><span class="pre">TBZYX</span></code></a><a class="headerlink" href="#tbzyx" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<h2><a class="reference internal" href="#transforms3d.euler.TBZYX" title="transforms3d.euler.TBZYX"><code class="xref py py-class docutils literal notranslate"><span class="pre">TBZYX</span></code></a><a class="headerlink" href="#tbzyx" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
 <dt id="transforms3d.euler.TBZYX">
-<em class="property">class </em><code class="descclassname">transforms3d.euler.</code><code class="descname">TBZYX</code><a class="headerlink" href="#transforms3d.euler.TBZYX" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#transforms3d.euler.EulerFuncs" title="transforms3d.euler.EulerFuncs"><code class="xref py py-class docutils literal"><span class="pre">transforms3d.euler.EulerFuncs</span></code></a></p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">transforms3d.euler.</span></code><code class="sig-name descname"><span class="pre">TBZYX</span></code><a class="headerlink" href="#transforms3d.euler.TBZYX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#transforms3d.euler.EulerFuncs" title="transforms3d.euler.EulerFuncs"><code class="xref py py-class docutils literal notranslate"><span class="pre">transforms3d.euler.EulerFuncs</span></code></a></p>
 <p>Namespace for Tait-Bryan ZYX Euler angle convention functions</p>
-<dl class="method">
+<dl class="py method">
 <dt id="transforms3d.euler.TBZYX.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.TBZYX.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.TBZYX.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize Tait-Bryan ZYX namespace</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="transforms3d.euler.TBZYX.euler2mat">
-<code class="descname">euler2mat</code><span class="sig-paren">(</span><em>ai</em>, <em>aj</em>, <em>ak</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.TBZYX.euler2mat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">euler2mat</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ak</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.TBZYX.euler2mat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return rotation matrix from Euler angles</p>
-<p>See <a class="reference internal" href="transforms3d.taitbryan.html#transforms3d.taitbryan.euler2mat" title="transforms3d.taitbryan.euler2mat"><code class="xref py py-func docutils literal"><span class="pre">transforms3d.taitbryan.euler2mat()</span></code></a> for details.</p>
+<p>See <a class="reference internal" href="transforms3d.taitbryan.html#transforms3d.taitbryan.euler2mat" title="transforms3d.taitbryan.euler2mat"><code class="xref py py-func docutils literal notranslate"><span class="pre">transforms3d.taitbryan.euler2mat()</span></code></a> for details.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="transforms3d.euler.TBZYX.euler2quat">
-<code class="descname">euler2quat</code><span class="sig-paren">(</span><em>ai</em>, <em>aj</em>, <em>ak</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.TBZYX.euler2quat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">euler2quat</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ak</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.TBZYX.euler2quat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return <cite>quaternion</cite> from Euler angles</p>
-<p>See <a class="reference internal" href="transforms3d.taitbryan.html#transforms3d.taitbryan.euler2quat" title="transforms3d.taitbryan.euler2quat"><code class="xref py py-func docutils literal"><span class="pre">transforms3d.taitbryan.euler2quat()</span></code></a> for details.</p>
+<p>See <a class="reference internal" href="transforms3d.taitbryan.html#transforms3d.taitbryan.euler2quat" title="transforms3d.taitbryan.euler2quat"><code class="xref py py-func docutils literal notranslate"><span class="pre">transforms3d.taitbryan.euler2quat()</span></code></a> for details.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="transforms3d.euler.TBZYX.mat2euler">
-<code class="descname">mat2euler</code><span class="sig-paren">(</span><em>mat</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.TBZYX.mat2euler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">mat2euler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.TBZYX.mat2euler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return Euler angles from rotation matrix <cite>mat</cite></p>
-<p>See <a class="reference internal" href="transforms3d.taitbryan.html#transforms3d.taitbryan.mat2euler" title="transforms3d.taitbryan.mat2euler"><code class="xref py py-func docutils literal"><span class="pre">transforms3d.taitbryan.mat2euler()</span></code></a> for details.</p>
+<p>See <a class="reference internal" href="transforms3d.taitbryan.html#transforms3d.taitbryan.mat2euler" title="transforms3d.taitbryan.mat2euler"><code class="xref py py-func docutils literal notranslate"><span class="pre">transforms3d.taitbryan.mat2euler()</span></code></a> for details.</p>
 </dd></dl>
 
 </dd></dl>
@@ -297,47 +283,35 @@ tuple - e.g. <code class="docutils literal"><span class="pre">sxyz</span></code>
 </div>
 <div class="section" id="axangle2euler">
 <h2>axangle2euler<a class="headerlink" href="#axangle2euler" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.euler.axangle2euler">
-<code class="descclassname">transforms3d.euler.</code><code class="descname">axangle2euler</code><span class="sig-paren">(</span><em>vector</em>, <em>theta</em>, <em>axes='sxyz'</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.axangle2euler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.euler.</span></code><code class="sig-name descname"><span class="pre">axangle2euler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sxyz'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.axangle2euler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert axis, angle pair to Euler angles</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>vector</strong> : 3 element sequence</p>
-<blockquote>
-<div><p>vector specifying axis for rotation.</p>
-</div></blockquote>
-<p><strong>theta</strong> : scalar</p>
-<blockquote>
-<div><p>angle of rotation</p>
-</div></blockquote>
-<p><strong>axes</strong> : str, optional</p>
-<blockquote>
-<div><p>Axis specification; one of 24 axis sequences as string or encoded
-tuple - e.g. <code class="docutils literal"><span class="pre">sxyz</span></code> (the default).</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ai</strong> : float</p>
-<blockquote>
-<div><p>First rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-<p><strong>aj</strong> : float</p>
-<blockquote>
-<div><p>Second rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-<p><strong>ak</strong> : float</p>
-<blockquote class="last">
-<div><p>Third rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>vector</strong><span class="classifier">3 element sequence</span></dt><dd><p>vector specifying axis for rotation.</p>
+</dd>
+<dt><strong>theta</strong><span class="classifier">scalar</span></dt><dd><p>angle of rotation</p>
+</dd>
+<dt><strong>axes</strong><span class="classifier">str, optional</span></dt><dd><p>Axis specification; one of 24 axis sequences as string or encoded
+tuple - e.g. <code class="docutils literal notranslate"><span class="pre">sxyz</span></code> (the default).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>ai</strong><span class="classifier">float</span></dt><dd><p>First rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+<dt><strong>aj</strong><span class="classifier">float</span></dt><dd><p>Second rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+<dt><strong>ak</strong><span class="classifier">float</span></dt><dd><p>Third rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ai</span><span class="p">,</span> <span class="n">aj</span><span class="p">,</span> <span class="n">ak</span> <span class="o">=</span> <span class="n">axangle2euler</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ai</span><span class="p">,</span> <span class="n">aj</span><span class="p">,</span> <span class="n">ak</span> <span class="o">=</span> <span class="n">axangle2euler</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">((</span><span class="n">ai</span><span class="p">,</span> <span class="n">aj</span><span class="p">,</span> <span class="n">ak</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
@@ -347,47 +321,35 @@ tuple - e.g. <code class="docutils literal"><span class="pre">sxyz</span></code>
 </div>
 <div class="section" id="euler2axangle">
 <h2>euler2axangle<a class="headerlink" href="#euler2axangle" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.euler.euler2axangle">
-<code class="descclassname">transforms3d.euler.</code><code class="descname">euler2axangle</code><span class="sig-paren">(</span><em>ai</em>, <em>aj</em>, <em>ak</em>, <em>axes='sxyz'</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.euler2axangle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.euler.</span></code><code class="sig-name descname"><span class="pre">euler2axangle</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ak</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sxyz'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.euler2axangle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return angle, axis corresponding to Euler angles, axis specification</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ai</strong> : float</p>
-<blockquote>
-<div><p>First rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-<p><strong>aj</strong> : float</p>
-<blockquote>
-<div><p>Second rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-<p><strong>ak</strong> : float</p>
-<blockquote>
-<div><p>Third rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-<p><strong>axes</strong> : str, optional</p>
-<blockquote>
-<div><p>Axis specification; one of 24 axis sequences as string or encoded
-tuple - e.g. <code class="docutils literal"><span class="pre">sxyz</span></code> (the default).</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>vector</strong> : array shape (3,)</p>
-<blockquote>
-<div><p>axis around which rotation occurs</p>
-</div></blockquote>
-<p><strong>theta</strong> : scalar</p>
-<blockquote class="last">
-<div><p>angle of rotation</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ai</strong><span class="classifier">float</span></dt><dd><p>First rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+<dt><strong>aj</strong><span class="classifier">float</span></dt><dd><p>Second rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+<dt><strong>ak</strong><span class="classifier">float</span></dt><dd><p>Third rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+<dt><strong>axes</strong><span class="classifier">str, optional</span></dt><dd><p>Axis specification; one of 24 axis sequences as string or encoded
+tuple - e.g. <code class="docutils literal notranslate"><span class="pre">sxyz</span></code> (the default).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>vector</strong><span class="classifier">array shape (3,)</span></dt><dd><p>axis around which rotation occurs</p>
+</dd>
+<dt><strong>theta</strong><span class="classifier">scalar</span></dt><dd><p>angle of rotation</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">euler2axangle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;szyx&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">euler2axangle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;szyx&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">theta</span>
@@ -399,43 +361,33 @@ tuple - e.g. <code class="docutils literal"><span class="pre">sxyz</span></code>
 </div>
 <div class="section" id="euler2mat">
 <h2>euler2mat<a class="headerlink" href="#euler2mat" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.euler.euler2mat">
-<code class="descclassname">transforms3d.euler.</code><code class="descname">euler2mat</code><span class="sig-paren">(</span><em>ai</em>, <em>aj</em>, <em>ak</em>, <em>axes='sxyz'</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.euler2mat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.euler.</span></code><code class="sig-name descname"><span class="pre">euler2mat</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ak</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sxyz'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.euler2mat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return rotation matrix from Euler angles and axis sequence.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ai</strong> : float</p>
-<blockquote>
-<div><p>First rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-<p><strong>aj</strong> : float</p>
-<blockquote>
-<div><p>Second rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-<p><strong>ak</strong> : float</p>
-<blockquote>
-<div><p>Third rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-<p><strong>axes</strong> : str, optional</p>
-<blockquote>
-<div><p>Axis specification; one of 24 axis sequences as string or encoded
-tuple - e.g. <code class="docutils literal"><span class="pre">sxyz</span></code> (the default).</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>mat</strong> : array-like shape (3, 3) or (4, 4)</p>
-<blockquote class="last">
-<div><p>Rotation matrix or affine.</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ai</strong><span class="classifier">float</span></dt><dd><p>First rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+<dt><strong>aj</strong><span class="classifier">float</span></dt><dd><p>Second rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+<dt><strong>ak</strong><span class="classifier">float</span></dt><dd><p>Third rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+<dt><strong>axes</strong><span class="classifier">str, optional</span></dt><dd><p>Axis specification; one of 24 axis sequences as string or encoded
+tuple - e.g. <code class="docutils literal notranslate"><span class="pre">sxyz</span></code> (the default).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>mat</strong><span class="classifier">array (3, 3)</span></dt><dd><p>Rotation matrix or affine.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">euler2mat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;syxz&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">euler2mat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;syxz&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="o">-</span><span class="mf">1.34786452</span><span class="p">)</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">R</span> <span class="o">=</span> <span class="n">euler2mat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
@@ -448,43 +400,33 @@ tuple - e.g. <code class="docutils literal"><span class="pre">sxyz</span></code>
 </div>
 <div class="section" id="euler2quat">
 <h2>euler2quat<a class="headerlink" href="#euler2quat" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.euler.euler2quat">
-<code class="descclassname">transforms3d.euler.</code><code class="descname">euler2quat</code><span class="sig-paren">(</span><em>ai</em>, <em>aj</em>, <em>ak</em>, <em>axes='sxyz'</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.euler2quat" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.euler.</span></code><code class="sig-name descname"><span class="pre">euler2quat</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ai</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ak</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sxyz'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.euler2quat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return <cite>quaternion</cite> from Euler angles and axis sequence <cite>axes</cite></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ai</strong> : float</p>
-<blockquote>
-<div><p>First rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-<p><strong>aj</strong> : float</p>
-<blockquote>
-<div><p>Second rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-<p><strong>ak</strong> : float</p>
-<blockquote>
-<div><p>Third rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-<p><strong>axes</strong> : str, optional</p>
-<blockquote>
-<div><p>Axis specification; one of 24 axis sequences as string or encoded
-tuple - e.g. <code class="docutils literal"><span class="pre">sxyz</span></code> (the default).</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>quat</strong> : array shape (4,)</p>
-<blockquote class="last">
-<div><p>Quaternion in w, x, y z (real, then vector) format</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ai</strong><span class="classifier">float</span></dt><dd><p>First rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+<dt><strong>aj</strong><span class="classifier">float</span></dt><dd><p>Second rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+<dt><strong>ak</strong><span class="classifier">float</span></dt><dd><p>Third rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+<dt><strong>axes</strong><span class="classifier">str, optional</span></dt><dd><p>Axis specification; one of 24 axis sequences as string or encoded
+tuple - e.g. <code class="docutils literal notranslate"><span class="pre">sxyz</span></code> (the default).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>quat</strong><span class="classifier">array shape (4,)</span></dt><dd><p>Quaternion in w, x, y z (real, then vector) format</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">euler2quat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;ryxz&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">euler2quat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;ryxz&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.435953</span><span class="p">,</span> <span class="mf">0.310622</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.718287</span><span class="p">,</span> <span class="mf">0.444435</span><span class="p">])</span>
 <span class="go">True</span>
 </pre></div>
@@ -494,44 +436,34 @@ tuple - e.g. <code class="docutils literal"><span class="pre">sxyz</span></code>
 </div>
 <div class="section" id="mat2euler">
 <h2>mat2euler<a class="headerlink" href="#mat2euler" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.euler.mat2euler">
-<code class="descclassname">transforms3d.euler.</code><code class="descname">mat2euler</code><span class="sig-paren">(</span><em>mat</em>, <em>axes='sxyz'</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.mat2euler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.euler.</span></code><code class="sig-name descname"><span class="pre">mat2euler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sxyz'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.mat2euler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return Euler angles from rotation matrix for specified axis sequence.</p>
 <p>Note that many Euler angle triplets can describe one matrix.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>mat</strong> : array-like shape (3, 3) or (4, 4)</p>
-<blockquote>
-<div><p>Rotation matrix or affine.</p>
-</div></blockquote>
-<p><strong>axes</strong> : str, optional</p>
-<blockquote>
-<div><p>Axis specification; one of 24 axis sequences as string or encoded
-tuple - e.g. <code class="docutils literal"><span class="pre">sxyz</span></code> (the default).</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ai</strong> : float</p>
-<blockquote>
-<div><p>First rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-<p><strong>aj</strong> : float</p>
-<blockquote>
-<div><p>Second rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-<p><strong>ak</strong> : float</p>
-<blockquote class="last">
-<div><p>Third rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>mat</strong><span class="classifier">array-like shape (3, 3) or (4, 4)</span></dt><dd><p>Rotation matrix or affine.</p>
+</dd>
+<dt><strong>axes</strong><span class="classifier">str, optional</span></dt><dd><p>Axis specification; one of 24 axis sequences as string or encoded
+tuple - e.g. <code class="docutils literal notranslate"><span class="pre">sxyz</span></code> (the default).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>ai</strong><span class="classifier">float</span></dt><dd><p>First rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+<dt><strong>aj</strong><span class="classifier">float</span></dt><dd><p>Second rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+<dt><strong>ak</strong><span class="classifier">float</span></dt><dd><p>Third rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">R0</span> <span class="o">=</span> <span class="n">euler2mat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;syxz&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">R0</span> <span class="o">=</span> <span class="n">euler2mat</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;syxz&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">al</span><span class="p">,</span> <span class="n">be</span><span class="p">,</span> <span class="n">ga</span> <span class="o">=</span> <span class="n">mat2euler</span><span class="p">(</span><span class="n">R0</span><span class="p">,</span> <span class="s1">&#39;syxz&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">R1</span> <span class="o">=</span> <span class="n">euler2mat</span><span class="p">(</span><span class="n">al</span><span class="p">,</span> <span class="n">be</span><span class="p">,</span> <span class="n">ga</span><span class="p">,</span> <span class="s1">&#39;syxz&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">R0</span><span class="p">,</span> <span class="n">R1</span><span class="p">)</span>
@@ -543,43 +475,33 @@ tuple - e.g. <code class="docutils literal"><span class="pre">sxyz</span></code>
 </div>
 <div class="section" id="quat2euler">
 <h2>quat2euler<a class="headerlink" href="#quat2euler" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="transforms3d.euler.quat2euler">
-<code class="descclassname">transforms3d.euler.</code><code class="descname">quat2euler</code><span class="sig-paren">(</span><em>quaternion</em>, <em>axes='sxyz'</em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.quat2euler" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">transforms3d.euler.</span></code><code class="sig-name descname"><span class="pre">quat2euler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">quaternion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sxyz'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transforms3d.euler.quat2euler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Euler angles from <cite>quaternion</cite> for specified axis sequence <cite>axes</cite></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>q</strong> : 4 element sequence</p>
-<blockquote>
-<div><p>w, x, y, z of quaternion</p>
-</div></blockquote>
-<p><strong>axes</strong> : str, optional</p>
-<blockquote>
-<div><p>Axis specification; one of 24 axis sequences as string or encoded
-tuple - e.g. <code class="docutils literal"><span class="pre">sxyz</span></code> (the default).</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ai</strong> : float</p>
-<blockquote>
-<div><p>First rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-<p><strong>aj</strong> : float</p>
-<blockquote>
-<div><p>Second rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-<p><strong>ak</strong> : float</p>
-<blockquote class="last">
-<div><p>Third rotation angle (according to <cite>axes</cite>).</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>q</strong><span class="classifier">4 element sequence</span></dt><dd><p>w, x, y, z of quaternion</p>
+</dd>
+<dt><strong>axes</strong><span class="classifier">str, optional</span></dt><dd><p>Axis specification; one of 24 axis sequences as string or encoded
+tuple - e.g. <code class="docutils literal notranslate"><span class="pre">sxyz</span></code> (the default).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>ai</strong><span class="classifier">float</span></dt><dd><p>First rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+<dt><strong>aj</strong><span class="classifier">float</span></dt><dd><p>Second rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+<dt><strong>ak</strong><span class="classifier">float</span></dt><dd><p>Third rotation angle (according to <cite>axes</cite>).</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">angles</span> <span class="o">=</span> <span class="n">quat2euler</span><span class="p">([</span><span class="mf">0.99810947</span><span class="p">,</span> <span class="mf">0.06146124</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">angles</span> <span class="o">=</span> <span class="n">quat2euler</span><span class="p">([</span><span class="mf">0.99810947</span><span class="p">,</span> <span class="mf">0.06146124</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.123</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="go">True</span>
 </pre></div>
@@ -591,70 +513,90 @@ tuple - e.g. <code class="docutils literal"><span class="pre">sxyz</span></code>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#"><code class="docutils literal"><span class="pre">euler</span></code></a><ul>
-<li><a class="reference internal" href="#defining-rotations">Defining rotations</a></li>
-<li><a class="reference internal" href="#rotation-axes">Rotation axes</a></li>
-<li><a class="reference internal" href="#specifying-angle-conventions">Specifying angle conventions</a></li>
-<li><a class="reference internal" href="#direction-of-rotation">Direction of rotation</a></li>
-<li><a class="reference internal" href="#terms-used-in-function-names">Terms used in function names</a></li>
-<li><a class="reference internal" href="#eulerfuncs"><code class="docutils literal"><span class="pre">EulerFuncs</span></code></a></li>
-<li><a class="reference internal" href="#tbzyx"><code class="docutils literal"><span class="pre">TBZYX</span></code></a></li>
-<li><a class="reference internal" href="#axangle2euler">axangle2euler</a></li>
-<li><a class="reference internal" href="#euler2axangle">euler2axangle</a></li>
-<li><a class="reference internal" href="#euler2mat">euler2mat</a></li>
-<li><a class="reference internal" href="#euler2quat">euler2quat</a></li>
-<li><a class="reference internal" href="#mat2euler">mat2euler</a></li>
-<li><a class="reference internal" href="#quat2euler">quat2euler</a></li>
+<h1 class="logo"><a href="../index.html">transforms3d</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../conventions.html">Conventions for transforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../naming_conventions.html">Naming conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gimbal_lock.html">Gimbal lock</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">transforms3d</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._gohlketransforms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_gohlketransforms</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d._version.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_version</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.affines.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">affines</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.axangles.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">axangles</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.derivations.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">derivations</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">euler</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.quaternions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quaternions</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.reflections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reflections</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.shears.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shears</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.taitbryan.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">taitbryan</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="transforms3d.zooms.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zooms</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 </ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../devel/make_release.html">Guide to making a Transforms3d release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devel/refactor_plan.html">Refactoring plan</a></li>
+</ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="index.html">API Reference</a><ul>
-      <li>Previous: <a href="transforms3d.derivations.html" title="previous chapter"><code class="docutils literal"><span class="pre">derivations</span></code></a></li>
-      <li>Next: <a href="transforms3d.quaternions.html" title="next chapter"><code class="docutils literal"><span class="pre">quaternions</span></code></a></li>
+      <li>Previous: <a href="transforms3d.derivations.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">derivations</span></code></a></li>
+      <li>Next: <a href="transforms3d.quaternions.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quaternions</span></code></a></li>
   </ul></li>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/reference/transforms3d.euler.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2009-2016, Matthew Brett.
+      &copy;2009-2022, Matthew Brett, Christoph Gohlke.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/reference/transforms3d.euler.txt"
+      <a href="../_sources/reference/transforms3d.euler.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

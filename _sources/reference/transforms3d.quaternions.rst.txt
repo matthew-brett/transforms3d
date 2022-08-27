@@ -12,11 +12,14 @@
    mat2quat
    nearly_equivalent
    qconjugate
+   qexp
    qeye
    qinverse
    qisunit
+   qlog
    qmult
    qnorm
+   qpow
    quat2axangle
    quat2mat
    rotate_vector
@@ -49,6 +52,11 @@ qconjugate
 
 .. autofunction:: qconjugate
 
+qexp
+~~~~
+
+.. autofunction:: qexp
+
 qeye
 ~~~~
 
@@ -64,6 +72,11 @@ qisunit
 
 .. autofunction:: qisunit
 
+qlog
+~~~~
+
+.. autofunction:: qlog
+
 qmult
 ~~~~~
 
@@ -73,6 +86,11 @@ qnorm
 ~~~~~
 
 .. autofunction:: qnorm
+
+qpow
+~~~~
+
+.. autofunction:: qpow
 
 quat2axangle
 ~~~~~~~~~~~~
