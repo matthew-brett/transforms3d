@@ -3,8 +3,7 @@
 import numpy as np
 from itertools import permutations
 
-from numpy.testing import (assert_array_equal, dec,
-                           assert_array_almost_equal)
+from numpy.testing import (assert_array_equal, assert_array_almost_equal)
 
 from transforms3d.affines import (compose, decompose, decompose44)
 from transforms3d.taitbryan import euler2mat
@@ -19,7 +18,6 @@ def test_compose():
     assert_raises(ValueError, compose, T, R, Z)
 
 
-@dec.slow
 def test_de_compose():
     # Make a series of translations etc, compose and decompose
     for trans in permutations([10,20,30]):

@@ -12,11 +12,9 @@ Terms used in function names:
 
 import math
 
-import warnings
-
 import numpy as np
 
-from .utils import normalized_vector, vector_norm
+from .utils import normalized_vector
 
 
 # Caching dictionary for common shear Ns, indices
@@ -170,6 +168,27 @@ def sadn2aff(angle, direction, normal, point=None):
     return M
 
 
+def inverse_outer(mat):
+    """ Return scalar t, unit vectors `a`, `b` so `mat = t * np.outer(a, b)`
+
+    Parameters
+    ----------
+    mat : array-like, shape (3,3)
+       shear matrix
+
+    Returns
+    -------
+    t : float
+        Scalar such that `mat = t * np.outer(a, b)`
+    a : array, shape (3,)
+        Unit vector such that `mat = t * np.outer(a, b)`
+    b : array, shape (3,)
+        Unit vector such that `mat = t * np.outer(a, b)`
+    """
+    u, s, vh = np.linalg.svd(mat)
+    return s[0], u.T[0], vh[0]
+
+
 def mat2sadn(mat):
     """Return shear angle, direction and plane normal from shear matrix.
 
@@ -197,28 +216,22 @@ def mat2sadn(mat):
     >>> M_again = sadn2mat(angle, direction, normal)
     >>> np.allclose(M, M_again)
     True
+
+    Notes
+    -----
+    The shear matrix we are decomposing was calculated using:
+
+    .. code: python
+
+        mat = np.eye(3) + angle * np.outer(direction, normal)
+
+    So the idea is to use an "inverse outer product" to recover the shears.
+    See :func:`inverse_outer` for the implementation.
     """
     mat = np.asarray(mat)
     # normal: cross independent eigenvectors corresponding to the eigenvalue 1
-    l, V = np.linalg.eig(mat)
-    near_1, = np.nonzero(abs(np.real(l.squeeze()) - 1.0) < 1e-4)
-    if near_1.size < 2:
-        raise ValueError("no two linear independent eigenvectors found %s" % l)
-    V = np.real(V[:, near_1]).squeeze().T
-    lenorm = -1.0
-    for i0, i1 in ((0, 1), (0, 2), (1, 2)):
-        n = np.cross(V[i0], V[i1])
-        l = vector_norm(n)
-        if l > lenorm:
-            lenorm = l
-            normal = n
-    normal /= lenorm
-    # direction and angle
-    direction = np.dot(mat - np.eye(3), normal)
-    angle = vector_norm(direction)
-    direction /= angle
-    angle = math.atan(angle)
-    return angle, direction, normal
+    tan, direction, normal = inverse_outer(mat - np.eye(3))
+    return math.atan(tan), direction, normal
 
 
 def aff2sadn(aff):
@@ -249,15 +262,38 @@ def aff2sadn(aff):
     >>> A_again = sadn2aff(angle, direction, normal, point)
     >>> np.allclose(A, A_again)
     True
+
+    Notes
+    -----
+    The translation part of the affine shear matrix is calculated using:
+
+    .. code: python
+
+        M[:3, 3] = -angle * np.dot(point, normal) * direction
+
+    This holds for the ``i``th coordinate:
+
+    .. code: python
+
+        M[i, 3] = -angle * np.dot(point, normal) * direction[i]
+
+    Then:
+
+    .. code: python
+
+        np.dot(point, normal) + M[i, 3] / (angle * direction[i]) == 0
+
+    This can be compared with the equation of the plane:
+
+    .. code: python
+
+        np.dot(point, normal) + d == 0
+
+    where ``d`` is the distance from the plane to the origin.
     """
-    warnings.warn('This function can be numerically unstable; use with care')
-    aff = np.asarray(aff)
-    angle, direction, normal = mat2sadn(aff[:3,:3])
-    # point: eigenvector corresponding to eigenvalue 1
-    l, V = np.linalg.eig(aff)
-    near_1, = np.nonzero(abs(np.real(l.squeeze()) - 1.0) < 1e-8)
-    if near_1.size == 0:
-        raise ValueError("no eigenvector corresponding to eigenvalue 1")
-    point = np.real(V[:, near_1[-1]]).squeeze()
-    point = point[:3] / point[3]
+    tan, direction, normal = inverse_outer(aff[:3,:3] - np.eye(3))
+    angle = math.atan(tan)
+    i = np.argmax(np.abs(direction))  # Avoid division by small values
+    d = aff[i, 3] / (tan * direction[i])
+    point = -d * normal
     return angle, direction, normal, point

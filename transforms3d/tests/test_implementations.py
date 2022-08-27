@@ -98,11 +98,9 @@ def test_shears():
     S0 = tss.sadn2aff(angle, direct, normal, point)
     S1 = tg.shear_matrix(angle, direct, point, normal)
     assert_array_almost_equal(S0, S1, 8)
-    with warnings.catch_warnings():
-        a1, d1, n0, p0 = tss.aff2sadn(S0)
+    # Confirm our own implementation does a correct round trip.
     a0, d0, n0, p0 = tss.aff2sadn(S0)
-    a1, d1, p1, n1 = tg.shear_from_matrix(S0)
-    assert_array_almost_equal(a0, a1, 8)
-    assert_array_almost_equal(d0, d1, 8)
-    assert_array_almost_equal(n0, n1, 8)
-    assert_array_almost_equal(p0, p1[:3], 8)
+    S0_back = tss.sadn2aff(a0, d0, n0, p0)
+    assert_array_almost_equal(S0, S0_back)
+    # We no longer test tg.shear_from_matrix, because it is so unstable.
+    # We aren't using that implementation.
