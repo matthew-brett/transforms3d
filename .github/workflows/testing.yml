@@ -1,0 +1,57 @@
+name: Build and run tests
+
+on:
+  push:
+  pull_request:
+
+env:
+  PKG_NAME: transforms3d
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - python-version: 3.7
+            pip_dep_var: "-r test-requirements.txt"
+          - python-version: 3.8
+            pip_dep_var: "-r test-requirements.txt"
+          - python-version: 3.9
+            pip_dep_var: "-r test-requirements.txt"
+          - python-version: "3.10"
+            pip_dep_var: "-r test-requirements.txt"
+          - python-version: 3.6
+            # Minimum dependencies; check against test-requirements.txt
+            pip_dep_var: "numpy==1.15"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install specified dependencies
+        run: pip install $PIP_DEPENDS
+        env:
+          PIP_DEPENDS:  ${{ matrix.pip_dep_var }}
+      - name: Install coverage dependencies
+        run: |
+          pip install pytest-cov
+      - name: Install package
+        run: |
+          pip install .
+      - name: Run tests
+        run: |
+          mkdir tmp
+          cd tmp
+          pytest --log-level DEBUG --cov-config=../.coveragerc --cov=$PKG_NAME --doctest-modules --pyargs $PKG_NAME
+      - name: Collect code coverage data
+        run: |
+          coverage xml --data-file=tmp/.coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          fail_ci_if_error: true
