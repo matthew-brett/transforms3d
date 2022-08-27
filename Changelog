@@ -13,6 +13,24 @@ See: http://github.com/matthew-brett/transforms3d
 Releases
 ********
 
+MB below means Matthew Brett.  Generally MB made changes not otherwise
+attributed.
+
+* 0.4 (Saturday 27th August 2022)
+
+  New feature release, bugfixes, updates.
+
+  * Improved inverse shear implementation (José Luis Esteban).
+  * Adding powers of quaternion functions ``qexp`` and ``qlog``, ``qpow``
+    (Maxime Lemonnier).
+  * Fix in-place modification of arrays in ``euler2quat`` (Jiayuan-Gu).
+  * Allow for not-normalized quaternions for ``rotate_vector`` (thanks to
+    Zhichao Li for pointing out the problem).
+  * Various maintenance improvements - move to Pytest, update Versioneer to
+    latest (Hugo van Kemenade), always use Setuptools, start using Github
+    workflow, documentation fixes (Filip Sund), fix older ``np.float`` usage
+    to resolve Numpy deprecation warnings.
+
 * 0.3.1 (Friday 16th June 2017)
 
   * Add various modules to top-level init (issue gh-13).

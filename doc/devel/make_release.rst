@@ -1,10 +1,10 @@
 .. _release-guide:
 
 **************************************
-Guide to making a transforms3d release
+Guide to making a Transforms3d release
 **************************************
 
-A guide for developers who are doing a transforms3d release
+A guide for developers who are doing a Transforms3d release
 
 .. _release-checklist:
 
@@ -46,9 +46,7 @@ Release checklist
 * Make sure all tests pass on your local machine (from the Transforms3d root
   directory)::
 
-    py.test --doctest-modules transforms3d
-
-  Do this on a Python 2 and Python 3 setup.
+    pytest --doctest-modules transforms3d
 
 * Run the same tests after installing into a virtualenv, to test that
   installing works correctly::
@@ -59,9 +57,9 @@ Release checklist
     python setup.py install
     mkdir for_test
     cd for_test
-    py.test --doctest-modules transforms3d
+    pytest --doctest-modules transforms3d
 
-* Check the documentation doctests::
+* Check the documentation Doctests::
 
     cd doc
     make doctest

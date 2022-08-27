@@ -44,7 +44,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'transforms3d'
-copyright = u'2009-2019, Matthew Brett, Christoph Gohlke'
+copyright = u'2009-2022, Matthew Brett, Christoph Gohlke'
 
 def check_import(mod_name):
     try:
