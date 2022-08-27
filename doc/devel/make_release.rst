@@ -84,40 +84,20 @@ to upstream on github.
 * Once everything looks good, upload the source release to PyPi.  See
   `setuptools intro`_::
 
-    python setup.py sdist --formats=gztar,zip
+    python setup.py sdist
     twine upload -s dist/*
 
-* Upload wheels by building in virtualenvs, something like::
-
-   workon py27
-   rm -rf build
-   python setup.py bdist_wheel upload
-   workon py33
-   rm -rf build
-   python setup.py bdist_wheel upload
-   workon py34
-   rm -rf build
-   python setup.py bdist_wheel upload
-
 * Remember you'll need your ``~/.pypirc`` file set up right for this to work.
-  See `setuptools intro`_.  The file should look something like this::
-
-    [distutils]
-    index-servers =
-        pypi
+  See `setuptools intro`_.  If you have 2-factor authentication, the file may
+  look something like this::
 
     [pypi]
-    username:your.pypi.username
-    password:your-password
+    username = __token__
 
-    [server-login]
-    username:your.pypi.username
-    password:your-password
-
-* Check how everything looks on pypi - the description, the packages.  If
+* Check how everything looks on Pypi - the description, the packages.  If
   necessary delete the release and try again if it doesn't look right.
 
-* Push the tag with ``git push origin 0.6.0``
+* Push the tag with ``git push --tags``
 
 * Upload the docs with::
 
