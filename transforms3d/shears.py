@@ -212,7 +212,7 @@ def mat2sadn(mat):
     >>> M = sadn2mat(0.5, [1, 0, 0], [0, 1, 0])
     >>> angle, direction, normal = mat2sadn(M)
     >>> angle, direction, normal
-    (0.5, array([-1.,  0.,  0.]), array([ 0., -1.,  0.]))
+    (0.5, array([1., 0., 0.]), array([0., 1., 0.]))
     >>> M_again = sadn2mat(angle, direction, normal)
     >>> np.allclose(M, M_again)
     True
@@ -258,7 +258,7 @@ def aff2sadn(aff):
     >>> A = sadn2aff(0.5, [1, 0, 0], [0, 1, 0])
     >>> angle, direction, normal, point = aff2sadn(A)
     >>> angle, direction, normal, point
-    (0.5, array([-1.,  0.,  0.]), array([ 0., -1.,  0.]), array([0., 0., 0.]))
+    (0.5, array([1., 0., 0.]), array([0., 1., 0.]))
     >>> A_again = sadn2aff(angle, direction, normal, point)
     >>> np.allclose(A, A_again)
     True
