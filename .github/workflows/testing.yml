@@ -13,15 +13,13 @@ jobs:
     strategy:
       matrix:
         include:
-          - python-version: 3.7
-            pip_dep_var: "-r test-requirements.txt"
           - python-version: 3.8
             pip_dep_var: "-r test-requirements.txt"
           - python-version: 3.9
             pip_dep_var: "-r test-requirements.txt"
           - python-version: "3.10"
             pip_dep_var: "-r test-requirements.txt"
-          - python-version: 3.6
+          - python-version: 3.7
             # Minimum dependencies; check against test-requirements.txt
             pip_dep_var: "numpy==1.15 sympy scipy"
     steps:
