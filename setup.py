@@ -39,6 +39,7 @@ setup(name='transforms3d',
         ],
       long_description = open('README.rst', 'rt').read(),
       zip_safe=False,
+      python_requires = '>=3.6',
       # Check dependencies also in .github/workflows/testing.yml file
       requires=['numpy (>=1.15)']
       )
