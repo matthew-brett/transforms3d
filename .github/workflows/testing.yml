@@ -38,6 +38,7 @@ jobs:
         env:
           PIP_DEPENDS:  ${{ matrix.pip_dep_var }}
       - name: Install coverage dependencies
+        if: python-version != 3.6
         run: |
           pip install pytest-cov
       - name: Install package
