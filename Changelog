@@ -16,6 +16,14 @@ Releases
 MB below means Matthew Brett.  Generally MB made changes not otherwise
 attributed.
 
+* 0.4.1 (Thursday 1st September 2022)
+
+  Bugfix release.
+
+  * Specify that this release requires Python 3.6 and above.  MB accidentally
+    broke some installs by upgrading Versioneer, and forgetting to test with
+    Python 2.7.  Versioneer has not supported Python 2.7 for several years.
+
 * 0.4 (Saturday 27th August 2022)
 
   New feature release, bugfixes, updates.
