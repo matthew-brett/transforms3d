@@ -83,7 +83,7 @@ qthelp:
 	@echo "To view the help file:"
 	@echo "# assistant -collectionFile _build/qthelp/transforms3d.qhc"
 
-latex: generate
+latex: api-stamp
 	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) _build/latex
 	@echo
 	@echo "Build finished; the LaTeX files are in _build/latex."
