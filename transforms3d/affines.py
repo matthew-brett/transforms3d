@@ -297,11 +297,9 @@ def compose(T, R, Z, S=None):
     if R.shape != (n,n):
         raise ValueError('Expecting shape (%d,%d) for rotations' % (n,n))
     A = np.eye(n+1)
+    ZS = np.diag(Z)
     if not S is None:
-        Smat = striu2mat(S)
-        ZS = np.dot(np.diag(Z), Smat)
-    else:
-        ZS = np.diag(Z)
+        ZS = ZS.dot(striu2mat(S))
     A[:n,:n] = np.dot(R, ZS)
     A[:n,n] = T[:]
     return A
