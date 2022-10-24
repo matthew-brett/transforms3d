@@ -4,3 +4,4 @@
 #
 # Check setup.py when updating dependencies
 numpy>=1.15
+igraph>=0.10.2

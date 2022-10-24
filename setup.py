@@ -41,5 +41,5 @@ setup(name='transforms3d',
       zip_safe=False,
       python_requires = '>=3.6',
       # Check dependencies also in .github/workflows/testing.yml file
-      requires=['numpy (>=1.15)']
+      requires=['numpy (>=1.15)', 'igraph (>=0.10.2)']
       )
