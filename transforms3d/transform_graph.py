@@ -13,6 +13,8 @@ class Transformation:
 
 
 def _invert_tf(tf: Transformation) -> Transformation:
+
+    # we could use decompose
     R = tf.A[:3, :3]
     p = tf.A[:3, 3]
 
@@ -62,7 +64,7 @@ def get_tranformation_matrix(tf_graph: ig.Graph, source: str, target: str) -> Li
 
     vertices_on_path = tf_graph.get_shortest_paths(source, to=target, mode="out", output='vpath')[0]
     
-    H = np.ones((4, 4), dtype=float)
+    H = np.identity(4)
     for e0, e1 in pairwise(vertices_on_path):
         edge = tf_graph.es.find(_source=e0, _target=e1)
         H = H @ edge["A"]
