@@ -8,7 +8,66 @@ from transforms3d.euler import euler2mat
 from transforms3d.affines import compose
 
 
+def test_create_tranformation_graph():
+
+    world_to_balloon = Transformation("world", "balloon",
+        define_ros_transform(50, 50, 50, 0, 0, 0))
+    world_to_drone = Transformation("world", "drone",
+        define_ros_transform(-50, 0, 50, 3.0, -3.0, 180, deg=True))
+
+    simple_world = [world_to_balloon, world_to_drone]
+
+    g = create_tranformation_graph(simple_world)
+    assert isinstance(g, ig.Graph)
+
+    H = get_tranformation_matrix(g, "world", "drone")
+
+    assert isinstance(H, np.ndarray)
+
+
+def test_simple_world():
+
+    world_to_balloon = Transformation("world", "balloon",
+        define_ros_transform(50, 50, 50, 0, 0, 0))
+    world_to_drone = Transformation("world", "drone",
+        define_ros_transform(-50, 0, 50, 3.0, -3.0, 180, deg=True))
+
+    simple_world_transforms = [
+        world_to_balloon,
+        world_to_drone,
+    ]
+
+    g = create_tranformation_graph(simple_world_transforms)
+    assert isinstance(g, ig.Graph)
+
+    H = get_tranformation_matrix(g, "drone", "balloon")
+
+    H_inv = get_tranformation_matrix(g, "balloon", "drone")
+
+    drone_origin = vector4(0, 0, 0)
+    drone_in_balloons_eyes = H_inv @ drone_origin
+    dist_in_balloons_eyes = math.dist(drone_in_balloons_eyes[:3], [0, 0, 0])
+
+    assert isinstance(H, np.ndarray)
+
+    balloon_origin = vector4(0, 0, 0)
+    balloon_in_drones_eyes = H @ balloon_origin
+
+    dist_in_drones_eyes = math.dist(balloon_in_drones_eyes[:3], [0, 0, 0])
+    assert dist_in_drones_eyes > 75.0
+
+    assert pytest.approx(0) == (dist_in_balloons_eyes - dist_in_drones_eyes)
+
+    x, y, z = balloon_in_drones_eyes[:3]
+    assert z < 0
+    assert y < -40
+    assert x < -75.0
+
+
 def define_ros_transform(x, y, z, roll, pitch, yaw, deg: bool = False):
+    # helper function to create a transformation matrix from
+    # - translation
+    # - RPY rotation
 
     if deg:
         roll, pitch, yaw = math.radians(roll), math.radians(pitch), math.radians(yaw)
@@ -25,66 +84,7 @@ def define_ros_transform(x, y, z, roll, pitch, yaw, deg: bool = False):
     return H
 
 
-def vector_with_one(x, y, z):
+def vector4(x, y, z):
     v = np.ones((4))
     v[:3] = [x, y ,z]
     return v
-
-
-def test_simple_world():
-
-    world_to_baloon = Transformation("world", "baloon",
-        define_ros_transform(50, 50, 50, 0, 0, 0))
-    world_to_dragon = Transformation("world", "dragon",
-        define_ros_transform(-50, 0, 50, 3.0, -3.0, 0, deg=True))
-
-    simple_world_transforms = [
-        world_to_baloon,
-        world_to_dragon,
-    ]
-
-    g = create_tranformation_graph(simple_world_transforms)
-    assert isinstance(g, ig.Graph)
-
-    H = get_tranformation_matrix(g, "dragon", "baloon")
-
-    H_inv = get_tranformation_matrix(g, "baloon", "dragon")
-
-    dragon_origin = vector_with_one(0, 0, 0)
-    dragon_in_baloons_eyes = H_inv @ dragon_origin
-    dist_in_baloons_eyes = math.dist(dragon_in_baloons_eyes[:3], [0, 0, 0])
-
-    assert isinstance(H, np.ndarray)
-
-    baloon_origin = vector_with_one(0, 0, 0)
-    baloon_in_dragons_eyes = H @ baloon_origin
-
-    dist_in_dragons_eyes = math.dist(baloon_in_dragons_eyes[:3], [0, 0, 0])
-    assert dist_in_dragons_eyes > 75.0
-
-    assert pytest.approx(0) == (dist_in_baloons_eyes - dist_in_dragons_eyes)
-
-    x, y, z = baloon_in_dragons_eyes[:3]
-    assert z < 0
-    assert y > 40
-
-
-
-def test_create_tranformation_graph():
-
-    # T = np.zeros((4,4), dtype=float)
-    T = np.identity(4)
-    wizard_transforms = [
-        Transformation("world", "left_hand", T),
-        Transformation("world", "right_hand", T),
-        Transformation("right_hand", "magic_stick", T),
-        Transformation("left_hand", "book", T),
-        Transformation("book", "page_corner", T)
-    ]
-
-    g = create_tranformation_graph(wizard_transforms)
-    assert isinstance(g, ig.Graph)
-
-    H = get_tranformation_matrix(g, "world", "page_corner")
-
-    assert isinstance(H, np.ndarray)

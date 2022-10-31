@@ -12,30 +12,6 @@ class Transformation:
     A: np.ndarray  # 4x4 matrix for 3D affine trafo
 
 
-def _invert_tf(tf: Transformation) -> Transformation:
-
-    # we could use decompose
-    R = tf.A[:3, :3]
-    p = tf.A[:3, 3]
-
-    R_inv = np.linalg.inv(R)
-
-    A_inv = np.identity(4, dtype=float)
-    A_inv[:3, :3] = R_inv
-    A_inv[:3, 3] = - R_inv @ p
-
-    return Transformation(tf.target_frame, tf.source_frame, A_inv)
-
-
-def invert_transformations(transformations: List[Transformation]) -> List[Transformation]:
-
-    inverted_transformations = list()
-    for tf in transformations:
-        tf_inv = _invert_tf(tf)
-        inverted_transformations.append(tf_inv)
-    return inverted_transformations
-
-
 def create_tranformation_graph(transformations: List[Transformation]):
 
     unique_frames = set([tf.source_frame for tf in transformations] + [tf.target_frame for tf in transformations])
@@ -76,3 +52,26 @@ def pairwise(iterable):
     a, b = tee(iterable)
     next(b, None)
     return zip(a, b)
+
+
+def invert_transformations(transformations: List[Transformation]) -> List[Transformation]:
+
+    inverted_transformations = list()
+    for tf in transformations:
+        tf_inv = _invert_tf(tf)
+        inverted_transformations.append(tf_inv)
+    return inverted_transformations
+
+def _invert_tf(tf: Transformation) -> Transformation:
+
+    # we could use decompose (?)
+    R = tf.A[:3, :3]
+    p = tf.A[:3, 3]
+
+    R_inv = np.linalg.inv(R)
+
+    A_inv = np.identity(4, dtype=float)
+    A_inv[:3, :3] = R_inv
+    A_inv[:3, 3] = - R_inv @ p
+
+    return Transformation(tf.target_frame, tf.source_frame, A_inv)
