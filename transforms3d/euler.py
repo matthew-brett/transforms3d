@@ -420,6 +420,10 @@ def quat2euler(quaternion, axes='sxyz', direct_formula=True):
             angles[2] = (angles[2]) % (2 * np.pi) - np.pi
         return tuple(angles)
 
+    # check if valid axes option
+    axes = axes.lower()
+    _AXES2TUPLE[axes]
+
     # if direct formula, use the algorithm:
     extrinsic = axes[0] == 's'
     seq = axes[1:]
