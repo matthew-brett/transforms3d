@@ -33,6 +33,12 @@ dependencies = [
     "numpy >=1.15",
 ]
 
+[tool.setuptools.packages.find]
+include = ["transforms3d*"]
+
+[tool.setuptools.package-data]
+"transforms3d.tests" = ["data/*"]
+
 [project.urls]
 Homepage = "http://github.com/matthew-brett/transforms3d"
 
