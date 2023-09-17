@@ -14,7 +14,7 @@ from transforms3d import taitbryan as tb
 
 from transforms3d.tests.samples import euler_tuples, euler_mats
 
-from numpy.testing import assert_almost_equal
+from numpy.testing import assert_almost_equal, assert_allclose
 
 
 def test_euler_axes():
@@ -72,6 +72,35 @@ def test_euler2mat():
             R2 = euler2mat(bi, bj, bk, ax_spec)
             assert_almost_equal(R, R2)
 
+
+def test_quat2euler_compare_algorithms():
+    rnd = np.random.RandomState(0)
+    n = 1000
+    angles = np.empty((n, 3))
+    angles[:, 0] = rnd.uniform(low=-np.pi, high=np.pi, size=(n,))
+    angles[:, 1] = rnd.uniform(low=0, high=np.pi, size=(n,))
+    angles[:, 2] = rnd.uniform(low=-np.pi, high=np.pi, size=(n,))
+
+    for intrinsic in (True, False):
+        for axes_tuple in permutations('xyz'):
+            # symmetric
+            axes = "".join([axes_tuple[0], axes_tuple[1], axes_tuple[0]])
+            axes = ('r' if intrinsic else 's')+axes
+            quat = np.array([euler2quat(*angles[i], axes) for i in range(n)])
+            angles_1 = np.array([quat2euler(quat[i], axes, True) for i in range(n)])
+            angles_2 = np.array([quat2euler(quat[i], axes, False) for i in range(n)])
+            assert_allclose(angles_1, angles_2)
+
+    angles[:, 1] -= np.pi / 2
+    for intrinsic in (True, False):
+        for axes_tuple in permutations('xyz'):
+            # asymmetric
+            axes = "".join(axes_tuple)
+            axes = ('r' if intrinsic else 's')+axes
+            quat = np.array([euler2quat(*angles[i], axes) for i in range(n)])
+            angles_1 = np.array([quat2euler(quat[i], axes, True) for i in range(n)])
+            angles_2 = np.array([quat2euler(quat[i], axes, False) for i in range(n)])
+            assert_allclose(angles_1, angles_2)
 
 def test_mat2euler():
     # Test mat2euler function
