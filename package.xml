@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package>
+  <name>transforms3d</name>
+  <version>0.3.0</version>
+  <description>The transforms3d package</description>
+  <maintainer email="james.goppert@gmail.com">jgoppert</maintainer>
+  <license>BSD</license>
+  <url type="repository">https://github.com/matthew-brett/transforms3d</url> 
+  <test_depend>python-nose</test_depend> 
+  <run_depend>catkin</run_depend> 
+  <buildtool_depend>catkin</buildtool_depend>
+  <export>
+    <build_type>cmake</build_type>
+  </export>
+</package>
+
+<!-- vim: set et fenc=utf-8 ff=unix sts=0 sw=2 ts=2 : -->
