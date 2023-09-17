@@ -23,6 +23,8 @@ jobs:
             pip_dep_var: "-r test-requirements.txt"
           - python-version: "3.11"
             pip_dep_var: "-r test-requirements.txt"
+          - python-version: "3.12"
+            pip_dep_var: "-r test-requirements.txt"
           - python-version: 3.7
             # Minimum dependencies; check against test-requirements.txt
             pip_dep_var: "numpy==1.15 sympy scipy"
@@ -35,6 +37,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
       - name: Install specified dependencies
         run: pip install $PIP_DEPENDS
         env:
