@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools", "versioneer[toml]"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "transforms3d"
+dynamic = ["version"]
+description = "Functions for 3D coordinate transformations"
+readme = "README.rst"
+license = { text = "BSD license" }
+requires-python = ">=3.6"
+authors = [
+    { name = "Matthew Brett", email = "matthew.brett@gmail.com" },
+]
+maintainers = [
+    { name = "Matthew Brett", email = "matthew.brett@gmail.com" },
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "numpy >=1.15",
+]
+
+[tool.setuptools.packages.find]
+include = ["transforms3d*"]
+
+[tool.setuptools.package-data]
+"transforms3d.tests" = ["data/*"]
+
+[project.urls]
+Homepage = "http://github.com/matthew-brett/transforms3d"
+
+[tool.versioneer]
+VCS = "git"
+style = "pep440"
+versionfile_source = "transforms3d/_version.py"
+versionfile_build = "transforms3d/_version.py"
+tag_prefix = ""
+parentdir_prefix = "transforms3d-"
