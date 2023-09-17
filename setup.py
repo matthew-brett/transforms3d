@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 ''' Installation script for transforms3d package '''
-from os.path import join as pjoin
 
 # Always use setuptools.
 from setuptools import setup
