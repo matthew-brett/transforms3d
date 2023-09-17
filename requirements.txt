@@ -2,5 +2,5 @@
 # Use with:
 #   pip install -r requirements.txt
 #
-# Check setup.py when updating dependencies
+# Check pyproject.toml when updating dependencies
 numpy>=1.15
