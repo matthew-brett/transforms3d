@@ -26,11 +26,11 @@ jobs:
             pip_dep_var: "numpy==1.15 sympy scipy"
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: true
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install specified dependencies
@@ -52,6 +52,6 @@ jobs:
         run: |
           coverage xml --data-file=tmp/.coverage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: true
