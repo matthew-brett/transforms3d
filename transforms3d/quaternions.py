@@ -301,7 +301,7 @@ def qinverse(q):
     invq : array shape (4,)
        w, i, j, k of quaternion inverse
     '''
-    return qconjugate(q) / qnorm(q)
+    return qconjugate(q) / qnorm(q) ** 2
 
 
 def qeye(dtype=np.float64):
