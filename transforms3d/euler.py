@@ -210,7 +210,7 @@ def euler2mat(ai, aj, ak, axes='sxyz'):
     cc, cs = ci*ck, ci*sk
     sc, ss = si*ck, si*sk
 
-    batches = np.asarray(ai).shape
+    batches = np.broadcast(ai, aj, ak).shape
     M = np.zeros((*batches, 3, 3))
     if repetition:
         M[..., i, i] = cj
