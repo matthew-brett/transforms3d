@@ -5,7 +5,7 @@ import math
 import numpy as np
 
 from .shears import striu2mat
-from .utils import diag_2d, transpose_2d, unpack
+from .utils import diag_2d, transpose_2d, unpack, vdot_batch
 
 
 def decompose44(A44):
@@ -69,6 +69,19 @@ def decompose44(A44):
     >>> np.allclose(Z, Zdash)
     True
     >>> np.allclose(S, Sdash)
+    True
+    >>> # Batched operation can be used to operate on multiple affine matrices at a time
+    >>> As = np.tile(A, (3, 1, 1))
+    >>> As[1, :3, :3] *= 2
+    >>> Ts, Rs, Zs, Ss = decompose44(As)
+    >>> np.allclose(T, Ts)
+    True
+    >>> np.allclose(R, Rs)
+    True
+    >>> Zs[1, :] /= 2
+    >>> np.allclose(Z, Zs)
+    True
+    >>> np.allclose(S, Ss)
     True
 
     Notes
@@ -134,8 +147,8 @@ def decompose44(A44):
     M0 /= sx[..., np.newaxis]
 
     # orthogonalize M1 with respect to M0
-    sx_sxy = np.vdot(M0, M1)
-    M1 -= sx_sxy * M0
+    sx_sxy = vdot_batch(M0, M1)
+    M1 -= sx_sxy[..., np.newaxis] * M0
 
     # extract y scale and normalize
     sy = np.sqrt(np.sum(M1**2, axis=-1))
@@ -143,9 +156,9 @@ def decompose44(A44):
     sxy = sx_sxy / sx
 
     # orthogonalize M2 with respect to M0 and M1
-    sx_sxz = np.vdot(M0, M2)
-    sy_syz = np.vdot(M1, M2)
-    M2 -= (sx_sxz * M0 + sy_syz * M1)
+    sx_sxz = vdot_batch(M0, M2)
+    sy_syz = vdot_batch(M1, M2)
+    M2 -= (sx_sxz[..., np.newaxis] * M0 + sy_syz[..., np.newaxis] * M1)
 
     # extract z scale and normalize
     sz = np.sqrt(np.sum(M2**2, axis=-1))

@@ -237,3 +237,27 @@ def transpose_2d(array):
     (128, 3, 2)
     '''
     return np.transpose(array, (*range(array.ndim - 2), -1, -2))
+
+def vdot_batch(a, b):
+    ''' Compute the vector dot product on batches of 1D arrays
+
+    Parameters
+    ----------
+    a, b : array-like batches of 1D arrays with shape (..., N)
+
+    Returns
+    -------
+    out : np.ndarray with shape (...)
+       sum-product of the last dimension from arrays a, b
+
+    Examples
+    --------
+    >>> a = np.array([[0, 1, 2], [2, 3, 4]])
+    >>> b = np.array([[2, 2, 2], [3, 3, 3]])
+    >>> c = vdot_batch(a, b)
+    >>> c.shape
+    (2,)
+    >>> c
+    array([ 6, 27])
+    '''
+    return np.einsum('...i,...i', a, b)
