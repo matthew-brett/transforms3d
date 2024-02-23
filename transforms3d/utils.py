@@ -158,3 +158,106 @@ def random_unit_vector(rng=None):
     if rng is None:
         rng = np_default_rng()
     return normalized_vector(rng.normal(size=3))
+
+
+def unpack(array, axis=-1, keepdim=False):
+    ''' Unpack an array along the given axis
+
+    Parameters
+    ----------
+    array : array-like with arbitrary shape (..., N, ...)
+    axis : axis to unpack
+    keepdim: keep a dimension of length 1 at `axis` position
+
+    Returns
+    -------
+    out : np.ndarray with shape (N, ...)
+       array with the given axis moved to the front, meant to be passed to Python unpacking
+
+    Examples
+    --------
+    >>> a, b = unpack([[1, 2], [3, 4], [5, 6]], axis=-1)
+    >>> a
+    array([1, 3, 5])
+    >>> b
+    array([2, 4, 6])
+    '''
+    array = np.asarray(array)
+    array = np.rollaxis(array, axis)
+    if keepdim:
+        array = np.expand_dims(array, axis)
+    return array
+
+
+def diag_2d(v):
+    ''' Construct batches of diagonal matrices
+
+    Parameters
+    ----------
+    v : array-like batch of vectors with shape (..., N)
+
+    Returns
+    -------
+    out : np.ndarray with shape (..., N, N)
+       batch of matrices with v on the diagonal
+       
+    Examples
+    --------
+    >>> a = np.ones((128, 3))
+    >>> b = diag_2d(a)
+    >>> b.shape
+    (128, 3, 3)
+    >>> np.allclose(b[0], np.diag(a[0]))
+    True
+    '''
+    *batches, n = v.shape
+    diag_indices = tuple([..., *np.diag_indices(n)])
+    out = np.zeros((*batches, n, n))
+    out[diag_indices] = v
+    return out
+
+
+def transpose_2d(array):
+    ''' Transpose batches of 2D arrays
+
+    Parameters
+    ----------
+    array : array-like batch of 2D arrays with shape (..., N, M)
+
+    Returns
+    -------
+    out : np.ndarray with shape (..., M, N)
+       array with the last two dimensions transposed
+       
+    Examples
+    --------
+    >>> a = np.zeros((128, 2, 3))
+    >>> b = transpose_2d(a)
+    >>> b.shape
+    (128, 3, 2)
+    '''
+    return np.transpose(array, (*range(array.ndim - 2), -1, -2))
+
+def vdot_batch(a, b):
+    ''' Compute the vector dot product on batches of 1D arrays
+
+    Parameters
+    ----------
+    a, b : array-like batches of 1D arrays with shape (..., N)
+
+    Returns
+    -------
+    out : np.ndarray with shape (...)
+       sum-product of the last dimension from arrays a, b
+
+    Examples
+    --------
+    >>> a = np.array([[0, 1, 2], [2, 3, 4]])
+    >>> b = np.array([[2, 2, 2], [3, 3, 3]])
+    >>> c = vdot_batch(a, b)
+    >>> c.shape
+    (2,)
+    >>> c
+    array([ 6, 27])
+    '''
+    return np.einsum('...i,...i', a, b)
