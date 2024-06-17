@@ -67,13 +67,10 @@ def fillpositive(xyz, w2_thresh=None):
     --------
     >>> import numpy as np
     >>> wxyz = fillpositive([0,0,0])
-    >>> np.all(wxyz == [1, 0, 0, 0])
-    True
+    >>> assert np.all(wxyz == [1, 0, 0, 0])
     >>> wxyz = fillpositive([1,0,0]) # Corner case; w is 0
-    >>> np.all(wxyz == [0, 1, 0, 0])
-    True
-    >>> np.dot(wxyz, wxyz)
-    1.0
+    >>> assert np.all(wxyz == [0, 1, 0, 0])
+    >>> assert np.dot(wxyz, wxyz) == 1
     '''
     # Check inputs (force error if < 3 values)
     if len(xyz) != 3:

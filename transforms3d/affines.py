@@ -281,8 +281,7 @@ def compose(T, R, Z, S=None):
            [ 0.,  0.,  0.,  1.]])
     >>> S = np.zeros(3)
     >>> B = compose(T, R, Z, S)
-    >>> np.all(A == B)
-    True
+    >>> assert(np.all(A == B))  # True
 
     A null set
 
