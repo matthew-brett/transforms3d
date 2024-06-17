@@ -16,6 +16,14 @@ Releases
 MB below means Matthew Brett.  Generally MB made changes not otherwise
 attributed.
 
+* 0.4.2 (Monday 17th June 2022)
+
+  Bugfix release.
+
+  * Update for Numpy 2.0 (MB)
+  * Move to ``pyproject.toml`` configuration (Chris Markiewicz)
+  * Fix ``latex`` target in doc/Makefile (Ben Beasley)
+
 * 0.4.1 (Thursday 1st September 2022)
 
   Bugfix release.
