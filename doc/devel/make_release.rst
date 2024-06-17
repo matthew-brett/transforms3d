@@ -33,22 +33,11 @@ Release checklist
 
 * Check the copyright years in ``doc/conf.py`` and ``LICENSE``
 
-* If you have travis-ci_ building set up you might want to push the code in its
-  current state to a branch that will build, e.g::
-
-    git branch -D pre-release-test # in case branch already exists
-    git co -b pre-release-test
-
 * Clean::
 
     git clean -fxd
 
-* Make sure all tests pass on your local machine (from the Transforms3d root
-  directory)::
-
-    pytest --doctest-modules transforms3d
-
-* Run the same tests after installing into a virtualenv, to test that
+* Run tests after installing into a virtualenv, to test that
   installing works correctly::
 
     mkvirtualenv transforms3d-test
@@ -59,8 +48,14 @@ Release checklist
     cd for_test
     pytest --doctest-modules transforms3d
 
+* Make sure all tests pass on your local machine (from the Transforms3d root
+  directory)::
+
+    pytest --doctest-modules transforms3d
+
 * Check the documentation Doctests::
 
+    pip install -r doc-requirements.txt
     cd doc
     make doctest
     cd ..
@@ -81,11 +76,11 @@ to upstream on github.
   Because we're using `versioneer`_ it is the tag which sets the package
   version.
 
-* Once everything looks good, upload the source release to PyPi.  See
-  `setuptools intro`_::
+* Once everything looks good, upload the source release to PyPi::
 
-    python setup.py sdist
-    twine upload -s dist/*
+    pip install build twine
+    python -m build . --sdist
+    twine upload -s dist/transforms*gz
 
 * Remember you'll need your ``~/.pypirc`` file set up right for this to work.
   See `setuptools intro`_.  If you have 2-factor authentication, the file may
