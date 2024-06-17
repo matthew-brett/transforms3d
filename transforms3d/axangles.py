@@ -107,7 +107,7 @@ def axangle2aff(axis, angle, point=None):
     M[:3,:3] = R
     if point is not None:
         # rotation not around origin
-        point = np.array(point[:3], dtype=np.float64, copy=False)
+        point = np.array(point[:3], dtype=np.float64)
         M[:3, 3] = point - np.dot(R, point)
     return M
 

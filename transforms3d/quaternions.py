@@ -23,7 +23,6 @@ Terms used in function names:
 import math
 import numpy as np
 
-_MAX_FLOAT = np.maximum_sctype(np.float64)
 _FLOAT_EPS = np.finfo(np.float64).eps
 
 
@@ -86,7 +85,7 @@ def fillpositive(xyz, w2_thresh=None):
         except (AttributeError, ValueError):
             w2_thresh = -_FLOAT_EPS * 3
     # Use maximum precision
-    xyz = np.asarray(xyz, dtype=_MAX_FLOAT)
+    xyz = np.asarray(xyz, dtype=np.float64)
     # Calculate w
     w2 = 1.0 - np.dot(xyz, xyz)
     if w2 < 0:
