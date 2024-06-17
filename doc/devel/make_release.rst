@@ -79,6 +79,7 @@ to upstream on github.
 * Once everything looks good, upload the source release to PyPi::
 
     pip install build twine
+    git clean -fxd
     python -m build . --sdist
     twine upload -s dist/transforms*gz
 
