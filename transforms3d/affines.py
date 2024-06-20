@@ -5,6 +5,7 @@ import math
 import numpy as np
 
 from .shears import striu2mat
+from .utils import diag_2d, transpose_2d, unpack, vdot_batch
 
 
 def decompose44(A44):
@@ -27,24 +28,24 @@ def decompose44(A44):
     The order of transformations is therefore shears, followed by
     zooms, followed by rotations, followed by translations.
 
-    This routine only works for shape (4,4) matrices
+    This routine only works for shape (..., 4,4) matrices
 
     Parameters
     ----------
-    A44 : array shape (4,4)
+    A44 : array shape (..., 4,4)
 
     Returns
     -------
-    T : array, shape (3,)
-       Translation vector
-    R : array shape (3,3)
+    T : array, shape (..., 3,)
+        Translation vector
+    R : array shape (..., 3,3)
         rotation matrix
-    Z : array, shape (3,)
-       Zoom vector.  May have one negative zoom to prevent need for negative
-       determinant R matrix above
-    S : array, shape (3,)
-       Shear vector, such that shears fill upper triangle above
-       diagonal to form shear matrix (type ``striu``).
+    Z : array, shape (..., 3)
+        Zoom vector.  May have one negative zoom to prevent need for negative
+        determinant R matrix above
+    S : array, shape (..., 3)
+        Shear vector, such that shears fill upper triangle above
+        diagonal to form shear matrix (type ``striu``).
 
     Examples
     --------
@@ -68,6 +69,19 @@ def decompose44(A44):
     >>> np.allclose(Z, Zdash)
     True
     >>> np.allclose(S, Sdash)
+    True
+    >>> # Batched operation can be used to operate on multiple affine matrices at a time
+    >>> As = np.tile(A, (3, 1, 1))
+    >>> As[1, :3, :3] *= 2
+    >>> Ts, Rs, Zs, Ss = decompose44(As)
+    >>> np.allclose(T, Ts)
+    True
+    >>> np.allclose(R, Rs)
+    True
+    >>> Zs[1, :] /= 2
+    >>> np.allclose(Z, Zs)
+    True
+    >>> np.allclose(S, Ss)
     True
 
     Notes
@@ -122,35 +136,45 @@ def decompose44(A44):
     unknowns.
     '''
     A44 = np.asarray(A44)
-    T = A44[:-1,-1]
-    RZS = A44[:-1,:-1]
+    T = A44[..., :-1,-1]
+    RZS = A44[..., :-1,:-1]
+
     # compute scales and shears
-    M0, M1, M2 = np.array(RZS).T
+    M0, M1, M2 = unpack(transpose_2d(RZS.copy()), axis=-2)
+
     # extract x scale and normalize
-    sx = math.sqrt(np.sum(M0**2))
-    M0 /= sx
+    sx = np.sqrt(np.sum(M0**2, axis=-1))
+    M0 /= sx[..., np.newaxis]
+
     # orthogonalize M1 with respect to M0
-    sx_sxy = np.dot(M0, M1)
-    M1 -= sx_sxy * M0
+    sx_sxy = vdot_batch(M0, M1)
+    M1 -= sx_sxy[..., np.newaxis] * M0
+
     # extract y scale and normalize
-    sy = math.sqrt(np.sum(M1**2))
-    M1 /= sy
+    sy = np.sqrt(np.sum(M1**2, axis=-1))
+    M1 /= sy[..., np.newaxis]
     sxy = sx_sxy / sx
+
     # orthogonalize M2 with respect to M0 and M1
-    sx_sxz = np.dot(M0, M2)
-    sy_syz = np.dot(M1, M2)
-    M2 -= (sx_sxz * M0 + sy_syz * M1)
+    sx_sxz = vdot_batch(M0, M2)
+    sy_syz = vdot_batch(M1, M2)
+    M2 -= (sx_sxz[..., np.newaxis] * M0 + sy_syz[..., np.newaxis] * M1)
+
     # extract z scale and normalize
-    sz = math.sqrt(np.sum(M2**2))
-    M2 /= sz
+    sz = np.sqrt(np.sum(M2**2, axis=-1))
+    M2 /= sz[..., np.newaxis]
     sxz = sx_sxz / sx
     syz = sy_syz / sy
+
     # Reconstruct rotation matrix, ensure positive determinant
-    Rmat = np.array([M0, M1, M2]).T
-    if np.linalg.det(Rmat) < 0:
-        sx *= -1
-        Rmat[:,0] *= -1
-    return T, Rmat, np.array([sx, sy, sz]), np.array([sxy, sxz, syz])
+    Rmat = transpose_2d(np.stack([M0, M1, M2], axis=-2))
+    Rsign = np.sign(np.linalg.det(Rmat))
+    sx *= Rsign
+    Rmat[..., :,0] *= Rsign[..., np.newaxis]
+
+    Z = np.stack([sx, sy, sz], axis=-1)
+    S = np.stack([sxy, sxz, syz], axis=-1)
+    return T, Rmat, Z, S
 
 
 def decompose(A):
@@ -251,20 +275,20 @@ def compose(T, R, Z, S=None):
 
     Parameters
     ----------
-    T : array-like shape (N,)
+    T : array-like shape (..., N,)
         Translations, where N is usually 3 (3D case)
-    R : array-like shape (N,N)
+    R : array-like shape (..., N,N)
         Rotation matrix where N is usually 3 (3D case)
-    Z : array-like shape (N,)
+    Z : array-like shape (..., N,)
         Zooms, where N is usually 3 (3D case)
-    S : array-like, shape (P,), optional
-       Shear vector, such that shears fill upper triangle above
-       diagonal to form shear matrix.  P is the (N-2)th Triangular
-       number, which happens to be 3 for a 4x4 affine (3D case)
+    S : array-like, shape (..., P,), optional
+        Shear vector, such that shears fill upper triangle above
+        diagonal to form shear matrix.  P is the (N-2)th Triangular
+        number, which happens to be 3 for a 4x4 affine (3D case)
 
     Returns
     -------
-    A : array, shape (N+1, N+1)
+    A : array, shape (..., N+1, N+1)
         Affine transformation matrix where N usually == 3
         (3D case)
 
@@ -291,14 +315,22 @@ def compose(T, R, Z, S=None):
            [0., 0., 1., 0.],
            [0., 0., 0., 1.]])
     '''
-    n = len(T)
+    T = np.asarray(T)
     R = np.asarray(R)
-    if R.shape != (n,n):
-        raise ValueError('Expecting shape (%d,%d) for rotations' % (n,n))
-    A = np.eye(n+1)
-    ZS = np.diag(Z)
-    if not S is None:
-        ZS = ZS.dot(striu2mat(S))
-    A[:n,:n] = np.dot(R, ZS)
-    A[:n,n] = T[:]
+    Z = np.asarray(Z)
+
+    *batches, n = T.shape
+    if R.shape[-2:] != (n, n):
+        raise ValueError('Expecting shape (..., %d, %d) for rotations' % (n, n))
+
+    A = np.zeros((*batches, n+1, n+1))
+
+    ZS = diag_2d(Z)
+    if S is not None:
+        ZS = ZS @ striu2mat(S)
+    
+    A[..., :n,:n] = R @ ZS
+    A[..., :n, n] = T[:]
+    A[...,  n, n] = 1
+    
     return A
