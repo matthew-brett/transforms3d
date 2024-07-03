@@ -33,6 +33,11 @@ dependencies = [
     "numpy >=1.15",
 ]
 
+[project.optional-dependencies]
+derivations = [
+    "sympy",
+]
+
 [tool.setuptools.packages.find]
 include = ["transforms3d*"]
 
