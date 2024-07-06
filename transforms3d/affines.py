@@ -246,7 +246,7 @@ def decompose(A):
     return T, R, Z, S
 
 
-def compose(T, R, Z, S=None):
+def compose(T, R, Z=None, S=None):
     ''' Compose translations, rotations, zooms, [shears]  to affine
 
     Parameters
@@ -256,7 +256,7 @@ def compose(T, R, Z, S=None):
     R : array-like shape (N,N)
         Rotation matrix where N is usually 3 (3D case)
     Z : array-like shape (N,)
-        Zooms, where N is usually 3 (3D case)
+        Zooms, where N is usually 3 (3D case). If None, then set value as np.ones(N).
     S : array-like, shape (P,), optional
        Shear vector, such that shears fill upper triangle above
        diagonal to form shear matrix.  P is the (N-2)th Triangular
@@ -296,6 +296,8 @@ def compose(T, R, Z, S=None):
     if R.shape != (n,n):
         raise ValueError('Expecting shape (%d,%d) for rotations' % (n,n))
     A = np.eye(n+1)
+    if Z is None:
+        Z = np.ones(n)
     ZS = np.diag(Z)
     if not S is None:
         ZS = ZS.dot(striu2mat(S))
