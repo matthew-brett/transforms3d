@@ -375,7 +375,7 @@ def euler2quat(ai, aj, ak, axes='sxyz'):
     return q
 
 
-def quat2euler(quaternion, axes='sxyz'):
+def quat2euler(quaternion, axes='sxyz', direct_formula=True):
     """Euler angles from `quaternion` for specified axis sequence `axes`
 
     Parameters
@@ -385,6 +385,10 @@ def quat2euler(quaternion, axes='sxyz'):
     axes : str, optional
         Axis specification; one of 24 axis sequences as string or encoded
         tuple - e.g. ``sxyz`` (the default).
+    direct_formula : bool, optional
+        When True, implements the algorithm from [1]_. When False, first
+        converts to matrix and then converts to Euler angles.
+        Default : True
 
     Returns
     -------
@@ -395,13 +399,106 @@ def quat2euler(quaternion, axes='sxyz'):
     ak : float
         Third rotation angle (according to `axes`).
 
+    References
+    ----------
+    .. [1] Bernardes E, Viollet S (2022) Quaternion to Euler angles
+           conversion: A direct, general and computationally efficient
+           method. PLoS ONE 17(11): e0276302.
+           https://doi.org/10.1371/journal.pone.0276302
+
     Examples
     --------
     >>> angles = quat2euler([0.99810947, 0.06146124, 0, 0])
     >>> np.allclose(angles, [0.123, 0, 0])
     True
     """
-    return mat2euler(quat2mat(quaternion), axes)
+    if not direct_formula:
+        angles = list(mat2euler(quat2mat(quaternion), axes))
+        if angles[1] < 0 and axes[1] == axes[-1]:
+            angles[0] = (angles[0]) % (2 * np.pi) - np.pi
+            angles[1] = -angles[1]
+            angles[2] = (angles[2]) % (2 * np.pi) - np.pi
+        return tuple(angles)
+
+    # check if valid axes option
+    axes = axes.lower()
+    _AXES2TUPLE[axes]
+
+    # if direct formula, use the algorithm:
+    extrinsic = axes[0] == 's'
+    seq = axes[1:]
+    if extrinsic:
+        angle_first = 0
+        angle_third = 2
+    else:
+        seq = seq[::-1]
+        angle_first = 2
+        angle_third = 0
+
+    i = 'xyz'.index(seq[0]) + 1
+    j = 'xyz'.index(seq[1]) + 1
+    k = 'xyz'.index(seq[2]) + 1
+
+    symmetric = i == k
+
+    if symmetric:
+        k = 6 - i - j  # get third axis
+
+    # Step 0
+    # Check if permutation is even (+1) or odd (-1)
+    sign = (i - j) * (j - k) * (k - i) // 2
+
+    angles = np.array([0., 0., 0.])
+
+    # Step 1
+    # Permutate quaternion elements
+    a = quaternion[0]
+    b = quaternion[i]
+    c = quaternion[j]
+    d = quaternion[k] * sign
+    if not symmetric:
+        a, b, c, d = a - c, b + d, c + a, d - b
+
+    # Step 2
+    # Compute second angle...
+    angles[1] = 2 * np.arctan2(np.hypot(c, d), np.hypot(a, b))
+
+    # ... and check if equal to is 0 or pi, causing a singularity
+    if abs(angles[1]) <= _EPS4:
+        case = 1
+    elif abs(angles[1] - np.pi) <= _EPS4:
+        case = 2
+    else:
+        case = 0  # normal case
+
+    # Step 3
+    # compute first and third angles, according to case
+    half_sum = np.arctan2(b, a)
+    half_diff = np.arctan2(d, c)
+
+    if case == 0:  # no singularities
+        angles[angle_first] = half_sum - half_diff
+        angles[angle_third] = half_sum + half_diff
+
+    else:  # any degenerate case
+        angles[2] = 0
+        if case == 1:
+            angles[0] = 2 * half_sum
+        else:
+            angles[0] = 2 * half_diff * (-1 if extrinsic else 1)
+
+    # for Tait-Bryan angles
+    if not symmetric:
+        angles[angle_third] *= sign
+        angles[1] -= np.pi / 2
+
+    for idx in range(3):
+        if angles[idx] < - np.pi:
+            angles[idx] += 2 * np.pi
+        elif angles[idx] > np.pi:
+            angles[idx] -= 2 * np.pi
+
+    return tuple(angles)
 
 
 def euler2axangle(ai, aj, ak, axes='sxyz'):
