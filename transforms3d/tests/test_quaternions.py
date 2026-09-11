@@ -5,6 +5,7 @@ from itertools import product
 from os.path import dirname, join as pjoin
 
 import numpy as np
+import pytest
 
 from numpy.testing import (assert_array_almost_equal, assert_array_equal,
                            assert_almost_equal)
@@ -123,6 +124,45 @@ def test_qexp():
 
     # from https://www.mathworks.com/help/aerotbx/ug/quatexp.html
     assert np.allclose(tq.qexp(np.array([0, 0, 0.7854, 0])), np.array([0.7071, 0., 0.7071, 0.]), atol=1e-05)
+
+
+@pytest.mark.parametrize('make_input', [
+    list, tuple,
+    np.bool_, np.int8, np.int16, np.int32, np.int64,
+    np.uint8, np.uint16, np.uint32, np.uint64,
+])
+def test_qexp_integer_input(make_input):
+    q = make_input([0, 1, 0, 0])
+    before = np.array(q, copy=True)
+    result = tq.qexp(q)
+    np.testing.assert_allclose(result, [math.cos(1), math.sin(1), 0, 0])
+    assert result.dtype.kind == 'f'
+    assert_array_equal(q, before)
+
+
+def test_qexp_integer_scalar_and_vector_parts():
+    # The vector part has norm 3, so every nonzero component is known.
+    result = tq.qexp([1, 2, -2, 1])
+    expected = math.exp(1) * np.array([
+        math.cos(3),
+        2 * math.sin(3) / 3,
+        -2 * math.sin(3) / 3,
+        math.sin(3) / 3,
+    ])
+    np.testing.assert_allclose(result, expected)
+
+
+def test_qexp_integer_norm_overflow():
+    # Squaring 16 in int8 would wrap to zero before computing the norm.
+    result = tq.qexp(np.array([0, 16, 0, 0], dtype=np.int8))
+    np.testing.assert_allclose(result, [math.cos(16), math.sin(16), 0, 0])
+
+
+@pytest.mark.parametrize('dtype', [np.float32, np.float64, np.longdouble])
+def test_qexp_floating_dtype(dtype):
+    result = tq.qexp(np.array([0, 1, 0, 0], dtype=dtype))
+    assert result.dtype == dtype
+    np.testing.assert_allclose(result, [math.cos(1), math.sin(1), 0, 0])
 
 
 def test_qlog():
