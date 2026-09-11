@@ -326,6 +326,9 @@ def qexp(q):
     * https://math.stackexchange.com/questions/1030737/exponential-function-of-quaternion-derivation
     '''
     q = np.array(q)  # to ensure there is a dtype
+    if q.dtype.kind in 'biu':
+        # Avoid integer overflow in the norm and truncation of the result.
+        q = q.astype(np.float64)
     w, v = q[0], q[1:]
     norm = np.sqrt(np.dot(v, v))
     result = np.zeros((4,), q.dtype)
