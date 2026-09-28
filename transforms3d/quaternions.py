@@ -126,6 +126,10 @@ def quat2mat(q):
     >>> np.allclose(M, np.diag([1, -1, -1]))
     True
     '''
+    # Compute products at float64 precision or higher: float32 rounding can
+    # leave spurious nonzero matrix entries at Euler angle singularities.
+    q = np.asarray(q)
+    q = q.astype(np.result_type(q.dtype, np.float64), copy=False)
     w, x, y, z = q
     Nq = w*w + x*x + y*y + z*z
     if Nq < _FLOAT_EPS:

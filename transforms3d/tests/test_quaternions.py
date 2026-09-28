@@ -90,6 +90,14 @@ def test_quat2mat():
     assert_array_almost_equal(M, np.eye(3))
 
 
+def test_quat2mat_float32_half_turn():
+    quat = np.array([0, 0.70710695, 0, -0.70710695], dtype=np.float32)
+    actual = tq.quat2mat(quat)
+    expected = np.array([[0, 0, -1], [0, -1, 0], [-1, 0, 0]])
+    np.testing.assert_allclose(actual, expected, atol=1e-12)
+    np.testing.assert_allclose(actual @ actual.T, np.eye(3), atol=1e-12)
+
+
 def test_qinverse():
     # Takes sequence
     iq = tq.qinverse((1, 0, 0, 0))
