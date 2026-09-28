@@ -82,6 +82,25 @@ def test_mat2euler():
        assert_almost_equal(R0, R1)
 
 
+def test_float32_quaternion_euler_roundtrip():
+    # A half-turn that used to round to a nearly singular, but not singular,
+    # rotation matrix when the quaternion products were computed in float32.
+    quat = np.array([0, 0.70710695, 0, -0.70710695], dtype=np.float32)
+    expected = np.array([[0, 0, -1], [0, -1, 0], [-1, 0, 0]])
+    for axes in euler._AXES2TUPLE:
+        angles = quat2euler(quat, axes)
+        actual = euler.quat2mat(euler2quat(*angles, axes=axes))
+        np.testing.assert_allclose(actual, expected, atol=1e-7)
+
+
+def test_mat2euler_float32_matrix():
+    for axes in euler._AXES2TUPLE:
+        expected = euler2mat(0.3, -0.8, 1.4, axes)
+        angles = mat2euler(expected.astype(np.float32), axes)
+        actual = euler2mat(*angles, axes=axes)
+        np.testing.assert_allclose(actual, expected, atol=1e-7)
+
+
 def test_names():
     assert euler.__dict__['physics'] == euler.__dict__['rzxz']
 

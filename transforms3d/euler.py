@@ -274,7 +274,7 @@ def mat2euler(mat, axes='sxyz'):
     j = _NEXT_AXIS[i+parity]
     k = _NEXT_AXIS[i-parity+1]
 
-    M = np.array(mat, dtype=np.float64, copy=False)[:3, :3]
+    M = np.asarray(mat, dtype=np.float64)[:3, :3]
     if repetition:
         sy = math.sqrt(M[i, j]*M[i, j] + M[i, k]*M[i, k])
         if sy > _EPS4:
