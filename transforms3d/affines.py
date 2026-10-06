@@ -220,29 +220,39 @@ def decompose(A):
 
     Notes
     -----
-    We have used a nice trick from SPM to get the shears.  Let us call the
-    starting N-1 by N-1 matrix ``RZS``, because it is the composition of the
-    rotations on the zooms on the shears.  The rotation matrix ``R`` must have
-    the property ``np.dot(R.T, R) == np.eye(N-1)``.  Thus ``np.dot(RZS.T,
-    RZS)`` will, by the transpose rules, be equal to ``np.dot((ZS).T, (ZS))``.
-    Because we are doing shears with the upper right part of the matrix, that
-    means that the Cholesky decomposition of ``np.dot(RZS.T, RZS)`` will give
-    us our ``ZS`` matrix, from which we take the zooms from the diagonal, and
-    the shear values from the off-diagonal elements.
+    A QR decomposition directly separates the linear part into an
+    orthogonal rotation and an upper triangular scale/shear matrix.  Making
+    the triangular diagonal positive fixes the sign ambiguity.  If the
+    rotation has negative determinant, its first column and first scale are
+    negated, preserving the existing reflection convention.
+
+    Factoring the linear part directly avoids forming its Gram matrix,
+    which squares its condition number and can lose positive definiteness
+    for nonsingular affines.  It also avoids explicitly inverting the
+    triangular factor to recover the rotation.
     '''
     A = np.asarray(A)
     T = A[:-1,-1]
     RZS = A[:-1,:-1]
-    ZS = np.linalg.cholesky(np.dot(RZS.T,RZS)).T
+    # A zero LU determinant detects singular input without a scale-based
+    # numerical-rank cutoff that would reject valid large-shear matrices.
+    if np.linalg.slogdet(RZS)[0] == 0:
+        raise np.linalg.LinAlgError("Singular affine matrix")
+    R, ZS = np.linalg.qr(RZS)
+    Z = np.diag(ZS).copy()
+    if np.any(Z == 0):
+        raise np.linalg.LinAlgError('Affine matrix is singular')
+    # Choose positive scales before applying the reflection convention.
+    signs = np.where(Z < 0, -1.0, 1.0)
+    R *= signs[np.newaxis, :]
+    ZS *= signs[:, np.newaxis]
     Z = np.diag(ZS).copy()
     shears = ZS / Z[:,np.newaxis]
     n = len(Z)
     S = shears[np.triu(np.ones((n,n)), 1).astype(bool)]
-    R = np.dot(RZS, np.linalg.inv(ZS))
     if np.linalg.det(R) < 0:
         Z[0] *= -1
-        ZS[0] *= -1
-        R = np.dot(RZS, np.linalg.inv(ZS))
+        R[:, 0] *= -1
     return T, R, Z, S
 
 
