@@ -584,6 +584,6 @@ def quat2axangle(quat, identity_thresh=None):
     if len2 < identity_thresh ** 2:
         # if vec is nearly 0,0,0, this is an identity rotation
         return np.array([1.0, 0, 0]), 0.0
-    # Make sure w is not slightly above 1 or below -1
-    theta = 2 * math.acos(max(min(quat[0], 1), -1))
+    # Retain small rotations when the scalar component rounds to one.
+    theta = 2 * math.atan2(math.sqrt(len2), quat[0])
     return  xyz / math.sqrt(len2), theta
