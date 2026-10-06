@@ -125,7 +125,7 @@ def decompose44(A44):
     T = A44[:-1,-1]
     RZS = A44[:-1,:-1]
     # compute scales and shears
-    M0, M1, M2 = np.array(RZS).T
+    M0, M1, M2 = np.array(RZS, dtype=np.result_type(RZS.dtype, np.float64)).T
     # extract x scale and normalize
     sx = math.sqrt(np.sum(M0**2))
     M0 /= sx
