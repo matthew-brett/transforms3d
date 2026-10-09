@@ -37,6 +37,10 @@ def axangle2mat(axis, angle, is_normalized=False):
     '''
     x, y, z = axis
     if not is_normalized:
+        # Bound the components before squaring, without rebuilding the norm.
+        scale = max(abs(float(x)), abs(float(y)), abs(float(z)))
+        if 0 < scale < float('inf'):
+            x, y, z = x / scale, y / scale, z / scale
         n = math.sqrt(x*x + y*y + z*z)
         x = x/n
         y = y/n
