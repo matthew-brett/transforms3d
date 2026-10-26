@@ -227,10 +227,15 @@ def mat2sadn(mat):
 
     So the idea is to use an "inverse outer product" to recover the shears.
     See :func:`inverse_outer` for the implementation.
+
+    For zero shear, the plane is not unique. We return orthogonal unit
+    direction and normal vectors so the result can be passed to ``sadn2mat``.
     """
     mat = np.asarray(mat)
     # normal: cross independent eigenvectors corresponding to the eigenvalue 1
     tan, direction, normal = inverse_outer(mat - np.eye(3))
+    if tan == 0:
+        return 0.0, np.array([1., 0., 0.]), np.array([0., 1., 0.])
     return math.atan(tan), direction, normal
 
 
@@ -291,8 +296,14 @@ def aff2sadn(aff):
         np.dot(point, normal) + d == 0
 
     where ``d`` is the distance from the plane to the origin.
+
+    For the identity affine, the plane is not unique. We return orthogonal
+    unit direction and normal vectors and a point at the origin.
     """
     tan, direction, normal = inverse_outer(aff[:3,:3] - np.eye(3))
+    if tan == 0 and not np.any(aff[:3, 3]):
+        return (0.0, np.array([1., 0., 0.]), np.array([0., 1., 0.]),
+                np.zeros(3))
     angle = math.atan(tan)
     i = np.argmax(np.abs(direction))  # Avoid division by small values
     d = aff[i, 3] / (tan * direction[i])
