@@ -148,10 +148,23 @@ def test_qexp_matlab():
     o_quats, o_unit_quats, quat_e, quat_p = [
         ml_quats[k] for k in ['quats', 'unit_quats', 'quat_e', 'quat_p']]
     for i in range(len(o_quats)):
-        assert np.allclose(tq.qexp(o_quats[i]), quat_e[i])
+        q = o_quats[i]
+        expected = quat_e[i]
+        if not np.any(q[1:]):
+            # The legacy Aerospace fixture returns identity on the real axis.
+            # General quaternion exponentials instead reduce to scalar exp.
+            expected = [math.exp(q[0]), 0., 0., 0.]
+        assert np.allclose(tq.qexp(q), expected)
     for i in range(len(o_unit_quats)):
         for p_i, p in enumerate(np.arange(1, 4, 0.5)):
-            assert np.allclose(tq.qpow(o_unit_quats[i], p), quat_p[0, p_i][i])
+            q = o_unit_quats[i]
+            expected = quat_p[0, p_i][i]
+            if not np.any(q[1:]):
+                # The fixture also identifies -1 with 1.  Use our documented
+                # +i branch, preserving the sign required by integer powers.
+                value = complex(q[0], 0.) ** p
+                expected = [value.real, value.imag, 0., 0.]
+            assert np.allclose(tq.qpow(q, p), expected)
 
 
 def test_qnorm():

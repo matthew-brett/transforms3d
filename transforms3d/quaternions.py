@@ -327,6 +327,8 @@ def qexp(q):
     '''
     q = np.array(q)  # to ensure there is a dtype
     w, v = q[0], q[1:]
+    if not np.any(v):
+        return np.concatenate((np.exp(q[:1]), np.zeros_like(v)))
     norm = np.sqrt(np.dot(v, v))
     result = np.zeros((4,), q.dtype)
 
@@ -354,13 +356,27 @@ def qlog(q):
     Notes
     -----
     See: https://en.wikipedia.org/wiki/Quaternion#Exponential,_logarithm,_and_power
+
+    For a negative real quaternion, the logarithm is not unique.  We choose
+    the positive x axis for its imaginary part, as in the complex plane
+    spanned by 1 and i: ``qlog([-r, 0, 0, 0]) = [log(r), pi, 0, 0]``.
     '''
     q = np.array(q)  # To ensure there is a dtype
+    w, v = q[0], q[1:]
+    if not np.any(v) and w != 0.:
+        # The real-axis formula needs no squared norm, which could overflow
+        # or underflow even when the scalar logarithm is representable.
+        w = np.asarray(w, dtype=np.result_type(q.dtype, 1.0))[()]
+        result = np.zeros((4,), w.dtype)
+        result[0] = np.log(np.abs(w))
+        if w < 0.:
+            result[1] = np.arccos(w.dtype.type(-1))
+        return result
+
     qnorm_ = qnorm(q)
     if qnorm_ == 0.:
         return qeye(q.dtype)
 
-    w, v = q[0], q[1:]
     vnorm = np.sqrt(np.dot(v, v))
     result = np.zeros((4,), q.dtype)
 
@@ -391,14 +407,43 @@ def qpow(q, n):
     -----
     See:
     https://en.wikipedia.org/wiki/Quaternion#Exponential,_logarithm,_and_power
+
+    Noninteger powers of negative real quaternions use the same positive
+    x-axis logarithm branch as :func:`qlog`.  Integer powers remain real.
     '''
     q = np.array(q)  # To ensure there is a dtype.
+    w, v = q[0], q[1:]
+    if not np.any(v) and w != 0.:
+        w = np.asarray(w, dtype=np.result_type(q.dtype, 1.0))[()]
+        magnitude = np.power(np.abs(w), n)
+        # Preserve floating input precision for Python scalar exponents on
+        # both NumPy 1 and 2, but retain explicit wider NumPy exponents.
+        n_dtype = w.dtype if type(n) in (int, float) else np.asarray(n).dtype
+        result = np.zeros((4,), np.result_type(w.dtype, n_dtype))
+        if w > 0.:
+            result[0] = magnitude
+        elif n % 1 == 0.:
+            # Avoid a spurious imaginary part from sin(n*pi) rounding.
+            result[0] = magnitude if n % 2 == 0. else -magnitude
+        else:
+            angle_dtype = np.result_type(w.dtype, np.asarray(n).dtype,
+                                         np.float64)
+            # Reduce before multiplying by pi.  Signed remainder also keeps
+            # tiny negative exponents instead of rounding them up to 2.
+            phase = np.fmod(n, 2)
+            if phase > 1:
+                phase -= 2
+            elif phase < -1:
+                phase += 2
+            angle = phase * np.arccos(angle_dtype.type(-1))
+            result[0] = magnitude * np.cos(angle)
+            result[1] = magnitude * np.sin(angle)
+        return result
+
     qnorm_ = qnorm(q)
 
     if qnorm_ == 0.:
         return qeye(q.dtype)
-
-    w, v = q[0], q[1:]
 
     nnorm = np.sqrt(np.dot(v, v))
     result = np.zeros((4,), q.dtype)
