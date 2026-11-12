@@ -84,3 +84,25 @@ def test_errors():
     A = np.eye(4)
     A[:3, :3] = M
     assert_raises(ValueError, aff2axangle, A)
+
+
+def test_mat2axangle_small_rotations():
+    # A complex eigenvalue near one is not the rotation's unit eigenvalue.
+    # Axis sign is arbitrary, so compare the signed rotation vector.
+    axes = np.array([[2., 1., 1.], [1., -2., 3.], [0., 1., 0.]])
+    for axis in axes:
+        axis = axis / np.linalg.norm(axis)
+        for angle in [1e-4, 1e-5, 3e-6, 1e-6, 1e-7, -1e-6]:
+            matrix = axangle2mat(axis, angle)
+            for threshold in [1e-5, 1e-3]:
+                result_axis, result_angle = mat2axangle(matrix, threshold)
+                np.testing.assert_allclose(np.linalg.norm(result_axis), 1., atol=1e-12)
+                np.testing.assert_allclose(result_axis * result_angle,
+                                           axis * angle, rtol=1e-7, atol=1e-14)
+                np.testing.assert_allclose(axangle2mat(result_axis, result_angle),
+                                           matrix, rtol=0, atol=1e-13)
+
+
+def test_mat2axangle_threshold_edges():
+    for threshold in [0., -1., float("nan")]:
+        assert_raises(ValueError, mat2axangle, np.eye(3), threshold)
