@@ -90,6 +90,21 @@ def test_quat2mat():
     assert_array_almost_equal(M, np.eye(3))
 
 
+def test_mat2quat_array_like():
+    # The public input contract includes nested Python lists and tuples.
+    cases = [
+        (np.eye(3), [1, 0, 0, 0]),
+        (np.diag([-1, 1, -1]), [0, 0, 1, 0]),
+        (np.array([[1, 0, 0], [0, 0, -1], [0, 1, 0]]),
+         [np.sqrt(0.5), np.sqrt(0.5), 0, 0]),
+    ]
+    for matrix, expected in cases:
+        for value in (matrix.tolist(), tuple(map(tuple, matrix))):
+            quaternion = tq.mat2quat(value)
+            assert tq.nearly_equivalent(quaternion, expected)
+            assert_array_almost_equal(tq.quat2mat(quaternion), matrix)
+
+
 def test_qinverse():
     # Takes sequence
     iq = tq.qinverse((1, 0, 0, 0))
