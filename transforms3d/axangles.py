@@ -147,10 +147,12 @@ def mat2axangle(mat, unit_thresh=1e-5):
     M = np.asarray(mat, dtype=np.float64)
     # direction: unit eigenvector of R33 corresponding to eigenvalue of 1
     L, W = np.linalg.eig(M.T)
-    i = np.where(np.abs(L - 1.0) < unit_thresh)[0]
-    if not len(i):
+    distances = np.abs(L - 1.0)
+    # Keep the last eigenvector on ties, including identity matrices.
+    i = len(L) - 1 - np.argmin(distances[::-1])
+    if not distances[i] < unit_thresh:
         raise ValueError("no unit eigenvector corresponding to eigenvalue 1")
-    direction = np.real(W[:, i[-1]]).squeeze()
+    direction = np.real(W[:, i]).squeeze()
     # rotation angle depending on direction
     cosa = (np.trace(M) - 1.0) / 2.0
     if abs(direction[2]) > 1e-8:
