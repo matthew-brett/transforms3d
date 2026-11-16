@@ -134,16 +134,25 @@ def mat2zfdir(mat):
     True
     """
     mat = np.asarray(mat, dtype=np.float64)
+    # Uniform scales have no preferred axis, even close to identity.
+    uniform_factor = mat[0, 0]
+    if (np.isfinite(uniform_factor)
+            and np.array_equal(mat, np.diag([uniform_factor] * 3))):
+        return uniform_factor, None
     factor = np.trace(mat) - 2.0
-    # direction: unit eigenvector corresponding to eigenvalue factor
-    l, V = np.linalg.eig(mat)
-    near_factors, = np.nonzero(abs(np.real(l.squeeze()) - factor) < 1e-8)
+    eigenvalues, V = np.linalg.eig(mat)
+    eigenvalues = np.real(eigenvalues)
+    near_factors, = np.nonzero(abs(eigenvalues - factor) < 1e-8)
     if near_factors.size == 0:
         # uniform scaling
         factor = (factor + 2.0) / 3.0
         return factor, None
-    direction = np.real(V[:, near_factors[0]])
-    return factor, normalized_vector(direction)
+    # In a directional zoom the other two eigenvalues are 1. Near
+    # identity all three can match the tolerance, even if the trace
+    # calculation has rounded the actual factor to 1.
+    i = near_factors[np.argmax(abs(eigenvalues[near_factors] - 1.0))]
+    direction = np.real(V[:, i])
+    return eigenvalues[i], normalized_vector(direction)
 
 
 def aff2zfdir(aff):
