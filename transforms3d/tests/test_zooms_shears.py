@@ -41,6 +41,34 @@ def test_zfdir_zmat_aff():
         assert_array_almost_equal(S0, tzs.zfdir2aff(f2, d2, o2))
 
 
+def test_mat2zfdir_uniform_near_identity():
+    for factor in (1.0 - 1e-9, 1.0, 1.0 + 1e-9):
+        mat = tzs.zfdir2mat(factor)
+        actual_factor, direction = tzs.mat2zfdir(mat)
+        assert direction is None
+        assert actual_factor == factor
+        assert_array_equal(tzs.zfdir2mat(actual_factor, direction), mat)
+
+
+def test_mat2zfdir_directional_near_identity():
+    for factor in (1.0 - 1e-9, 1.0 + 1e-9):
+        for expected_direction in ([0, 0, 1], [1, 2, 3]):
+            mat = tzs.zfdir2mat(factor, expected_direction)
+            actual_factor, direction = tzs.mat2zfdir(mat)
+            assert direction is not None
+            assert_array_almost_equal(tzs.zfdir2mat(actual_factor, direction),
+                                      mat, decimal=15)
+
+
+def test_mat2zfdir_directional_one_ulp_from_identity():
+    for factor in (np.nextafter(1.0, 0.0), np.nextafter(1.0, 2.0)):
+        mat = tzs.zfdir2mat(factor, [0, 0, 1])
+        actual_factor, direction = tzs.mat2zfdir(mat)
+        assert actual_factor == factor
+        assert_array_equal(np.abs(direction), [0, 0, 1])
+        assert_array_equal(tzs.zfdir2mat(actual_factor, direction), mat)
+
+
 def test_striu():
     # Shears encoded as vector from triangle above diagonal of shear mat
     S = [0.1, 0.2, 0.3]
