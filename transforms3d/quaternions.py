@@ -290,14 +290,17 @@ def qinverse(q):
     Parameters
     ----------
     q : 4 element sequence
-       w, i, j, k of quaternion
+       w, i, j, k of nonzero quaternion
 
     Returns
     -------
     invq : array shape (4,)
        w, i, j, k of quaternion inverse
     '''
-    return qconjugate(q) / qnorm(q)
+    conjugate = qconjugate(q)
+    # q * conjugate(q) is the squared norm. Use the floating-point
+    # conjugate for the dot product to avoid integer overflow.
+    return conjugate / np.dot(conjugate, conjugate)
 
 
 def qeye(dtype=np.float64):

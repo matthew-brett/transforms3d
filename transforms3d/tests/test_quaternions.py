@@ -102,6 +102,13 @@ def test_qinverse():
         assert np.allclose(iM, iqM)
 
 
+def test_qinverse_nonunit():
+    for q in ([2, -1, 3, -4], np.array([300, -400, 500, 600], dtype=np.int16)):
+        iq = tq.qinverse(q)
+        assert_array_almost_equal(tq.qmult(q, iq), tq.qeye())
+        assert_array_almost_equal(tq.qmult(iq, q), tq.qeye())
+
+
 def test_qeye():
     qi = tq.qeye()
     assert qi.dtype.kind == 'f'
